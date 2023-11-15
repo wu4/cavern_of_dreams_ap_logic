@@ -1,0 +1,145 @@
+title: Logic
+description: A logical rule
+
+anyOf:
+  - type: "null"
+  - $ref: "#/$defs/CommentedLogic"
+
+$defs:
+  CommentedLogic:
+    $ref: "#/$defs/Logic"
+    if:
+      properties:
+        comment:
+          type: string
+      required:
+        - comment
+    then:
+      minProperties: 2
+      maxProperties: 2
+    else:
+      minProperties: 1
+      maxProperties: 1
+
+  Logic:
+    type: object
+
+    additionalProperties: false
+
+    properties:
+      comment:
+        type: string
+
+      and:
+        type: array
+        minItems: 2
+        items:
+          $ref: "#/$defs/CommentedLogic"
+
+      or:
+        type: array
+        minItems: 2
+        items:
+          $ref: "#/$defs/CommentedLogic"
+      
+      ability:
+        description: Requires use of an ability
+        anyOf:
+          - const: Attack
+            description: Attacking, whether grounded or not
+          - const: Wings
+            description: Hovering
+          - const: Dive
+            description: Ground pound
+          - const: Bubble
+            description: Pew pew
+          - const: Flight
+            description: Full, unrestricted flight. Can basically do anything
+
+          - const: Aerial Attack
+            description: Attacking in the air
+          - const: Grounded Attack
+            description: Attacking on the ground
+          - const: Roll
+            description: Rolling
+          - const: Sprint
+            description: The ability to gain momentum
+          - const: High Jump
+            description: The ability to high jump
+          - const: Swim
+            description: The ability to swim
+          - const: Climb
+            description: The ability to climb vines and ladders
+          - const: Carry
+            description: The ability to carry and throw objects
+
+      tech:
+        description: Requires use of tech
+        anyOf:
+          - const: super_bounce
+            description: >
+              Aiming a tail-roll upwards to gain significant height. Requires
+              air attack and roll
+          - const: bubble_jump
+            description: >
+              Gaining significant height via firing bubbles downwards. Requires
+              bubble and roll
+          - const: jester_boots_anywhere
+            description: >
+              The ability to smuggle Jester Boots outside of its intended areas.
+              Requires Prismic Jester Boots access, as well as a method of
+              leaving the area without losing the boots
+          - const: hitlaunch_cancel
+            description: >
+              The ability to cancel knockback from taking damage. Simply pause
+              after taking damage
+          - const: damage_boost
+            description: >
+              Intentionally being hit by enemies to launch yourself in ways that
+              allow you to access new areas
+
+      event:
+        description: Requires an event to have been triggered
+        type: string
+
+      obstacle:
+        description: A generic obstacle
+        anyOf:
+          - const: high_jump
+            description: >
+              An obstacle that requires more or less the same abilities as what
+              high jump provides
+          - const: flame
+            description: >
+              A flame that can be doused with bubble or medicine
+
+      movement:
+        description: Requires a certain degree of skill in movement
+        anyOf:
+          - const: 2
+            description: Intermediate
+          - const: 3
+            description: Expert
+
+      has_eggs:
+        description: Requires a certain number of eggs
+        type: number
+        minimum: 1
+        maximum: 40
+      
+      has_hearts:
+        description: Requires a certain amount of gratitude
+        type: number
+        minimum: 1
+        maximum: 4
+
+      whackable:
+        description: Requires the ability to whack an object
+        type: array
+        minItems: 1
+        items:
+          enum:
+            - attack
+            - roll
+            - throw
+            - dive

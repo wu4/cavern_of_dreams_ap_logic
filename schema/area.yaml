@@ -1,0 +1,95 @@
+title: Area
+description: An area in the room
+type: object
+
+required:
+  - area_connections
+
+unevaluatedProperties: false
+additionalProperties: false
+
+properties:
+  area_connections:
+    description: A list of connections this area possesses
+    type: object
+
+    unevaluatedProperties: false
+
+    additionalProperties:
+      description: An area connection
+      $ref: "logic.yaml"
+  
+  entrances:
+    description: A list of entrances that lead to other rooms
+    type: object
+    minProperties: 1
+    unevaluatedProperties: false
+
+    additionalProperties:
+      description: An entrance
+      type: object
+
+      required:
+        - to
+
+      properties:
+        to:
+          type: array
+          items:
+            type: string
+          minItems: 2
+          maxItems: 2
+        rule:
+          $ref: "logic.yaml"
+
+  locations:
+    description: A list of locations that can be randomized
+    type: object
+
+    minProperties: 1
+    additionalProperties: false
+    unevaluatedProperties: false
+
+    properties:
+      eggs:
+        type: object
+        minProperties: 1
+        unevaluatedProperties: false
+        additionalProperties:
+          $ref: "logic.yaml"
+
+      events:
+        type: object
+        minProperties: 1
+        unevaluatedProperties: false
+        additionalProperties:
+          $ref: "logic.yaml"
+
+      cards:
+        type: object
+        minProperties: 1
+        unevaluatedProperties: false
+        additionalProperties:
+          $ref: "logic.yaml"
+
+      abilities:
+        type: object
+        minProperties: 1
+        unevaluatedProperties: false
+        additionalProperties:
+          $ref: "logic.yaml"
+
+      shrooms:
+        type: object
+        minProperties: 1
+        unevaluatedProperties: false
+        additionalProperties:
+          type: object
+          properties:
+            count:
+              type: number
+              minimum: 1
+            rule:
+              $ref: "logic.yaml"
+          required:
+            - count

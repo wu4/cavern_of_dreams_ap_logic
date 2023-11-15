@@ -1,0 +1,139 @@
+contains:
+  eggs: 2
+  cards: 2
+  shrooms: 25
+
+areas:
+  Start:
+    area_connections:
+      Lower:
+        whackable:
+          - attack
+          - dive
+          - throw
+
+      Upper Connector:
+        or:
+          - comment: Mushroom + Keehee damage boost
+            tech: damage_boost
+
+          - obstacle: high_jump
+
+      Lava Mushroom Platform:
+        null
+
+    entrances:
+      Sun Cavern Door:
+        to:
+          - Sun Cavern
+          - Moon Cavern Heart Door
+
+    locations:
+      cards:
+        Dive:
+          and:
+            - ability: Swim
+            - whackable:
+              - dive
+
+      shrooms:
+        Dive Holes:
+          count: 6
+          rule:
+            whackable:
+              - dive
+        Lava Platforms:
+          count: 4
+        Dive Puzzle:
+          count: 3
+          rule:
+            or:
+              - ability: Dive
+              - ability: Flight
+
+              - tech: super_bounce
+              - tech: bubble_jump
+        Potionfall:
+          count: 1
+
+  Upper Connector:
+    area_connections:
+      Upper:
+        obstacle: high_jump
+
+      Start:
+        null
+
+    locations:
+      shrooms:
+        Lonely Shroom:
+          count: 1
+
+  Upper:
+    area_connections:
+      Upper Connector:
+        null
+
+    entrances:
+      Prismic Lobby Door:
+        to:
+          - Prismic Lobby
+          - Moon Cavern Door
+
+    locations:
+      eggs:
+        Keehee Climb:
+          or:
+            - and:
+              - ability: Wings
+              - or:
+                - ability: High Jump
+                - ability: Dive
+
+            - ability: Flight
+
+            - tech: bubble_jump
+      cards:
+        Statue: null
+
+      shrooms:
+        Prismic Pathway:
+          count: 3
+        Prismic Statue:
+          count: 2
+        Prismic Entrance:
+          count: 3
+
+  Lava Mushroom Platform:
+    area_connections:
+      Start:
+        obstacle: high_jump
+      Nightmare Lobby Door Platform:
+        or:
+          - tech: jester_boots_anywhere
+          - obstacle: high_jump
+
+    locations:
+      shrooms:
+        Lava Mushroom Platform:
+          count: 2
+
+  Nightmare Lobby Door Platform:
+    area_connections:
+      Lava Mushroom Platform:
+        null
+
+    entrances:
+      Nightmare Lobby Door:
+        to:
+          - Nightmare Lobby
+          - Moon Cavern Door
+        rule:
+          or:
+            - event: Open Nightmare Lobby Entrance
+            - tech: hitlaunch_cancel
+
+    locations:
+      events:
+        Douse Nightmare Lobby Entrance Flame:
+          obstacle: flame

@@ -1,0 +1,123 @@
+contains:
+  shrooms: 5
+  cards: 1
+  eggs: 1
+
+areas:
+  Start:
+    area_connections:
+      Jester Boots Platform:
+        or:
+          - event: Armada Lobby Pipes Risen
+          - ability: Wings
+          - comment: Ejection launch from cannon wheel
+            and:
+            - movement: 2
+            - ability: Roll
+
+      Cannon Entrance:
+        comment: Early Armada
+        movement: 3
+      
+      Cannon:
+        or:
+          - and:
+            - event: Armada Lobby Red Pipe Updraft
+            - event: Armada Lobby Pipes Risen
+            - ability: Wings
+
+          - tech: super_bounce
+          - tech: bubble_jump
+
+      Flag Platform:
+        or:
+          - ability: Dive
+          - ability: Grounded Attack
+          - and:
+            - ability: Aerial Attack
+            - ability: High Jump
+          - and:
+            - movement: 2
+            - ability: Wings
+            - ability: Bubble
+
+          - tech: super_bounce
+          - tech: bubble_jump
+
+    entrances:
+      Sun Cavern Door:
+        to:
+          - Sun Cavern
+          - Airborne Armada Lobby Door
+
+    locations:
+      shrooms:
+        Cliffside:
+          count: 5
+
+      cards:
+        Jester Boots:
+          or:
+            - ability: Flight
+            - event: AAL Jester Boots Access
+
+      events:
+        Armada Lobby Purple Valve:
+          whackable:
+            - attack
+            - roll
+
+        Armada Lobby Green Valve:
+          whackable:
+            - attack
+            - roll
+
+  Flag Platform:
+    area_connections:
+      Start: null
+      Sewer Connector Entrance:
+        ability: Swim
+
+  Jester Boots Platform:
+    area_connections:
+      Start:
+        # death warp lol
+        null
+
+    locations:
+      events:
+        AAL Jester Boots Access:
+          whackable:
+            - attack
+            - roll
+            # - dive
+            - throw
+
+  Cannon:
+    area_connections:
+      Cannon Entrance: null
+      Start: null
+      Egg Platform:
+        or:
+          - event: AAL Jester Boots Access
+          - tech: super_bounce
+          - tech: bubble_jump
+
+  Cannon Entrance:
+    area_connections:
+      Cannon: null
+    
+    entrances:
+      Cannon Shot:
+        to:
+          - Airborne Armada
+          - Airborne Armada Lobby Door
+  
+  Egg Platform:
+    area_connections:
+      Cannon: null
+
+    locations:
+      eggs:
+        Cannon: null
+
