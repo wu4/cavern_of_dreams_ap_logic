@@ -1,0 +1,101 @@
+internal_name: Rainbow
+
+contains:
+  cards: 1
+
+areas:
+  Start:
+    area_connections:
+      Platforms:
+        or:
+          - tech: super_bounce
+          - tech: bubble_jump
+
+          - and:
+            - ability: Bubble
+            - or:
+              - ability: Double Jump
+              - ability: Grounded Attack
+              - ability: Aerial Attack
+
+          - and:
+            - ability: Double Jump
+            - ability: Aerial Attack
+
+          - ability: High Jump
+          - ability: Dive
+
+    entrances:
+      Well:
+        to:
+          - Gallery Lobby
+          - Bench
+
+  Platforms:
+    area_connections:
+      Start: null
+      Before Top:
+        or:
+          - tech: super_bounce
+          - tech: bubble_jump
+
+          - and:
+            - ability: Sprint
+            - ability: Roll
+            - ability: Aerial Attack
+            - ability: Hover
+
+          - comment: >
+              Avoiding the planet route, aerial attack boost off of the fence
+              and go around the left side instead
+            and:
+            - movement: 3
+            - ability: Aerial Attack
+            - ability: Double Jump
+
+          - ability: Bubble
+
+          - and:
+            - tech: momentum_cancel
+            - ability: Dive
+
+  Before Top:
+    area_connections:
+      Start: null
+      Top:
+        or:
+          - tech: super_bounce
+          - tech: bubble_jump
+
+          - ability: Double Jump
+
+          - and:
+            - movement: 2
+            - ability: Bubble
+          
+          - and:
+            - ability: Sprint
+            - ability: Hover
+
+          - ability: Dive
+
+  Top:
+    area_connections:
+      Start: null
+
+    locations:
+      cards:
+        (room name):
+          or:
+            - ability: Double Jump
+            - ability: High Jump
+            - ability: Dive
+            - comment: Ramp off the outer area
+              and:
+              - ability: Aerial Attack
+              - ability: Roll
+              - or:
+                - movement: 2
+                - ability: Hover
+                - ability: Bubble
+

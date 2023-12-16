@@ -1,13 +1,12 @@
+$schema: 'https://json-schema.org/draft/2020-12/schema'
 title: Logic
 description: A logical rule
-
 anyOf:
-  - type: "null"
-  - $ref: "#/$defs/CommentedLogic"
-
+  - type: 'null'
+  - $ref: '#/$defs/CommentedLogic'
 $defs:
   CommentedLogic:
-    $ref: "#/$defs/Logic"
+    $ref: '#/$defs/Logic'
     if:
       properties:
         comment:
@@ -15,17 +14,17 @@ $defs:
       required:
         - comment
     then:
+      properties:
+        test:
+          type: string
       minProperties: 2
       maxProperties: 2
     else:
       minProperties: 1
       maxProperties: 1
-
   Logic:
     type: object
-
     additionalProperties: false
-
     properties:
       comment:
         type: string
@@ -34,84 +33,101 @@ $defs:
         type: array
         minItems: 2
         items:
-          $ref: "#/$defs/CommentedLogic"
+          $ref: '#/$defs/CommentedLogic'
 
       or:
         type: array
         minItems: 2
         items:
-          $ref: "#/$defs/CommentedLogic"
-      
+          $ref: '#/$defs/CommentedLogic'
+
+      template:
+        description: Shortcut template for common logic
+        anyOf:
+          - const: super_jumps
+            description: >
+              Use of Super Bounce or Super Bubble Jumps
+
+          - const: high_jump_obstacle
+            description: >
+              Can be cleared with any combination of abilities that provide the
+              height gain of a High Jump
+          
+          - const: air_swim
+            description: >
+              Can be cleared by performing an Air Swim
+
       ability:
         description: Requires use of an ability
         anyOf:
-          - const: Attack
-            description: Attacking, whether grounded or not
-          - const: Wings
-            description: Hovering
+          - const: Hover
+            description: >
+              Basic wings. Lets you slowly descend in the air
+
+          - const: Double Jump
+            description: >
+              Advanced wings. Lets you jump a second time in the air. Jumps
+              higher when coupled with Hover
+
           - const: Dive
-            description: Ground pound
+            description: >
+              Ground pound
+
           - const: Bubble
-            description: Pew pew
+            description: >
+              Pew pew
+
           - const: Flight
-            description: Full, unrestricted flight. Can basically do anything
+            description: >
+              Full, unrestricted flight. Can basically do anything
 
           - const: Aerial Attack
-            description: Attacking in the air
+            description: >
+              Attacking in the air
+
           - const: Grounded Attack
-            description: Attacking on the ground
+            description: >
+              Attacking on the ground
+
           - const: Roll
-            description: Rolling
+            description: >
+              The ability to roll. Allows you to aim item throws, attacks and
+              bubbles at weird angles, build speed down slopes, and ejection
+              launch from terrain
+
           - const: Sprint
-            description: The ability to gain momentum
+            description: >
+              The ability for Hover, swimming and rolling to gain momentum. Also
+              provides the ability to sprint while grounded
+
           - const: High Jump
-            description: The ability to high jump
+            description: >
+              The ability to high jump
+
           - const: Swim
-            description: The ability to swim
+            description: >
+              The ability to swim
+
           - const: Climb
-            description: The ability to climb vines and ladders
+            description: >
+              The ability to climb vines and ladders
+
           - const: Carry
-            description: The ability to carry and throw objects
+            description: >
+              The ability to carry and throw apples, medicine, the Bubble Conch,
+              and the various Gallery painting objects
+          
+          - const: Air Swim
+            description: >
+              The ability to carry the underwater state outside of water.
+              Requires the ability to Swim.
 
       tech:
-        description: Requires use of tech
-        anyOf:
-          - const: super_bounce
-            description: >
-              Aiming a tail-roll upwards to gain significant height. Requires
-              air attack and roll
-          - const: bubble_jump
-            description: >
-              Gaining significant height via firing bubbles downwards. Requires
-              bubble and roll
-          - const: jester_boots_anywhere
-            description: >
-              The ability to smuggle Jester Boots outside of its intended areas.
-              Requires Prismic Jester Boots access, as well as a method of
-              leaving the area without losing the boots
-          - const: hitlaunch_cancel
-            description: >
-              The ability to cancel knockback from taking damage. Simply pause
-              after taking damage
-          - const: damage_boost
-            description: >
-              Intentionally being hit by enemies to launch yourself in ways that
-              allow you to access new areas
+        $ref: ./tech.yaml
 
       event:
         description: Requires an event to have been triggered
         type: string
-
-      obstacle:
-        description: A generic obstacle
-        anyOf:
-          - const: high_jump
-            description: >
-              An obstacle that requires more or less the same abilities as what
-              high jump provides
-          - const: flame
-            description: >
-              A flame that can be doused with bubble or medicine
 
       movement:
         description: Requires a certain degree of skill in movement
@@ -121,12 +137,24 @@ $defs:
           - const: 3
             description: Expert
 
+      carrying:
+        description: Carrying something that can be dropped
+        anyOf:
+          - const: Jester Boots
+            description: Got the Jester Boots from somewhere
+          - const: Apple
+            description: Picked up an Apple
+          - const: Potion
+            description: Picked up a Potion
+          - const: Bubble Conch
+            description: Picked up a Bubble Conch
+
       has_eggs:
         description: Requires a certain number of eggs
         type: number
         minimum: 1
         maximum: 40
-      
+
       has_hearts:
         description: Requires a certain amount of gratitude
         type: number

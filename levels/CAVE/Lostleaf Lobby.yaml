@@ -1,3 +1,5 @@
+internal_name: Lake Lobby
+
 contains:
   eggs: 1
   cards: 1
@@ -15,7 +17,7 @@ areas:
       Trees:
         or:
           - movement: 2
-          - obstacle: high_jump
+          - template: high_jump_obstacle
 
     entrances:
       Sun Cavern Door: 

@@ -1,0 +1,160 @@
+# TODO: JBA
+
+contains:
+  shrooms: 14
+  eggs: 1
+  cards: 2
+
+areas:
+  Start:
+    area_connections:
+      Outer Walls:
+        or:
+          - tech: super_bounce
+          - tech: bubble_jump
+          - and:
+            - movement: 3
+            - ability: Roll
+            - ability: Sprint
+
+      Lostleaf Lobby Connector:
+        or:
+          - tech: super_bounce
+          - tech: bubble_jump
+
+      Maze:
+        or:
+          - event: Open Gallery Lobby Hedge Maze
+          - tech: bubble_jump
+          - tech: super_bounce
+          - carrying: Jester Boots
+
+          - and:
+            - ability: Grounded Attack
+            - ability: High Jump
+            - ability: Double Jump
+          - and:
+            - ability: Hover
+            - ability: Double Jump
+          - comment: >
+              Launch onto the walls using the steep hill, then float over the
+              gate
+            and:
+            - movement: 3
+            - ability: Roll
+            - ability: Sprint
+            - or:
+              - ability: Hover
+              - and:
+                - ability: Bubble
+                - tech: momentum_cancel
+          - comment: >
+              Fastroll jump from the fountain walls, then hover over the gate
+            and:
+            - movement: 3
+            - ability: Roll
+            - ability: Aerial Attack
+            - ability: Hover
+
+    locations:
+      cards:
+        Behind the Gallery:
+          null
+      shrooms:
+        Fountain:
+          count: 4
+        Castle Hill:
+          count: 5
+        Entryway:
+          count: 5
+    
+    entrances:
+      Gallery Door:
+        to:
+          - Gallery of Nightmares
+          - Gallery Lobby Door
+
+        rule:
+          event: Open Gallery Lobby Door
+      
+      Bench:
+        to:
+          - Dream
+          - Well
+
+  Lostleaf Lobby Connector:
+    area_connections:
+      Start:
+        or:
+          - tech: super_bounce
+          - tech: bubble_jump
+          - carrying: Jester Boots
+    
+    locations:
+      eggs:
+        Lostleaf Lobby Entryway:
+          null
+        
+    entrances:
+      Lostleaf Lobby Door:
+        to:
+          - Lostleaf Lobby
+          - Gallery Lobby Door
+
+  Outer Walls:
+    area_connections:
+      Maze:
+        or:
+          - ability: Hover
+          - and:
+            - tech: momentum_cancel
+            - ability: Bubble
+
+      Lostleaf Lobby Connector:
+        or:
+          - ability: Hover
+          - ability: Bubble
+    
+  Maze:
+    area_connections:
+      Start:
+        or:
+          - event: Open Gallery Lobby Hedge Maze
+          - tech: bubble_jump
+          - tech: super_bounce
+          - carrying: Jester Boots
+
+    locations:
+      events:
+        Hedge Maze Preston:
+          or:
+            - tech: super_bounce
+
+            - carrying: Jester Boots
+
+            - event: Open Gallery Lobby Door
+            - and:
+              - ability: Bubble
+              - or:
+                - ability: Double Jump
+                - ability: Dive
+                - ability: Grounded Attack
+                - and:
+                  - ability: Aerial Attack
+                  - ability: High Jump
+            - and:
+              - ability: Double Jump
+              - or:
+                - ability: Dive
+                - ability: Grounded Attack
+                - and:
+                  - ability: High Jump
+                  - ability: Hover
+                - and:
+                  - ability: Aerial Attack
+                  - or:
+                    - ability: High Jump
+                    - ability: Hover
+      cards:
+        Hedge Maze:
+          null

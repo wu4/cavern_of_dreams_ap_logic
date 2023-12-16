@@ -1,0 +1,399 @@
+contains:
+  eggs: 2
+  cards: 1
+  shrooms: 18
+
+areas:
+  Start:
+    area_connections:
+      Armada Lobby Entrance:
+        or:
+          - carrying: Jester Boots
+          - template: super_jumps
+          - template: air_swim
+
+          - ability: Dive
+
+          - ability: Hover
+
+          - and:
+            - ability: High Jump
+            - movement: 2
+            - or:
+              - ability: Sprint
+              - and:
+                - tech: bubble_jump
+                - ability: Bubble
+
+      High Jump Ledge:
+        or:
+          - ability: High Jump
+          - ability: Double Jump
+
+          - carrying: Jester Boots
+          - template: super_jumps
+
+          - comment: >
+              Hover-jump into the nearby tutorial stone
+            and:
+            - tech: hover_jump
+            - ability: Hover
+
+          - comment: >
+              Hover shoot into the nearby tutorial stone
+            and:
+            - tech: hover_shoot
+            - ability: Hover
+            - ability: Bubble
+
+          - comment: >
+              Build speed and roll into the nearby tutorial stone
+            and:
+            - ability: Sprint
+            - ability: Roll
+
+      Vine Ledge:
+        or:
+          - ability: Climb
+
+          - template: super_jumps
+          - template: air_swim
+
+          - comment: >
+              Hover-jump up the sun wall
+            and:
+            - tech: hover_jump
+            - ability: Hover
+
+          - comment: >
+              Climb the nearby stalagmite or sun wall with hover + bubble shots
+            and:
+            - tech: hover_shoot
+            - ability: Bubble
+            - ability: Hover
+
+          - and:
+            - ability: Double Jump
+            - tech: tail_jump
+            - or:
+              - and:
+                - ability: Grounded Attack
+                - or:
+                  - ability: High Jump
+                  - ability: Hover
+              - and:
+                - ability: Aerial Attack
+                - ability: High Jump
+                - ability: Hover
+
+      Tail Spin Ledge:
+        or:
+          - template: super_jumps
+          - template: air_swim
+          - carrying: Jester Boots
+
+          - comment: Roll jump gains a bit extra distance
+            ability: Roll
+
+          - comment: Hijump from the ground
+            ability: High Jump
+
+          - ability: Bubble
+
+          - ability: Hover
+
+
+          - and:
+            - tech: tail_jump
+            - or:
+              - ability: Grounded Attack
+              - ability: Aerial Attack
+
+      Mighty Wall Ledge:
+        or:
+          - ability: Climb
+
+          - carrying: Jester Boots
+          - template: super_jumps
+          - template: air_swim
+
+          - and:
+            - ability: Double Jump
+            - or:
+              - ability: High Jump
+              - ability: Hover
+
+          - comment: Dive-bounce off of shroom
+            ability: Dive
+
+          - comment: Attack-jump up various pieces of geometry
+            and:
+              - tech: tail_jump
+              - ability: Grounded Attack
+
+          - comment: Attack-jump up various pieces of geometry (with assistance from High Jump or Double Jump)
+            and:
+              - tech: tail_jump
+              - ability: Aerial Attack
+              - or:
+                - ability: High Jump
+                - ability: Double Jump
+
+      Waterfall Ledge:
+        or:
+          - template: super_jumps
+          - template: air_swim
+          - carrying: Jester Boots
+
+          - and:
+            - tech: tail_jump
+            - ability: Grounded Attack
+            - ability: High Jump
+            - ability: Double Jump
+            - ability: Hover
+
+      Ducklings Ledge:
+        or:
+          - ability: Dive
+          - ability: Hover
+          - ability: Double Jump
+          - template: super_jumps
+          - template: air_swim
+
+          - and:
+            - tech: tail_jump
+            - or:
+              - ability: Grounded Attack
+              - and:
+                - ability: Aerial Attack
+                - ability: High Jump
+
+          - and:
+            - ability: Roll
+            - or:
+              - ability: Sprint
+              - ability: Aerial Attack
+
+      Ducklings Doorway:
+        or:
+          - template: super_jumps
+          - template: air_swim
+
+          - comment: >
+              Speedy launch from the waterjet
+            and:
+              - ability: Swim
+              - or:
+                - movement: 2
+                - ability: Sprint
+
+          - comment: >
+              Float to the leaf from the Sage ramp
+            and:
+            - ability: Sprint
+            - or:
+              - and:
+                - tech: hover_jump
+                - ability: Hover
+              - and:
+                - tech: bubble_jump
+                - ability: Bubble
+
+          - comment: >
+              Speedy launch from the Sage ramp
+            and:
+              - ability: Sprint
+              - ability: Roll
+              - ability: Aerial Attack
+
+          - comment: >
+              Hover shoot from the Sage ramp
+            and:
+            - tech: hover_shoot
+            - ability: Hover
+            - ability: Bubble
+
+          - comment: >
+              Precise use of bubble float and shoot jumping to land on the leaf
+              from the right gem
+            and:
+            - movement: 2
+            - tech: bubble_jump
+            - ability: Bubble
+
+          - comment: >
+              Clever use of wings and riding up the left gem's geometry to jump
+              on a leaf
+            and:
+              - tech: hover_jump
+              - ability: Hover
+
+      Moon Cavern Heart Door:
+        ability: Swim
+
+    entrances:
+      Lostleaf Lobby Door:
+        to:
+          - Lostleaf Lobby
+          - Sun Cavern Door
+        rule:
+          event: Mighty Wall Toppled
+
+    locations:
+      abilities:
+        Attack:
+          has_eggs: 1
+        Hover:
+          has_eggs: 6
+        Dive:
+          has_eggs: 12
+        Bubble:
+          has_eggs: 24
+        Flight:
+          has_eggs: 40
+
+      cards:
+        Air Vent: null
+
+      shrooms:
+        Mighty Wall Ground:
+          count: 4
+
+  Armada Lobby Entrance:
+    area_connections:
+      Start: null
+
+    entrances:
+      Armada Lobby Door:
+        to:
+          - Armada Lobby
+          - Sun Cavern Door
+
+    locations:
+      shrooms:
+        Stump:
+          count: 3
+
+  High Jump Ledge:
+    area_connections:
+      Start: null
+    
+    locations:
+      shrooms:
+        High Jump Ledge:
+          count: 2
+
+  Vine Ledge:
+    area_connections:
+      Start: null
+      High Jump Ledge:
+        or:
+          - and:
+            - tech: hover_jump
+            - ability: Hover
+
+          - and:
+            - ability: Roll
+            - or:
+              - ability: Sprint
+              - ability: Aerial Attack
+
+    locations:
+      shrooms:
+        Vine Ledge:
+          count: 2
+
+  Tail Spin Ledge:
+    area_connections:
+      Start: null
+
+    locations:
+      shrooms:
+        Tail Spin Ledge:
+          count: 2
+
+  Mighty Wall Ledge:
+    area_connections:
+      Lower: null
+
+    locations:
+      events:
+        Beat Mighty Wall:
+          whackable:
+            - attack
+            - dive
+            - throw
+
+      eggs:
+        Mighty Wall: null
+
+      shrooms:
+        Mighty Wall Egg Ledge:
+          count: 3
+
+  Waterfall Ledge:
+    area_connections:
+      Start: null
+
+      Ducklings Doorway:
+        comment: >
+          Making it to the Ducklings Doorway ledge is barely possible via smart
+          use of floating from the Waterfall Ledge, no high jump necessary
+        or:
+          - and:
+            - tech: bubble_jump
+            - ability: Bubble
+          - ability: Hover
+
+    entrances:
+      Lostleaf Ducklings Door - Upper:
+        to:
+          - Lostleaf Lake
+          - Ducklings Door - Upper
+
+    locations:
+      eggs:
+        Waterfall: null
+
+  Ducklings Ledge:
+    area_connections:
+      Start: null
+      Ducklings Doorway:
+        template: high_jump_obstacle
+
+    locations:
+      shrooms:
+        Ducklings Ledge:
+          count: 2
+
+  Ducklings Doorway:
+    area_connections:
+      Waterfall Lower Platform: null
+
+    entrances:
+      Lostleaf Ducklings Door - Lower:
+        to:
+          - Lostleaf Lake
+          - Ducklings Door - Lower
+
+  Moon Cavern Heart Door:
+    area_connections:
+      Start:
+        ability: Swim
+
+    entrances:
+      Moon Cavern Heart Door:
+        underwater: true
+        to:
+          - Moon Cavern
+          - Sun Cavern Door
+        rule:
+          event: Open Moon Cavern Heart Door
+
+    locations:
+      events:
+        Moon Cavern Heart Door:
+          and:
+            - has_hearts: 1
+            - whackable:
+              - attack

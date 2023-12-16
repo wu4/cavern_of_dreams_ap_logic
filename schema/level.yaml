@@ -1,14 +1,21 @@
-$schema: https://json-schema.org/draft/2020-12/schema
+$schema: 'https://json-schema.org/draft/2020-12/schema'
 $id: level.yaml
 title: Level
 description: One room (or level) in Cavern of Dreams
 type: object
+
+unevaluatedProperties: false
+additionalProperties: false
 
 required:
   - areas
   - contains
 
 properties:
+  internal_name:
+    description: The name of the room as depicted in the game's scene tree
+    type: string
+
   contains:
     type: object
     properties:
@@ -21,8 +28,9 @@ properties:
       cards:
         type: number
         minimum: 0
+
   areas:
     description: A list of areas in the room
     type: object
     additionalProperties:
-      $ref: "area.yaml"
+      $ref: ./area.yaml

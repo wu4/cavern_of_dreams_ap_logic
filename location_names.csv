@@ -1,3 +1,23 @@
+ability
+Tail,Sun Cavern - Sage's Blessing 1,SKILL_ATTACK
+Horn,Sun Cavern - Sage's Blessing 2,SKILL_DIVE
+Wings,Sun Cavern - Sage's Blessing 3,SKILL_HOVER
+Bubble,Sun Cavern - Sage's Blessing 4,SKILL_PROJECTILE
+Flight,Sun Cavern - Sage's Blessing 5,SKILL_FLIGHT
+
+nonVanillaAbility
+Grounded Tail,SKILL_GROUNDATTACK
+Aerial Tail,SKILL_AIRATTACK
+Double Jump,SKILL_DOUBLEJUMP
+Roll,SKILL_ROLL
+Swim,SKILL_SWIM
+Carry,SKILL_CARRY
+Climb,SKILL_CLIMB
+High Jump,SKILL_HIGHJUMP
+Sprint,SKILL_SPRINT
+Super Jumps,SKILL_SUPERJUMPS
+Air Swim,SKILL_AIRSWIM
+
 pickup
 Fish Food,Lostleaf Lake - Treehouse Fish Food,ITEM_FISH_FOOD
 Lady Opal's Egg 1,Lady Opal's Egg: Castle,ITEM_PRINCESS_1
@@ -11,24 +31,37 @@ Open Moon Cavern Heart Door,Moon Cavern Heart Door,GRATITUDE_DOOR1
 Armada Lobby Pipes Risen,Armada Lobby Purple Valve,MONSTER_LOBBY_PIPES_RISEN
 Armada Lobby Red Pipe Updraft,Armada Lobby Green Valve,MONSTER_LOBBY_STEAM
 
-Prismic Palace Lobby Faucet Running,Prismic Palace Lobby Faucet Preston,PALACE_LOBBY_FAUCET_ON
+Palace Lobby Faucet Running,Palace Lobby Faucet Preston,PALACE_LOBBY_FAUCET_ON
+Palace Lobby Whirlpool Active,Palace Lobby Whirlpool Preston,PALACE_LOBBY_WHIRLPOOL_ON
 
-Open Gallery Hedge Maze,Gallery Lobby - Extinguish Torches,CAVE_GALLERY_LOBBY_TORCH_EXTINGUISH
+Open Gallery Lobby Hedge Maze,Gallery Lobby - Extinguish Torches,CAVE_GALLERY_LOBBY_TORCH_EXTINGUISH
+Open Gallery Lobby Door,Gallery Lobby - Hedge Maze Preston,CAVE_GALLERY_LOBBY_GALLERY_OPEN
 
-Raise Lake Swings,Lostleaf Lake - Preston Near Treehouse,LAKE_SWINGS_RAISED
+Raise Lake Swings,Lostleaf Lake - Winky Tree Target,LAKE_SWINGS_RAISED
 Open Deep Woods,Lostleaf Lake - Help Shelnert,LAKE_KAPPA_SUCCESS
 Open Crypt,Lostleaf Lake - Back of the Headstone,LAKE_CRYPT_GATE_OPEN
 Open Church,Lostleaf Lake - Ring Bell,LAKE_BELL_RANG
 Open Church Egg,Lostleaf Lake - Angel Statue Puzzle,LAKE_CHURCH_SUCCESS
+Open Treehouse,Lostleaf Lake - Treehouse Preston,LAKE_BEDROOM_DOOR_OPEN
 
-Open Armada Cockpit,Airborne Armada - Help Mr. Kerrington,MONSTER_BOILS_REMOVED
+Open Armada Cockpit,Armada Interior - Help Mr. Kerrington,MONSTER_BOILS_REMOVED
+Free Armada Buddies,Armada Interior - Generators Puzzle,MONSTER_TEST_CHUBES_OPENED
+Unclog Kerrington's Heart,Heart - Generators Puzzle,MONSTER_HEART_ROOM_SUCCESS
 
 Open Prismic Palace Basement,Prismic Palace - Basement Star Hoops,PALACE_ABYSS_HOOP_SUCCESS
-Open Prismic-Lostleaf Connector,Prismic-Lostleaf Connector - Preston,PALACE_LAKE_GATE_OPEN
+Open Palace-Lostleaf Connector,Palace-Lostleaf Connector - Preston,PALACE_LAKE_GATE_OPEN
 Open Prismic Palace Gate,Prismic Palace - Angel Statue Puzzle,PALACE_GATE_RISEN
 Unfreeze Prismic Palace,Prismic Palace - Help Lady Opal,PALACE_MELTED_ICE
-Disable Prismic Palace Seedragons,Prismic Palace - Sentry Control Preston,PALACE_SENTRIES_DISABLED
-Open Heaven's Path Exit,Prismic Palace - Heaven's Path Race,PALACE_SANCTUM_RACE_FINISHED
+Open Prismic Palace Snowcastle,Prismic Palace - Snowcastle Preston,PALACE_SNOW_CASTLE_GATE_OPEN
+Open Observatory Shortcut,Prismic Palace - Observatory Preston,PALACE_OBSERVATORY_SHORTCUT
+
+Disable Prismic Palace Seedragons,Palace Interior - Sentry Control Preston,PALACE_SENTRIES_DISABLED
+Open Bubble Conch Room,Palace Interior - Seastar Puzzle,PALACE_TORPEDO_DOOR_OPENED
+
+Open Heaven's Path Exit,Heaven's Path - Finished Race,PALACE_SANCTUM_RACE_FINISHED
+Open Heaven's Path Race Entrance,Heaven's Path - Bottom Preston,PALACE_SANCTUM_STOPPER_RAISED
+
+Raise Dining Room Platform,Palace Dining Room - Preston,PALACE_DINING_ROOM_RISEN
 
 Open Gallery Doors,Gallery of Nightmares - Sage's Painting,GALLERY_SAGE_PAINTING_SUCCESS
 Open Mr. Kerrington Painting Gate,Gallery of Nightmares - Mr. Kerrington's Painting,GALLERY_MONSTER_PAINTING_SUCCESS
@@ -37,6 +70,10 @@ Open Gallery-Armada Connector,Gallery-Armada Connector - Preston,GALLERY_MONSTER
 Open Gallery of Nightmares Swamp Door,Gallery of Nightmares - Swamp Angel Statue Puzzle,GALLERY_STATUE_PUZZLE_SUCCESS
 Open Gallery of Nightmares Sewer Chest #1,Gallery of Nightmares - Sewer Angel Statue Puzzle,GALLERY_ANGEL_STATUE_SHADOWS_SUCCESS
 Open Gallery of Nightmares Sewer Chest #2,Gallery of Nightmares - Lady Opal's Painting,GALLERY_PRINCESS_PAINTING_SUCCESS
+Open Luna's House,Gallery of Nightmares - Helped Sniffles,GALLERY_GIANT_HEALED
+Extend Fire Lobby Tongue Platform,Gallery of Nightmares - Fire Lobby Preston,GALLERY_FIRE_LOBBY_BRIDGE_EXTENDED
+Extend Fire Lobby Frying Pans,Gallery of Nightmares - Fire Lobby Hoops,GALLERY_HOOP_SUCCESS
+Coils of Agony - Open Snake's Mouth,Coils of Agony - Hidden Pillar,CHALICE_BRIDGE_ACTIVE
 
 card
 Card: Shroom,Card: Sun Cavern - Air Vent,CARD_CAVE_MUSHROOM
@@ -49,16 +86,16 @@ Card: Hunger,Card: Gallery Lobby - Hedge Maze,CARD_CAVE_HUNGER
 Card: Shelnert,Card: Lostleaf Lake - Teepee,CARD_LAKE_KAPPA
 Card: Shelwart,Card: Lostleaf Lake - Apple Tree,CARD_LAKE_CRYPT
 Card: Carpy,Card: Lostleaf Lake - Lake Stump,CARD_LAKE_KOI
-Card: Raay,Card: Lostleaf Lake - Church,CARD_LAKE_SUN
+Card: Raay,Card: Church - Top,CARD_LAKE_SUN
 Card: Sappleing,Card: Lostleaf Lake - Entry,CARD_LAKE_SAPLING
 Card: Gabby Grove,Card: Lostleaf Lake - Treehouse,CARD_LAKE_GROVE
 
-Card: Mr. Kerrington,Card: Airborne Armada - Slide,CARD_MONSTER_MONSTER
-Card: Skritch,Card: Airborne Armada - Pipe,CARD_MONSTER_SPIN_BLADE
-Card: Boiby,Card: Airborne Armada - Broken Wing,CARD_MONSTER_BOIL
+Card: Mr. Kerrington,Card: Armada Interior - Slide,CARD_MONSTER_MONSTER
+Card: Skritch,Card: Armada Interior - Pipe,CARD_MONSTER_SPIN_BLADE
+Card: Boiby,Card: Armada Interior - Broken Wing,CARD_MONSTER_BOIL
 Card: Dumpling,Card: Airborne Armada - Behind Entry Drone,CARD_MONSTER_DUMPLING
-Card: F.I.S.H,Card: Airborne Armada - Hammocks,CARD_MONSTER_FISH
-Card: Reaper,Card: Airborne Armada - Heart,CARD_MONSTER_FF
+Card: F.I.S.H,Card: Armada Interior - Hammocks,CARD_MONSTER_FISH
+Card: Reaper,Card: Armada Interior - Near Mr. Kerrington's Heart,CARD_MONSTER_FF
 
 Card: Lady Opal,Card: Prismic Palace - Observatory,CARD_PALACE_PRINCESS
 Card: Poki-Poki,Card: Prismic Palace - Top of Observatory,CARD_PALACE_URCHIN
@@ -74,12 +111,12 @@ Card: Eternal,Card: Gallery of Nightmares - Swamp,CARD_GALLERY_UNDEAD
 Card: Heartburn,Card: Gallery of Nightmares - Frying Pans,CARD_GALLERY_FIRE_SNAKE
 Card: Hawhaw,Card: Gallery of Nightmares - Above Pits of Despair Painting,CARD_GALLERY_CHOMP
 
-Card: Fynn,Card: Armada-Gallery Connector - Armada Side,CARD_CAVE_DRAGON
-Card: Fynn's Siblings,Card: Armada-Gallery Connector - Gallery Side,CARD_CAVE_FELLA
-Card: Sage,Card: Dreams - Top,CARD_CAVE_SAGE
+Card: Fynn,Card: Sewer - Armada Lobby Side,CARD_CAVE_DRAGON
+Card: Fynn's Siblings,Card: Sewer - Gallery of Nightmares Side,CARD_CAVE_FELLA
+Card: Sage,Card: Dream,CARD_CAVE_SAGE
 Card: Luna,Card: Gallery Lobby - Behind the Gallery,CARD_CAVE_VILLAIN
-Card: Boxed Nightmare,Card: Prismic Palace - Frozen Dining Room,CARD_CAVE_PANDORA
-Card: Frozen King,Card: Prismic Lobby - Top,CARD_CAVE_KING
+Card: Boxed Nightmare,Card: Palace Dining Room - Top,CARD_CAVE_PANDORA
+Card: Frozen King,Card: Palace Lobby - Top,CARD_CAVE_KING
 
 egg
 Sun Egg,Egg: Sun Cavern - Mighty Wall,FELLA_CAVE1
@@ -89,33 +126,33 @@ Blorange Striped Egg,Egg: Moon Cavern - Keehee Climb,FELLA_CAVE4
 Blue Dotted Egg,Egg: Lostleaf Lobby - Branches,FELLA_CAVE5
 American Egg,Egg: Armada Lobby - Cannon,FELLA_CAVE6
 Red Swirly Egg,Egg: Palace Lobby - Submerged,FELLA_CAVE7
-Ghost Egg,Egg: Gallery Lobby - Lostleaf Lobby Entry,FELLA_CAVE8
+Ghost Egg,Egg: Gallery Lobby - Lostleaf Lobby Entryway,FELLA_CAVE8
 
 Hatchable Egg: Lostleaf Lake,Egg: Lostleaf Lake - Entry Stump,FELLA_LAKE1
 Easter Zig-zag Egg,Egg: Lostleaf Lake - Jester Boots,FELLA_LAKE2
 Apple Egg,Egg: Lostleaf Lake - Lake Log,FELLA_LAKE3
 Snowfall Egg,Egg: Lostleaf Lake - Waterfall,FELLA_LAKE4
-Fishbones Egg,Egg: Lostleaf Lake - Crypt,FELLA_LAKE5
+Fishbones Egg,Egg: Crypt - Shelwart's Gravestone,FELLA_LAKE5
 Sunshine Egg,Egg: Lostleaf Lake - Deep Woods Puzzle,FELLA_LAKE6
-Birds Egg,Egg: Lostleaf Lake - Treehouse,FELLA_LAKE7
-Stained Glass Egg,Egg: Lostleaf Lake - Church,FELLA_LAKE8
+Birds Egg,Egg: Lostleaf Lake - Near the Treehouse,FELLA_LAKE7
+Stained Glass Egg,Egg: Church - Below the Angel Statues,FELLA_LAKE8
 
-Hatchable Egg: Airborne Armada,Egg: Airborne Armada - Tail,FELLA_MONSTER1
-Burning Egg,Egg: Airborne Armada - Burning,FELLA_MONSTER2
-Bat Egg,Egg: Airborne Armada - Slide,FELLA_MONSTER3
-Doggy Egg,Egg: Airborne Armada - Dog Food,FELLA_MONSTER4
-Spooky Egg,Egg: Airborne Armada - Boiler,FELLA_MONSTER5
-Smiley Egg,Egg: Airborne Armada - Pipe,FELLA_MONSTER6
-Heart Egg,Egg: Airborne Armada - Heart,FELLA_MONSTER7
-Dumpling Egg,Egg: Airborne Armada - Dumpling,FELLA_MONSTER8
+Hatchable Egg: Airborne Armada,Egg: Airborne Armada - Mr. Kerrington's Tail,FELLA_MONSTER1
+Burning Egg,Egg: Fire Drone,FELLA_MONSTER2
+Bat Egg,Egg: Armada Interior - Slide,FELLA_MONSTER3
+Doggy Egg,Egg: Armada Interior - Dog Food,FELLA_MONSTER4
+Spooky Egg,Egg: Armada Interior - Boiler,FELLA_MONSTER5
+Smiley Egg,Egg: Armada Interior - Pipe,FELLA_MONSTER6
+Heart Egg,Egg: Mr. Kerrington's Heart,FELLA_MONSTER7
+Dumpling Egg,Egg: Armada Interior - Dumpling,FELLA_MONSTER8
 
 Hatchable Egg: Prismic Palace,Egg: Prismic Palace - Snowcastle,FELLA_PALACE1
-Ornate Egg,Egg: Prismic Palace - Frozen Dining Room,FELLA_PALACE2
-Starlit Egg,Egg: Prismic Palace - Inside Observatory,FELLA_PALACE3
+Ornate Egg,Egg: Palace Dining Room,FELLA_PALACE2
+Starlit Egg,Egg: Observatory,FELLA_PALACE3
 Checkered Egg,Egg: Prismic Palace - Observatory Slide,FELLA_PALACE4
 Flower Egg,Egg: Prismic Palace - Bigstar,FELLA_PALACE5
-Snowstorm Egg,Egg: Prismic Palace - Top,FELLA_PALACE6
-Zig-zag Egg,Egg: Prismic Palace - Basement,FELLA_PALACE7
+Snowstorm Egg,Egg: Prismic Palace - Top of the Palace,FELLA_PALACE6
+Zig-zag Egg,Egg: Palace Interior - Basement,FELLA_PALACE7
 Happy Egg,Egg: Prismic Palace - Gobbler,FELLA_PALACE8
 
 Red Eyes Egg,Egg: Coils of Agony,FELLA_CHALICE1
@@ -129,323 +166,326 @@ Bricked Egg,Egg: Gallery of Nightmares - Sewer,FELLA_GALLERY4
 Ghost Egg,Egg: Gallery of Nightmares - Deepest Darkness,FELLA_GALLERY5
 
 shroom
-Shroom,Shroom: Sun Cavern - Mighty Wall Ground 1,NOTE_CAVE2
-Shroom,Shroom: Sun Cavern - Mighty Wall Ground 2,NOTE_CAVE3
-Shroom,Shroom: Sun Cavern - Mighty Wall Ground 3,NOTE_CAVE4
-Shroom,Shroom: Sun Cavern - Mighty Wall Ground 4,NOTE_CAVE5
-Shroom,Shroom: Sun Cavern - Mighty Wall Egg Ledge 1,NOTE_CAVE1
-Shroom,Shroom: Sun Cavern - Mighty Wall Egg Ledge 2,NOTE_CAVE6
-Shroom,Shroom: Sun Cavern - Mighty Wall Egg Ledge 3,NOTE_CAVE7
-Shroom,Shroom: Sun Cavern - High Jump Ledge 1,NOTE_CAVE8
-Shroom,Shroom: Sun Cavern - High Jump Ledge 2,NOTE_CAVE9
-Shroom,Shroom: Sun Cavern - Tail Spin Ledge 1,NOTE_CAVE10
-Shroom,Shroom: Sun Cavern - Tail Spin Ledge 2,NOTE_CAVE11
-Shroom,Shroom: Sun Cavern - Ducklings Ledge 1,NOTE_CAVE12
-Shroom,Shroom: Sun Cavern - Ducklings Ledge 2,NOTE_CAVE13
-Shroom,Shroom: Sun Cavern - Armada Entrance 1,NOTE_CAVE14
-Shroom,Shroom: Sun Cavern - Armada Entrance 2,NOTE_CAVE15
-Shroom,Shroom: Sun Cavern - Armada Entrance 3,NOTE_CAVE16
-Shroom,Shroom: Sun Cavern - Vine Ledge 1,NOTE_CAVE17
-Shroom,Shroom: Sun Cavern - Vine Ledge 2,NOTE_CAVE18
-Shroom,Shroom: Moon Cavern - Dive Holes 1,NOTE_CAVE19
-Shroom,Shroom: Moon Cavern - Dive Holes 2,NOTE_CAVE20
-Shroom,Shroom: Moon Cavern - Dive Holes 3,NOTE_CAVE21
-Shroom,Shroom: Moon Cavern - Dive Holes 4,NOTE_CAVE22
-Shroom,Shroom: Moon Cavern - Dive Holes 5,NOTE_CAVE23
-Shroom,Shroom: Moon Cavern - Dive Holes 6,NOTE_CAVE24
-Shroom,Shroom: Moon Cavern - Dive Puzzle 1,NOTE_CAVE25
-Shroom,Shroom: Moon Cavern - Dive Puzzle 2,NOTE_CAVE26
-Shroom,Shroom: Moon Cavern - Dive Puzzle 3,NOTE_CAVE27
-Shroom,Shroom: Moon Cavern - Potionfall,NOTE_CAVE28
-Shroom,Shroom: Moon Cavern - Lonely Shroom,NOTE_CAVE29
-Shroom,Shroom: Moon Cavern - Prismic Pathway 2,NOTE_CAVE30
-Shroom,Shroom: Moon Cavern - Prismic Pathway 1,NOTE_CAVE31
-Shroom,Shroom: Moon Cavern - Prismic Pathway 3,NOTE_CAVE32
-Shroom,Shroom: Moon Cavern - Prismic Statue 1,NOTE_CAVE33
-Shroom,Shroom: Moon Cavern - Prismic Statue 2,NOTE_CAVE34
-Shroom,Shroom: Moon Cavern - Prismic Entrance 1,NOTE_CAVE35
-Shroom,Shroom: Moon Cavern - Prismic Entrance 2,NOTE_CAVE36
-Shroom,Shroom: Moon Cavern - Prismic Entrance 3,NOTE_CAVE37
-Shroom,Shroom: Moon Cavern - Lava Platforms 1,NOTE_CAVE38
-Shroom,Shroom: Moon Cavern - Lava Platforms 2,NOTE_CAVE39
-Shroom,Shroom: Moon Cavern - Lava Platforms 3,NOTE_CAVE40
-Shroom,Shroom: Moon Cavern - Lava Platforms 4,NOTE_CAVE41
-Shroom,Shroom: Moon Cavern - Lava Mushroom Platform 1,NOTE_CAVE42
-Shroom,Shroom: Moon Cavern - Lava Mushroom Platform 2,NOTE_CAVE43
-Shroom,Shroom: Lostleaf Lobby - Bridge 2,NOTE_CAVE44
-Shroom,Shroom: Lostleaf Lobby - Bridge 3,NOTE_CAVE45
-Shroom,Shroom: Lostleaf Lobby - Bridge 1,NOTE_CAVE46
-Shroom,Shroom: Lostleaf Lobby - Trees 1,NOTE_CAVE47
-Shroom,Shroom: Lostleaf Lobby - Trees 2,NOTE_CAVE48
-Shroom,Shroom: Lostleaf Lobby - Trees 3,NOTE_CAVE49
-Shroom,Shroom: Armada Lobby - Cliffside 1,NOTE_CAVE50
-Shroom,Shroom: Armada Lobby - Cliffside 2,NOTE_CAVE51
-Shroom,Shroom: Armada Lobby - Cliffside 4,NOTE_CAVE52
-Shroom,Shroom: Armada Lobby - Cliffside 5,NOTE_CAVE53
-Shroom,Shroom: Armada Lobby - Cliffside 3,NOTE_CAVE54
-Shroom,Shroom: Palace Lobby - Ledges 1,NOTE_CAVE55
-Shroom,Shroom: Palace Lobby - Ledges 6,NOTE_CAVE56
-Shroom,Shroom: Palace Lobby - Ledges 5,NOTE_CAVE57
-Shroom,Shroom: Palace Lobby - Ledges 3,NOTE_CAVE58
-Shroom,Shroom: Palace Lobby - Ledges 2,NOTE_CAVE59
-Shroom,Shroom: Palace Lobby - Ledges 4,NOTE_CAVE60
-Shroom,Shroom: Palace Lobby - Water 1,NOTE_CAVE61
-Shroom,Shroom: Palace Lobby - Water 2,NOTE_CAVE62
-Shroom,Shroom: Palace Lobby - Water 3,NOTE_CAVE63
-Shroom,Shroom: Palace Lobby - Water 5,NOTE_CAVE64
-Shroom,Shroom: Palace Lobby - Water 6,NOTE_CAVE65
-Shroom,Shroom: Palace Lobby - Water 4,NOTE_CAVE66
-Shroom,Shroom: Gallery Lobby - Fountain 1,NOTE_CAVE67
-Shroom,Shroom: Gallery Lobby - Fountain 2,NOTE_CAVE68
-Shroom,Shroom: Gallery Lobby - Fountain 3,NOTE_CAVE69
-Shroom,Shroom: Gallery Lobby - Fountain 4,NOTE_CAVE70
-Shroom,Shroom: Gallery Lobby - Castle Hill 3,NOTE_CAVE71
-Shroom,Shroom: Gallery Lobby - Castle Hill 5,NOTE_CAVE72
-Shroom,Shroom: Gallery Lobby - Castle Hill 4,NOTE_CAVE73
-Shroom,Shroom: Gallery Lobby - Castle Hill 1,NOTE_CAVE74
-Shroom,Shroom: Gallery Lobby - Castle Hill 2,NOTE_CAVE75
-Shroom,Shroom: Gallery Lobby - Entryway 1,NOTE_CAVE76
-Shroom,Shroom: Gallery Lobby - Entryway 4,NOTE_CAVE77
-Shroom,Shroom: Gallery Lobby - Entryway 5,NOTE_CAVE78
-Shroom,Shroom: Gallery Lobby - Entryway 3,NOTE_CAVE79
-Shroom,Shroom: Gallery Lobby - Entryway 2,NOTE_CAVE80
-Shroom,Shroom: Lostleaf Lake - Treehouse Branches 4,NOTE_LAKE1
-Shroom,Shroom: Lostleaf Lake - Treehouse Branches 3,NOTE_LAKE2
-Shroom,Shroom: Lostleaf Lake - Treehouse Branches 1,NOTE_LAKE3
-Shroom,Shroom: Lostleaf Lake - Treehouse Branches 2,NOTE_LAKE4
-Shroom,Shroom: Lostleaf Lake - Treehouse Branches 6,NOTE_LAKE5
-Shroom,Shroom: Lostleaf Lake - Treehouse Branches 5,NOTE_LAKE6
-Shroom,Shroom: Lostleaf Lake - Deep Woods 2,NOTE_LAKE7
-Shroom,Shroom: Lostleaf Lake - Deep Woods 1,NOTE_LAKE8
-Shroom,Shroom: Lostleaf Lake - Deep Woods 3,NOTE_LAKE9
-Shroom,Shroom: Lostleaf Lake - Deep Woods 6,NOTE_LAKE10
-Shroom,Shroom: Lostleaf Lake - Deep Woods 4,NOTE_LAKE11
-Shroom,Shroom: Lostleaf Lake - Deep Woods 5,NOTE_LAKE12
-Shroom,Shroom: Lostleaf Lake - Behind Church 3,NOTE_LAKE13
-Shroom,Shroom: Lostleaf Lake - Behind Church 1,NOTE_LAKE14
-Shroom,Shroom: Lostleaf Lake - Behind Church 2,NOTE_LAKE15
-Shroom,Shroom: Lostleaf Lake - Teepee 1,NOTE_LAKE16
-Shroom,Shroom: Lostleaf Lake - Teepee 3,NOTE_LAKE17
-Shroom,Shroom: Lostleaf Lake - Teepee 2,NOTE_LAKE18
-Shroom,Shroom: Lostleaf Lake - Waterfall Logs 2,NOTE_LAKE19
-Shroom,Shroom: Lostleaf Lake - Waterfall Logs 3,NOTE_LAKE20
-Shroom,Shroom: Lostleaf Lake - Waterfall Logs 4,NOTE_LAKE21
-Shroom,Shroom: Lostleaf Lake - Waterfall Logs 1,NOTE_LAKE22
-Shroom,Shroom: Lostleaf Lake - Lake Logs 2,NOTE_LAKE23
-Shroom,Shroom: Lostleaf Lake - Lake Logs 1,NOTE_LAKE24
-Shroom,Shroom: Lostleaf Lake - Lake Logs 3,NOTE_LAKE25
-Shroom,Shroom: Lostleaf Lake - Lake Logs 4,NOTE_LAKE26
-Shroom,Shroom: Lostleaf Lake - Winky Bouncy Mushroom 1,NOTE_LAKE27
-Shroom,Shroom: Lostleaf Lake - Winky Bouncy Mushroom 2,NOTE_LAKE28
-Shroom,Shroom: Lostleaf Lake - Winky Bouncy Mushroom 3,NOTE_LAKE29
-Shroom,Shroom: Lostleaf Lake - Ramp to Winky Tree 1,NOTE_LAKE30
-Shroom,Shroom: Lostleaf Lake - Ramp to Winky Tree 3,NOTE_LAKE31
-Shroom,Shroom: Lostleaf Lake - Ramp to Winky Tree 5,NOTE_LAKE32
-Shroom,Shroom: Lostleaf Lake - Ramp to Winky Tree 2,NOTE_LAKE33
-Shroom,Shroom: Lostleaf Lake - Ramp to Winky Tree 4,NOTE_LAKE34
-Shroom,Shroom: Lostleaf Lake - Deep Woods Entryway 1,NOTE_LAKE35
-Shroom,Shroom: Lostleaf Lake - Deep Woods Entryway 2,NOTE_LAKE36
-Shroom,Shroom: Lostleaf Lake - Deep Woods Entryway 3,NOTE_LAKE37
-Shroom,Shroom: Lostleaf Lake - Lake Gravestone 1,NOTE_LAKE38
-Shroom,Shroom: Lostleaf Lake - Lake Gravestone 2,NOTE_LAKE39
-Shroom,Shroom: Lostleaf Lake - Lake Gravestone 3,NOTE_LAKE40
-Shroom,Shroom: Lostleaf Lake - Bridge 2,NOTE_LAKE41
-Shroom,Shroom: Lostleaf Lake - Bridge 1,NOTE_LAKE42
-Shroom,Shroom: Lostleaf Lake - Bridge 3,NOTE_LAKE43
-Shroom,Shroom: Lostleaf Lake - Winky Apple Tree 4,NOTE_LAKE44
-Shroom,Shroom: Lostleaf Lake - Winky Apple Tree 3,NOTE_LAKE45
-Shroom,Shroom: Lostleaf Lake - Winky Apple Tree 1,NOTE_LAKE46
-Shroom,Shroom: Lostleaf Lake - Winky Apple Tree 2,NOTE_LAKE47
-Shroom,Shroom: Lostleaf Lake - Church Entryway 3,NOTE_LAKE48
-Shroom,Shroom: Lostleaf Lake - Church Entryway 2,NOTE_LAKE49
-Shroom,Shroom: Lostleaf Lake - Church Entryway 1,NOTE_LAKE50
-Shroom,Shroom: Church - Pews 4,NOTE_LAKE51
-Shroom,Shroom: Church - Pews 2,NOTE_LAKE52
-Shroom,Shroom: Church - Pews 1,NOTE_LAKE53
-Shroom,Shroom: Church - Pews 3,NOTE_LAKE54
-Shroom,Shroom: Treehouse - Corners 4,NOTE_LAKE55
-Shroom,Shroom: Treehouse - Corners 3,NOTE_LAKE56
-Shroom,Shroom: Treehouse - Corners 2,NOTE_LAKE57
-Shroom,Shroom: Treehouse - Corners 1,NOTE_LAKE58
-Shroom,Shroom: Treehouse - Corners 5,NOTE_LAKE59
-Shroom,Shroom: Treehouse - Corners 6,NOTE_LAKE60
-Shroom,Shroom: Airborne Armada - Bouncy Shroom 1,NOTE_MONSTER1
-Shroom,Shroom: Airborne Armada - Bouncy Shroom 3,NOTE_MONSTER2
-Shroom,Shroom: Airborne Armada - Bouncy Shroom 2,NOTE_MONSTER3
-Shroom,Shroom: Airborne Armada - Bouncy Shroom 4,NOTE_MONSTER4
-Shroom,Shroom: Airborne Armada - Entry Pathway 5,NOTE_MONSTER5
-Shroom,Shroom: Airborne Armada - Front Entrance 1,NOTE_MONSTER6
-Shroom,Shroom: Airborne Armada - Front Entrance 2,NOTE_MONSTER7
-Shroom,Shroom: Airborne Armada - Front Entrance 3,NOTE_MONSTER8
-Shroom,Shroom: Airborne Armada - Side 1,NOTE_MONSTER9
-Shroom,Shroom: Airborne Armada - Side 2,NOTE_MONSTER10
-Shroom,Shroom: Airborne Armada - Side 3,NOTE_MONSTER11
-Shroom,Shroom: Airborne Armada - Back Entrance 1,NOTE_MONSTER12
-Shroom,Shroom: Airborne Armada - Back Entrance 2,NOTE_MONSTER13
-Shroom,Shroom: Airborne Armada - Back Entrance 3,NOTE_MONSTER14
-Shroom,Shroom: Airborne Armada - Back Entrance 4,NOTE_MONSTER15
-Shroom,Shroom: Airborne Armada - Back Entrance 6,NOTE_MONSTER16
-Shroom,Shroom: Airborne Armada - Back Entrance 5,NOTE_MONSTER17
-Shroom,Shroom: Airborne Armada - Topside 1,NOTE_MONSTER18
-Shroom,Shroom: Airborne Armada - Topside 2,NOTE_MONSTER19
-Shroom,Shroom: Airborne Armada - Topside 3,NOTE_MONSTER20
-Shroom,Shroom: Airborne Armada - Entry Pathway 1,NOTE_MONSTER21
-Shroom,Shroom: Airborne Armada - Entry Pathway 2,NOTE_MONSTER22
-Shroom,Shroom: Airborne Armada - Entry Pathway 3,NOTE_MONSTER23
-Shroom,Shroom: Airborne Armada - Entry Pathway 4,NOTE_MONSTER24
-Shroom,Shroom: Armada Interior - Rain Entryway 4,NOTE_MONSTER25
-Shroom,Shroom: Armada Interior - Rain Entryway 3,NOTE_MONSTER26
-Shroom,Shroom: Armada Interior - Rain Entryway 2,NOTE_MONSTER27
-Shroom,Shroom: Armada Interior - Hammocks Entryway 2,NOTE_MONSTER28
-Shroom,Shroom: Armada Interior - Hammocks Entryway 1,NOTE_MONSTER29
-Shroom,Shroom: Armada Interior - Cockpit Entry 3,NOTE_MONSTER30
-Shroom,Shroom: Armada Interior - Cockpit Entry 2,NOTE_MONSTER31
-Shroom,Shroom: Armada Interior - Cockpit Entry 1,NOTE_MONSTER32
-Shroom,Shroom: Armada Interior - Cockpit Entry 6,NOTE_MONSTER33
-Shroom,Shroom: Armada Interior - Cockpit Entry 5,NOTE_MONSTER34
-Shroom,Shroom: Armada Interior - Cockpit Entry 4,NOTE_MONSTER35
-Shroom,Shroom: Armada Interior - Rain Below Medicine 3,NOTE_MONSTER36
-Shroom,Shroom: Armada Interior - Rain Below Medicine 2,NOTE_MONSTER37
-Shroom,Shroom: Armada Interior - Rain Below Boiler 1,NOTE_MONSTER38
-Shroom,Shroom: Armada Interior - Rain Below Boiler 2,NOTE_MONSTER39
-Shroom,Shroom: Armada Interior - Rain Below Boiler 3,NOTE_MONSTER40
-Shroom,Shroom: Armada Interior - Rain Below Medicine 1,NOTE_MONSTER41
-Shroom,Shroom: Armada Interior - Rain Plant Base,NOTE_MONSTER42
-Shroom,Shroom: Armada Interior - Rain Plant 1,NOTE_MONSTER43
-Shroom,Shroom: Armada Interior - Lab Rain Connector 5,NOTE_MONSTER44
-Shroom,Shroom: Armada Interior - Lab Rain Connector 6,NOTE_MONSTER45
-Shroom,Shroom: Armada Interior - Lab Rain Connector 4,NOTE_MONSTER46
-Shroom,Shroom: Armada Interior - Lab Rain Connector 3,NOTE_MONSTER47
-Shroom,Shroom: Armada Interior - Lab Rain Connector 2,NOTE_MONSTER48
-Shroom,Shroom: Armada Interior - Lab Rain Connector 1,NOTE_MONSTER49
-Shroom,Shroom: Armada Interior - Lab Entryway 4,NOTE_MONSTER50
-Shroom,Shroom: Armada Interior - Lab Entryway 3,NOTE_MONSTER51
-Shroom,Shroom: Armada Interior - Lab Entryway 2,NOTE_MONSTER52
-Shroom,Shroom: Armada Interior - Lab Entryway 1,NOTE_MONSTER53
-Shroom,Shroom: Armada Interior - Pipe 5,NOTE_MONSTER54
-Shroom,Shroom: Armada Interior - Pipe 4,NOTE_MONSTER55
-Shroom,Shroom: Armada Interior - Pipe 3,NOTE_MONSTER56
-Shroom,Shroom: Armada Interior - Pipe 2,NOTE_MONSTER57
-Shroom,Shroom: Armada Interior - Pipe 1,NOTE_MONSTER58
-Shroom,Shroom: Armada Interior - Pipe Ramp 3,NOTE_MONSTER59
-Shroom,Shroom: Armada Interior - Pipe Ramp 2,NOTE_MONSTER60
-Shroom,Shroom: Armada Interior - Pipe Ramp 1,NOTE_MONSTER61
-Shroom,Shroom: Armada Interior - Rain Entryway 1,NOTE_MONSTER62
-Shroom,Shroom: Armada Interior - Slide Entryway 1,NOTE_MONSTER63
-Shroom,Shroom: Armada Interior - Slide Entryway 2,NOTE_MONSTER64
-Shroom,Shroom: Armada Interior - Slide Entryway 3,NOTE_MONSTER65
-Shroom,Shroom: Armada Interior - Rain Plant 2,NOTE_MONSTER66
-Shroom,Shroom: Armada Interior - Rain Plant 3,NOTE_MONSTER67
-Shroom,Shroom: Armada Interior - Rain Plant 4,NOTE_MONSTER68
-Shroom,Shroom: Armada Interior - Rain Above Boiler 4,NOTE_MONSTER69
-Shroom,Shroom: Armada Interior - Rain Above Boiler 2,NOTE_MONSTER70
-Shroom,Shroom: Armada Interior - Rain Above Boiler 1,NOTE_MONSTER71
-Shroom,Shroom: Armada Interior - Rain Above Boiler 3,NOTE_MONSTER72
-Shroom,Shroom: Armada Entry Drone - Ledges 6,NOTE_MONSTER73
-Shroom,Shroom: Armada Entry Drone - Ledges 5,NOTE_MONSTER74
-Shroom,Shroom: Armada Entry Drone - Ledges 4,NOTE_MONSTER75
-Shroom,Shroom: Armada Entry Drone - Ledges 3,NOTE_MONSTER76
-Shroom,Shroom: Armada Entry Drone - Ledges 7,NOTE_MONSTER77
-Shroom,Shroom: Armada Entry Drone - Ledges 8,NOTE_MONSTER78
-Shroom,Shroom: Armada Entry Drone - Ledges 1,NOTE_MONSTER79
-Shroom,Shroom: Armada Entry Drone - Ledges 2,NOTE_MONSTER80
-Shroom,Shroom: Prismic Palace - Poms 5,NOTE_PALACE1
-Shroom,Shroom: Prismic Palace - Poms 3,NOTE_PALACE2
-Shroom,Shroom: Prismic Palace - Poms 4,NOTE_PALACE3
-Shroom,Shroom: Prismic Palace - Poms 2,NOTE_PALACE4
-Shroom,Shroom: Prismic Palace - Poms 1,NOTE_PALACE5
-Shroom,Shroom: Prismic Palace - Entry Tree 2,NOTE_PALACE6
-Shroom,Shroom: Prismic Palace - Entry Tree 1,NOTE_PALACE7
-Shroom,Shroom: Prismic Palace - Entry Tree 3,NOTE_PALACE8
-Shroom,Shroom: Prismic Palace - Entry 1,NOTE_PALACE9
-Shroom,Shroom: Prismic Palace - Entry 2,NOTE_PALACE10
-Shroom,Shroom: Prismic Palace - Entry 3,NOTE_PALACE11
-Shroom,Shroom: Prismic Palace - Jester Boots 1,NOTE_PALACE12
-Shroom,Shroom: Prismic Palace - Jester Boots 2,NOTE_PALACE13
-Shroom,Shroom: Prismic Palace - Jester Boots 3,NOTE_PALACE14
-Shroom,Shroom: Prismic Palace - Jester Boots 4,NOTE_PALACE15
-Shroom,Shroom: Prismic Palace - Jester Boots 5,NOTE_PALACE16
-Shroom,Shroom: Prismic Palace - Pom Spire 1,NOTE_PALACE17
-Shroom,Shroom: Prismic Palace - Pom Spire 2,NOTE_PALACE18
-Shroom,Shroom: Prismic Palace - Pom Spire 3,NOTE_PALACE19
-Shroom,Shroom: Prismic Palace - Pom Spire 4,NOTE_PALACE20
-Shroom,Shroom: Prismic Palace - Pom Spire 5,NOTE_PALACE21
-Shroom,Shroom: Prismic Palace - Observatory Spire 1,NOTE_PALACE22
-Shroom,Shroom: Prismic Palace - Observatory Spire 2,NOTE_PALACE23
-Shroom,Shroom: Prismic Palace - Observatory Spire 3,NOTE_PALACE24
-Shroom,Shroom: Prismic Palace - Observatory Spire 4,NOTE_PALACE25
-Shroom,Shroom: Prismic Palace - Observatory Spire 5,NOTE_PALACE26
-Shroom,Shroom: Prismic Palace - Lake Gobbler 2,NOTE_PALACE27
-Shroom,Shroom: Prismic Palace - Lake Gobbler 3,NOTE_PALACE28
-Shroom,Shroom: Prismic Palace - Lake Gobbler 1,NOTE_PALACE29
-Shroom,Shroom: Prismic Palace - Lake Plants 2,NOTE_PALACE30
-Shroom,Shroom: Prismic Palace - Lake Plants 3,NOTE_PALACE31
-Shroom,Shroom: Prismic Palace - Lake Plants 1,NOTE_PALACE32
-Shroom,Shroom: Prismic Palace - Lake Plants 5,NOTE_PALACE33
-Shroom,Shroom: Prismic Palace - Lake Plants 6,NOTE_PALACE34
-Shroom,Shroom: Prismic Palace - Lake Plants 4,NOTE_PALACE35
-Shroom,Shroom: Prismic Palace - Lake Basement Overpass 3,NOTE_PALACE36
-Shroom,Shroom: Prismic Palace - Lake Basement Overpass 4,NOTE_PALACE37
-Shroom,Shroom: Prismic Palace - Lake Basement Overpass 5,NOTE_PALACE38
-Shroom,Shroom: Prismic Palace - Lake Basement Overpass 2,NOTE_PALACE39
-Shroom,Shroom: Prismic Palace - Lake Basement Overpass 1,NOTE_PALACE40
-Shroom,Shroom: Prismic Palace - Lake Mushroom Cave 3,NOTE_PALACE41
-Shroom,Shroom: Prismic Palace - Lake Mushroom Cave 4,NOTE_PALACE42
-Shroom,Shroom: Prismic Palace - Lake Mushroom Cave 5,NOTE_PALACE43
-Shroom,Shroom: Prismic Palace - Lake Mushroom Cave 2,NOTE_PALACE44
-Shroom,Shroom: Prismic Palace - Lake Mushroom Cave 1,NOTE_PALACE45
-Shroom,Shroom: Prismic Palace - Observatory Slide 5,NOTE_PALACE46
-Shroom,Shroom: Prismic Palace - Observatory Slide 4,NOTE_PALACE47
-Shroom,Shroom: Prismic Palace - Observatory Slide 3,NOTE_PALACE48
-Shroom,Shroom: Prismic Palace - Observatory Slide 2,NOTE_PALACE49
-Shroom,Shroom: Prismic Palace - Observatory Slide 1,NOTE_PALACE50
-Shroom,Shroom: Prismic Palace - Poki-Poki Cave 1,NOTE_PALACE51
-Shroom,Shroom: Prismic Palace - Poki-Poki Cave 2,NOTE_PALACE52
-Shroom,Shroom: Prismic Palace - Poki-Poki Cave 3,NOTE_PALACE53
-Shroom,Shroom: Prismic Palace - Poki-Poki Cave 4,NOTE_PALACE54
-Shroom,Shroom: Prismic Palace - Poki-Poki Cave 5,NOTE_PALACE55
-Shroom,Shroom: Prismic Palace - Pool 1,NOTE_PALACE56
-Shroom,Shroom: Prismic Palace - Pool 2,NOTE_PALACE57
-Shroom,Shroom: Prismic Palace - Pool 3,NOTE_PALACE58
-Shroom,Shroom: Prismic Palace - Pool 4,NOTE_PALACE59
-Shroom,Shroom: Prismic Palace - Pool 5,NOTE_PALACE60
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 3,NOTE_PALACE61
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 4,NOTE_PALACE62
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 5,NOTE_PALACE63
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 6,NOTE_PALACE64
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 8,NOTE_PALACE65
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 7,NOTE_PALACE66
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 2,NOTE_PALACE67
-Shroom,Shroom: Prismic Palace - Lake Basement Entry 1,NOTE_PALACE68
-Shroom,Shroom: Prismic Palace - Lake Corner 1,NOTE_PALACE69
-Shroom,Shroom: Prismic Palace - Lake Corner 2,NOTE_PALACE70
-Shroom,Shroom: Prismic Palace - Lake Corner 3,NOTE_PALACE71
-Shroom,Shroom: Prismic Palace - Lake Behind 3,NOTE_PALACE72
-Shroom,Shroom: Prismic Palace - Lake Behind 1,NOTE_PALACE73
-Shroom,Shroom: Prismic Palace - Lake Behind 2,NOTE_PALACE74
-Shroom,Shroom: Prismic Palace - Pool Bridges 2,NOTE_PALACE75
-Shroom,Shroom: Prismic Palace - Pool Bridges 3,NOTE_PALACE76
-Shroom,Shroom: Prismic Palace - Pool Bridges 1,NOTE_PALACE77
-Shroom,Shroom: Prismic Palace - Pool Bridges 5,NOTE_PALACE78
-Shroom,Shroom: Prismic Palace - Pool Bridges 4,NOTE_PALACE79
-Shroom,Shroom: Prismic Palace - Pool Bridges 6,NOTE_PALACE80
-Shroom,Shroom: Palace Interior - Star Puzzle 3,NOTE_PALACE81
-Shroom,Shroom: Palace Interior - Star Puzzle 1,NOTE_PALACE82
-Shroom,Shroom: Palace Interior - Star Puzzle 2,NOTE_PALACE83
-Shroom,Shroom: Palace Interior - Heaven's Path Entry 3,NOTE_PALACE84
-Shroom,Shroom: Palace Interior - Heaven's Path Entry 1,NOTE_PALACE85
-Shroom,Shroom: Palace Interior - Heaven's Path Entry 2,NOTE_PALACE86
-Shroom,Shroom: Palace Interior - Bubble Conch Room 3,NOTE_PALACE87
-Shroom,Shroom: Palace Interior - Bubble Conch Room 1,NOTE_PALACE88
-Shroom,Shroom: Palace Interior - Bubble Conch Room 2,NOTE_PALACE89
-Shroom,Shroom: Palace Interior - Sentry Control Chamber 3,NOTE_PALACE90
-Shroom,Shroom: Palace Interior - Sentry Control Chamber 1,NOTE_PALACE91
-Shroom,Shroom: Palace Interior - Sentry Control Chamber 2,NOTE_PALACE92
-Shroom,Shroom: Palace Interior - Palace Back 1,NOTE_PALACE93
-Shroom,Shroom: Palace Interior - Palace Back 2,NOTE_PALACE94
-Shroom,Shroom: Palace Interior - Palace Back 3,NOTE_PALACE95
-Shroom,Shroom: Palace Interior - Palace Back 4,NOTE_PALACE96
-Shroom,Shroom: Palace Interior - Palace Back 5,NOTE_PALACE97
-Shroom,Shroom: Palace Interior - Palace Back 6,NOTE_PALACE98
-Shroom,Shroom: Palace Interior - Bubble Conch Room 4,NOTE_PALACE99
-Shroom,Shroom: Palace Interior - Bubble Conch Room 5,NOTE_PALACE100
+Cavern Shroom 1,Shroom: Sun Cavern - Mighty Wall Ground 1,NOTE_CAVE2
+Cavern Shroom 2,Shroom: Sun Cavern - Mighty Wall Ground 2,NOTE_CAVE3
+Cavern Shroom 3,Shroom: Sun Cavern - Mighty Wall Ground 3,NOTE_CAVE4
+Cavern Shroom 4,Shroom: Sun Cavern - Mighty Wall Ground 4,NOTE_CAVE5
+Cavern Shroom 5,Shroom: Sun Cavern - Mighty Wall Egg Ledge 1,NOTE_CAVE1
+Cavern Shroom 6,Shroom: Sun Cavern - Mighty Wall Egg Ledge 2,NOTE_CAVE6
+Cavern Shroom 7,Shroom: Sun Cavern - Mighty Wall Egg Ledge 3,NOTE_CAVE7
+Cavern Shroom 8,Shroom: Sun Cavern - High Jump Ledge 1,NOTE_CAVE8
+Cavern Shroom 9,Shroom: Sun Cavern - High Jump Ledge 2,NOTE_CAVE9
+Cavern Shroom 10,Shroom: Sun Cavern - Tail Spin Ledge 1,NOTE_CAVE10
+Cavern Shroom 11,Shroom: Sun Cavern - Tail Spin Ledge 2,NOTE_CAVE11
+Cavern Shroom 12,Shroom: Sun Cavern - Ducklings Ledge 1,NOTE_CAVE12
+Cavern Shroom 13,Shroom: Sun Cavern - Ducklings Ledge 2,NOTE_CAVE13
+Cavern Shroom 14,Shroom: Sun Cavern - Armada Entrance 1,NOTE_CAVE14
+Cavern Shroom 15,Shroom: Sun Cavern - Armada Entrance 2,NOTE_CAVE15
+Cavern Shroom 16,Shroom: Sun Cavern - Armada Entrance 3,NOTE_CAVE16
+Cavern Shroom 17,Shroom: Sun Cavern - Vine Ledge 1,NOTE_CAVE17
+Cavern Shroom 18,Shroom: Sun Cavern - Vine Ledge 2,NOTE_CAVE18
+Cavern Shroom 19,Shroom: Moon Cavern - Dive Holes 1,NOTE_CAVE19
+Cavern Shroom 20,Shroom: Moon Cavern - Dive Holes 2,NOTE_CAVE20
+Cavern Shroom 21,Shroom: Moon Cavern - Dive Holes 3,NOTE_CAVE21
+Cavern Shroom 22,Shroom: Moon Cavern - Dive Holes 4,NOTE_CAVE22
+Cavern Shroom 23,Shroom: Moon Cavern - Dive Holes 5,NOTE_CAVE23
+Cavern Shroom 24,Shroom: Moon Cavern - Dive Holes 6,NOTE_CAVE24
+Cavern Shroom 25,Shroom: Moon Cavern - Dive Puzzle 1,NOTE_CAVE25
+Cavern Shroom 26,Shroom: Moon Cavern - Dive Puzzle 2,NOTE_CAVE26
+Cavern Shroom 27,Shroom: Moon Cavern - Dive Puzzle 3,NOTE_CAVE27
+Cavern Shroom 28,Shroom: Moon Cavern - Potionfall,NOTE_CAVE28
+Cavern Shroom 29,Shroom: Moon Cavern - Lonely Shroom,NOTE_CAVE29
+Cavern Shroom 30,Shroom: Moon Cavern - Palace Lobby Pathway 2,NOTE_CAVE30
+Cavern Shroom 31,Shroom: Moon Cavern - Palace Lobby Pathway 1,NOTE_CAVE31
+Cavern Shroom 32,Shroom: Moon Cavern - Palace Lobby Pathway 3,NOTE_CAVE32
+Cavern Shroom 33,Shroom: Moon Cavern - Palace Lobby Statue 1,NOTE_CAVE33
+Cavern Shroom 34,Shroom: Moon Cavern - Palace Lobby Statue 2,NOTE_CAVE34
+Cavern Shroom 35,Shroom: Moon Cavern - Palace Lobby Entryway 1,NOTE_CAVE35
+Cavern Shroom 36,Shroom: Moon Cavern - Palace Lobby Entryway 2,NOTE_CAVE36
+Cavern Shroom 37,Shroom: Moon Cavern - Palace Lobby Entryway 3,NOTE_CAVE37
+Cavern Shroom 38,Shroom: Moon Cavern - Lava Platforms 1,NOTE_CAVE38
+Cavern Shroom 39,Shroom: Moon Cavern - Lava Platforms 2,NOTE_CAVE39
+Cavern Shroom 40,Shroom: Moon Cavern - Lava Platforms 3,NOTE_CAVE40
+Cavern Shroom 41,Shroom: Moon Cavern - Lava Platforms 4,NOTE_CAVE41
+Cavern Shroom 42,Shroom: Moon Cavern - Lava Mushroom Platform 1,NOTE_CAVE42
+Cavern Shroom 43,Shroom: Moon Cavern - Lava Mushroom Platform 2,NOTE_CAVE43
+Cavern Shroom 44,Shroom: Lostleaf Lobby - Bridge 2,NOTE_CAVE44
+Cavern Shroom 45,Shroom: Lostleaf Lobby - Bridge 3,NOTE_CAVE45
+Cavern Shroom 46,Shroom: Lostleaf Lobby - Bridge 1,NOTE_CAVE46
+Cavern Shroom 47,Shroom: Lostleaf Lobby - Trees 1,NOTE_CAVE47
+Cavern Shroom 48,Shroom: Lostleaf Lobby - Trees 2,NOTE_CAVE48
+Cavern Shroom 49,Shroom: Lostleaf Lobby - Trees 3,NOTE_CAVE49
+Cavern Shroom 50,Shroom: Armada Lobby - Cliffside 1,NOTE_CAVE50
+Cavern Shroom 51,Shroom: Armada Lobby - Cliffside 2,NOTE_CAVE51
+Cavern Shroom 52,Shroom: Armada Lobby - Cliffside 4,NOTE_CAVE52
+Cavern Shroom 53,Shroom: Armada Lobby - Cliffside 5,NOTE_CAVE53
+Cavern Shroom 54,Shroom: Armada Lobby - Cliffside 3,NOTE_CAVE54
+Cavern Shroom 55,Shroom: Palace Lobby - Ledges 1,NOTE_CAVE55
+Cavern Shroom 56,Shroom: Palace Lobby - Ledges 6,NOTE_CAVE56
+Cavern Shroom 57,Shroom: Palace Lobby - Ledges 5,NOTE_CAVE57
+Cavern Shroom 58,Shroom: Palace Lobby - Ledges 3,NOTE_CAVE58
+Cavern Shroom 59,Shroom: Palace Lobby - Ledges 2,NOTE_CAVE59
+Cavern Shroom 60,Shroom: Palace Lobby - Ledges 4,NOTE_CAVE60
+Cavern Shroom 61,Shroom: Palace Lobby - Underwater 1,NOTE_CAVE61
+Cavern Shroom 62,Shroom: Palace Lobby - Underwater 2,NOTE_CAVE62
+Cavern Shroom 63,Shroom: Palace Lobby - Underwater 3,NOTE_CAVE63
+Cavern Shroom 64,Shroom: Palace Lobby - Underwater 5,NOTE_CAVE64
+Cavern Shroom 65,Shroom: Palace Lobby - Underwater 6,NOTE_CAVE65
+Cavern Shroom 66,Shroom: Palace Lobby - Underwater 4,NOTE_CAVE66
+Cavern Shroom 67,Shroom: Gallery Lobby - Fountain 1,NOTE_CAVE67
+Cavern Shroom 68,Shroom: Gallery Lobby - Fountain 2,NOTE_CAVE68
+Cavern Shroom 69,Shroom: Gallery Lobby - Fountain 3,NOTE_CAVE69
+Cavern Shroom 70,Shroom: Gallery Lobby - Fountain 4,NOTE_CAVE70
+Cavern Shroom 71,Shroom: Gallery Lobby - Castle Hill 3,NOTE_CAVE71
+Cavern Shroom 72,Shroom: Gallery Lobby - Castle Hill 5,NOTE_CAVE72
+Cavern Shroom 73,Shroom: Gallery Lobby - Castle Hill 4,NOTE_CAVE73
+Cavern Shroom 74,Shroom: Gallery Lobby - Castle Hill 1,NOTE_CAVE74
+Cavern Shroom 75,Shroom: Gallery Lobby - Castle Hill 2,NOTE_CAVE75
+Cavern Shroom 76,Shroom: Gallery Lobby - Entryway 1,NOTE_CAVE76
+Cavern Shroom 77,Shroom: Gallery Lobby - Entryway 4,NOTE_CAVE77
+Cavern Shroom 78,Shroom: Gallery Lobby - Entryway 5,NOTE_CAVE78
+Cavern Shroom 79,Shroom: Gallery Lobby - Entryway 3,NOTE_CAVE79
+Cavern Shroom 80,Shroom: Gallery Lobby - Entryway 2,NOTE_CAVE80
+
+Lostleaf Shroom 1,Shroom: Lostleaf Lake - Treehouse Branches 4,NOTE_LAKE1
+Lostleaf Shroom 2,Shroom: Lostleaf Lake - Treehouse Branches 3,NOTE_LAKE2
+Lostleaf Shroom 3,Shroom: Lostleaf Lake - Treehouse Branches 1,NOTE_LAKE3
+Lostleaf Shroom 4,Shroom: Lostleaf Lake - Treehouse Branches 2,NOTE_LAKE4
+Lostleaf Shroom 5,Shroom: Lostleaf Lake - Treehouse Branches 6,NOTE_LAKE5
+Lostleaf Shroom 6,Shroom: Lostleaf Lake - Treehouse Branches 5,NOTE_LAKE6
+Lostleaf Shroom 7,Shroom: Lostleaf Lake - Deep Woods 2,NOTE_LAKE7
+Lostleaf Shroom 8,Shroom: Lostleaf Lake - Deep Woods 1,NOTE_LAKE8
+Lostleaf Shroom 9,Shroom: Lostleaf Lake - Deep Woods 3,NOTE_LAKE9
+Lostleaf Shroom 10,Shroom: Lostleaf Lake - Deep Woods 6,NOTE_LAKE10
+Lostleaf Shroom 11,Shroom: Lostleaf Lake - Deep Woods 4,NOTE_LAKE11
+Lostleaf Shroom 12,Shroom: Lostleaf Lake - Deep Woods 5,NOTE_LAKE12
+Lostleaf Shroom 13,Shroom: Lostleaf Lake - Behind Church 3,NOTE_LAKE13
+Lostleaf Shroom 14,Shroom: Lostleaf Lake - Behind Church 1,NOTE_LAKE14
+Lostleaf Shroom 15,Shroom: Lostleaf Lake - Behind Church 2,NOTE_LAKE15
+Lostleaf Shroom 16,Shroom: Lostleaf Lake - Teepee 1,NOTE_LAKE16
+Lostleaf Shroom 17,Shroom: Lostleaf Lake - Teepee 3,NOTE_LAKE17
+Lostleaf Shroom 18,Shroom: Lostleaf Lake - Teepee 2,NOTE_LAKE18
+Lostleaf Shroom 19,Shroom: Lostleaf Lake - Waterfall Logs 2,NOTE_LAKE19
+Lostleaf Shroom 20,Shroom: Lostleaf Lake - Waterfall Logs 3,NOTE_LAKE20
+Lostleaf Shroom 21,Shroom: Lostleaf Lake - Waterfall Logs 4,NOTE_LAKE21
+Lostleaf Shroom 22,Shroom: Lostleaf Lake - Waterfall Logs 1,NOTE_LAKE22
+Lostleaf Shroom 23,Shroom: Lostleaf Lake - Lake Logs 2,NOTE_LAKE23
+Lostleaf Shroom 24,Shroom: Lostleaf Lake - Lake Logs 1,NOTE_LAKE24
+Lostleaf Shroom 25,Shroom: Lostleaf Lake - Lake Logs 3,NOTE_LAKE25
+Lostleaf Shroom 26,Shroom: Lostleaf Lake - Lake Logs 4,NOTE_LAKE26
+Lostleaf Shroom 27,Shroom: Lostleaf Lake - Winky Bouncy Mushroom 1,NOTE_LAKE27
+Lostleaf Shroom 28,Shroom: Lostleaf Lake - Winky Bouncy Mushroom 2,NOTE_LAKE28
+Lostleaf Shroom 29,Shroom: Lostleaf Lake - Winky Bouncy Mushroom 3,NOTE_LAKE29
+Lostleaf Shroom 30,Shroom: Lostleaf Lake - Ramp to Winky Tree 1,NOTE_LAKE30
+Lostleaf Shroom 31,Shroom: Lostleaf Lake - Ramp to Winky Tree 3,NOTE_LAKE31
+Lostleaf Shroom 32,Shroom: Lostleaf Lake - Ramp to Winky Tree 5,NOTE_LAKE32
+Lostleaf Shroom 33,Shroom: Lostleaf Lake - Ramp to Winky Tree 2,NOTE_LAKE33
+Lostleaf Shroom 34,Shroom: Lostleaf Lake - Ramp to Winky Tree 4,NOTE_LAKE34
+Lostleaf Shroom 35,Shroom: Lostleaf Lake - Deep Woods Entryway 1,NOTE_LAKE35
+Lostleaf Shroom 36,Shroom: Lostleaf Lake - Deep Woods Entryway 2,NOTE_LAKE36
+Lostleaf Shroom 37,Shroom: Lostleaf Lake - Deep Woods Entryway 3,NOTE_LAKE37
+Lostleaf Shroom 38,Shroom: Lostleaf Lake - Lake Gravestone 1,NOTE_LAKE38
+Lostleaf Shroom 39,Shroom: Lostleaf Lake - Lake Gravestone 2,NOTE_LAKE39
+Lostleaf Shroom 40,Shroom: Lostleaf Lake - Lake Gravestone 3,NOTE_LAKE40
+Lostleaf Shroom 41,Shroom: Lostleaf Lake - Bridge 2,NOTE_LAKE41
+Lostleaf Shroom 42,Shroom: Lostleaf Lake - Bridge 1,NOTE_LAKE42
+Lostleaf Shroom 43,Shroom: Lostleaf Lake - Bridge 3,NOTE_LAKE43
+Lostleaf Shroom 44,Shroom: Lostleaf Lake - Winky Apple Tree 4,NOTE_LAKE44
+Lostleaf Shroom 45,Shroom: Lostleaf Lake - Winky Apple Tree 3,NOTE_LAKE45
+Lostleaf Shroom 46,Shroom: Lostleaf Lake - Winky Apple Tree 1,NOTE_LAKE46
+Lostleaf Shroom 47,Shroom: Lostleaf Lake - Winky Apple Tree 2,NOTE_LAKE47
+Lostleaf Shroom 48,Shroom: Lostleaf Lake - Church Entryway 3,NOTE_LAKE48
+Lostleaf Shroom 49,Shroom: Lostleaf Lake - Church Entryway 2,NOTE_LAKE49
+Lostleaf Shroom 50,Shroom: Lostleaf Lake - Church Entryway 1,NOTE_LAKE50
+Lostleaf Shroom 51,Shroom: Church - Pews 4,NOTE_LAKE51
+Lostleaf Shroom 52,Shroom: Church - Pews 2,NOTE_LAKE52
+Lostleaf Shroom 53,Shroom: Church - Pews 1,NOTE_LAKE53
+Lostleaf Shroom 54,Shroom: Church - Pews 3,NOTE_LAKE54
+Lostleaf Shroom 55,Shroom: Treehouse - Corners 4,NOTE_LAKE55
+Lostleaf Shroom 56,Shroom: Treehouse - Corners 3,NOTE_LAKE56
+Lostleaf Shroom 57,Shroom: Treehouse - Corners 2,NOTE_LAKE57
+Lostleaf Shroom 58,Shroom: Treehouse - Corners 1,NOTE_LAKE58
+Lostleaf Shroom 59,Shroom: Treehouse - Corners 5,NOTE_LAKE59
+Lostleaf Shroom 60,Shroom: Treehouse - Corners 6,NOTE_LAKE60
+
+Armada Shroom 1,Shroom: Airborne Armada - Bouncy Shroom 1,NOTE_MONSTER1
+Armada Shroom 2,Shroom: Airborne Armada - Bouncy Shroom 3,NOTE_MONSTER2
+Armada Shroom 3,Shroom: Airborne Armada - Bouncy Shroom 2,NOTE_MONSTER3
+Armada Shroom 4,Shroom: Airborne Armada - Bouncy Shroom 4,NOTE_MONSTER4
+Armada Shroom 5,Shroom: Airborne Armada - Entry Pathway 5,NOTE_MONSTER5
+Armada Shroom 6,Shroom: Airborne Armada - Front Entrance 1,NOTE_MONSTER6
+Armada Shroom 7,Shroom: Airborne Armada - Front Entrance 2,NOTE_MONSTER7
+Armada Shroom 8,Shroom: Airborne Armada - Front Entrance 3,NOTE_MONSTER8
+Armada Shroom 9,Shroom: Airborne Armada - Side 1,NOTE_MONSTER9
+Armada Shroom 10,Shroom: Airborne Armada - Side 2,NOTE_MONSTER10
+Armada Shroom 11,Shroom: Airborne Armada - Side 3,NOTE_MONSTER11
+Armada Shroom 12,Shroom: Airborne Armada - Back Entrance 1,NOTE_MONSTER12
+Armada Shroom 13,Shroom: Airborne Armada - Back Entrance 2,NOTE_MONSTER13
+Armada Shroom 14,Shroom: Airborne Armada - Back Entrance 3,NOTE_MONSTER14
+Armada Shroom 15,Shroom: Airborne Armada - Back Entrance 4,NOTE_MONSTER15
+Armada Shroom 16,Shroom: Airborne Armada - Back Entrance 6,NOTE_MONSTER16
+Armada Shroom 17,Shroom: Airborne Armada - Back Entrance 5,NOTE_MONSTER17
+Armada Shroom 18,Shroom: Airborne Armada - Topside 1,NOTE_MONSTER18
+Armada Shroom 19,Shroom: Airborne Armada - Topside 2,NOTE_MONSTER19
+Armada Shroom 20,Shroom: Airborne Armada - Topside 3,NOTE_MONSTER20
+Armada Shroom 21,Shroom: Airborne Armada - Entry Pathway 1,NOTE_MONSTER21
+Armada Shroom 22,Shroom: Airborne Armada - Entry Pathway 2,NOTE_MONSTER22
+Armada Shroom 23,Shroom: Airborne Armada - Entry Pathway 3,NOTE_MONSTER23
+Armada Shroom 24,Shroom: Airborne Armada - Entry Pathway 4,NOTE_MONSTER24
+Armada Shroom 25,Shroom: Armada Interior - Rain Entryway 4,NOTE_MONSTER25
+Armada Shroom 26,Shroom: Armada Interior - Rain Entryway 3,NOTE_MONSTER26
+Armada Shroom 27,Shroom: Armada Interior - Rain Entryway 2,NOTE_MONSTER27
+Armada Shroom 28,Shroom: Armada Interior - Hammocks Entryway 2,NOTE_MONSTER28
+Armada Shroom 29,Shroom: Armada Interior - Hammocks Entryway 1,NOTE_MONSTER29
+Armada Shroom 30,Shroom: Armada Interior - Cockpit Entry 3,NOTE_MONSTER30
+Armada Shroom 31,Shroom: Armada Interior - Cockpit Entry 2,NOTE_MONSTER31
+Armada Shroom 32,Shroom: Armada Interior - Cockpit Entry 1,NOTE_MONSTER32
+Armada Shroom 33,Shroom: Armada Interior - Cockpit Entry 6,NOTE_MONSTER33
+Armada Shroom 34,Shroom: Armada Interior - Cockpit Entry 5,NOTE_MONSTER34
+Armada Shroom 35,Shroom: Armada Interior - Cockpit Entry 4,NOTE_MONSTER35
+Armada Shroom 36,Shroom: Armada Interior - Rain Below Medicine 3,NOTE_MONSTER36
+Armada Shroom 37,Shroom: Armada Interior - Rain Below Medicine 2,NOTE_MONSTER37
+Armada Shroom 38,Shroom: Armada Interior - Rain Below Boiler 1,NOTE_MONSTER38
+Armada Shroom 39,Shroom: Armada Interior - Rain Below Boiler 2,NOTE_MONSTER39
+Armada Shroom 40,Shroom: Armada Interior - Rain Below Boiler 3,NOTE_MONSTER40
+Armada Shroom 41,Shroom: Armada Interior - Rain Below Medicine 1,NOTE_MONSTER41
+Armada Shroom 42,Shroom: Armada Interior - Rain Plant Base,NOTE_MONSTER42
+Armada Shroom 43,Shroom: Armada Interior - Rain Plant 1,NOTE_MONSTER43
+Armada Shroom 44,Shroom: Armada Interior - Lab Rain Connector 5,NOTE_MONSTER44
+Armada Shroom 45,Shroom: Armada Interior - Lab Rain Connector 6,NOTE_MONSTER45
+Armada Shroom 46,Shroom: Armada Interior - Lab Rain Connector 4,NOTE_MONSTER46
+Armada Shroom 47,Shroom: Armada Interior - Lab Rain Connector 3,NOTE_MONSTER47
+Armada Shroom 48,Shroom: Armada Interior - Lab Rain Connector 2,NOTE_MONSTER48
+Armada Shroom 49,Shroom: Armada Interior - Lab Rain Connector 1,NOTE_MONSTER49
+Armada Shroom 50,Shroom: Armada Interior - Lab Entryway 4,NOTE_MONSTER50
+Armada Shroom 51,Shroom: Armada Interior - Lab Entryway 3,NOTE_MONSTER51
+Armada Shroom 52,Shroom: Armada Interior - Lab Entryway 2,NOTE_MONSTER52
+Armada Shroom 53,Shroom: Armada Interior - Lab Entryway 1,NOTE_MONSTER53
+Armada Shroom 54,Shroom: Armada Interior - Pipe 5,NOTE_MONSTER54
+Armada Shroom 55,Shroom: Armada Interior - Pipe 4,NOTE_MONSTER55
+Armada Shroom 56,Shroom: Armada Interior - Pipe 3,NOTE_MONSTER56
+Armada Shroom 57,Shroom: Armada Interior - Pipe 2,NOTE_MONSTER57
+Armada Shroom 58,Shroom: Armada Interior - Pipe 1,NOTE_MONSTER58
+Armada Shroom 59,Shroom: Armada Interior - Pipe Ramp 3,NOTE_MONSTER59
+Armada Shroom 60,Shroom: Armada Interior - Pipe Ramp 2,NOTE_MONSTER60
+Armada Shroom 61,Shroom: Armada Interior - Pipe Ramp 1,NOTE_MONSTER61
+Armada Shroom 62,Shroom: Armada Interior - Rain Entryway 1,NOTE_MONSTER62
+Armada Shroom 63,Shroom: Armada Interior - Slide Entryway 1,NOTE_MONSTER63
+Armada Shroom 64,Shroom: Armada Interior - Slide Entryway 2,NOTE_MONSTER64
+Armada Shroom 65,Shroom: Armada Interior - Slide Entryway 3,NOTE_MONSTER65
+Armada Shroom 66,Shroom: Armada Interior - Rain Plant 2,NOTE_MONSTER66
+Armada Shroom 67,Shroom: Armada Interior - Rain Plant 3,NOTE_MONSTER67
+Armada Shroom 68,Shroom: Armada Interior - Rain Plant 4,NOTE_MONSTER68
+Armada Shroom 69,Shroom: Armada Interior - Rain Above Boiler 4,NOTE_MONSTER69
+Armada Shroom 70,Shroom: Armada Interior - Rain Above Boiler 2,NOTE_MONSTER70
+Armada Shroom 71,Shroom: Armada Interior - Rain Above Boiler 1,NOTE_MONSTER71
+Armada Shroom 72,Shroom: Armada Interior - Rain Above Boiler 3,NOTE_MONSTER72
+Armada Shroom 73,Shroom: Armada Entry Drone - Ledges 6,NOTE_MONSTER73
+Armada Shroom 74,Shroom: Armada Entry Drone - Ledges 5,NOTE_MONSTER74
+Armada Shroom 75,Shroom: Armada Entry Drone - Ledges 4,NOTE_MONSTER75
+Armada Shroom 76,Shroom: Armada Entry Drone - Ledges 3,NOTE_MONSTER76
+Armada Shroom 77,Shroom: Armada Entry Drone - Ledges 7,NOTE_MONSTER77
+Armada Shroom 78,Shroom: Armada Entry Drone - Ledges 8,NOTE_MONSTER78
+Armada Shroom 79,Shroom: Armada Entry Drone - Ledges 1,NOTE_MONSTER79
+Armada Shroom 80,Shroom: Armada Entry Drone - Ledges 2,NOTE_MONSTER80
+
+Palace Shroom 1,Shroom: Prismic Palace - Poms 5,NOTE_PALACE1
+Palace Shroom 2,Shroom: Prismic Palace - Poms 3,NOTE_PALACE2
+Palace Shroom 3,Shroom: Prismic Palace - Poms 4,NOTE_PALACE3
+Palace Shroom 4,Shroom: Prismic Palace - Poms 2,NOTE_PALACE4
+Palace Shroom 5,Shroom: Prismic Palace - Poms 1,NOTE_PALACE5
+Palace Shroom 6,Shroom: Prismic Palace - Entry Tree 2,NOTE_PALACE6
+Palace Shroom 7,Shroom: Prismic Palace - Entry Tree 1,NOTE_PALACE7
+Palace Shroom 8,Shroom: Prismic Palace - Entry Tree 3,NOTE_PALACE8
+Palace Shroom 9,Shroom: Prismic Palace - Entry 1,NOTE_PALACE9
+Palace Shroom 10,Shroom: Prismic Palace - Entry 2,NOTE_PALACE10
+Palace Shroom 11,Shroom: Prismic Palace - Entry 3,NOTE_PALACE11
+Palace Shroom 12,Shroom: Prismic Palace - Jester Boots 1,NOTE_PALACE12
+Palace Shroom 13,Shroom: Prismic Palace - Jester Boots 2,NOTE_PALACE13
+Palace Shroom 14,Shroom: Prismic Palace - Jester Boots 3,NOTE_PALACE14
+Palace Shroom 15,Shroom: Prismic Palace - Jester Boots 4,NOTE_PALACE15
+Palace Shroom 16,Shroom: Prismic Palace - Jester Boots 5,NOTE_PALACE16
+Palace Shroom 17,Shroom: Prismic Palace - Pom Spire 1,NOTE_PALACE17
+Palace Shroom 18,Shroom: Prismic Palace - Pom Spire 2,NOTE_PALACE18
+Palace Shroom 19,Shroom: Prismic Palace - Pom Spire 3,NOTE_PALACE19
+Palace Shroom 20,Shroom: Prismic Palace - Pom Spire 4,NOTE_PALACE20
+Palace Shroom 21,Shroom: Prismic Palace - Pom Spire 5,NOTE_PALACE21
+Palace Shroom 22,Shroom: Prismic Palace - Observatory Spire 1,NOTE_PALACE22
+Palace Shroom 23,Shroom: Prismic Palace - Observatory Spire 2,NOTE_PALACE23
+Palace Shroom 24,Shroom: Prismic Palace - Observatory Spire 3,NOTE_PALACE24
+Palace Shroom 25,Shroom: Prismic Palace - Observatory Spire 4,NOTE_PALACE25
+Palace Shroom 26,Shroom: Prismic Palace - Observatory Spire 5,NOTE_PALACE26
+Palace Shroom 27,Shroom: Prismic Palace - Lake Gobbler 2,NOTE_PALACE27
+Palace Shroom 28,Shroom: Prismic Palace - Lake Gobbler 3,NOTE_PALACE28
+Palace Shroom 29,Shroom: Prismic Palace - Lake Gobbler 1,NOTE_PALACE29
+Palace Shroom 30,Shroom: Prismic Palace - Lake Plants 2,NOTE_PALACE30
+Palace Shroom 31,Shroom: Prismic Palace - Lake Plants 3,NOTE_PALACE31
+Palace Shroom 32,Shroom: Prismic Palace - Lake Plants 1,NOTE_PALACE32
+Palace Shroom 33,Shroom: Prismic Palace - Lake Plants 5,NOTE_PALACE33
+Palace Shroom 34,Shroom: Prismic Palace - Lake Plants 6,NOTE_PALACE34
+Palace Shroom 35,Shroom: Prismic Palace - Lake Plants 4,NOTE_PALACE35
+Palace Shroom 36,Shroom: Prismic Palace - Lake Basement Overpass 3,NOTE_PALACE36
+Palace Shroom 37,Shroom: Prismic Palace - Lake Basement Overpass 4,NOTE_PALACE37
+Palace Shroom 38,Shroom: Prismic Palace - Lake Basement Overpass 5,NOTE_PALACE38
+Palace Shroom 39,Shroom: Prismic Palace - Lake Basement Overpass 2,NOTE_PALACE39
+Palace Shroom 40,Shroom: Prismic Palace - Lake Basement Overpass 1,NOTE_PALACE40
+Palace Shroom 41,Shroom: Prismic Palace - Lake Mushroom Cave 3,NOTE_PALACE41
+Palace Shroom 42,Shroom: Prismic Palace - Lake Mushroom Cave 4,NOTE_PALACE42
+Palace Shroom 43,Shroom: Prismic Palace - Lake Mushroom Cave 5,NOTE_PALACE43
+Palace Shroom 44,Shroom: Prismic Palace - Lake Mushroom Cave 2,NOTE_PALACE44
+Palace Shroom 45,Shroom: Prismic Palace - Lake Mushroom Cave 1,NOTE_PALACE45
+Palace Shroom 46,Shroom: Prismic Palace - Observatory Slide 5,NOTE_PALACE46
+Palace Shroom 47,Shroom: Prismic Palace - Observatory Slide 4,NOTE_PALACE47
+Palace Shroom 48,Shroom: Prismic Palace - Observatory Slide 3,NOTE_PALACE48
+Palace Shroom 49,Shroom: Prismic Palace - Observatory Slide 2,NOTE_PALACE49
+Palace Shroom 50,Shroom: Prismic Palace - Observatory Slide 1,NOTE_PALACE50
+Palace Shroom 51,Shroom: Prismic Palace - Poki-Poki Cave 1,NOTE_PALACE51
+Palace Shroom 52,Shroom: Prismic Palace - Poki-Poki Cave 2,NOTE_PALACE52
+Palace Shroom 53,Shroom: Prismic Palace - Poki-Poki Cave 3,NOTE_PALACE53
+Palace Shroom 54,Shroom: Prismic Palace - Poki-Poki Cave 4,NOTE_PALACE54
+Palace Shroom 55,Shroom: Prismic Palace - Poki-Poki Cave 5,NOTE_PALACE55
+Palace Shroom 56,Shroom: Prismic Palace - Pool 1,NOTE_PALACE56
+Palace Shroom 57,Shroom: Prismic Palace - Pool 2,NOTE_PALACE57
+Palace Shroom 58,Shroom: Prismic Palace - Pool 3,NOTE_PALACE58
+Palace Shroom 59,Shroom: Prismic Palace - Pool 4,NOTE_PALACE59
+Palace Shroom 60,Shroom: Prismic Palace - Pool 5,NOTE_PALACE60
+Palace Shroom 61,Shroom: Prismic Palace - Lake Basement Entry 3,NOTE_PALACE61
+Palace Shroom 62,Shroom: Prismic Palace - Lake Basement Entry 4,NOTE_PALACE62
+Palace Shroom 63,Shroom: Prismic Palace - Lake Basement Entry 5,NOTE_PALACE63
+Palace Shroom 64,Shroom: Prismic Palace - Lake Basement Entry 6,NOTE_PALACE64
+Palace Shroom 65,Shroom: Prismic Palace - Lake Basement Entry 8,NOTE_PALACE65
+Palace Shroom 66,Shroom: Prismic Palace - Lake Basement Entry 7,NOTE_PALACE66
+Palace Shroom 67,Shroom: Prismic Palace - Lake Basement Entry 2,NOTE_PALACE67
+Palace Shroom 68,Shroom: Prismic Palace - Lake Basement Entry 1,NOTE_PALACE68
+Palace Shroom 69,Shroom: Prismic Palace - Lake Corner 1,NOTE_PALACE69
+Palace Shroom 70,Shroom: Prismic Palace - Lake Corner 2,NOTE_PALACE70
+Palace Shroom 71,Shroom: Prismic Palace - Lake Corner 3,NOTE_PALACE71
+Palace Shroom 72,Shroom: Prismic Palace - Lake Behind 3,NOTE_PALACE72
+Palace Shroom 73,Shroom: Prismic Palace - Lake Behind 1,NOTE_PALACE73
+Palace Shroom 74,Shroom: Prismic Palace - Lake Behind 2,NOTE_PALACE74
+Palace Shroom 75,Shroom: Prismic Palace - Pool Bridges 2,NOTE_PALACE75
+Palace Shroom 76,Shroom: Prismic Palace - Pool Bridges 3,NOTE_PALACE76
+Palace Shroom 77,Shroom: Prismic Palace - Pool Bridges 1,NOTE_PALACE77
+Palace Shroom 78,Shroom: Prismic Palace - Pool Bridges 5,NOTE_PALACE78
+Palace Shroom 79,Shroom: Prismic Palace - Pool Bridges 4,NOTE_PALACE79
+Palace Shroom 80,Shroom: Prismic Palace - Pool Bridges 6,NOTE_PALACE80
+Palace Shroom 81,Shroom: Palace Interior - Star Puzzle 3,NOTE_PALACE81
+Palace Shroom 82,Shroom: Palace Interior - Star Puzzle 1,NOTE_PALACE82
+Palace Shroom 83,Shroom: Palace Interior - Star Puzzle 2,NOTE_PALACE83
+Palace Shroom 84,Shroom: Palace Interior - Heaven's Path Entry 3,NOTE_PALACE84
+Palace Shroom 85,Shroom: Palace Interior - Heaven's Path Entry 1,NOTE_PALACE85
+Palace Shroom 86,Shroom: Palace Interior - Heaven's Path Entry 2,NOTE_PALACE86
+Palace Shroom 87,Shroom: Palace Interior - Bubble Conch Room 3,NOTE_PALACE87
+Palace Shroom 88,Shroom: Palace Interior - Bubble Conch Room 1,NOTE_PALACE88
+Palace Shroom 89,Shroom: Palace Interior - Bubble Conch Room 2,NOTE_PALACE89
+Palace Shroom 90,Shroom: Palace Interior - Sentry Control Chamber 3,NOTE_PALACE90
+Palace Shroom 91,Shroom: Palace Interior - Sentry Control Chamber 1,NOTE_PALACE91
+Palace Shroom 92,Shroom: Palace Interior - Sentry Control Chamber 2,NOTE_PALACE92
+Palace Shroom 93,Shroom: Palace Interior - Palace Back 1,NOTE_PALACE93
+Palace Shroom 94,Shroom: Palace Interior - Palace Back 2,NOTE_PALACE94
+Palace Shroom 95,Shroom: Palace Interior - Palace Back 3,NOTE_PALACE95
+Palace Shroom 96,Shroom: Palace Interior - Palace Back 4,NOTE_PALACE96
+Palace Shroom 97,Shroom: Palace Interior - Palace Back 5,NOTE_PALACE97
+Palace Shroom 98,Shroom: Palace Interior - Palace Back 6,NOTE_PALACE98
+Palace Shroom 99,Shroom: Palace Interior - Bubble Conch Room 4,NOTE_PALACE99
+Palace Shroom 100,Shroom: Palace Interior - Bubble Conch Room 5,NOTE_PALACE100

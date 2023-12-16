@@ -1,5 +1,9 @@
 {
   "yaml.schemas": {
-      "schema/level.yaml": "levels/*.yaml",
+    "schema/level.yaml": "levels/*/*.yaml",
+    "file:///c%3A/Users/wuffie/projects/cavern_of_dreams_ap_logic/schema/level.yaml": [
+      "file:///c%3A/Users/wuffie/projects/cavern_of_dreams_ap_logic/levels/LAKE/Lostleaf%20Lake.yaml",
+      "file:///c%3A/Users/wuffie/projects/cavern_of_dreams_ap_logic/levels/CAVE/Armada%20Lobby.yaml"
+    ]
   }
 }
