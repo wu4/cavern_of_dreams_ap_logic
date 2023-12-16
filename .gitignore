@@ -1,2 +1,4 @@
 .venv/
+.vscode/
 generated.py
+__pycache__/

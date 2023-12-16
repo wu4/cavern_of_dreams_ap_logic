@@ -1,7 +1,4 @@
 from logic import *
-import LostleafLobby
-import LostleafLake
-import MoonCavern
 
 class Main(Region): pass
 class ArmadaLobbyRoom(Region): pass
@@ -18,6 +15,10 @@ class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
 class DucklingsDoorLower(Entrance): pass
 class MoonCavernHeartDoor(Entrance): pass
+
+import LostleafLobby
+import LostleafLake
+import MoonCavern
 
 name = "Sun Cavern"
 
@@ -227,7 +228,8 @@ area = Area({
       "Shroom: Sun Cavern - Armada Entrance 2" : None,
       "Shroom: Sun Cavern - Armada Entrance 3" : None,
     },
-    region_connections={
+
+    region_connections = {
       Main: None
     }
   ),
@@ -363,9 +365,3 @@ area = Area({
     }
   )
 })
-
-for region in area.regions:
-  for k, v in region.locations.items():
-    print(f"{k}: {v}")
-  for k, v in region.region_connections.items():
-    print(f"{region.__name__} -> {k.__name__}: {v}")
