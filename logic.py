@@ -94,6 +94,23 @@ CarryingType: TypeAlias = Literal[
   "Bubble Conch"
 ]
 
+class Impossible(Logic):
+  def __str__(self) -> str:
+    return "Impossible"
+
+class DropCarryable(Logic):
+  def __str__(self) -> str:
+    drop: list[str] = []
+    if self.jester_boots: drop.append("Jester Boots")
+    if self.throwable: drop.append("Throwables")
+    return f"Drop [{', '.join(drop)}] for [{self.logic}]"
+
+  def __init__(self, logic: MaybeLogic, jester_boots: bool = False, throwable: bool = False) -> None:
+    self.jester_boots = jester_boots
+    self.throwable = throwable
+    self.logic = logic
+    super().__init__()
+
 class Carrying(Logic):
   def __str__(self) -> str:
     return f"Carrying {self.carrying}"
@@ -116,7 +133,18 @@ TechType: TypeAlias = Literal[
   "super_bounce",
   "bubble_jump",
 ]
-    
+
+class InternalEvent:
+  pass
+
+class HasInternalEvent(Logic):
+  def __str__(self) -> str:
+    return f"(internal) {self.event.__name__}"
+
+  def __init__(self, event: type[InternalEvent]) -> None:
+    self.event = event
+    super().__init__()
+
 class Tech(Logic):
   def __str__(self) -> str:
     return f"Tech: {self.tech}"
@@ -188,14 +216,15 @@ def CanTailJump(groundedTail: Logic | None = None, aerialTail: Logic | None = No
     HasAirTail if aerialTail is None else HasAirTail & aerialTail,
   )
 
+CanSuperJump = CanSuperBounce | CanSuperBubbleJump
+
 HighJumpObstacle = Any(
   HasHighJump,
   HasHorn,
   HasDoubleJump,
-  CanTailJump()
+  CanTailJump(),
+  CanSuperJump
 )
-
-CanSuperJump = CanSuperBounce | CanSuperBubbleJump
 
 MaybeLogic = Logic | None
 
