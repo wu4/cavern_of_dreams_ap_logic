@@ -15,8 +15,21 @@ Carry,SKILL_CARRY
 Climb,SKILL_CLIMB
 High Jump,SKILL_HIGHJUMP
 Sprint,SKILL_SPRINT
-Super Jumps,SKILL_SUPERJUMPS
+Super Bounce,SKILL_SUPERBOUNCE
+Super Bubble Jump,SKILL_SUPERBUBBLEJUMP
 Air Swim,SKILL_AIRSWIM
+
+teleport
+Open Lake Lobby Teleport,TELEPORT_LAKE
+Open Armada Lobby Teleport,TELEPORT_MONSTER
+Open Palace Lobby Teleport,TELEPORT_PALACE
+Open Gallery Lobby Teleport,TELEPORT_GALLERY
+
+gratitude
+Gratitude 1,Fed Lostleaf Lake Fella,GRATITUDE1
+Gratitude 2,Fed Airborne Armada Fella,GRATITUDE2
+Gratitude 3,Fed Prismic Palace Fella,GRATITUDE3
+Gratitude 4,Fed Gallery of Nightmares Fella,GRATITUDE4
 
 pickup
 Fish Food,Lostleaf Lake - Treehouse Fish Food,ITEM_FISH_FOOD
@@ -25,14 +38,13 @@ Lady Opal's Egg 2,Lady Opal's Egg: Pool,ITEM_PRINCESS_2
 Lady Opal's Egg 3,Lady Opal's Egg: Poki-Poki,ITEM_PRINCESS_3
 
 event
-Mighty Wall Toppled,Beat Mighty Wall,CAVE_NURIKABE_FALLEN
-Open Moon Cavern Heart Door,Moon Cavern Heart Door,GRATITUDE_DOOR1
+Topple Mighty Wall,Whack Mighty Wall,CAVE_NURIKABE_FALLEN
 
-Armada Lobby Pipes Risen,Armada Lobby Purple Valve,MONSTER_LOBBY_PIPES_RISEN
-Armada Lobby Red Pipe Updraft,Armada Lobby Green Valve,MONSTER_LOBBY_STEAM
+Raise Armada Lobby Pipes,Armada Lobby Purple Valve,MONSTER_LOBBY_PIPES_RISEN
+Activate Armada Lobby Red Pipe Updraft,Armada Lobby Green Valve,MONSTER_LOBBY_STEAM
 
-Palace Lobby Faucet Running,Palace Lobby Faucet Preston,PALACE_LOBBY_FAUCET_ON
-Palace Lobby Whirlpool Active,Palace Lobby Whirlpool Preston,PALACE_LOBBY_WHIRLPOOL_ON
+Run Palace Lobby Faucet,Palace Lobby Faucet Preston,PALACE_LOBBY_FAUCET_ON
+Activate Palace Lobby Whirlpool,Palace Lobby Whirlpool Preston,PALACE_LOBBY_WHIRLPOOL_ON
 
 Open Gallery Lobby Hedge Maze,Gallery Lobby - Extinguish Torches,CAVE_GALLERY_LOBBY_TORCH_EXTINGUISH
 Open Gallery Lobby Door,Gallery Lobby - Hedge Maze Preston,CAVE_GALLERY_LOBBY_GALLERY_OPEN

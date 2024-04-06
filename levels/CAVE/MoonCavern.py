@@ -1,4 +1,4 @@
-from logic import *
+from ...logic import *
 
 class Main(Region): pass
 class DiveRoom(Region): pass
@@ -14,15 +14,16 @@ class PalaceLobbyDoor(Entrance): pass
 class GalleryLobbyDoor(Entrance): pass
 
 class DousedGalleryLobbyFlame(InternalEvent): pass
+class SolvedDivePuzzle(InternalEvent): pass
 
-import SunCavern
-import PalaceLobby
-import GalleryLobby
+from . import SunCavern as _SunCavern
+from . import PalaceLobby as _PalaceLobby
+from . import GalleryLobby as _GalleryLobby
 
-area = Area({
-  Main: RegionDefinition(
+regions = [
+  Main.define(
     locations = {
-      "Card: Moon Cavern - Dive": HasSwim & CanWhack(horn_works = True),
+      "Card: Moon Cavern - Dive": HasSwim & Whackable(horn_works = True),
       
       "Shroom: Moon Cavern - Lava Platforms 1": None,
       "Shroom: Moon Cavern - Lava Platforms 2": None,
@@ -30,23 +31,25 @@ area = Area({
       "Shroom: Moon Cavern - Lava Platforms 4": None,
 
       "Shroom: Moon Cavern - Potionfall": None,
+      
+      SolvedDivePuzzle: HasHorn
     },
 
-    entrances = {
-      SunCavernDoor: EntranceDefinition(
-        SunCavern.MoonCavernHeartDoor
+    entrances = [
+      SunCavernDoor.define(
+        _SunCavern.MoonCavernHeartDoor
       )
-    },
+    ],
 
     region_connections = {
-      DiveHoles: CanWhack(horn_works = True),
+      DiveHoles: Whackable(horn_works = True),
 
       DiveRoom: Any(
-        CanWhack(horn_works = True),
+        Whackable(horn_works = True),
 
         Comment(
           "Vine entrance",
-          CanWhack(air_tail_works = True, throwable_works = True)
+          Whackable(air_tail_works = True, throwable_works = True)
         )
       ),
 
@@ -78,7 +81,7 @@ area = Area({
 
         Comment(
           "Bouncy mushroom + Keehee damage boost",
-          Tech("damage_boost")
+          CanDamageBoost()
         ),
 
         Comment(
@@ -102,7 +105,7 @@ area = Area({
 
         Comment(
           "Bouncy mushroom + Keehee damage  boost while bubble floating",
-          Tech("damage_boost") & CanBubbleJump
+          CanDamageBoost(CanBubbleJump)
         )
       ),
 
@@ -110,7 +113,7 @@ area = Area({
     }
   ),
   
-  DiveHoles: RegionDefinition(
+  DiveHoles.define(
     locations = {
       "Shroom: Moon Cavern - Dive Holes 1": None,
       "Shroom: Moon Cavern - Dive Holes 2": None,
@@ -125,7 +128,7 @@ area = Area({
     }
   ),
 
-  UpperConnector: RegionDefinition(
+  UpperConnector.define(
     locations = {
       "Shroom: Moon Cavern - Lonely Shroom": None
     },
@@ -137,16 +140,13 @@ area = Area({
     }
   ),
 
-  Upper: RegionDefinition(
+  Upper.define(
     locations = {
       "Egg: Moon Cavern - Keehee Climb": Any(
         CanSuperJump,
         Carrying("Jester Boots"),
 
-        DropCarryable(
-          HasClimb & HasWings & (HasHighJump | HasHorn),
-          throwable = True
-        )
+        HasClimb & HasWings & (HasHighJump | HasHorn),
       ),
 
       "Card: Moon Cavern - Statue": None,
@@ -161,52 +161,66 @@ area = Area({
       "Shroom: Moon Cavern - Palace Lobby Statue 2": None,
     },
 
-    entrances = {
-      PalaceLobbyDoor: EntranceDefinition(
-        PalaceLobby.MoonCavernDoor
+    entrances = [
+      PalaceLobbyDoor.define(
+        _PalaceLobby.MoonCavernDoor
       )
+    ],
+
+    region_connections = {
+      UpperConnector: None
     }
   ),
 
-  LavaMushroomPlatform: RegionDefinition(
+  LavaMushroomPlatform.define(
     locations = {
       "Shroom: Moon Cavern - Lava Mushroom Platform 1": None,
       "Shroom: Moon Cavern - Lava Mushroom Platform 2": None
     },
 
     region_connections = {
+      NightmareLobbyDoorway: None,
+
       Main: Any(
         HighJumpObstacle,
 
         Comment(
           "Boost off of the Keehee to the Dive Holes side",
-          Tech("damage_boost") & Any(
-            Difficulty("Hard"),
-            CanBubbleJump
-          )
-        )
-      ),
-
-      NightmareLobbyDoorway: None
-    }
-  ),
-
-  NightmareLobbyDoorway: RegionDefinition(
-    locations = {
-    },
-
-    entrances = {
-      GalleryLobbyDoor: EntranceDefinition(
-        GalleryLobby.MoonCavernDoor,
-        Any(
-          HasInternalEvent(DousedGalleryLobbyFlame),
-          DropCarryable(
-            Difficulty("Hard") & Tech("momentum_cancel"),
-            jester_boots = True,
-            throwable = True
+          CanDamageBoost(
+            Difficulty("Hard") | CanBubbleJump
           )
         )
       )
     }
+  ),
+
+  NightmareLobbyDoorway.define(
+    locations = {
+      DousedGalleryLobbyFlame: Carrying("Potion") | HasBubble
+    },
+
+    entrances = [
+      GalleryLobbyDoor.define(
+        _GalleryLobby.MoonCavernDoor,
+        Any(
+          Has(DousedGalleryLobbyFlame),
+          CanDamageBoost(Difficulty("Hard") & Tech("momentum_cancel"))
+        )
+      )
+    ],
+
+    region_connections = {
+      LavaMushroomPlatform: None
+    }
+  ),
+
+  DiveRoom.define(
+    locations = {
+      "Egg: Moon Cavern - Dive Puzzle": Has(SolvedDivePuzzle)
+    },
+
+    region_connections = {
+      Main: HasClimb
+    }
   )
-})
+]

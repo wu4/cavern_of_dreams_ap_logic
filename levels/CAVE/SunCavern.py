@@ -1,4 +1,4 @@
-from logic import *
+from ...logic import *
 
 class Main(Region): pass
 class ArmadaLobbyRoom(Region): pass
@@ -15,15 +15,23 @@ class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
 class DucklingsDoorLower(Entrance): pass
 class MoonCavernHeartDoor(Entrance): pass
+class ArmadaLobbyDoor(Entrance): pass
+class LostleafLobbyTeleport(Entrance): pass
+class ArmadaLobbyTeleport(Entrance): pass
+class PalaceLobbyTeleport(Entrance): pass
+class GalleryLobbyTeleport(Entrance): pass
 
-import LostleafLobby
-import LostleafLake
-import MoonCavern
+class MoonCavernHeartDoorOpened(InternalEvent): pass
 
-name = "Sun Cavern"
+from . import LostleafLobby as _LostleafLobby
+from . import ArmadaLobby as _ArmadaLobby
+from . import PalaceLobby as _PalaceLobby
+from . import GalleryLobby as _GalleryLobby
+from ..LAKE import LostleafLake as _LostleafLake
+from . import MoonCavern as _MoonCavern
 
-area = Area({
-  Main: RegionDefinition(
+regions = [
+  Main.define(
     locations = {
       "Sun Cavern - Sage's Blessing 1": HasEggs(1),
       "Sun Cavern - Sage's Blessing 2": HasEggs(6),
@@ -36,8 +44,35 @@ area = Area({
       "Shroom: Sun Cavern - Mighty Wall Ground 1": None,
       "Shroom: Sun Cavern - Mighty Wall Ground 2": None,
       "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
-      "Shroom: Sun Cavern - Mighty Wall Ground 4": None
+      "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
+
+      "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (HasGroundTail | HasAirTail),
+      "Fed Airborne Armada Fella":       HasShrooms("Monster") & (HasGroundTail | HasAirTail),
+      "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (HasGroundTail | HasAirTail),
+      "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (HasGroundTail | HasAirTail),
     },
+    
+    entrances = [
+      LostleafLobbyTeleport.define(
+        to = _LostleafLobby.SunCavernTeleport,
+        rule = Has("Open Lake Lobby Teleport")
+      ),
+
+      ArmadaLobbyTeleport.define(
+        to = _ArmadaLobby.SunCavernTeleport,
+        rule = Has("Open Armada Lobby Teleport")
+      ),
+
+      PalaceLobbyTeleport.define(
+        to = _PalaceLobby.SunCavernTeleport,
+        rule = Has("Open Palace Lobby Teleport")
+      ),
+
+      GalleryLobbyTeleport.define(
+        to = _GalleryLobby.SunCavernTeleport,
+        rule = Has("Open Gallery Lobby Teleport")
+      ),
+    ],
 
     region_connections = {
       ArmadaLobbyRoom: Any(
@@ -93,8 +128,8 @@ area = Area({
         Comment(
           "Tail jump double jump from the nearby tutorial stone",
           HasDoubleJump & CanTailJump(
-            groundedTail = HasHighJump | HasWings,
-            aerialTail = HasHighJump & HasWings
+            groundedExtraLogic = HasHighJump | HasWings,
+            aerialExtraLogic = HasHighJump & HasWings
           )
         )
       ),
@@ -135,8 +170,8 @@ area = Area({
             All(
               Difficulty("Intermediate"),
               CanTailJump(
-                groundedTail = None,
-                aerialTail = HasHighJump | HasDoubleJump
+                groundedExtraLogic = None,
+                aerialExtraLogic = HasHighJump | HasDoubleJump
               )
             )
           )
@@ -167,8 +202,8 @@ area = Area({
         HasRoll & (HasSprint | HasAirTail),
 
         CanTailJump(
-          groundedTail = None,
-          aerialTail = Any(
+          groundedExtraLogic = None,
+          aerialExtraLogic = Any(
             Comment(
               "Tail Spin from the right gem to the tiny leaf, then to the big leaf",
               Difficulty("Intermediate")
@@ -180,15 +215,15 @@ area = Area({
       
       DucklingsDoorway: Any(
         CanSuperJump,
-
+        
         Comment(
-          "Speedy launch from the waterjet",
-          HasSwim & (Difficulty("Intermediate") | HasSprint)
+          "Float to the big leaf from the Sage ramp",
+          HasSprint & (CanHoverJump | CanBubbleJump)
         ),
         
         Comment(
-          "Float to the leaf from the Sage ramp",
-          HasSprint & (CanHoverJump | CanBubbleJump)
+          "Jump to the small leaf from the right crystal",
+          Difficulty("Intermediate") & Tech("tail_jump") & HasAirTail
         ),
 
         Comment(
@@ -210,31 +245,38 @@ area = Area({
 
         Comment(
           "Clever use of wings and riding up the left gem's geometry to jump on a leaf",
-          CanHoverJump
+          Difficulty("Intermediate") & CanHoverJump
         )
       ),
 
       MoonCavernHeartDoorway:
         HasSwim & Any(
           HasHorn,
-          Difficulty("Intermediate")
+          HasSprint,
+          Difficulty("Intermediate"),
         )
     },
   ),
 
-  ArmadaLobbyRoom: RegionDefinition(
+  ArmadaLobbyRoom.define(
     locations = {
       "Shroom: Sun Cavern - Armada Entrance 1" : None,
       "Shroom: Sun Cavern - Armada Entrance 2" : None,
       "Shroom: Sun Cavern - Armada Entrance 3" : None,
     },
+    
+    entrances = [
+      ArmadaLobbyDoor.define(
+        to = _ArmadaLobby.SunCavernDoor
+      )
+    ],
 
     region_connections = {
       Main: None
     }
   ),
 
-  HighJumpLedge: RegionDefinition(
+  HighJumpLedge.define(
     locations = {
       "Shroom: Sun Cavern - High Jump Ledge 1": None,
       "Shroom: Sun Cavern - High Jump Ledge 2": None
@@ -244,7 +286,7 @@ area = Area({
     }
   ),
 
-  VineLedge: RegionDefinition(
+  VineLedge.define(
     locations = {
       "Shroom: Sun Cavern - Vine Ledge 1": None,
       "Shroom: Sun Cavern - Vine Ledge 2": None
@@ -259,7 +301,7 @@ area = Area({
     }
   ),
 
-  TailSpinLedge: RegionDefinition(
+  TailSpinLedge.define(
     locations = {
       "Shroom: Sun Cavern - Tail Spin Ledge 1": None,
       "Shroom: Sun Cavern - Tail Spin Ledge 2": None
@@ -270,9 +312,9 @@ area = Area({
     }
   ),
 
-  MightyWallLedge: RegionDefinition(
+  MightyWallLedge.define(
     locations = {
-      "Beat Mighty Wall": Any(
+      "Whack Mighty Wall": Any(
         HasAirTail,
         HasGroundTail,
         Carrying("Apple"),
@@ -286,28 +328,28 @@ area = Area({
       "Shroom: Sun Cavern - Mighty Wall Egg Ledge 3": None
     },
 
-    entrances = {
-      LostleafLobbyDoor: EntranceDefinition(
-        to = LostleafLobby.SunCavernDoor,
-        rule = HasEvent("Mighty Wall Toppled")
+    entrances = [
+      LostleafLobbyDoor.define(
+        to = _LostleafLobby.SunCavernDoor,
+        rule = Has("Topple Mighty Wall")
       )
-    },
+    ],
 
     region_connections = {
       Main: None
     }
   ),
 
-  WaterfallLedge: RegionDefinition(
+  WaterfallLedge.define(
     locations = {
       "Egg: Sun Cavern - Waterfall": None
     },
 
-    entrances = {
-      DucklingsDoorUpper: EntranceDefinition(
-        to = LostleafLake.DucklingsDoorUpper
+    entrances = [
+      DucklingsDoorUpper.define(
+        to = _LostleafLake.DucklingsDoorUpper
       )
-    },
+    ],
 
     region_connections = {
       Main: None,
@@ -324,7 +366,7 @@ area = Area({
     }
   ),
 
-  DucklingsLedge: RegionDefinition(
+  DucklingsLedge.define(
     locations = {
       "Shroom: Sun Cavern - Ducklings Ledge 1": None,
       "Shroom: Sun Cavern - Ducklings Ledge 2": None
@@ -336,32 +378,39 @@ area = Area({
     }
   ),
   
-  DucklingsDoorway: RegionDefinition(
-    entrances = {
-      DucklingsDoorLower: EntranceDefinition(
-        to = LostleafLake.DucklingsDoorLower
+  DucklingsDoorway.define(
+    entrances = [
+      DucklingsDoorLower.define(
+        to = _LostleafLake.DucklingsDoorLower
       )
-    },
+    ],
 
     region_connections = {
       DucklingsLedge: None
     }
   ),
 
-  MoonCavernHeartDoorway: RegionDefinition(
-    entrances = {
-      MoonCavernHeartDoor: EntranceDefinition(
-        to = MoonCavern.SunCavernDoor,
-        rule = HasEvent("Open Moon Cavern Heart Door")
-      )
-    },
+  MoonCavernHeartDoorway.define(
+    entrances = [
+      MoonCavernHeartDoor.define(
+        to = _MoonCavern.SunCavernDoor,
+        rule = Has(MoonCavernHeartDoorOpened)
+      ),
+    ],
 
     locations = {
-      "Moon Cavern Heart Door": HasHearts(1) & CanWhack(ground_tail_works = True, air_tail_works = True)
+      MoonCavernHeartDoorOpened:
+        HasHearts(1) & Whackable(ground_tail_works = True, air_tail_works = True)
     },
 
     region_connections = {
-      Main: HasSwim
+      Main: HasSwim,
+
+      DucklingsDoorway: 
+        Comment(
+          "Speedy launch from the waterjet",
+          HasSwim
+        )
     }
   )
-})
+]
