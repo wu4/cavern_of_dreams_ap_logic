@@ -1,6 +1,6 @@
 from . import Any
-from .item import HighJump, Horn, DoubleJump
-from .tech import CanTailJump, SuperJump
+from .has import HasHighJump, HasHorn, HasDoubleJump
+from .tech import CanTailJump, CanSuperJump
 
 HighJumpObstacle = Any(
   HasHighJump,

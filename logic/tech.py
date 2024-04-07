@@ -1,6 +1,5 @@
 from . import Logic, MaybeLogic as _MaybeLogic, All, Any
-from . import item
-# from .has import HasWings, HasBubble, HasRoll, HasAirTail, HasGroundTail, NoTempItems, HasSuperBounce, HasSuperBubbleJump
+from .has import HasWings, HasBubble, HasRoll, HasAirTail, HasGroundTail, NoTempItems, HasSuperBounce, HasSuperBubbleJump
 
 from typing import TypeAlias, Literal
 
@@ -12,6 +11,7 @@ TechType: TypeAlias = Literal[
   "ability_toggle",
   "out_of_bounds",
   "roll_disjoint",
+  "standable_terrain",
 
   "tail_jump",
   "hover_jump",
@@ -29,33 +29,27 @@ class Tech(Logic):
     self.tech = tech
     super().__init__()
 
-EjectionLaunch: Logic = Tech("ejection_launch")
-ZTarget: Logic = Tech("z_target")
-MomentumCancel: Logic = Tech("momentum_cancel")
-AbilityToggle: Logic = Tech("ability_toggle")
-OutOfBounds: Logic = Tech("out_of_bounds")
-
-HoverJump: Logic = Tech("hover_jump") & item.Wings
-BubbleJump: Logic = Tech("bubble_jump") & item.Bubble
-HoverShoot: Logic = Tech("hover_shoot") & item.Wings & item.Bubble
-SuperBounce: Logic = Tech("super_bounce") & item.SuperBounce & item.Roll & item.AirTail
-SuperBubbleJump: Logic = Tech("super_bubble_jump") & item.SuperBubbleJump & item.Roll & item.Bubble
-SuperJump: Logic = SuperBounce | SuperBubbleJump
-
-def RollDisjoint(requires_tail: bool = False) -> Logic:
-  ret = Tech("roll_disjoint") & item.Roll
+CanHoverJump: Logic = Tech("hover_jump") & HasWings
+CanBubbleJump: Logic = Tech("bubble_jump") & HasBubble
+CanHoverShoot: Logic = Tech("hover_shoot") & HasWings & HasBubble
+CanSuperBounce: Logic = Tech("super_bounce") & HasSuperBounce & HasRoll & HasAirTail
+CanSuperBubbleJump: Logic = Tech("super_bubble_jump") & HasSuperBubbleJump & HasRoll & HasBubble
+def CanRollDisjoint(requires_tail: bool = False) -> Logic:
+  ret = Tech("roll_disjoint") & HasRoll
   if requires_tail:
-    ret &= (item.GroundTail | item.AirTail)
+    ret &= (HasGroundTail | HasAirTail)
   return ret
 
-def DamageBoost(logic: _MaybeLogic = None) -> Logic:
+def CanDamageBoost(logic: _MaybeLogic = None) -> Logic:
   return All(
-    item.NoTempItems,
+    NoTempItems,
     Tech("damage_boost") if logic is None else Tech("damage_boost") & logic
   )
 
-def TailJump(groundedExtraLogic: Logic | None = None, aerialExtraLogic: Logic | None = None) -> Logic:
+def CanTailJump(groundedExtraLogic: Logic | None = None, aerialExtraLogic: Logic | None = None) -> Logic:
   return Tech("tail_jump") & Any(
-    item.GroundTail if groundedExtraLogic is None else (item.GroundTail & groundedExtraLogic),
-    item.AirTail if aerialExtraLogic is None else (item.AirTail & aerialExtraLogic),
+    HasGroundTail if groundedExtraLogic is None else (HasGroundTail & groundedExtraLogic),
+    HasAirTail if aerialExtraLogic is None else (HasAirTail & aerialExtraLogic),
   )
+
+CanSuperJump = CanSuperBounce | CanSuperBubbleJump
