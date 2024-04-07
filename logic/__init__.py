@@ -36,11 +36,11 @@ class Not(Logic):
 
 MaybeLogic: TypeAlias = Logic | None
 
-from .comment import *
-from .has import *
-from .objects import *
-from .quantities import *
-from .tech import *
-from .whackable import *
-from .difficulty import *
-from .templates import *
+from .comment import Comment
+# from .items import *
+# from .objects import *
+# from .quantities import *
+# from .tech import *
+# from .whackable import *
+# from .difficulty import *
+# from .templates import *

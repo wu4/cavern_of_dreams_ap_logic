@@ -1,5 +1,5 @@
 from . import Logic, Any
-from .has import HasGroundTail, HasAirTail, HasRoll, HasHorn, Carrying
+from . import item, carrying
 
 def Whackable(
   ground_tail_works: bool = False,
@@ -9,9 +9,9 @@ def Whackable(
   horn_works: bool = False
 ) -> Logic:
   accum = []
-  if ground_tail_works: accum.append(HasGroundTail)
-  if air_tail_works: accum.append(HasAirTail)
-  if roll_works: accum.append(HasRoll & (HasGroundTail | HasAirTail))
-  if throwable_works: accum.append(Carrying("Apple") | Carrying("Bubble Conch"))
-  if horn_works: accum.append(HasHorn)
+  if ground_tail_works: accum.append(item.GroundTail)
+  if air_tail_works: accum.append(item.AirTail)
+  if roll_works: accum.append(item.Roll & (item.GroundTail | item.AirTail))
+  if throwable_works: accum.append(carrying.Apple | carrying.BubbleConch)
+  if horn_works: accum.append(item.Horn)
   return Any(*accum)
