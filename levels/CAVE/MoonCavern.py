@@ -1,4 +1,9 @@
-from ...logic import *
+from ...logic import Any, All
+from ...logic.objects import Region, Entrance, InternalEvent
+
+from ...logic import item, event, difficulty, carrying, tech, templates
+from ...logic.whackable import Whackable
+from ...logic.comment import Comment
 
 class Main(Region): pass
 class DiveRoom(Region): pass
@@ -23,7 +28,7 @@ from . import GalleryLobby as _GalleryLobby
 regions = [
   Main.define(
     locations = {
-      "Card: Moon Cavern - Dive": HasSwim & Whackable(horn_works = True),
+      "Card: Moon Cavern - Dive": item.Swim & Whackable(horn_works = True),
       
       "Shroom: Moon Cavern - Lava Platforms 1": None,
       "Shroom: Moon Cavern - Lava Platforms 2": None,
@@ -32,7 +37,7 @@ regions = [
 
       "Shroom: Moon Cavern - Potionfall": None,
       
-      SolvedDivePuzzle: HasHorn
+      SolvedDivePuzzle: item.Horn
     },
 
     entrances = [
@@ -54,58 +59,57 @@ regions = [
       ),
 
       DivePuzzleLedge: Any(
-        HasHorn,
+        tech.AnySuperJump,
+        carrying.JesterBoots,
 
-        CanSuperJump,
-        Carrying("Jester Boots"),
+        item.Horn,
         
         Comment(
           "Extinguish the Keehee and use him as a platform",
-          Carrying("Potion") | HasBubble
+          carrying.Potion | item.Bubble
         ),
 
-        HasDoubleJump & CanTailJump(),
+        item.DoubleJump & (tech.GroundTailJump | tech.AirTailJump),
 
-        HasWings & Any(
-          HasDoubleJump,
+        item.Wings & Any(
+          item.DoubleJump,
           All(
-            Tech("tail_jump") & HasGroundTail,
-            Tech("hover_jump") | HasHighJump
+            tech.GroundTailJump,
+            tech.HoverJump & item.HighJump
           )
         )
       ),
 
       UpperConnector: Any(
-        CanSuperJump,
-        HighJumpObstacle,
+        templates.HighJumpObstacle,
 
         Comment(
           "Bouncy mushroom + Keehee damage boost",
-          CanDamageBoost()
+          tech.DamageBoost
         ),
 
         Comment(
           "Bouncy mushroom + Z-target bubble shooting",
-          Tech("z_target") & CanBubbleJump
+          tech.ZTarget & tech.BubbleJump
         ),
 
         Comment(
           "Hover from bouncy shroom",
-          HasWings
+          item.Wings
         )
       ),
 
       Upper: Any(
-        CanSuperJump,
+        tech.AnySuperJump,
         
         Comment(
           "Hover from bouncy shroom",
-          HasWings
+          item.Wings
         ),
 
         Comment(
-          "Bouncy mushroom + Keehee damage  boost while bubble floating",
-          CanDamageBoost(CanBubbleJump)
+          "Bouncy mushroom + Keehee damage boost while bubble floating",
+          tech.DamageBoost & tech.BubbleJump
         )
       ),
 
@@ -136,17 +140,17 @@ regions = [
     region_connections = {
       Main: None,
       
-      Upper: HighJumpObstacle
+      Upper: templates.HighJumpObstacle
     }
   ),
 
   Upper.define(
     locations = {
       "Egg: Moon Cavern - Keehee Climb": Any(
-        CanSuperJump,
-        Carrying("Jester Boots"),
+        tech.AnySuperJump,
+        carrying.JesterBoots,
 
-        HasClimb & HasWings & (HasHighJump | HasHorn),
+        item.Climb & item.Wings & (item.HighJump | item.Horn),
       ),
 
       "Card: Moon Cavern - Statue": None,
@@ -182,13 +186,11 @@ regions = [
       NightmareLobbyDoorway: None,
 
       Main: Any(
-        HighJumpObstacle,
+        templates.HighJumpObstacle,
 
         Comment(
           "Boost off of the Keehee to the Dive Holes side",
-          CanDamageBoost(
-            Difficulty("Hard") | CanBubbleJump
-          )
+          tech.DamageBoost & (difficulty.Hard | tech.BubbleJump)
         )
       )
     }
@@ -196,15 +198,15 @@ regions = [
 
   NightmareLobbyDoorway.define(
     locations = {
-      DousedGalleryLobbyFlame: Carrying("Potion") | HasBubble
+      DousedGalleryLobbyFlame: carrying.Potion | item.Bubble
     },
 
     entrances = [
       GalleryLobbyDoor.define(
         _GalleryLobby.MoonCavernDoor,
         Any(
-          Has(DousedGalleryLobbyFlame),
-          CanDamageBoost(Difficulty("Hard") & Tech("momentum_cancel"))
+          event.Collected(DousedGalleryLobbyFlame),
+          difficulty.Hard & tech.DamageBoost & tech.MomentumCancel
         )
       )
     ],
@@ -216,11 +218,11 @@ regions = [
 
   DiveRoom.define(
     locations = {
-      "Egg: Moon Cavern - Dive Puzzle": Has(SolvedDivePuzzle)
+      "Egg: Moon Cavern - Dive Puzzle": event.Collected(SolvedDivePuzzle)
     },
 
     region_connections = {
-      Main: HasClimb
+      Main: item.Climb
     }
   )
 ]

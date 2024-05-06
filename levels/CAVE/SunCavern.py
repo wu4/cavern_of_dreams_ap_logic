@@ -186,8 +186,7 @@ regions = [
           "Very high jump from one of the nearby gems",
           All (
             Difficulty("Intermediate"),
-            Tech("tail_jump"),
-            HasGroundTail & HasHighJump & HasDoubleJump & HasWings
+            CanGroundTailJump & HasHighJump & HasDoubleJump & HasWings
           )
         )
       ),
@@ -223,7 +222,7 @@ regions = [
         
         Comment(
           "Jump to the small leaf from the right crystal",
-          Difficulty("Intermediate") & Tech("tail_jump") & HasAirTail
+          Difficulty("Intermediate") & CanAirTailJump
         ),
 
         Comment(

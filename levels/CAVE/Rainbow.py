@@ -29,7 +29,7 @@ regions = [
 
         Comment(
           "Jump from the well",
-          Tech("tail_jump") & HasGroundTail & HasDoubleJump,
+          CanGroundTailJump & HasDoubleJump,
         ),
       )
     },

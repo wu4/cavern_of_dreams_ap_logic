@@ -40,7 +40,7 @@ regions = [
         
         HasRoll & HasAirTail & Tech("ability_toggle") & HasDoubleJump,
 
-        Tech("tail_jump") & HasGroundTail & HasHighJump & HasDoubleJump & HasWings
+        CanGroundTailJump & HasHighJump & HasDoubleJump & HasWings
       ),
 
       BellTower: Any(

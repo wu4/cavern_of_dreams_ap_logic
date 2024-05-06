@@ -1,4 +1,7 @@
-from ...logic import *
+from ...logic.objects import Region, Entrance
+from ...logic.comment import Comment
+from ...logic import All, Any
+from ...logic import event, tech, item, carrying, difficulty
 
 class Main(Region): pass
 class LostleafCave(Region): pass
@@ -16,6 +19,8 @@ from . import SunCavern as _SunCavern
 from . import MoonCavern as _MoonCavern
 from . import Rainbow as _Rainbow
 from ..GALLERY import Foyer as _Foyer
+
+[UNFINISHED]
 
 regions = [
   Main.define(
@@ -43,7 +48,7 @@ regions = [
     entrances = [
       FoyerDoor.define(
         to = _Foyer.GalleryLobbyDoor,
-        rule = Has("Open Gallery Lobby Door")
+        rule = event.Collected("Open Gallery Lobby Door")
       ),
       RainbowBench.define(
         to = _Rainbow.Well
@@ -52,166 +57,103 @@ regions = [
 
     region_connections = {
       OuterWalls: Any(
-        CanSuperJump,
-        Carrying("Jester Boots"),
+        tech.AnySuperJump,
+        carrying.JesterBoots,
 
-        Difficulty("Intermediate") & HasRoll & HasSprint
+        difficulty.Intermediate & item.Roll & item.Sprint
       ),
 
       LostleafCave: Any(
-        CanSuperJump,
-        Carrying("Jester Boots")
+        tech.AnySuperJump,
+        carrying.JesterBoots
       ),
 
       Maze: Any(
-        CanSuperJump,
-        Has("Open Gallery Lobby Hedge Maze"),
-        Carrying("Jester Boots"),
+        tech.AnySuperJump,
+        event.Collected("Open Gallery Lobby Hedge Maze"),
+        carrying.JesterBoots,
         
-        HasGroundTail & Tech("tail_jump") & HasHighJump & HasDoubleJump,
+        tech.GroundTailJump & item.HighJump & item.DoubleJump,
         
         Comment(
           "Jump from the hedges",
-          HasWings & HasDoubleJump,
+          item.Wings & item.DoubleJump,
         ),
 
         Comment(
-              #Fastroll jump from the fountain walls, then hover over the gate
-          "",
-          HasRoll & HasAirTail & HasWings
+          "Fastroll jump from the fountain walls, then hover over the gate",
+          item.Roll & item.AirTail & item.Wings
         )
       )
 
-          # - comment: >
-          #     Launch onto the walls using the steep hill, then float over the
-          #     gate
-          #   and:
-          #   - movement: 3
-          #   - ability: Roll
-          #   - ability: Sprint
-          #   - or:
-          #     - ability: Hover
-          #     - and:
-          #       - ability: Bubble
-          #       - tech: momentum_cancel
+    }
+  ),
+
+  LostleafCave.define(
+    locations = {
+      "Egg: Gallery Lobby - Lostleaf Lobby Entryway": None
+    },
+
+    entrances = [
+      LostleafLobbyDoor.define(_LostleafLobby.GalleryLobbyDoor)
+    ],
+
+    region_connections = {
+      Main: Any(
+        tech.AnySuperJump,
+        carrying.JesterBoots,
+        item.DoubleJump & carrying.PlantAndClimbTree
+      )
+    }
+  ),
+
+  OuterWalls.define(
+    region_connections = {
+      Main: None,
+      Maze: Any(
+        item.Wings,
+        item.Bubble & tech.MomentumCancel
+      ),
+      LostleafCave: Any(
+        item.Wings,
+        item.Bubble,
+        tech.MomentumCancel
+      )
+    }
+  ),
+
+  Maze.define(
+    locations = {
+      "Card: Gallery Lobby - Hedge Maze": None,
+
+      "Gallery Lobby - Hedge Maze Preston": Any(
+        tech.AnySuperJump,
+        carrying.JesterBoots,
+        
+        event.Collected("Open Gallery Lobby Door"), # ???
+        
+        item.Bubble & Any(
+          item.DoubleJump,
+          item.Horn,
+          tech.GroundTailJump,
+          tech.AirTailJump & item.HighJump
+        ),
+
+        item.DoubleJump & Any(
+          item.Horn,
+          tech.GroundTailJump,
+          item.HighJump & item.Wings,
+          tech.AirTailJump & (item.Wings | item.HighJump)
+        )
+      )
+    },
+    region_connections = {
+      Main: Any(
+        tech.AnySuperJump,
+        carrying.JesterBoots,
+
+        event.Collected("Open Gallery Lobby Hedge Maze")
+      )
     }
   )
 ]
-
-  Start:
-    area_connections:
-      Lostleaf Lobby Connector:
-        or:
-          - tech: super_bounce
-          - tech: bubble_jump
-
-      Maze:
-        or:
-          - event: Open Gallery Lobby Hedge Maze
-          - tech: bubble_jump
-          - tech: super_bounce
-          - carrying: Jester Boots
-
-          - and:
-            - ability: Grounded Attack
-            - ability: High Jump
-            - ability: Double Jump
-          - and:
-            - ability: Hover
-            - ability: Double Jump
-          - comment: >
-              Launch onto the walls using the steep hill, then float over the
-              gate
-            and:
-            - movement: 3
-            - ability: Roll
-            - ability: Sprint
-            - or:
-              - ability: Hover
-              - and:
-                - ability: Bubble
-                - tech: momentum_cancel
-          - comment: >
-              Fastroll jump from the fountain walls, then hover over the gate
-            and:
-            - movement: 3
-            - ability: Roll
-            - ability: Aerial Attack
-            - ability: Hover
-
-  Lostleaf Lobby Connector:
-    area_connections:
-      Start:
-        or:
-          - tech: super_bounce
-          - tech: bubble_jump
-          - carrying: Jester Boots
-    
-    locations:
-      eggs:
-        Lostleaf Lobby Entryway:
-          null
-        
-    entrances:
-      Lostleaf Lobby Door:
-        to:
-          - Lostleaf Lobby
-          - Gallery Lobby Door
-
-  Outer Walls:
-    area_connections:
-      Maze:
-        or:
-          - ability: Hover
-          - and:
-            - tech: momentum_cancel
-            - ability: Bubble
-
-      Lostleaf Lobby Connector:
-        or:
-          - ability: Hover
-          - ability: Bubble
-    
-  Maze:
-    area_connections:
-      Start:
-        or:
-          - event: Open Gallery Lobby Hedge Maze
-          - tech: bubble_jump
-          - tech: super_bounce
-          - carrying: Jester Boots
-
-    locations:
-      events:
-        Hedge Maze Preston:
-          or:
-            - tech: super_bounce
-
-            - carrying: Jester Boots
-
-            - event: Open Gallery Lobby Door
-            - and:
-              - ability: Bubble
-              - or:
-                - ability: Double Jump
-                - ability: Dive
-                - ability: Grounded Attack
-                - and:
-                  - ability: Aerial Attack
-                  - ability: High Jump
-            - and:
-              - ability: Double Jump
-              - or:
-                - ability: Dive
-                - ability: Grounded Attack
-                - and:
-                  - ability: High Jump
-                  - ability: Hover
-                - and:
-                  - ability: Aerial Attack
-                  - or:
-                    - ability: High Jump
-                    - ability: Hover
-      cards:
-        Hedge Maze:
-          null

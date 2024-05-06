@@ -11,13 +11,13 @@ class Logic:
 class ChainableLogic(Logic):
   def __init__(self, *args: Logic) -> None:
     super().__init__()
-    unwrap: list[Logic] = []
+    unwrapped: list[Logic] = []
     for item in args:
       if isinstance(item, self.__class__):
-        unwrap.extend(item.operands)
+        unwrapped.extend(item.operands)
       else:
-        unwrap.append(item)
-    self.operands = unwrap
+        unwrapped.append(item)
+    self.operands = unwrapped
 
 class All(ChainableLogic):
   def __str__(self) -> str:
@@ -36,11 +36,4 @@ class Not(Logic):
 
 MaybeLogic: TypeAlias = Logic | None
 
-from .comment import *
-from .has import *
 from .objects import *
-from .quantities import *
-from .tech import *
-from .whackable import *
-from .difficulty import *
-from .templates import *

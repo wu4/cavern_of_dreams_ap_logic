@@ -1,4 +1,7 @@
-from ...logic import *
+from ...logic import Any, All, Logic
+from ...logic.objects import Region, Entrance, InternalEvent
+from ...logic.whackable import Whackable
+from ...logic import item, event
 
 class Main(Region): pass
 class Trees(Region): pass
@@ -39,15 +42,15 @@ regions = [
 
       SunCavernTeleport.define(
         to = _SunCavern.LostleafLobbyTeleport,
-        rule = Has("Open Lake Lobby Teleport")
+        rule = event.Collected("Open Lake Lobby Teleport")
       )
     ],
 
     region_connections = {
       BreakHiddenWall: CanBreakHiddenWall,
-      HiddenDoorway: Has(BrokeHiddenWall),
+      HiddenDoorway: event.Collected(BrokeHiddenWall),
 
-      Trees: Difficulty("Intermediate") | HighJumpObstacle
+      Trees: None # difficulty.Intermediate | templates.HighJumpObstacle
     },
   ),
   
@@ -80,7 +83,7 @@ regions = [
 
     region_connections = {
       BreakHiddenWall: CanBreakHiddenWall,
-      Main: Has(BrokeHiddenWall)
+      Main: event.Collected(BrokeHiddenWall)
     }
   )
 ]

@@ -27,7 +27,7 @@ regions = [
 
         All(
           Carrying("Jester Boots"),
-          HasDoubleJump | (Tech("tail_jump") & HasGroundTail)
+          HasDoubleJump | CanGroundTailJump
         ),
 
         All(
