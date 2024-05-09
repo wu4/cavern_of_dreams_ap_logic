@@ -15,7 +15,7 @@ from ..CAVE import LostleafLobby as _LostleafLobby
 regions = [
   Main.define(
     locations = {
-      AppleTree: HasCarry & Any(
+      AppleTreeLocation: HasCarry & Any(
         Comment(
           "Grab the apple near the Winky Tree",
           Difficulty("Intermediate")

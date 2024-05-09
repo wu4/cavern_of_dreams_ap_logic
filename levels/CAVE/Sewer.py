@@ -1,71 +1,77 @@
-from ...logic import *
+from ...logic import Entrance, Region, Any, All
+from ...logic.comment import Comment
+from ...logic import tech, item, carrying, difficulty
 
-class ArmadaLobbyDoor(Entrance): pass
-class GalleryDoor(Entrance): pass
+armada_lobby_door = Entrance("Armada Lobby Door")
+gallery_door = Entrance("Gallery Door")
 
-class ArmadaLobbySide(Region): pass
-class GallerySide(Region): pass
+from . import ArmadaLobby
+from ..GALLERY import WaterLobby
 
-from . import ArmadaLobby as _ArmadaLobby
-from ..GALLERY import WaterLobby as _WaterLobby
+armada_lobby_side = Region("Armada Lobby Side")
+gallery_side = Region ("Gallery Side")
 
 regions = [
-  ArmadaLobbySide.define(
+  armada_lobby_side.define(
     locations = {
       "Card: Sewer - Armada Lobby Side": None
     },
 
     entrances = [
-      ArmadaLobbyDoor.define(_ArmadaLobby.SewerDoor)
+      armada_lobby_door.define(ArmadaLobby.sewer_door)
     ],
 
     region_connections = {
-      GallerySide: Any(
-        CanSuperJump,
+      gallery_side: Any(
+        tech.any_super_jump,
 
-        HasDoubleJump & HasWings & (CanTailJump() | HasHorn),
+        item.double_jump & item.wings & (tech.air_tail_jump | tech.ground_tail_jump | item.horn),
 
         All(
-          Carrying("Jester Boots"),
-          HasDoubleJump | CanGroundTailJump
+          carrying.jester_boots,
+          item.double_jump | tech.ground_tail_jump
         ),
 
         All(
-          Difficulty("Hard"),
-          Carrying("Jester Boots") & CanHoverShoot & CanHoverJump
+          difficulty.hard,
+          carrying.jester_boots & tech.hover_jump & tech.hover_shoot
         )
       )
     }
   ),
 
-  GallerySide.define(
+  gallery_side.define(
     locations = {
       "Card: Sewer - Gallery of Nightmares Side": None
     },
 
     entrances = [
-      GalleryDoor.define(_WaterLobby.SewerDoor)
+      gallery_door.define(WaterLobby.sewer_door)
     ],
 
     region_connections = {
-      ArmadaLobbySide: Any(
-        Carrying("Jester Boots"),
+      armada_lobby_side: Any(
+        carrying.jester_boots,
 
-        CanSuperJump,
+        tech.any_super_jump,
         
-        HasDoubleJump & (HasWings | CanTailJump()),
+        item.double_jump & (item.wings | tech.ground_tail_jump | tech.air_tail_jump),
 
         Comment(
           "From the pipe: Hijump, instant hover + bubble float, turnaround (or z-target) bubble shots",
-          (Difficulty("Intermediate") | Tech("z_target")) & HasHighJump & CanBubbleJump & CanHoverJump & CanHoverShoot
+          All(
+            difficulty.intermediate | tech.z_target,
+            item.high_jump,
+            tech.bubble_jump,
+            tech.hover_jump,
+            tech.hover_shoot
+          )
         ),
 
-        CanTailJump(
-          groundedExtraLogic = HasBubble | HasWings,
-          aerialExtraLogic = HasWings | (HasBubble & HasHighJump)
-        ),
+        tech.ground_tail_jump & (item.bubble | item.wings),
+        tech.air_tail_jump & (item.wings | (item.bubble & item.high_jump)),
 
-        HasAirTail & HasRoll & HasSprint
+        item.air_tail & item.roll & item.sprint
       )
     }
   )

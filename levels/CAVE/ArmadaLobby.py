@@ -1,29 +1,29 @@
-from ...logic.objects import Region, Entrance, JesterBoots
+from ...logic.objects import Region, Entrance, JesterBootsLocation
 from ...logic.comment import Comment
 from ...logic import Any, All
 from ...logic import carrying, item, tech, difficulty, event, whackable
 
-class Main(Region): pass
-class JesterBootsPlatform(Region): pass
-class CannonLip(Region): pass
-class FlagPlatform(Region): pass
-class SewerConnector(Region): pass
-class EggPlatform(Region): pass
+sun_cavern_door = Entrance("Sun Cavern Door")
+earth_drone_cannon_shot = Entrance("Earth Drone Cannon Shot")
+earth_drone_cannon_shot_clip = Entrance("Earth Drone Cannon Shot (Clip)")
+sun_cavern_teleport = Entrance("Sun Cavern Teleport")
+sewer_door = Entrance("Sewer Door")
 
-class SunCavernDoor(Entrance): pass
-class EarthDroneCannonShot(Entrance): pass
-class EarthDroneCannonShotEarly(Entrance): pass
-class SunCavernTeleport(Entrance): pass
-class SewerDoor(Entrance): pass
+boots_location = JesterBootsLocation("Armada Lobby Boots")
 
-class ArmadaLobbyBoots(JesterBoots): pass
+from . import SunCavern
+from . import Sewer
+from ..MONSTER import EarthDrone
 
-from . import SunCavern as _SunCavern
-from . import Sewer as _Sewer
-from ..MONSTER import EarthDrone as _EarthDrone
+main = Region("Main")
+jester_boots_platform = Region("Jester Boots Platform")
+cannon_lip = Region("Cannon Lip")
+flag_platform = Region("Flag Platform")
+sewer_connector = Region("Sewer Connector")
+egg_platform = Region("Egg Platform")
 
 regions = [
-  Main.define(
+  main.define(
     locations = {
       "Shroom: Armada Lobby - Cliffside 1": None,
       "Shroom: Armada Lobby - Cliffside 2": None,
@@ -32,110 +32,110 @@ regions = [
       "Shroom: Armada Lobby - Cliffside 5": None,
 
       "Card: Armada Lobby - Jester Boots": Any(
-        carrying.JesterBoots,
-        tech.HoverShoot,
-        item.DoubleJump & Any(
-          tech.AbilityToggle & item.Wings,
-          item.AirTail & item.Roll
+        carrying.jester_boots,
+        tech.hover_shoot,
+        item.double_jump & Any(
+          tech.ability_toggle & item.wings,
+          item.air_tail & item.roll
         ),
         Comment(
           """
           Precise triple tail-bounce from the walls while z-targeting and
           drifting backwards with bubble float
           """,
-          item.AirTail & tech.ZTarget & tech.BubbleJump & Any(
-            difficulty.Intermediate & item.DoubleJump,
-            difficulty.Hard
+          item.air_tail & tech.z_target & tech.bubble_jump & Any(
+            difficulty.intermediate & item.double_jump,
+            difficulty.hard
           )
         )
       )
     },
 
     entrances = [
-      SunCavernDoor.define(
-        _SunCavern.ArmadaLobbyDoor,
-        tech.RollDisjoint(requires_tail = True) | carrying.NoJesterBoots
+      sun_cavern_door.define(
+        SunCavern.ArmadaLobbyDoor,
+        tech.roll_disjoint(requires_tail = True) | carrying.no_jester_boots
       ),
-      EarthDroneCannonShotEarly.define(
-        _EarthDrone.ArmadaLobbyDoor,
+      earth_drone_cannon_shot_clip.define(
+        EarthDrone.ArmadaLobbyDoor,
         Comment(
           "Early Armada",
-          tech.OutOfBounds
+          tech.out_of_bounds
         )
       )
     ],
 
     region_connections = {
-      JesterBootsPlatform: Any(
-        carrying.JesterBoots,
+      jester_boots_platform: Any(
+        carrying.jester_boots,
         event.Collected("Raise Armada Lobby Pipes"),
-        item.Wings,
-        item.DoubleJump,
-        tech.GroundTailJump,
-        tech.AirTailJump & (difficulty.Intermediate | item.HighJump),
-        item.AirTail & item.Roll,
-        item.Sprint & item.Horn,
+        item.wings,
+        item.double_jump,
+        tech.ground_tail_jump,
+        tech.air_tail_jump & (difficulty.intermediate | item.high_jump),
+        item.air_tail & item.roll,
+        item.sprint & item.horn,
         Comment(
           "Ejection launch from cannon wheel",
-          tech.EjectionLaunch & item.Roll
+          tech.ejection_launch & item.roll
         )
       ),
 
-      CannonLip: Any(
-        tech.AnySuperJump,
+      cannon_lip: Any(
+        tech.any_super_jump,
 
         All(
           event.Collected("Activate Armada Lobby Red Pipe Updraft"),
           event.Collected("Raise Armada Lobby Pipes"),
-          item.Wings
+          item.wings
         ),
 
-        item.DoubleJump & Any(
-          item.Horn,
-          item.HighJump,
-          item.Wings,
-          tech.GroundTailJump,
-          tech.AirTailJump & difficulty.Intermediate,
+        item.double_jump & Any(
+          item.horn,
+          item.high_jump,
+          item.wings,
+          tech.ground_tail_jump,
+          tech.air_tail_jump & difficulty.intermediate,
         )
       ),
 
-      FlagPlatform: Any(
-        carrying.JesterBoots,
-        tech.AnySuperJump,
+      flag_platform: Any(
+        carrying.jester_boots,
+        tech.any_super_jump,
 
-        item.DoubleJump,
-        item.Horn,
-        tech.GroundTailJump,
-        tech.AirTailJump & item.HighJump,
+        item.double_jump,
+        item.horn,
+        tech.ground_tail_jump,
+        tech.air_tail_jump & item.high_jump,
 
         Comment(
           "Hover shoot onto and from the entrance pipe",
-          tech.HoverShoot
+          tech.hover_shoot
         )
       )
     },
   ),
 
-  FlagPlatform.define(
+  flag_platform.define(
     region_connections = {
-      Main: None,
-      SewerConnector: item.Swim
+      main: None,
+      sewer_connector: item.swim
     }
   ),
 
-  SewerConnector.define(
+  sewer_connector.define(
     entrances = [
-      SewerDoor.define(_Sewer.ArmadaLobbyDoor)
+      sewer_door.define(Sewer.armada_lobby_door)
     ],
 
     region_connections = {
-      FlagPlatform: item.Swim
+      flag_platform: item.swim
     }
   ),
 
-  JesterBootsPlatform.define(
+  jester_boots_platform.define(
     locations = {
-      ArmadaLobbyBoots: whackable.Whackable(
+      boots_location: whackable.Whackable(
         ground_tail_works = True,
         air_tail_works = True,
         roll_works = True,
@@ -146,34 +146,34 @@ regions = [
 
     region_connections = {
       # death warp
-      Main: None
+      main: None
     }
   ),
 
-  CannonLip.define(
+  cannon_lip.define(
     entrances = [
-      SunCavernTeleport.define(
-        to = _SunCavern.ArmadaLobbyTeleport,
+      sun_cavern_teleport.define(
+        to = SunCavern.ArmadaLobbyTeleport,
         rule = event.Collected("Open Armada Lobby Teleport"),
       ),
-      EarthDroneCannonShot.define(
-        to = _EarthDrone.ArmadaLobbyDoor,
+      earth_drone_cannon_shot.define(
+        to = EarthDrone.ArmadaLobbyDoor,
         rule = None
       )
     ],
 
     region_connections = {
-      Main: None,
-      EggPlatform: Any(
-        carrying.JesterBoots,
-        tech.AnySuperJump,
+      main: None,
+      egg_platform: Any(
+        carrying.jester_boots,
+        tech.any_super_jump,
 
         Comment(
           """
           Hover jump towards the pipe, enable double-jump, then jump onto the
           pipe. Perform the same trick from the pipe to the ledge
           """,
-          tech.HoverJump & tech.AbilityToggle & item.DoubleJump
+          tech.hover_jump & tech.ability_toggle & item.double_jump
         ),
 
         Comment(
@@ -181,7 +181,7 @@ regions = [
           Double jump and hover-shoot to the pipe, then do the same to the
           platform
           """,
-          tech.HoverShoot & item.DoubleJump
+          tech.hover_shoot & item.double_jump
         ),
 
         Comment(
@@ -189,19 +189,19 @@ regions = [
           Speedy roll launch to the pipe and double jump, then do the same to
           the platform
           """,
-          item.AirTail & item.Roll & item.DoubleJump
+          item.air_tail & item.roll & item.double_jump
         )
       )
     }
   ),
 
-  EggPlatform.define(
+  egg_platform.define(
     locations = {
       "Egg: Armada Lobby - Cannon": None,
     },
 
     region_connections = {
-      CannonLip: None
+      cannon_lip: None
     }
   )
 ]

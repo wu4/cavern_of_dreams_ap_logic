@@ -78,7 +78,7 @@ regions = [
   
   HiddenDoorway.define(
     entrances = [
-      GalleryLobbyDoor.define(_GalleryLobby.LostleafLobbyDoor)
+      GalleryLobbyDoor.define(_GalleryLobby.lostleaf_lobby_door)
     ],
 
     region_connections = {
