@@ -3,27 +3,27 @@ from ...logic.comment import Comment
 from ...logic import All, Any
 from ...logic import event, tech, item, carrying, difficulty
 
-lostleaf_lobby_door = Entrance("Lostleaf Lobby Door")
-moon_cavern_door = Entrance("Moon Cavern Door")
-sun_cavern_teleport = Entrance("Sun Cavern Teleport")
+class Main(Region): pass
+class LostleafCave(Region): pass
+class OuterWalls(Region): pass
+class Maze(Region): pass
+
+class LostleafLobbyDoor(Entrance): pass
+class MoonCavernDoor(Entrance): pass
+class SunCavernTeleport(Entrance): pass
 class RainbowBench(Entrance): pass
 class FoyerDoor(Entrance): pass
 
-from . import LostleafLobby
-from . import SunCavern
-from . import MoonCavern
-from . import Rainbow
-from ..GALLERY import Foyer
+from . import LostleafLobby as _LostleafLobby
+from . import SunCavern as _SunCavern
+from . import MoonCavern as _MoonCavern
+from . import Rainbow as _Rainbow
+from ..GALLERY import Foyer as _Foyer
 
-main = Region("Main")
-lostleaf_cave = Region("Lostleaf Cave")
-outer_walls = Region("Outer Walls")
-maze = Region("Maze")
-
-# [UNFINISHED]
+[UNFINISHED]
 
 regions = [
-  main.define(
+  Main.define(
     locations = {
       "Card: Gallery Lobby - Behind the Gallery": None,
 
@@ -47,110 +47,110 @@ regions = [
     
     entrances = [
       FoyerDoor.define(
-        to = Foyer.gallery_lobby_door,
+        to = _Foyer.GalleryLobbyDoor,
         rule = event.Collected("Open Gallery Lobby Door")
       ),
       RainbowBench.define(
-        to = Rainbow.Well
+        to = _Rainbow.Well
       )
     ],
 
     region_connections = {
-      outer_walls: Any(
-        tech.any_super_jump,
-        carrying.jester_boots,
+      OuterWalls: Any(
+        tech.AnySuperJump,
+        carrying.JesterBoots,
 
-        difficulty.intermediate & item.roll & item.sprint
+        difficulty.Intermediate & item.Roll & item.Sprint
       ),
 
-      lostleaf_cave: Any(
-        tech.any_super_jump,
-        carrying.jester_boots
+      LostleafCave: Any(
+        tech.AnySuperJump,
+        carrying.JesterBoots
       ),
 
-      maze: Any(
-        tech.any_super_jump,
+      Maze: Any(
+        tech.AnySuperJump,
         event.Collected("Open Gallery Lobby Hedge Maze"),
-        carrying.jester_boots,
-
-        tech.ground_tail_jump & item.high_jump & item.double_jump,
-
+        carrying.JesterBoots,
+        
+        tech.GroundTailJump & item.HighJump & item.DoubleJump,
+        
         Comment(
           "Jump from the hedges",
-          item.wings & item.double_jump,
+          item.Wings & item.DoubleJump,
         ),
 
         Comment(
           "Fastroll jump from the fountain walls, then hover over the gate",
-          item.roll & item.air_tail & item.wings
+          item.Roll & item.AirTail & item.Wings
         )
       )
 
     }
   ),
 
-  lostleaf_cave.define(
+  LostleafCave.define(
     locations = {
       "Egg: Gallery Lobby - Lostleaf Lobby Entryway": None
     },
 
     entrances = [
-      lostleaf_lobby_door.define(LostleafLobby.GalleryLobbyDoor)
+      LostleafLobbyDoor.define(_LostleafLobby.GalleryLobbyDoor)
     ],
 
     region_connections = {
-      main: Any(
-        tech.any_super_jump,
-        carrying.jester_boots,
-        item.double_jump & carrying.PlantAndClimbTree
+      Main: Any(
+        tech.AnySuperJump,
+        carrying.JesterBoots,
+        item.DoubleJump & carrying.PlantAndClimbTree
       )
     }
   ),
 
-  outer_walls.define(
+  OuterWalls.define(
     region_connections = {
-      main: None,
-      maze: Any(
-        item.wings,
-        item.bubble & tech.momentum_cancel
+      Main: None,
+      Maze: Any(
+        item.Wings,
+        item.Bubble & tech.MomentumCancel
       ),
-      lostleaf_cave: Any(
-        item.wings,
-        item.bubble,
-        tech.momentum_cancel
+      LostleafCave: Any(
+        item.Wings,
+        item.Bubble,
+        tech.MomentumCancel
       )
     }
   ),
 
-  maze.define(
+  Maze.define(
     locations = {
       "Card: Gallery Lobby - Hedge Maze": None,
 
       "Gallery Lobby - Hedge Maze Preston": Any(
-        tech.any_super_jump,
-        carrying.jester_boots,
-
+        tech.AnySuperJump,
+        carrying.JesterBoots,
+        
         event.Collected("Open Gallery Lobby Door"), # ???
-
-        item.bubble & Any(
-          item.double_jump,
-          item.horn,
-          tech.ground_tail_jump,
-          tech.air_tail_jump & item.high_jump
+        
+        item.Bubble & Any(
+          item.DoubleJump,
+          item.Horn,
+          tech.GroundTailJump,
+          tech.AirTailJump & item.HighJump
         ),
 
-        item.double_jump & Any(
-          item.horn,
-          tech.ground_tail_jump,
-          item.high_jump & item.wings,
-          tech.air_tail_jump & (item.wings | item.high_jump)
+        item.DoubleJump & Any(
+          item.Horn,
+          tech.GroundTailJump,
+          item.HighJump & item.Wings,
+          tech.AirTailJump & (item.Wings | item.HighJump)
         )
       )
     },
     region_connections = {
-      main: Any(
-        tech.any_super_jump,
-        carrying.jester_boots,
+      Main: Any(
+        tech.AnySuperJump,
+        carrying.JesterBoots,
 
         event.Collected("Open Gallery Lobby Hedge Maze")
       )

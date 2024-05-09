@@ -23,7 +23,7 @@ regions = [
 
     entrances = [
       ArmadaLobbyDoor.define(
-        to = _ArmadaLobby.earth_drone_cannon_shot,
+        to = _ArmadaLobby.EarthDroneCannonShot,
         rule = None
       ),
       SkyDoor.define(

@@ -13,5 +13,5 @@ class Difficulty(Logic):
     super().__init__()
     self.difficulty = difficulty
     
-intermediate = Difficulty("Intermediate")
-hard = Difficulty("Hard")
+Intermediate = Difficulty("Intermediate")
+Hard = Difficulty("Hard")

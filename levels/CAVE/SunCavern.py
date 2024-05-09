@@ -59,7 +59,7 @@ regions = [
       ),
 
       ArmadaLobbyTeleport.define(
-        to = _ArmadaLobby.sun_cavern_teleport,
+        to = _ArmadaLobby.SunCavernTeleport,
         rule = Has("Open Armada Lobby Teleport")
       ),
 
@@ -69,7 +69,7 @@ regions = [
       ),
 
       GalleryLobbyTeleport.define(
-        to = _GalleryLobby.sun_cavern_teleport,
+        to = _GalleryLobby.SunCavernTeleport,
         rule = Has("Open Gallery Lobby Teleport")
       ),
     ],
@@ -266,7 +266,7 @@ regions = [
     
     entrances = [
       ArmadaLobbyDoor.define(
-        to = _ArmadaLobby.sun_cavern_door
+        to = _ArmadaLobby.SunCavernDoor
       )
     ],
 

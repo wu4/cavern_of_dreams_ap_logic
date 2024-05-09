@@ -2,81 +2,61 @@ from __future__ import annotations
 from . import MaybeLogic as _MaybeLogic
 from ..generated import AnyLocation
 
-from typing import Self, TypeAlias
+from typing import TypeAlias
 
 class InternalEvent:
-  def __init__(self, pretty_name: str):
-    super().__init__()
-    self.pretty_name = pretty_name
+  pass
 
 class CarryableLocation:
-  def __init__(self, pretty_name: str):
-    super().__init__()
-    self.pretty_name = pretty_name
-
-class AppleTreeLocation(CarryableLocation):
   pass
 
-class JesterBootsLocation(CarryableLocation):
+class AppleTree(CarryableLocation):
   pass
 
-LocationType: TypeAlias = AnyLocation | InternalEvent | CarryableLocation
+class JesterBoots(CarryableLocation):
+  pass
+
+LocationType: TypeAlias = AnyLocation | type[InternalEvent] | type[CarryableLocation]
 
 class Region:
-  def __init__(
-    self,
-    pretty_name: str,
-  ):
-    super().__init__()
-    self._is_defined = False
-    self.pretty_name = pretty_name
+  _is_defined: bool = False
 
-    self.region_connections = {}
-    self.entrances = []
-    self.locations = {}
-
+  @classmethod
   def define(
-    self,
-    region_connections: dict[Region, _MaybeLogic] | None = None,
-    entrances: list[Entrance] | None = None,
+    cls,
+    region_connections: dict[type[Region], _MaybeLogic] | None = None,
+    entrances: list[type[Entrance]] | None = None,
     locations: dict[LocationType, _MaybeLogic] | None = None
-  ) -> Self:
-    assert not self._is_defined, f"Tried to redefine {self.pretty_name}"
-    self._is_defined = True
+  ) -> type[Region]:
+    assert not cls._is_defined, f"Tried to redefine {cls.__name__}"
 
-    if region_connections is not None:
-      self.region_connections = region_connections
-    if entrances is not None:
-      self.entrances = entrances
-    if locations is not None:
-      self.locations = locations
+    if region_connections is None: region_connections = {}
+    if entrances is None: entrances = []
+    if locations is None: locations = {}
 
-    for entrance in self.entrances:
-      entrance.set_containing_region(self)
+    cls._is_defined = True
 
-    return self
+    cls.region_connections = region_connections
+    cls.entrances = entrances
+    cls.locations = locations
+    for entrance in entrances:
+      entrance.set_containing_region(cls)
+
+    return cls
 
 class Entrance:
-  def set_containing_region(self, region: Region):
-    self.containing_region = region
+  _is_defined: bool = False
 
-  def __init__(
-    self,
-    pretty_name: str
-  ):
-    super().__init__()
-    self.to: Entrance
-    self.rule: _MaybeLogic
-    self.containing_region: Region
+  @classmethod
+  def set_containing_region(cls, region: type[Region]):
+    cls.containing_region = region
 
-    self._is_defined = False
-    self.pretty_name = pretty_name
+  @classmethod
+  def define(cls, to: type[Entrance], rule: _MaybeLogic = None) -> type[Entrance]:
+    assert not cls._is_defined, f"Tried to redefine {cls.__name__}"
+    cls._is_defined = True
 
-  def define(self, to: Entrance, rule: _MaybeLogic = None) -> Self:
-    assert not self._is_defined, f"Tried to redefine {self.pretty_name}"
-    self._is_defined = True
+    cls.to = to
+    cls.rule = rule
 
-    self.to = to
-    self.rule = rule
-
-    return self
+    return cls

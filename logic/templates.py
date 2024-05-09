@@ -1,12 +1,12 @@
 from . import Any
-from .item import high_jump, horn, double_jump
-from .tech import any_super_jump, ground_tail_jump, air_tail_jump
+from .item import HighJump, Horn, DoubleJump
+from .tech import AnySuperJump, GroundTailJump, AirTailJump
 
 HighJumpObstacle = Any(
-  high_jump,
-  horn,
-  double_jump,
-  ground_tail_jump,
-  air_tail_jump,
-  any_super_jump
+  HighJump,
+  Horn,
+  DoubleJump,
+  GroundTailJump,
+  AirTailJump,
+  AnySuperJump
 )

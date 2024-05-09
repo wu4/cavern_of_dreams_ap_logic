@@ -25,27 +25,27 @@ class Tech(Logic):
   @override
   def __str__(self) -> str:
     return f"Tech: {self.tech}"
-
+  
   def __init__(self, tech: TechType) -> None:
     self.tech = tech
     super().__init__()
 
-ejection_launch: Logic = Tech("ejection_launch")
-z_target: Logic = Tech("z_target")
-momentum_cancel: Logic = Tech("momentum_cancel")
-ability_toggle: Logic = Tech("ability_toggle")
-out_of_bounds: Logic = Tech("out_of_bounds")
+EjectionLaunch: Logic = Tech("ejection_launch")
+ZTarget: Logic = Tech("z_target")
+MomentumCancel: Logic = Tech("momentum_cancel")
+AbilityToggle: Logic = Tech("ability_toggle")
+OutOfBounds: Logic = Tech("out_of_bounds")
 
-hover_jump: Logic = Tech("hover_jump") & item.wings
-bubble_jump: Logic = Tech("bubble_jump") & item.bubble
-hover_shoot: Logic = Tech("hover_shoot") & item.wings & item.bubble
-super_bounce: Logic = Tech("super_bounce") & item.SuperBounce & item.roll & item.air_tail
-super_bubble_jump: Logic = Tech("super_bubble_jump") & item.SuperBubbleJump & item.roll & item.bubble
+HoverJump: Logic = Tech("hover_jump") & item.Wings
+BubbleJump: Logic = Tech("bubble_jump") & item.Bubble
+HoverShoot: Logic = Tech("hover_shoot") & item.Wings & item.Bubble
+SuperBounce: Logic = Tech("super_bounce") & item.SuperBounce & item.Roll & item.AirTail
+SuperBubbleJump: Logic = Tech("super_bubble_jump") & item.SuperBubbleJump & item.Roll & item.Bubble
 
-def roll_disjoint(requires_tail: bool = False) -> Logic:
-  ret = Tech("roll_disjoint") & item.roll
+def RollDisjoint(requires_tail: bool = False) -> Logic:
+  ret = Tech("roll_disjoint") & item.Roll
   if requires_tail:
-    ret &= (item.ground_tail | item.air_tail)
+    ret &= (item.GroundTail | item.AirTail)
   return ret
 
 DamageBoost: Logic = Tech("damage_boost") & carrying.NoTempItems
@@ -54,7 +54,7 @@ DamageBoost: Logic = Tech("damage_boost") & carrying.NoTempItems
 #   if logic is not None: ret &= logic
 #   return ret
 
-ground_tail_jump: Logic = Tech("ground_tail_jump") & item.ground_tail
-air_tail_jump: Logic = Tech("air_tail_jump") & item.air_tail
+GroundTailJump: Logic = Tech("ground_tail_jump") & item.GroundTail
+AirTailJump: Logic = Tech("air_tail_jump") & item.AirTail
 
-any_super_jump = super_bounce | super_bubble_jump
+AnySuperJump = SuperBounce | SuperBubbleJump
