@@ -1,4 +1,4 @@
-from typing import TypeAlias
+from typing import TypeAlias, override
 
 from . import Logic
 from . import carrying
@@ -7,6 +7,7 @@ from ..generated import abilityItem, nonVanillaAbilityItem, pickupItem
 HasItemType: TypeAlias = abilityItem | nonVanillaAbilityItem | pickupItem
 
 class Collected(Logic):
+  @override
   def __str__(self) -> str:
     return f"Has {self.item}"
   

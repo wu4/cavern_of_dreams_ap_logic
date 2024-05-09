@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TypeAlias
+from typing import TypeAlias, override
 
 class Logic:
   def __and__(self, other: Logic) -> All:
@@ -20,18 +20,22 @@ class ChainableLogic(Logic):
     self.operands = unwrapped
 
 class All(ChainableLogic):
+  @override
   def __str__(self) -> str:
     return "(" + (" && ".join(map(str, self.operands))) + ")"
 
 class Any(ChainableLogic):
+  @override
   def __str__(self) -> str:
     return "(" + (" || ".join(map(str, self.operands))) + ")"
   
 class Not(Logic):
+  @override
   def __str__(self) -> str:
     return f"Not {self.logic}"
 
   def __init__(self, logic: Logic) -> None:
+    super().__init__()
     self.logic = logic
 
 MaybeLogic: TypeAlias = Logic | None

@@ -9,6 +9,7 @@ class Whackable(Logic):
     throwable_works: bool = False,
     horn_works: bool = False
   ):
+    super().__init__()
     self.ground_tail_works = ground_tail_works
     self.air_tail_works = air_tail_works
     self.roll_works = roll_works

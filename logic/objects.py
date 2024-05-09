@@ -3,7 +3,6 @@ from . import MaybeLogic as _MaybeLogic
 from ..generated import AnyLocation
 
 from typing import TypeAlias
-from dataclasses import dataclass
 
 class InternalEvent:
   pass
@@ -25,24 +24,29 @@ class Region:
   @classmethod
   def define(
     cls,
-    region_connections: dict[type[Region], _MaybeLogic] = {},
-    entrances: list[type[Entrance]] = [],
-    locations: dict[LocationType, _MaybeLogic] = {}
+    region_connections: dict[type[Region], _MaybeLogic] | None = None,
+    entrances: list[type[Entrance]] | None = None,
+    locations: dict[LocationType, _MaybeLogic] | None = None
   ) -> type[Region]:
     assert not cls._is_defined, f"Tried to redefine {cls.__name__}"
+
+    if region_connections is None: region_connections = {}
+    if entrances is None: entrances = []
+    if locations is None: locations = {}
+
     cls._is_defined = True
 
     cls.region_connections = region_connections
-    cls.locations = locations
     cls.entrances = entrances
+    cls.locations = locations
     for entrance in entrances:
       entrance.set_containing_region(cls)
-    
+
     return cls
 
 class Entrance:
   _is_defined: bool = False
-  
+
   @classmethod
   def set_containing_region(cls, region: type[Region]):
     cls.containing_region = region

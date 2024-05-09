@@ -1,4 +1,4 @@
-from typing import TypeAlias
+from typing import TypeAlias, override
 
 from . import Logic
 from .objects import InternalEvent
@@ -7,6 +7,7 @@ from ..generated import eventItem, teleportItem
 HasEventType: TypeAlias = eventItem | teleportItem | type[InternalEvent]
 
 class Collected(Logic):
+  @override
   def __str__(self) -> str:
     return f"Has {self.event}"
   

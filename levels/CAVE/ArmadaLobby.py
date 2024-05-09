@@ -3,7 +3,6 @@ from ...logic.comment import Comment
 from ...logic import Any, All
 from ...logic import carrying, item, tech, difficulty, event, whackable
 
-
 class Main(Region): pass
 class JesterBootsPlatform(Region): pass
 class CannonLip(Region): pass
@@ -39,7 +38,8 @@ regions = [
           tech.AbilityToggle & item.Wings,
           item.AirTail & item.Roll
         ),
-        Comment("""
+        Comment(
+          """
           Precise triple tail-bounce from the walls while z-targeting and
           drifting backwards with bubble float
           """,
@@ -95,7 +95,7 @@ regions = [
           item.HighJump,
           item.Wings,
           tech.GroundTailJump,
-          tech.AirTailJump & difficulty.Intermediate
+          tech.AirTailJump & difficulty.Intermediate,
         )
       ),
 
@@ -154,7 +154,7 @@ regions = [
     entrances = [
       SunCavernTeleport.define(
         to = _SunCavern.ArmadaLobbyTeleport,
-        rule = event.Collected("Open Armada Lobby Teleport")
+        rule = event.Collected("Open Armada Lobby Teleport"),
       ),
       EarthDroneCannonShot.define(
         to = _EarthDrone.ArmadaLobbyDoor,
@@ -167,7 +167,7 @@ regions = [
       EggPlatform: Any(
         carrying.JesterBoots,
         tech.AnySuperJump,
-        
+
         Comment(
           """
           Hover jump towards the pipe, enable double-jump, then jump onto the
@@ -175,7 +175,7 @@ regions = [
           """,
           tech.HoverJump & tech.AbilityToggle & item.DoubleJump
         ),
-    
+
         Comment(
           """
           Double jump and hover-shoot to the pipe, then do the same to the
@@ -194,10 +194,10 @@ regions = [
       )
     }
   ),
-  
+
   EggPlatform.define(
     locations = {
-      "Egg: Armada Lobby - Cannon": None
+      "Egg: Armada Lobby - Cannon": None,
     },
 
     region_connections = {

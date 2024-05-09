@@ -12,7 +12,7 @@ class ConnectionParser:
 
     for inner_region in region.region_connections:
       self.parse(inner_region)
-      
+
     for entrance in region.entrances:
       self.parse(entrance.to.containing_region)
 

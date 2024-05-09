@@ -1,4 +1,4 @@
-from typing import TypeAlias, Literal
+from typing import TypeAlias, Literal, override
 from . import Logic
 
 CarryingType: TypeAlias = Literal[
@@ -9,6 +9,7 @@ CarryingType: TypeAlias = Literal[
 ]
 
 class Carrying(Logic):
+  @override
   def __str__(self) -> str:
     return f"Carrying {self.carrying}"
   
@@ -17,14 +18,17 @@ class Carrying(Logic):
     super().__init__()
 
 class _NoThrowables(Logic):
+  @override
   def __str__(self) -> str:
     return "Not carrying any throwables"
 
 class _NoJesterBoots(Logic):
+  @override
   def __str__(self) -> str:
     return "Not carrying Jester Boots"
   
 class _PlantAndClimbTree(Logic):
+  @override
   def __str__(self) -> str:
     return "Climb planted tree"
 

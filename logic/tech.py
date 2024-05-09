@@ -1,7 +1,7 @@
-from . import Logic, MaybeLogic, All, Any
+from . import Logic
 from . import item, carrying
 
-from typing import TypeAlias, Literal
+from typing import TypeAlias, Literal, override
 
 TechType: TypeAlias = Literal[
   "ejection_launch",
@@ -22,6 +22,7 @@ TechType: TypeAlias = Literal[
 ]
 
 class Tech(Logic):
+  @override
   def __str__(self) -> str:
     return f"Tech: {self.tech}"
   
