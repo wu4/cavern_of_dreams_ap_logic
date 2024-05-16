@@ -28,7 +28,7 @@ from . import GalleryLobby as _GalleryLobby
 regions = [
   Main.define(
     locations = {
-      "Card: Moon Cavern - Dive": item.Swim & Whackable(horn_works = True),
+      "Card: Moon Cavern - Dive": item.swim & Whackable(horn_works = True),
       
       "Shroom: Moon Cavern - Lava Platforms 1": None,
       "Shroom: Moon Cavern - Lava Platforms 2": None,
@@ -37,7 +37,7 @@ regions = [
 
       "Shroom: Moon Cavern - Potionfall": None,
       
-      SolvedDivePuzzle: item.Horn
+      SolvedDivePuzzle: item.horn
     },
 
     entrances = [
@@ -59,57 +59,57 @@ regions = [
       ),
 
       DivePuzzleLedge: Any(
-        tech.AnySuperJump,
-        carrying.JesterBoots,
+        tech.any_super_jump,
+        carrying.jester_boots,
 
-        item.Horn,
+        item.horn,
         
         Comment(
           "Extinguish the Keehee and use him as a platform",
-          carrying.Potion | item.Bubble
+          carrying.potion | item.bubble
         ),
 
-        item.DoubleJump & (tech.GroundTailJump | tech.AirTailJump),
+        item.double_jump & (tech.ground_tail_jump | tech.air_tail_jump),
 
-        item.Wings & Any(
-          item.DoubleJump,
+        item.wings & Any(
+          item.double_jump,
           All(
-            tech.GroundTailJump,
-            tech.HoverJump & item.HighJump
+            tech.ground_tail_jump,
+            tech.wing_jump & item.high_jump
           )
         )
       ),
 
       UpperConnector: Any(
-        templates.HighJumpObstacle,
+        templates.high_jump_obstacle,
 
         Comment(
           "Bouncy mushroom + Keehee damage boost",
-          tech.DamageBoost
+          tech.damage_boost
         ),
 
         Comment(
           "Bouncy mushroom + Z-target bubble shooting",
-          tech.ZTarget & tech.BubbleJump
+          tech.z_target & tech.bubble_jump
         ),
 
         Comment(
           "Hover from bouncy shroom",
-          item.Wings
+          item.wings
         )
       ),
 
       Upper: Any(
-        tech.AnySuperJump,
+        tech.any_super_jump,
         
         Comment(
           "Hover from bouncy shroom",
-          item.Wings
+          item.wings
         ),
 
         Comment(
           "Bouncy mushroom + Keehee damage boost while bubble floating",
-          tech.DamageBoost & tech.BubbleJump
+          tech.damage_boost & tech.bubble_jump
         )
       ),
 
@@ -140,17 +140,17 @@ regions = [
     region_connections = {
       Main: None,
       
-      Upper: templates.HighJumpObstacle
+      Upper: templates.high_jump_obstacle
     }
   ),
 
   Upper.define(
     locations = {
       "Egg: Moon Cavern - Keehee Climb": Any(
-        tech.AnySuperJump,
-        carrying.JesterBoots,
+        tech.any_super_jump,
+        carrying.jester_boots,
 
-        item.Climb & item.Wings & (item.HighJump | item.Horn),
+        item.climb & item.wings & (item.high_jump | item.horn),
       ),
 
       "Card: Moon Cavern - Statue": None,
@@ -186,11 +186,11 @@ regions = [
       NightmareLobbyDoorway: None,
 
       Main: Any(
-        templates.HighJumpObstacle,
+        templates.high_jump_obstacle,
 
         Comment(
           "Boost off of the Keehee to the Dive Holes side",
-          tech.DamageBoost & (difficulty.Hard | tech.BubbleJump)
+          tech.damage_boost & (difficulty.hard | tech.bubble_jump)
         )
       )
     }
@@ -198,7 +198,7 @@ regions = [
 
   NightmareLobbyDoorway.define(
     locations = {
-      DousedGalleryLobbyFlame: carrying.Potion | item.Bubble
+      DousedGalleryLobbyFlame: carrying.potion | item.bubble
     },
 
     entrances = [
@@ -206,7 +206,7 @@ regions = [
         _GalleryLobby.MoonCavernDoor,
         Any(
           event.Collected(DousedGalleryLobbyFlame),
-          difficulty.Hard & tech.DamageBoost & tech.MomentumCancel
+          difficulty.hard & tech.damage_boost & tech.momentum_cancel
         )
       )
     ],
@@ -222,7 +222,7 @@ regions = [
     },
 
     region_connections = {
-      Main: item.Climb
+      Main: item.climb
     }
   )
 ]

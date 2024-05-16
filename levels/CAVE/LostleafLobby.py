@@ -1,16 +1,22 @@
-from ...logic import Any, All, Logic
+from ...logic import Logic
 from ...logic.objects import Region, Entrance, InternalEvent
 from ...logic.whackable import Whackable
-from ...logic import item, event
+from ...logic import event
 
-class Main(Region): pass
-class Trees(Region): pass
-class HiddenDoorway(Region): pass
+# FINISHED
 
 class SunCavernDoor(Entrance): pass
 class LostleafLakeDoor(Entrance): pass
 class GalleryLobbyDoor(Entrance): pass
 class SunCavernTeleport(Entrance): pass
+
+from . import SunCavern
+from . import GalleryLobby
+from ..LAKE import LostleafLake
+
+class Main(Region): pass
+class Trees(Region): pass
+class HiddenDoorway(Region): pass
 
 # this wall is unique in that it can be broken from both directions
 class BrokeHiddenWall(InternalEvent): pass
@@ -23,10 +29,6 @@ CanBreakHiddenWall: Logic = Whackable(
   throwable_works = True
 )
 
-from . import SunCavern as _SunCavern
-from . import GalleryLobby as _GalleryLobby
-from ..LAKE import LostleafLake as _LostleafLake
-
 regions = [
   Main.define(
     locations = {
@@ -36,12 +38,12 @@ regions = [
     },
 
     entrances = [
-      SunCavernDoor.define(_SunCavern.LostleafLobbyDoor),
+      SunCavernDoor.define(SunCavern.LostleafLobbyDoor),
 
-      LostleafLakeDoor.define(_LostleafLake.LostleafLobbyDoor),
+      LostleafLakeDoor.define(LostleafLake.LostleafLobbyDoor),
 
       SunCavernTeleport.define(
-        to = _SunCavern.LostleafLobbyTeleport,
+        to = SunCavern.LostleafLobbyTeleport,
         rule = event.Collected("Open Lake Lobby Teleport")
       )
     ],
@@ -53,7 +55,7 @@ regions = [
       Trees: None # difficulty.Intermediate | templates.HighJumpObstacle
     },
   ),
-  
+
   BreakHiddenWall.define(
     locations = {
       BrokeHiddenWall: None
@@ -65,9 +67,9 @@ regions = [
       "Shroom: Lostleaf Lobby - Trees 1": None,
       "Shroom: Lostleaf Lobby - Trees 2": None,
       "Shroom: Lostleaf Lobby - Trees 3": None,
-      
+
       "Egg: Lostleaf Lobby - Branches": None,
-      
+
       "Card: Lostleaf Lobby - Branches": None,
     },
 
@@ -75,10 +77,10 @@ regions = [
       Main: None
     }
   ),
-  
+
   HiddenDoorway.define(
     entrances = [
-      GalleryLobbyDoor.define(_GalleryLobby.LostleafLobbyDoor)
+      GalleryLobbyDoor.define(GalleryLobby.LostleafLobbyDoor)
     ],
 
     region_connections = {

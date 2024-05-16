@@ -5,7 +5,7 @@ class HasEggs(Logic):
   @override
   def __str__(self) -> str:
     return f"Has at least {self.eggs} eggs"
-  
+
   def __init__(self, eggs: int) -> None:
     self.eggs = eggs
     super().__init__()
@@ -14,7 +14,7 @@ class HasHearts(Logic):
   @override
   def __str__(self) -> str:
     return f"Has at least {self.hearts} hearts"
-  
+
   def __init__(self, hearts: int) -> None:
     self.hearts = hearts
     super().__init__()

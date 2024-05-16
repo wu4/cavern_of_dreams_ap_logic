@@ -1,17 +1,4 @@
-from . import Logic
+from .option import Option
 
-from typing import TypeAlias, Literal, override
-
-DifficultyType: TypeAlias = Literal["Intermediate", "Hard"]
-
-class Difficulty(Logic):
-  @override
-  def __str__(self) -> str:
-    return f"Difficulty: {self.difficulty}"
-  
-  def __init__(self, difficulty: DifficultyType) -> None:
-    super().__init__()
-    self.difficulty = difficulty
-    
-Intermediate = Difficulty("Intermediate")
-Hard = Difficulty("Hard")
+intermediate = Option("difficulty", 1)
+hard = Option("difficulty", 2)

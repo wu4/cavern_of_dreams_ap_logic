@@ -32,15 +32,15 @@ class _PlantAndClimbTree(Logic):
   def __str__(self) -> str:
     return "Climb planted tree"
 
-JesterBoots = Carrying("Jester Boots")
-Apple = Carrying("Apple")
-Potion = Carrying("Potion")
-BubbleConch = Carrying("Bubble Conch")
+jester_boots = Carrying("Jester Boots")
+apple = Carrying("Apple")
+potion = Carrying("Potion")
+bubble_conch = Carrying("Bubble Conch")
 
-NoThrowables = _NoThrowables()
+no_throwables = _NoThrowables()
 
-NoJesterBoots = _NoJesterBoots()
+no_jester_boots = _NoJesterBoots()
 
-PlantAndClimbTree = _PlantAndClimbTree()
+plant_and_climb_tree = _PlantAndClimbTree()
 
-NoTempItems = NoThrowables & NoJesterBoots
+no_temp_items = no_throwables & no_jester_boots

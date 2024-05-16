@@ -1,6 +1,7 @@
 import csv
 from dataclasses import dataclass
-from typing import cast, Iterable, Callable, Literal
+from typing import Callable, Literal, cast
+from collections.abc import Iterable
 
 CHECK_DUPLICATE_FIELDS = False
 
@@ -15,6 +16,7 @@ class CheckDataWithLocation(CheckData):
 
 class FlagList:
     def __init__(self, datas: Iterable[CheckData]) -> None:
+        super().__init__()
         self.items: dict[str, str] = {}
         for data in datas:
             self.items[data.flag_name] = data.item_name
@@ -26,7 +28,7 @@ class FlagListWithLocations(FlagList):
         self.locations: dict[str, str] = {}
 
         for data in datas:
-            self.locations[f"LOCATION_{data.flag_name}"] = cast(str, data.location_name)
+            self.locations[f"LOCATION_{data.flag_name}"] = data.location_name
 
 @dataclass
 class FlagListIteration:
@@ -70,11 +72,11 @@ def read_locations_csv(filename: str) -> dict[str, FlagList]:
     with open(filename, "r") as csv_file:
         reader = csv.reader(csv_file)
         current_category: str | None = None
-        accum = []
+        accum: list[CheckData] = []
         has_locations = False
         def consume_category():
             if current_category is not None:
-                location_datas[current_category] = FlagListWithLocations(accum) if has_locations else FlagList(accum)
+                location_datas[current_category] = FlagListWithLocations(cast(list[CheckDataWithLocation], accum)) if has_locations else FlagList(accum)
 
         for row in reader:
             columns = len(row)

@@ -17,6 +17,7 @@ class ConnectionParser:
       self.parse(entrance.to.containing_region)
 
   def __init__(self) -> None:
+    super().__init__()
     self.seen_regions: set[type[Region]] = set()
     self.seen_entrances: set[type[Entrance]] = set()
 

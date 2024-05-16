@@ -1,4 +1,7 @@
-from ...logic import *
+from logic.comment import Comment
+from ...logic import Any, Region, Entrance
+from ...logic import item, tech, carrying, difficulty
+
 
 class Main(Region): pass
 class MoonLedges(Region): pass
@@ -7,35 +10,35 @@ class Topside(Region): pass
 
 class Well(Entrance): pass
 
-from ..CAVE.GalleryLobby import RainbowBench as _RainbowBench
+from ..CAVE import GalleryLobby
 
 regions = [
   Main.define(
     region_connections = {
       MoonLedges: Any(
-        CanSuperJump,
+        tech.any_super_jump,
 
         Comment(
           "Build height on the outside of the gate",
-          Carrying("Jester Boots")
+          carrying.jester_boots
         ),
 
         Comment(
           "Conk on the geometry next to the ledge to short hop, then hijump",
-          HasHighJump,
+          item.high_jump
         ),
 
-        HasHorn,
+        item.horn,
 
         Comment(
           "Jump from the well",
-          CanGroundTailJump & HasDoubleJump,
+          tech.ground_tail_jump & item.double_jump,
         ),
       )
     },
 
     entrances = [
-      Well.define(_RainbowBench)
+      Well.define(GalleryLobby.RainbowBench)
     ]
   ),
 
@@ -44,17 +47,17 @@ regions = [
       Main: None,
 
       ShroomLedges: Any(
-        CanSuperJump,
+        tech.any_super_jump,
 
-        Carrying("Jester Boots"),
+        carrying.jester_boots,
 
-        HasBubble,
-        
-        HasDoubleJump,
-        
-        HasAirTail & HasRoll & Difficulty("Hard"),
+        item.bubble,
 
-        HasHorn & Tech("momentum_cancel")
+        item.double_jump,
+
+        item.air_tail & item.roll & difficulty.hard,
+
+        item.horn & tech.momentum_cancel
       )
     }
   ),
@@ -67,25 +70,25 @@ regions = [
         Comment(
           """Walk all of the way out of bounds to the green dragon, then
           carefully walk off to gain enough height for the final platform""",
-          Difficulty("Hard") & Carrying("Jester Boots"),
+          difficulty.hard & carrying.jester_boots
         ),
-        
 
-        HasHorn,
-        
+
+        item.horn,
+
         Comment(
           "Double jump after conking on the ceiling from the bouncy shroom",
-          HasDoubleJump,
+          item.double_jump
         ),
-        
-        HasHighJump & HasDoubleJump & Tech("momentum_cancel"),
+
+        item.high_jump & item.double_jump & tech.momentum_cancel,
 
         Comment(
           "Speedy roll, then jump into the bouncy shroom",
-          HasAirTail & HasRoll,
+          item.air_tail & item.roll,
         ),
 
-        Tech("z_target") & HasBubble
+        tech.z_target & tech.bubble_jump
       )
     }
   ),
@@ -97,15 +100,15 @@ regions = [
 
     locations = {
       "Card: Dream": Any(
-        CanSuperJump,
+        tech.any_super_jump,
 
-        HasHighJump,
+        item.high_jump,
 
-        HasDoubleJump,
+        item.double_jump,
 
-        HasAirTail & HasRoll,
-        
-        HasHorn
+        item.air_tail & item.roll,
+
+        item.horn
       )
     }
   )

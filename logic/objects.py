@@ -10,10 +10,10 @@ class InternalEvent:
 class CarryableLocation:
   pass
 
-class AppleTree(CarryableLocation):
+class AppleTreeLocation(CarryableLocation):
   pass
 
-class JesterBoots(CarryableLocation):
+class JesterBootsLocation(CarryableLocation):
   pass
 
 LocationType: TypeAlias = AnyLocation | type[InternalEvent] | type[CarryableLocation]

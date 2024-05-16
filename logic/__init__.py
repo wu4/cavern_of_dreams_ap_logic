@@ -28,7 +28,7 @@ class Any(ChainableLogic):
   @override
   def __str__(self) -> str:
     return "(" + (" || ".join(map(str, self.operands))) + ")"
-  
+
 class Not(Logic):
   @override
   def __str__(self) -> str:

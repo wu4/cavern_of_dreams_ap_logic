@@ -1,15 +1,10 @@
-from ...logic import *
-
-class Main(Region): pass
-class ArmadaLobbyRoom(Region): pass
-class HighJumpLedge(Region): pass
-class VineLedge(Region): pass
-class TailSpinLedge(Region): pass
-class MightyWallLedge(Region): pass
-class WaterfallLedge(Region): pass
-class DucklingsLedge(Region): pass
-class DucklingsDoorway(Region): pass
-class MoonCavernHeartDoorway(Region): pass
+from ...logic import templates
+from ...logic.whackable import Whackable
+from ...logic import Region, Entrance, InternalEvent
+from ...logic import All, Any
+from ...logic.quantities import HasEggs, HasHearts, HasShrooms
+from ...logic.comment import Comment
+from ...logic import item, carrying, difficulty, tech, event
 
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
@@ -23,12 +18,23 @@ class GalleryLobbyTeleport(Entrance): pass
 
 class MoonCavernHeartDoorOpened(InternalEvent): pass
 
-from . import LostleafLobby as _LostleafLobby
-from . import ArmadaLobby as _ArmadaLobby
-from . import PalaceLobby as _PalaceLobby
-from . import GalleryLobby as _GalleryLobby
-from ..LAKE import LostleafLake as _LostleafLake
-from . import MoonCavern as _MoonCavern
+from . import LostleafLobby
+from . import ArmadaLobby
+from . import PalaceLobby
+from . import GalleryLobby
+from ..LAKE import LostleafLake
+from . import MoonCavern
+
+class Main(Region): pass
+class ArmadaLobbyRoom(Region): pass
+class HighJumpLedge(Region): pass
+class VineLedge(Region): pass
+class TailSpinLedge(Region): pass
+class MightyWallLedge(Region): pass
+class WaterfallLedge(Region): pass
+class DucklingsLedge(Region): pass
+class DucklingsDoorway(Region): pass
+class MoonCavernHeartDoorway(Region): pass
 
 regions = [
   Main.define(
@@ -46,213 +52,201 @@ regions = [
       "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
       "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
 
-      "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (HasGroundTail | HasAirTail),
-      "Fed Airborne Armada Fella":       HasShrooms("Monster") & (HasGroundTail | HasAirTail),
-      "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (HasGroundTail | HasAirTail),
-      "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (HasGroundTail | HasAirTail),
+      "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (item.ground_tail | item.air_tail),
+      "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail),
+      "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (item.ground_tail | item.air_tail),
+      "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail),
     },
-    
+
     entrances = [
       LostleafLobbyTeleport.define(
-        to = _LostleafLobby.SunCavernTeleport,
-        rule = Has("Open Lake Lobby Teleport")
+        to = LostleafLobby.SunCavernTeleport,
+        rule = event.Collected("Open Lake Lobby Teleport")
       ),
 
       ArmadaLobbyTeleport.define(
-        to = _ArmadaLobby.SunCavernTeleport,
-        rule = Has("Open Armada Lobby Teleport")
+        to = ArmadaLobby.SunCavernTeleport,
+        rule = event.Collected("Open Armada Lobby Teleport")
       ),
 
       PalaceLobbyTeleport.define(
-        to = _PalaceLobby.SunCavernTeleport,
-        rule = Has("Open Palace Lobby Teleport")
+        to = PalaceLobby.SunCavernTeleport,
+        rule = event.Collected("Open Palace Lobby Teleport")
       ),
 
       GalleryLobbyTeleport.define(
-        to = _GalleryLobby.SunCavernTeleport,
-        rule = Has("Open Gallery Lobby Teleport")
+        to = GalleryLobby.SunCavernTeleport,
+        rule = event.Collected("Open Gallery Lobby Teleport")
       ),
     ],
 
     region_connections = {
       ArmadaLobbyRoom: Any(
-        HasHorn,
-        HasWings,
+        item.horn,
+        item.wings,
 
-        Carrying("Jester Boots"),
-        CanSuperJump,
-        
+        carrying.jester_boots,
+        tech.any_super_jump,
+
         Comment(
           "Well-spaced high jump into the fan",
-          HasHighJump & (HasSprint | CanBubbleJump)
+          item.high_jump & (item.sprint | tech.bubble_jump)
         )
       ),
 
       HighJumpLedge: Any(
-        HasHighJump,
-        HasDoubleJump,
+        item.high_jump,
+        item.double_jump,
 
-        Carrying("Jester Boots"),
-        CanSuperJump,
-        
+        carrying.jester_boots,
+        tech.any_super_jump,
+
         Comment(
           "Hover-jump into the nearby tutorial stone",
-          CanHoverJump
-        ),
-
-        Comment(
-          "Hover-shoot into the nearby tutorial stone",
-          CanHoverShoot
+          tech.wing_jump
         ),
 
         Comment(
           "Build speed and roll into the nearby tutorial stone",
-          HasSprint & HasRoll
+          item.sprint & item.roll
         )
       ),
-      
+
       VineLedge: Any(
-        HasClimb,
-        CanSuperJump,
-        
+        item.climb,
+        tech.any_super_jump,
+
         Comment(
           "Hover-jump up the sun wall",
-          CanHoverJump
+          tech.wing_jump
         ),
-        
-        Comment(
-          "Climb the nearby stalagmite or sun wall with hover + bubble shots",
-          CanHoverShoot
-        ),
-        
+
         Comment(
           "Tail jump double jump from the nearby tutorial stone",
-          HasDoubleJump & CanTailJump(
-            groundedExtraLogic = HasHighJump | HasWings,
-            aerialExtraLogic = HasHighJump & HasWings
+          item.double_jump & Any(
+            tech.ground_tail_jump & (item.high_jump | item.wings),
+            tech.air_tail_jump & (item.high_jump & item.wings)
           )
         )
       ),
-      
+
       TailSpinLedge: Any(
-        Carrying("Jester Boots"),
-        CanSuperJump,
+        carrying.jester_boots,
+        tech.any_super_jump,
 
         Comment(
           "Roll jump makes the distance",
-          HasRoll
+          item.roll
         ),
-        
-        HasHighJump,
-        
-        HasBubble,
 
-        HasWings,
-        
-        CanTailJump()
+        item.high_jump,
+
+        item.bubble,
+
+        item.wings,
+
+        tech.air_tail_jump | tech.ground_tail_jump
       ),
 
       MightyWallLedge: Any(
-        HasClimb,
-        Carrying("Jester Boots"),
-        CanSuperJump,
+        item.climb,
+        carrying.jester_boots,
+        tech.any_super_jump,
 
         Comment(
           "Dive-bounce off of shroom",
-          HasHorn
+          item.horn
         ),
 
         Comment(
           "Jump up a tutorial stone and spire to reach the egg ledge",
           Any(
-            HasDoubleJump & (HasHighJump | HasWings),
+            item.double_jump & (item.high_jump | item.wings),
 
-            All(
-              Difficulty("Intermediate"),
-              CanTailJump(
-                groundedExtraLogic = None,
-                aerialExtraLogic = HasHighJump | HasDoubleJump
-              )
+            difficulty.intermediate & Any(
+              tech.ground_tail_jump,
+              tech.air_tail_jump & (item.high_jump | item.double_jump)
             )
           )
         ),
       ),
 
       WaterfallLedge: Any(
-        Carrying("Jester Boots"),
-        CanSuperJump,
+        carrying.jester_boots,
+        tech.any_super_jump,
 
         Comment(
           "Very high jump from one of the nearby gems",
           All (
-            Difficulty("Intermediate"),
-            CanGroundTailJump & HasHighJump & HasDoubleJump & HasWings
+            difficulty.intermediate,
+            tech.ground_tail_jump & item.high_jump & item.double_jump & item.wings
           )
         )
       ),
-      
 
       DucklingsLedge: Any(
-        HasHorn,
-        HasWings,
-        HasDoubleJump,
-        CanSuperJump,
+        item.horn,
+        item.wings,
+        item.double_jump,
+        tech.any_super_jump,
 
-        HasRoll & (HasSprint | HasAirTail),
+        item.roll & (item.sprint | item.air_tail),
 
-        CanTailJump(
-          groundedExtraLogic = None,
-          aerialExtraLogic = Any(
-            Comment(
-              "Tail Spin from the right gem to the tiny leaf, then to the big leaf",
-              Difficulty("Intermediate")
-            ),
-            HasHighJump
+        tech.ground_tail_jump,
+
+        Comment(
+          "Tail Spin from the right gem to the tiny leaf, then to the big leaf",
+          tech.air_tail_jump & Any(
+            item.high_jump,
+            difficulty.intermediate
           )
         ),
       ),
-      
+
       DucklingsDoorway: Any(
-        CanSuperJump,
-        
+        tech.any_super_jump,
+
         Comment(
           "Float to the big leaf from the Sage ramp",
-          HasSprint & (CanHoverJump | CanBubbleJump)
+          item.sprint & (tech.wing_jump | tech.bubble_jump)
         ),
-        
+
         Comment(
           "Jump to the small leaf from the right crystal",
-          Difficulty("Intermediate") & CanAirTailJump
+          difficulty.intermediate & tech.air_tail_jump
         ),
 
         Comment(
           "Speedy launch from the Sage ramp",
-          HasSprint & HasRoll & HasAirTail
+          item.sprint & item.roll & item.air_tail
         ),
-        
+
         Comment(
           "Hover shoot from the Sage ramp",
-          CanHoverShoot
+          tech.wing_jump & tech.bubble_jump_and_recoil
         ),
-        
+
         Comment(
           "Precise use of bubble float and shoot jumping to land on the leaf from the right gem",
-          Difficulty("Intermediate") & CanBubbleJump
+          difficulty.intermediate & tech.bubble_jump
         ),
-        
-        Tech("momentum_cancel") & HasWings,
+
+        tech.momentum_cancel & item.wings,
 
         Comment(
           "Clever use of wings and riding up the left gem's geometry to jump on a leaf",
-          Difficulty("Intermediate") & CanHoverJump
+          difficulty.intermediate & tech.wing_jump
         )
       ),
 
       MoonCavernHeartDoorway:
-        HasSwim & Any(
-          HasHorn,
-          HasSprint,
-          Difficulty("Intermediate"),
+        Comment(
+          "Bypass the waterjet",
+          item.swim & Any(
+            item.horn,
+            item.sprint,
+            difficulty.intermediate
+          )
         )
     },
   ),
@@ -263,10 +257,10 @@ regions = [
       "Shroom: Sun Cavern - Armada Entrance 2" : None,
       "Shroom: Sun Cavern - Armada Entrance 3" : None,
     },
-    
+
     entrances = [
       ArmadaLobbyDoor.define(
-        to = _ArmadaLobby.SunCavernDoor
+        to = ArmadaLobby.SunCavernDoor
       )
     ],
 
@@ -294,8 +288,8 @@ regions = [
     region_connections = {
       Main: None,
       HighJumpLedge: Any(
-        CanHoverJump,
-        HasRoll & (HasSprint | HasAirTail)
+        tech.wing_jump,
+        item.roll & (item.sprint | item.air_tail)
       )
     }
   ),
@@ -305,7 +299,7 @@ regions = [
       "Shroom: Sun Cavern - Tail Spin Ledge 1": None,
       "Shroom: Sun Cavern - Tail Spin Ledge 2": None
     },
-      
+
     region_connections = {
       Main: None
     }
@@ -314,10 +308,10 @@ regions = [
   MightyWallLedge.define(
     locations = {
       "Whack Mighty Wall": Any(
-        HasAirTail,
-        HasGroundTail,
-        Carrying("Apple"),
-        Carrying("Bubble Conch")
+        item.air_tail,
+        item.ground_tail,
+        carrying.apple,
+        carrying.bubble_conch
       ),
 
       "Egg: Sun Cavern - Mighty Wall": None,
@@ -329,8 +323,8 @@ regions = [
 
     entrances = [
       LostleafLobbyDoor.define(
-        to = _LostleafLobby.SunCavernDoor,
-        rule = Has("Topple Mighty Wall")
+        to = LostleafLobby.SunCavernDoor,
+        rule = event.Collected("Topple Mighty Wall")
       )
     ],
 
@@ -346,21 +340,21 @@ regions = [
 
     entrances = [
       DucklingsDoorUpper.define(
-        to = _LostleafLake.DucklingsDoorUpper
+        to = LostleafLake.DucklingsDoorUpper
       )
     ],
 
     region_connections = {
       Main: None,
-      
+
       DucklingsDoorway: Comment(
         "Simply float down",
-        CanBubbleJump | CanHoverJump
+        tech.bubble_jump | tech.wing_jump
       ),
 
       MoonCavernHeartDoorway: Comment(
         "Jumping down lets you get past the jets",
-        HasSwim
+        item.swim
       )
     }
   ),
@@ -373,14 +367,14 @@ regions = [
 
     region_connections = {
       Main: None,
-      DucklingsDoorway: HighJumpObstacle | CanSuperJump
+      DucklingsDoorway: templates.high_jump_obstacle | tech.any_super_jump
     }
   ),
-  
+
   DucklingsDoorway.define(
     entrances = [
       DucklingsDoorLower.define(
-        to = _LostleafLake.DucklingsDoorLower
+        to = LostleafLake.DucklingsDoorLower
       )
     ],
 
@@ -392,8 +386,8 @@ regions = [
   MoonCavernHeartDoorway.define(
     entrances = [
       MoonCavernHeartDoor.define(
-        to = _MoonCavern.SunCavernDoor,
-        rule = Has(MoonCavernHeartDoorOpened)
+        to = MoonCavern.SunCavernDoor,
+        rule = event.Collected(MoonCavernHeartDoorOpened)
       ),
     ],
 
@@ -403,12 +397,12 @@ regions = [
     },
 
     region_connections = {
-      Main: HasSwim,
+      Main: item.swim,
 
-      DucklingsDoorway: 
+      DucklingsDoorway:
         Comment(
           "Speedy launch from the waterjet",
-          HasSwim
+          item.swim
         )
     }
   )
