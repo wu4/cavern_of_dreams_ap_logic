@@ -8,6 +8,7 @@ ability_toggle = Option("ability_toggle")
 out_of_bounds = Option("out_of_bounds")
 
 wing_jump = Option("wing_jump") & item.wings
+wing_storage = Option("wing_storage") & item.wings
 
 bubble_jump = Option("bubble_jump", 1) & item.bubble
 bubble_jump_and_recoil = Option("bubble_jump", 2) & item.bubble

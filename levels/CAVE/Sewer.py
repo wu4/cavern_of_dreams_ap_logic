@@ -1,4 +1,5 @@
-from ...logic import *
+from ...logic import Entrance, Region, Any, All
+from ...logic import tech, item, carrying, difficulty
 
 class ArmadaLobbyDoor(Entrance): pass
 class GalleryDoor(Entrance): pass
@@ -21,18 +22,18 @@ regions = [
 
     region_connections = {
       GallerySide: Any(
-        CanSuperJump,
+        tech.any_super_jump,
 
-        HasDoubleJump & HasWings & (CanTailJump() | HasHorn),
+        item.double_jump & item.wings & (tech.air_tail_jump | tech.ground_tail_jump | item.horn),
 
-        All(
-          Carrying("Jester Boots"),
-          HasDoubleJump | CanGroundTailJump
+        carrying.jester_boots & Any(
+          item.double_jump,
+          tech.ground_tail_jump
         ),
 
         All(
-          Difficulty("Hard"),
-          Carrying("Jester Boots") & CanHoverShoot & CanHoverJump
+          difficulty.hard,
+          carrying.jester_boots & tech.bubble_jump_and_recoil & tech.wing_jump
         )
       )
     }

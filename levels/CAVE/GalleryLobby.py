@@ -50,6 +50,13 @@ regions = [
         to = Foyer.GalleryLobbyDoor,
         rule = event.Collected("Open Gallery Lobby Door")
       ),
+      MoonCavernDoor.define(
+        to = MoonCavern.GalleryLobbyDoor
+      ),
+      SunCavernTeleport.define(
+        to = SunCavern.GalleryLobbyTeleport,
+        rule = event.Collected("Open Gallery Lobby Teleport")
+      ),
       RainbowBench.define(
         to = Rainbow.Well
       )
@@ -59,6 +66,16 @@ regions = [
       OuterWalls: Any(
         tech.any_super_jump,
         carrying.jester_boots,
+
+        Comment(
+          "The hole in the wall to the right of the Foyer entrance lets you slide up",
+          carrying.mr_kerringtons_wings,
+        ),
+
+        Comment(
+          "Tailjump double jump onto the Foyer entrance, then tailspin roll jump over to the walls",
+          item.double_jump & tech.ground_tail_jump & item.roll & item.air_tail,
+        ),
 
         difficulty.intermediate & item.roll & item.sprint
       ),
@@ -112,11 +129,14 @@ regions = [
       Main: None,
       Maze: Any(
         item.wings,
-        item.bubble & tech.momentum_cancel
+        carrying.mr_kerringtons_wings,
+        tech.bubble_jump & (tech.momentum_cancel | item.double_jump)
       ),
       LostleafCave: Any(
         item.wings,
-        item.bubble,
+        carrying.mr_kerringtons_wings,
+        item.double_jump,
+        tech.bubble_jump,
         tech.momentum_cancel
       )
     }
@@ -128,22 +148,35 @@ regions = [
 
       "Gallery Lobby - Hedge Maze Preston": Any(
         tech.any_super_jump,
-        carrying.jester_boots,
 
-        event.Collected("Open Gallery Lobby Door"), # ???
+        carrying.jester_boots & Any(
+          Comment(
+            "Walk outside of the maze near its entrance and repeatedly walk into an invisible wall to gain height",
+            tech.out_of_bounds
+          ),
 
-        item.bubble & Any(
+          item.double_jump,
+          tech.ground_tail_jump
+        ),
+
+        event.Collected("Open Gallery Lobby Door"),
+
+        Comment("Water the rose", item.bubble) & Any(
+          Comment(
+            "Jump onto the rose as it grows",
+            tech.ejection_launch
+          ),
           item.double_jump,
           item.horn,
           tech.ground_tail_jump,
-          tech.air_tail_jump & item.high_jump
+          tech.air_tail_jump & item.high_jump,
         ),
 
         item.double_jump & Any(
           item.horn,
           tech.ground_tail_jump,
           item.high_jump & item.wings,
-          tech.air_tail_jump & (item.wings | item.high_jump)
+          difficulty.intermediate & tech.air_tail_jump & item.high_jump
         )
       )
     },

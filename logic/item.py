@@ -10,7 +10,7 @@ class Collected(Logic):
   @override
   def __str__(self) -> str:
     return f"Has {self.item}"
-  
+
   def __init__(self, item: HasItemType) -> None:
     self.item = item
     super().__init__()

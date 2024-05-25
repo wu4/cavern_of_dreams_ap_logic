@@ -66,7 +66,7 @@ regions = [
         
         Comment(
           "Extinguish the Keehee and use him as a platform",
-          carrying.potion | item.bubble
+          carrying.medicine | item.bubble
         ),
 
         item.double_jump & (tech.ground_tail_jump | tech.air_tail_jump),
@@ -198,7 +198,7 @@ regions = [
 
   NightmareLobbyDoorway.define(
     locations = {
-      DousedGalleryLobbyFlame: carrying.potion | item.bubble
+      DousedGalleryLobbyFlame: carrying.medicine | item.bubble
     },
 
     entrances = [

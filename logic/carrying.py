@@ -1,19 +1,12 @@
-from typing import TypeAlias, Literal, override
+from typing import override
 from . import Logic
-
-CarryingType: TypeAlias = Literal[
-  "Jester Boots",
-  "Apple",
-  "Potion",
-  "Bubble Conch"
-]
 
 class Carrying(Logic):
   @override
   def __str__(self) -> str:
     return f"Carrying {self.carrying}"
-  
-  def __init__(self, carrying: CarryingType) -> None:
+
+  def __init__(self, carrying: str) -> None:
     self.carrying = carrying
     super().__init__()
 
@@ -34,8 +27,13 @@ class _PlantAndClimbTree(Logic):
 
 jester_boots = Carrying("Jester Boots")
 apple = Carrying("Apple")
-potion = Carrying("Potion")
+medicine = Carrying("Medicine")
 bubble_conch = Carrying("Bubble Conch")
+
+sages_gloves = Carrying("Sage's Gloves")
+lady_opals_head = Carrying("Lady Opal's Head")
+shelnerts_fish = Carrying("Shelnert's Fish")
+mr_kerringtons_wings = Carrying("Mr. Kerrington's Wings")
 
 no_throwables = _NoThrowables()
 
