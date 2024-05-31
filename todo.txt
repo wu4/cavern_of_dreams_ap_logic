@@ -1,0 +1,29 @@
+[x] levels/CAVE/SunCavern.py
+[x] levels/CAVE/MoonCavern.py
+[x] levels/CAVE/LostleafLobby.py
+[ ] levels/CAVE/ArmadaLobby.py
+  [x] pass through with apple
+  [x] pass through with bubble conch
+  [x] pass through with shelnerts fish
+  [ ] pass through with mr kerringtons wings
+    * you do not need wing jump tech to get to the egg platform
+[ ] levels/CAVE/PalaceLobby.py
+  [ ] pass through with apple
+  [ ] pass through with bubble conch
+  [ ] pass through with shelnerts fish
+  [ ] pass through with mr kerringtons wings
+[ ] levels/CAVE/GalleryLobby.py
+  [ ] pass through with apple
+  [ ] pass through with bubble conch
+  [ ] pass through with shelnerts fish
+  [ ] pass through with mr kerringtons wings
+[ ] levels/CAVE/Sewer.py
+  [ ] pass through with apple
+  [ ] pass through with bubble conch
+  [ ] pass through with shelnerts fish
+  [ ] pass through with mr kerringtons wings
+[ ] levels/CAVE/Rainbow.py
+  [ ] pass through with apple
+  [ ] pass through with bubble conch
+  [ ] pass through with shelnerts fish
+  [ ] pass through with mr kerringtons wings

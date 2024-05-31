@@ -1,9 +1,7 @@
 from ...logic.objects import Region, Entrance, JesterBootsLocation
 from ...logic.comment import Comment
 from ...logic import Any, All
-from ...logic import carrying, item, tech, difficulty, event, whackable
-
-# FINISHED
+from ...logic import carrying, item, tech, difficulty, event
 
 class SunCavernDoor(Entrance): pass
 class EarthDroneCannonShot(Entrance): pass
@@ -35,11 +33,16 @@ regions = [
 
       "Card: Armada Lobby - Jester Boots": Any(
         carrying.jester_boots,
+
+        carrying.mr_kerringtons_wings,
+
         tech.wing_jump & tech.bubble_jump_and_recoil,
+
         item.double_jump & Any(
           tech.ability_toggle & item.wings,
           item.air_tail & item.roll
         ),
+
         Comment(
           """
           Precise triple tail-bounce from the walls while z-targeting and
@@ -65,7 +68,7 @@ regions = [
         EarthDrone.ArmadaLobbyDoor,
         Comment(
           "Early Armada",
-          tech.out_of_bounds
+          tech.out_of_bounds & carrying.no_jester_boots
         )
       )
     ],
@@ -74,6 +77,7 @@ regions = [
       JesterBootsPlatform: Any(
         carrying.jester_boots,
         event.Collected("Raise Armada Lobby Pipes"),
+        carrying.mr_kerringtons_wings,
         item.wings,
         item.double_jump,
         tech.ground_tail_jump,
@@ -96,6 +100,11 @@ regions = [
         ),
 
         item.double_jump & Any(
+          Comment(
+            "Fly up to the tree trunk in the back",
+            tech.wing_jump & carrying.mr_kerringtons_wings,
+          ),
+
           item.horn,
           item.high_jump,
           item.wings,
@@ -106,7 +115,11 @@ regions = [
 
       FlagPlatform: Any(
         carrying.jester_boots,
-        tech.any_super_jump,
+        carrying.mr_kerringtons_wings,
+        Comment(
+          "Wing Storage from slope on entry pipe",
+          tech.wing_jump & tech.wing_storage,
+        ),
 
         item.double_jump,
         item.horn,
@@ -140,18 +153,19 @@ regions = [
 
   JesterBootsPlatform.define(
     locations = {
-      ArmadaLobbyBoots: whackable.Whackable(
-        ground_tail_works = True,
-        air_tail_works = True,
-        roll_works = True,
-        throwable_works = True,
-        # horn_works = True
+      ArmadaLobbyBoots: Any(
+        item.ground_tail,
+        item.air_tail,
+        carrying.apple | carrying.bubble_conch,
+        # The wall allows destroying it with the horn, but it's impossible
+        # to actually do it
+        # item.horn
       )
     },
 
     region_connections = {
       # death warp
-      Main: None
+      Main: carrying.no_temp_items
     }
   ),
 
@@ -163,12 +177,13 @@ regions = [
       ),
       EarthDroneCannonShot.define(
         to = EarthDrone.ArmadaLobbyDoor,
-        rule = None
+        rule = carrying.no_jester_boots
       )
     ],
 
     region_connections = {
       Main: None,
+
       EggPlatform: Any(
         carrying.jester_boots,
         tech.any_super_jump,

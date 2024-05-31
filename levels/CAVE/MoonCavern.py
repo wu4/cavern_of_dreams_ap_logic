@@ -1,4 +1,4 @@
-from ...logic import Any, All
+from ...logic import Any
 from ...logic.objects import Region, Entrance, InternalEvent
 
 from ...logic import item, event, difficulty, carrying, tech, templates
@@ -21,67 +21,64 @@ class GalleryLobbyDoor(Entrance): pass
 class DousedGalleryLobbyFlame(InternalEvent): pass
 class SolvedDivePuzzle(InternalEvent): pass
 
-from . import SunCavern as _SunCavern
-from . import PalaceLobby as _PalaceLobby
-from . import GalleryLobby as _GalleryLobby
+from . import SunCavern
+from . import PalaceLobby
+from . import GalleryLobby
 
 regions = [
   Main.define(
     locations = {
-      "Card: Moon Cavern - Dive": item.swim & Whackable(horn_works = True),
-      
+      "Card: Moon Cavern - Dive": item.swim & item.horn,
+
       "Shroom: Moon Cavern - Lava Platforms 1": None,
       "Shroom: Moon Cavern - Lava Platforms 2": None,
       "Shroom: Moon Cavern - Lava Platforms 3": None,
       "Shroom: Moon Cavern - Lava Platforms 4": None,
 
       "Shroom: Moon Cavern - Potionfall": None,
-      
+
       SolvedDivePuzzle: item.horn
     },
 
     entrances = [
       SunCavernDoor.define(
-        _SunCavern.MoonCavernHeartDoor
+        SunCavern.MoonCavernHeartDoor
       )
     ],
 
     region_connections = {
-      DiveHoles: Whackable(horn_works = True),
+      DiveHoles: item.horn,
 
       DiveRoom: Any(
-        Whackable(horn_works = True),
+        item.horn,
 
         Comment(
           "Vine entrance",
-          Whackable(air_tail_works = True, throwable_works = True)
+          item.air_tail | carrying.apple | carrying.bubble_conch
         )
       ),
 
       DivePuzzleLedge: Any(
         tech.any_super_jump,
         carrying.jester_boots,
+        carrying.mr_kerringtons_wings,
 
         item.horn,
-        
+
         Comment(
           "Extinguish the Keehee and use him as a platform",
-          carrying.medicine | item.bubble
+          item.bubble
         ),
 
         item.double_jump & (tech.ground_tail_jump | tech.air_tail_jump),
+        item.wings & item.double_jump,
 
-        item.wings & Any(
-          item.double_jump,
-          All(
-            tech.ground_tail_jump,
-            tech.wing_jump & item.high_jump
-          )
-        )
+        tech.wing_jump & tech.ground_tail_jump & item.high_jump
       ),
 
       UpperConnector: Any(
         templates.high_jump_obstacle,
+        carrying.mr_kerringtons_wings,
 
         Comment(
           "Bouncy mushroom + Keehee damage boost",
@@ -101,7 +98,8 @@ regions = [
 
       Upper: Any(
         tech.any_super_jump,
-        
+        carrying.mr_kerringtons_wings,
+
         Comment(
           "Hover from bouncy shroom",
           item.wings
@@ -116,7 +114,7 @@ regions = [
       LavaMushroomPlatform: None
     }
   ),
-  
+
   DiveHoles.define(
     locations = {
       "Shroom: Moon Cavern - Dive Holes 1": None,
@@ -139,7 +137,7 @@ regions = [
 
     region_connections = {
       Main: None,
-      
+
       Upper: templates.high_jump_obstacle
     }
   ),
@@ -167,7 +165,7 @@ regions = [
 
     entrances = [
       PalaceLobbyDoor.define(
-        _PalaceLobby.MoonCavernDoor
+        PalaceLobby.MoonCavernDoor
       )
     ],
 
@@ -186,7 +184,12 @@ regions = [
       NightmareLobbyDoorway: None,
 
       Main: Any(
+        tech.any_super_jump,
         templates.high_jump_obstacle,
+
+        carrying.mr_kerringtons_wings,
+
+        tech.bubble_jump_and_recoil & tech.wing_jump,
 
         Comment(
           "Boost off of the Keehee to the Dive Holes side",
@@ -203,7 +206,7 @@ regions = [
 
     entrances = [
       GalleryLobbyDoor.define(
-        _GalleryLobby.MoonCavernDoor,
+        GalleryLobby.MoonCavernDoor,
         Any(
           event.Collected(DousedGalleryLobbyFlame),
           difficulty.hard & tech.damage_boost & tech.momentum_cancel

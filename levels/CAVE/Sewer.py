@@ -1,5 +1,6 @@
 from ...logic import Entrance, Region, Any, All
 from ...logic import tech, item, carrying, difficulty
+from ...logic.comment import Comment
 
 class ArmadaLobbyDoor(Entrance): pass
 class GalleryDoor(Entrance): pass
@@ -7,8 +8,8 @@ class GalleryDoor(Entrance): pass
 class ArmadaLobbySide(Region): pass
 class GallerySide(Region): pass
 
-from . import ArmadaLobby as _ArmadaLobby
-from ..GALLERY import WaterLobby as _WaterLobby
+from . import ArmadaLobby
+from ..GALLERY import WaterLobby
 
 regions = [
   ArmadaLobbySide.define(
@@ -17,7 +18,7 @@ regions = [
     },
 
     entrances = [
-      ArmadaLobbyDoor.define(_ArmadaLobby.SewerDoor)
+      ArmadaLobbyDoor.define(ArmadaLobby.SewerDoor)
     ],
 
     region_connections = {
@@ -45,28 +46,36 @@ regions = [
     },
 
     entrances = [
-      GalleryDoor.define(_WaterLobby.SewerDoor)
+      GalleryDoor.define(WaterLobby.SewerDoor)
     ],
 
     region_connections = {
       ArmadaLobbySide: Any(
-        Carrying("Jester Boots"),
+        carrying.jester_boots,
+        tech.any_super_jump,
 
-        CanSuperJump,
-        
-        HasDoubleJump & (HasWings | CanTailJump()),
+        item.double_jump & Any(
+          item.wings,
+          tech.ground_tail_jump,
+          tech.air_tail_jump
+        ),
 
         Comment(
           "From the pipe: Hijump, instant hover + bubble float, turnaround (or z-target) bubble shots",
-          (Difficulty("Intermediate") | Tech("z_target")) & HasHighJump & CanBubbleJump & CanHoverJump & CanHoverShoot
+          (difficulty.intermediate | tech.z_target) & item.high_jump & tech.bubble_jump_and_recoil & tech.wing_jump
         ),
 
-        CanTailJump(
-          groundedExtraLogic = HasBubble | HasWings,
-          aerialExtraLogic = HasWings | (HasBubble & HasHighJump)
+        tech.ground_tail_jump & Any(
+          tech.bubble_jump,
+          item.wings
         ),
 
-        HasAirTail & HasRoll & HasSprint
+        tech.air_tail_jump & Any(
+          item.wings,
+          item.bubble & item.high_jump
+        ),
+
+        item.air_tail & item.roll & item.sprint
       )
     }
   )

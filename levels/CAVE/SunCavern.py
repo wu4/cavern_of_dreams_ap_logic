@@ -52,31 +52,31 @@ regions = [
       "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
       "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
 
-      "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (item.ground_tail | item.air_tail),
-      "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail),
-      "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (item.ground_tail | item.air_tail),
-      "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail),
+      "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (item.ground_tail | item.air_tail | item.horn),
+      "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail | item.horn),
+      "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (item.ground_tail | item.air_tail | item.horn),
+      "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail | item.horn),
     },
 
     entrances = [
       LostleafLobbyTeleport.define(
         to = LostleafLobby.SunCavernTeleport,
-        rule = event.Collected("Open Lake Lobby Teleport")
+        rule = event.Collected("Open Lake Lobby Teleport") & carrying.no_jester_boots
       ),
 
       ArmadaLobbyTeleport.define(
         to = ArmadaLobby.SunCavernTeleport,
-        rule = event.Collected("Open Armada Lobby Teleport")
+        rule = event.Collected("Open Armada Lobby Teleport") & carrying.no_jester_boots
       ),
 
       PalaceLobbyTeleport.define(
         to = PalaceLobby.SunCavernTeleport,
-        rule = event.Collected("Open Palace Lobby Teleport")
+        rule = event.Collected("Open Palace Lobby Teleport") & carrying.no_jester_boots
       ),
 
       GalleryLobbyTeleport.define(
         to = GalleryLobby.SunCavernTeleport,
-        rule = event.Collected("Open Gallery Lobby Teleport")
+        rule = event.Collected("Open Gallery Lobby Teleport") & carrying.no_jester_boots
       ),
     ],
 
@@ -84,6 +84,7 @@ regions = [
       ArmadaLobbyRoom: Any(
         item.horn,
         item.wings,
+        carrying.mr_kerringtons_wings,
 
         carrying.jester_boots,
         tech.any_super_jump,
@@ -245,6 +246,8 @@ regions = [
           item.swim & Any(
             item.horn,
             item.sprint,
+            carrying.bubble_conch,
+            carrying.shelnerts_fish,
             difficulty.intermediate
           )
         )

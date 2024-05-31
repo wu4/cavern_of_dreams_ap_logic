@@ -3,8 +3,6 @@ from ...logic.objects import Region, Entrance, InternalEvent
 from ...logic.whackable import Whackable
 from ...logic import event
 
-# FINISHED
-
 class SunCavernDoor(Entrance): pass
 class LostleafLakeDoor(Entrance): pass
 class GalleryLobbyDoor(Entrance): pass

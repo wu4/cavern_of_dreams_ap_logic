@@ -7,8 +7,8 @@ momentum_cancel = Option("momentum_cancel")
 ability_toggle = Option("ability_toggle")
 out_of_bounds = Option("out_of_bounds")
 
-wing_jump = Option("wing_jump") & item.wings
-wing_storage = Option("wing_storage") & item.wings
+wing_jump = Option("wing_jump") & (item.wings | carrying.mr_kerringtons_wings)
+wing_storage = Option("wing_storage") & (item.wings | carrying.mr_kerringtons_wings)
 
 bubble_jump = Option("bubble_jump", 1) & item.bubble
 bubble_jump_and_recoil = Option("bubble_jump", 2) & item.bubble

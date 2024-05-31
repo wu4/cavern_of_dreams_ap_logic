@@ -7,6 +7,7 @@ class Main(Region): pass
 class LostleafCave(Region): pass
 class OuterWalls(Region): pass
 class Maze(Region): pass
+class MazeStatue(Region): pass
 
 class LostleafLobbyDoor(Entrance): pass
 class MoonCavernDoor(Entrance): pass
@@ -101,8 +102,14 @@ regions = [
           "Fastroll jump from the fountain walls, then hover over the gate",
           item.roll & item.air_tail & item.wings
         )
-      )
+      ),
 
+      MazeStatue: Any(
+        Comment(
+          "Carry height into the maze and jump over the rose bush",
+          carrying.jester_boots
+        )
+      )
     }
   ),
 
@@ -127,11 +134,13 @@ regions = [
   OuterWalls.define(
     region_connections = {
       Main: None,
+
       Maze: Any(
         item.wings,
         carrying.mr_kerringtons_wings,
         tech.bubble_jump & (tech.momentum_cancel | item.double_jump)
       ),
+
       LostleafCave: Any(
         item.wings,
         carrying.mr_kerringtons_wings,
@@ -144,9 +153,18 @@ regions = [
 
   Maze.define(
     locations = {
-      "Card: Gallery Lobby - Hedge Maze": None,
+      "Card: Gallery Lobby - Hedge Maze": None
+    },
 
-      "Gallery Lobby - Hedge Maze Preston": Any(
+    region_connections = {
+      Main: Any(
+        tech.any_super_jump,
+        carrying.jester_boots,
+
+        event.Collected("Open Gallery Lobby Hedge Maze")
+      ),
+
+      MazeStatue: Any(
         tech.any_super_jump,
 
         carrying.jester_boots & Any(
@@ -166,6 +184,7 @@ regions = [
             "Jump onto the rose as it grows",
             tech.ejection_launch
           ),
+
           item.double_jump,
           item.horn,
           tech.ground_tail_jump,
@@ -179,13 +198,21 @@ regions = [
           difficulty.intermediate & tech.air_tail_jump & item.high_jump
         )
       )
-    },
-    region_connections = {
-      Main: Any(
-        tech.any_super_jump,
-        carrying.jester_boots,
+    }
+  ),
 
-        event.Collected("Open Gallery Lobby Hedge Maze")
+  MazeStatue.define(
+    locations = {
+      "Gallery Lobby - Hedge Maze Preston": None
+    },
+
+    region_connections = {
+      Maze: Any(
+        event.Collected("Open Gallery Lobby Door"),
+
+        tech.any_super_jump,
+
+        tech.ground_tail_jump & item.double_jump & item.wings & item.high_jump
       )
     }
   )
