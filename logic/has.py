@@ -15,7 +15,8 @@ CarryingItem: TypeAlias = Literal[
   "Mr. Kerrington's Wings",
 ]
 
-I = TypeVar("I", bound=AnyItem | type[InternalEvent] | CarryingItem)
+CollectedItem: TypeAlias = AnyItem | type[InternalEvent] | CarryingItem
+I = TypeVar("I", bound=CollectedItem)
 
 class Collected(Logic, Generic[I]):
   item: I
@@ -31,3 +32,5 @@ class Collected(Logic, Generic[I]):
   def __init__(self, item: I) -> None:
     self.item = item
     super().__init__()
+
+CollectedAny: TypeAlias = Collected[CollectedItem]

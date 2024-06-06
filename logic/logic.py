@@ -1,6 +1,7 @@
 from __future__ import annotations
 from abc import ABCMeta, abstractmethod
-from typing import Callable, TypeAlias, TypeVar, cast, override
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Callable, TypeAlias, TypeVar, override
 
 class Logic(metaclass=ABCMeta):
   def __and__(self, other: Logic) -> All:
@@ -16,7 +17,6 @@ class Logic(metaclass=ABCMeta):
   def into_server_code(self) -> str:
     """Function for converting logic into code for the server-side in Python."""
     ...
-    # raise NotImplementedError()
 
 T = TypeVar("T")
 
@@ -26,6 +26,12 @@ def splitter(data: list[T], pred: Callable[[T], bool]) -> tuple[list[T], list[T]
   for d in data:
     (yes if pred(d) else no).append(d)
   return (yes, no)
+
+if TYPE_CHECKING:
+  from .has import CollectedAny
+
+def serialize_collecteds(collecteds: Iterable["CollectedAny"]) -> str:
+  return [str(x.item) for x in collecteds].__repr__()
 
 class ChainableLogic(Logic):
   server_code_separator: str = ""
@@ -50,7 +56,13 @@ class ChainableLogic(Logic):
     if co_len == 1:
       logics.append(collected_operands[0].into_server_code())
     elif co_len > 1:
-      logics.append(f"s.{self.server_code_function}({ {x.item.__str__() for x in collected_operands}.__repr__() }, p))")
+      # pythons typing system doesnt support type narrowing here
+      # cast technically has a performance cost, but comments dont! :3
+
+      # collected_operands is guaranteed to be list[CollectedAny]
+      serialized = serialize_collecteds(collected_operands) # pyright: ignore[reportArgumentType]
+
+      logics.append(f"s.{self.server_code_function}({serialized}, p))")
 
     if len(other_operands) > 0:
       for op in other_operands:

@@ -16,7 +16,6 @@ class Option(Logic, Generic[V]):
 
   @override
   def into_server_code(self) -> str:
-    if self.greater_or_equal:
-      return f"s.multiworld.worlds[p].options.{self.option}.value >= {self.value.__repr__()}"
-    else:
-      return f"s.multiworld.worlds[p].options.{self.option}.value == {self.value.__repr__()}"
+    eq_str = ">=" if self.greater_or_equal else "=="
+    # return f"s.multiworld.worlds[p].options.{self.option}.value {eq_str} {self.value.__repr__()}"
+    return f"o.{self.option}.value {eq_str} {self.value.__repr__()}"
