@@ -172,11 +172,11 @@ regions = [
   CannonLip.define(
     entrances = [
       SunCavernTeleport.define(
-        to = SunCavern.ArmadaLobbyTeleport,
+        default_connection = SunCavern.ArmadaLobbyTeleport,
         rule = event.Collected("Open Armada Lobby Teleport"),
       ),
       EarthDroneCannonShot.define(
-        to = EarthDrone.ArmadaLobbyDoor,
+        default_connection = EarthDrone.ArmadaLobbyDoor,
         rule = carrying.no_jester_boots
       )
     ],

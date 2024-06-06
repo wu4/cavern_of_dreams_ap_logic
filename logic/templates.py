@@ -1,4 +1,4 @@
-from . import Any
+from .logic import Any
 from .item import high_jump, horn, double_jump
 from .tech import any_super_jump, ground_tail_jump, air_tail_jump
 

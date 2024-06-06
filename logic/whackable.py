@@ -1,4 +1,4 @@
-from . import Logic
+from .logic import Logic
 
 class Whackable(Logic):
   def __init__(

@@ -1,10 +1,9 @@
 from ...logic import templates
-from ...logic.whackable import Whackable
 from ...logic import Region, Entrance, InternalEvent
 from ...logic import All, Any
-from ...logic.quantities import HasEggs, HasHearts, HasShrooms
+from ...logic.quantities import HasEggs, HasGratitude, HasShrooms
 from ...logic.comment import Comment
-from ...logic import item, carrying, difficulty, tech, event
+from ...logic import item, carrying, difficulty, tech#,  event
 
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
@@ -18,12 +17,12 @@ class GalleryLobbyTeleport(Entrance): pass
 
 class MoonCavernHeartDoorOpened(InternalEvent): pass
 
-from . import LostleafLobby
-from . import ArmadaLobby
-from . import PalaceLobby
-from . import GalleryLobby
-from ..LAKE import LostleafLake
-from . import MoonCavern
+# from . import LostleafLobby
+# from . import ArmadaLobby
+# from . import PalaceLobby
+# from . import GalleryLobby
+# from ..LAKE import LostleafLake
+# from . import MoonCavern
 
 class Main(Region): pass
 class ArmadaLobbyRoom(Region): pass
@@ -58,27 +57,27 @@ regions = [
       "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail | item.horn),
     },
 
-    entrances = [
-      LostleafLobbyTeleport.define(
-        to = LostleafLobby.SunCavernTeleport,
-        rule = event.Collected("Open Lake Lobby Teleport") & carrying.no_jester_boots
-      ),
-
-      ArmadaLobbyTeleport.define(
-        to = ArmadaLobby.SunCavernTeleport,
-        rule = event.Collected("Open Armada Lobby Teleport") & carrying.no_jester_boots
-      ),
-
-      PalaceLobbyTeleport.define(
-        to = PalaceLobby.SunCavernTeleport,
-        rule = event.Collected("Open Palace Lobby Teleport") & carrying.no_jester_boots
-      ),
-
-      GalleryLobbyTeleport.define(
-        to = GalleryLobby.SunCavernTeleport,
-        rule = event.Collected("Open Gallery Lobby Teleport") & carrying.no_jester_boots
-      ),
-    ],
+#     entrances = [
+#       LostleafLobbyTeleport.define(
+#         default_connection = LostleafLobby.SunCavernTeleport,
+#         rule = event.Collected("Open Lake Lobby Teleport") & carrying.no_jester_boots
+#       ),
+# 
+#       ArmadaLobbyTeleport.define(
+#         default_connection = ArmadaLobby.SunCavernTeleport,
+#         rule = event.Collected("Open Armada Lobby Teleport") & carrying.no_jester_boots
+#       ),
+# 
+#       PalaceLobbyTeleport.define(
+#         default_connection = PalaceLobby.SunCavernTeleport,
+#         rule = event.Collected("Open Palace Lobby Teleport") & carrying.no_jester_boots
+#       ),
+# 
+#       GalleryLobbyTeleport.define(
+#         default_connection = GalleryLobby.SunCavernTeleport,
+#         rule = event.Collected("Open Gallery Lobby Teleport") & carrying.no_jester_boots
+#       ),
+#     ],
 
     region_connections = {
       ArmadaLobbyRoom: Any(
@@ -261,11 +260,11 @@ regions = [
       "Shroom: Sun Cavern - Armada Entrance 3" : None,
     },
 
-    entrances = [
-      ArmadaLobbyDoor.define(
-        to = ArmadaLobby.SunCavernDoor
-      )
-    ],
+#     entrances = [
+#       ArmadaLobbyDoor.define(
+#         default_connection = ArmadaLobby.SunCavernDoor
+#       )
+#     ],
 
     region_connections = {
       Main: None
@@ -324,12 +323,12 @@ regions = [
       "Shroom: Sun Cavern - Mighty Wall Egg Ledge 3": None
     },
 
-    entrances = [
-      LostleafLobbyDoor.define(
-        to = LostleafLobby.SunCavernDoor,
-        rule = event.Collected("Topple Mighty Wall")
-      )
-    ],
+#     entrances = [
+#       LostleafLobbyDoor.define(
+#         default_connection = LostleafLobby.SunCavernDoor,
+#         rule = event.Collected("Topple Mighty Wall")
+#       )
+#     ],
 
     region_connections = {
       Main: None
@@ -341,11 +340,11 @@ regions = [
       "Egg: Sun Cavern - Waterfall": None
     },
 
-    entrances = [
-      DucklingsDoorUpper.define(
-        to = LostleafLake.DucklingsDoorUpper
-      )
-    ],
+#     entrances = [
+#       DucklingsDoorUpper.define(
+#         default_connection = LostleafLake.DucklingsDoorUpper
+#       )
+#     ],
 
     region_connections = {
       Main: None,
@@ -375,11 +374,11 @@ regions = [
   ),
 
   DucklingsDoorway.define(
-    entrances = [
-      DucklingsDoorLower.define(
-        to = LostleafLake.DucklingsDoorLower
-      )
-    ],
+#     entrances = [
+#       DucklingsDoorLower.define(
+#         default_connection = LostleafLake.DucklingsDoorLower
+#       )
+#     ],
 
     region_connections = {
       DucklingsLedge: None
@@ -387,16 +386,16 @@ regions = [
   ),
 
   MoonCavernHeartDoorway.define(
-    entrances = [
-      MoonCavernHeartDoor.define(
-        to = MoonCavern.SunCavernDoor,
-        rule = event.Collected(MoonCavernHeartDoorOpened)
-      ),
-    ],
+#     entrances = [
+#       MoonCavernHeartDoor.define(
+#         default_connection = MoonCavern.SunCavernDoor,
+#         rule = event.Collected(MoonCavernHeartDoorOpened)
+#       ),
+#     ],
 
     locations = {
       MoonCavernHeartDoorOpened:
-        HasHearts(1) & Whackable(ground_tail_works = True, air_tail_works = True)
+        HasGratitude(1) & (item.ground_tail | item.air_tail)
     },
 
     region_connections = {

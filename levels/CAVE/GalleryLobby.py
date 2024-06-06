@@ -48,18 +48,18 @@ regions = [
 
     entrances = [
       FoyerDoor.define(
-        to = Foyer.GalleryLobbyDoor,
+        default_connection = Foyer.GalleryLobbyDoor,
         rule = event.Collected("Open Gallery Lobby Door")
       ),
       MoonCavernDoor.define(
-        to = MoonCavern.GalleryLobbyDoor
+        default_connection = MoonCavern.GalleryLobbyDoor
       ),
       SunCavernTeleport.define(
-        to = SunCavern.GalleryLobbyTeleport,
+        default_connection = SunCavern.GalleryLobbyTeleport,
         rule = event.Collected("Open Gallery Lobby Teleport")
       ),
       RainbowBench.define(
-        to = Rainbow.Well
+        default_connection = Rainbow.Well
       )
     ],
 

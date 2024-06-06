@@ -23,11 +23,11 @@ regions = [
 
     entrances = [
       ArmadaLobbyDoor.define(
-        to = _ArmadaLobby.EarthDroneCannonShot,
+        default_connection = _ArmadaLobby.EarthDroneCannonShot,
         rule = None
       ),
       SkyDoor.define(
-        to = _Sky.EarthDroneDoor,
+        default_connection = _Sky.EarthDroneDoor,
         rule = None
       )
     ]

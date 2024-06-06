@@ -41,7 +41,7 @@ regions = [
       LostleafLakeDoor.define(LostleafLake.LostleafLobbyDoor),
 
       SunCavernTeleport.define(
-        to = SunCavern.LostleafLobbyTeleport,
+        default_connection = SunCavern.LostleafLobbyTeleport,
         rule = event.Collected("Open Lake Lobby Teleport")
       )
     ],

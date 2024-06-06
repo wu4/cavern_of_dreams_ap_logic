@@ -1,11 +1,14 @@
 from __future__ import annotations
-from . import MaybeLogic as _MaybeLogic
-from ..generated import AnyLocation
 
-from typing import TypeAlias
+from .logic import MaybeLogic as _MaybeLogic
+from ..generated_types import AnyLocation
+
+from typing import TypeAlias, override
 
 class InternalEvent:
-  pass
+  @override
+  def __str__(self) -> str:
+    return self.__class__.__name__
 
 class CarryableLocation:
   pass
@@ -52,11 +55,11 @@ class Entrance:
     cls.containing_region = region
 
   @classmethod
-  def define(cls, to: type[Entrance], rule: _MaybeLogic = None) -> type[Entrance]:
+  def define(cls, default_connection: type[Entrance], rule: _MaybeLogic = None) -> type[Entrance]:
     assert not cls._is_defined, f"Tried to redefine {cls.__name__}"
     cls._is_defined = True
 
-    cls.to = to
+    cls.default_connection = default_connection
     cls.rule = rule
 
     return cls

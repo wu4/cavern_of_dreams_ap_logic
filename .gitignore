@@ -1,4 +1,5 @@
 .venv/
 .vscode/
-generated.py
+ap_generated/
+generated_types.py
 __pycache__/

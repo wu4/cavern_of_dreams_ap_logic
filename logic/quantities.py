@@ -1,23 +1,32 @@
 from typing import override
-from . import Logic
 
-class HasEggs(Logic):
-  @override
-  def __str__(self) -> str:
-    return f"Has at least {self.eggs} eggs"
+from .logic import Logic
 
-  def __init__(self, eggs: int) -> None:
-    self.eggs = eggs
+class HasQuantity(Logic):
+  def __init__(self, group_name: str, amount: int) -> None:
+    self.group_name = group_name
+    self.amount = amount
     super().__init__()
 
-class HasHearts(Logic):
+  @override
+  def into_server_code(self) -> str:
+    return f"s.has_group({self.group_name.__repr__()}, p, {self.amount})"
+
+class HasEggs(HasQuantity):
+  def __init__(self, amount: int) -> None:
+    super().__init__("Egg", amount)
+
   @override
   def __str__(self) -> str:
-    return f"Has at least {self.hearts} hearts"
+    return f"Has at least {self.amount} eggs"
 
-  def __init__(self, hearts: int) -> None:
-    self.hearts = hearts
-    super().__init__()
+class HasGratitude(HasQuantity):
+  def __init__(self, amount: int) -> None:
+    super().__init__("Gratitude", amount)
+
+  @override
+  def __str__(self) -> str:
+    return f"Has at least {self.amount} gratitude"
 
 class HasShrooms(Logic):
   @override
@@ -27,3 +36,8 @@ class HasShrooms(Logic):
   def __init__(self, shroom_count_source: str):
     super().__init__()
     self.shroom_count_source = shroom_count_source
+
+  @override
+  def into_server_code(self) -> str:
+    print("warning: unimplemented HasShrooms")
+    return f"True"
