@@ -1,10 +1,10 @@
 from typing import override
-from .logic import Logic, Not, Any
+from .logic import Logic, Not
 from .has import CarryingItem
 
 class Carrying(Logic):
   def __init__(self, carryable: CarryingItem | None):
-    self.carryable = carryable
+    self.carryable: CarryingItem | None = carryable
     super().__init__()
 
   @override
@@ -16,7 +16,7 @@ class Carrying(Logic):
     if self.carryable is None:
       return f"s._cavernofdreams_carrying_throwable[p] is None"
     else:
-      return f"s._cavernofdreams_carrying_throwable[p] == {self.carryable.__repr__()}"
+      return f"s._cavernofdreams_carrying_throwable[p]=={self.carryable.__repr__()}"
 
 class WearingJesterBoots(Logic):
   def __init__(self):

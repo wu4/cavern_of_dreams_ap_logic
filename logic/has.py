@@ -27,7 +27,7 @@ class Collected(Logic, Generic[I]):
 
   @override
   def into_server_code(self) -> str:
-    return f"s.has({self.item.__str__().__repr__()}, p)"
+    return f"s.has({str(self.item).__repr__()}, p)"
 
   def __init__(self, item: I) -> None:
     self.item = item
