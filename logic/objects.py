@@ -1,23 +1,25 @@
 from __future__ import annotations
 
+from .has import CarryingItem
 from .logic import MaybeLogic as _MaybeLogic
 from ..generated_types import AnyLocation
 
 from typing import TypeAlias, override
 
-class InternalEvent:
+class HasPathName:
+  def name(self) -> str:
+    return f"{self.__module__}.{self.__class__.__name__}"
+
+class InternalEvent(HasPathName):
   @override
   def __str__(self) -> str:
-    return self.__class__.__name__
+    return f"Has {self.name()}"
 
-class CarryableLocation:
-  pass
+class CarryableLocation(InternalEvent):
+  carryable: CarryingItem
 
-class AppleTreeLocation(CarryableLocation):
-  pass
+class PlantableSoil(InternalEvent): pass
 
-class JesterBootsLocation(CarryableLocation):
-  pass
 
 LocationType: TypeAlias = AnyLocation | type[InternalEvent] | type[CarryableLocation]
 

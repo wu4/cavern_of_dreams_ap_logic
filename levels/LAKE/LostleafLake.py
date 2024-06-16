@@ -1,3 +1,5 @@
+from logic import event
+from ...logic.objects import PlantableSoil
 from ...logic import Region, Entrance, Any
 from ...logic import AppleTreeLocation
 from ...logic.comment import Comment
@@ -13,6 +15,9 @@ class LobbyEntry(Region): pass
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
 class DucklingsDoorLower(Entrance): pass
+
+class BellTowerSoil(PlantableSoil): pass
+
 
 from ..CAVE import LostleafLobby
 
@@ -31,7 +36,8 @@ regions = [
           roll_works = True,
           throwable_works = True
         )
-      )
+      ),
+      BellTowerSoil: carrying.apple
     },
 
     entrances = [
@@ -50,10 +56,10 @@ regions = [
       BellTower: Any(
         tech.any_super_jump,
 
+        event.Collected(BellTowerSoil) & item.climb,
         Comment(
           "Climb the ladder",
           Any(
-            carrying.plant_and_climb_tree,
             item.climb & Any(
               tech.ground_tail_jump,
               tech.air_tail_jump & item.high_jump,
@@ -80,14 +86,14 @@ regions = [
       )
     }
   ),
-  
+
   BellTower.define(
     region_connections = {
       OuterRim: Any(
         item.wings,
         item.air_tail & item.roll
       ),
-      
+
       RingBell: Whackable(
         ground_tail_works = True,
         air_tail_works = True,

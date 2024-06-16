@@ -1,7 +1,9 @@
+from logic import has
 from ...logic.objects import Region, Entrance
 from ...logic.comment import Comment
 from ...logic import Any
 from ...logic import event, tech, item, carrying, difficulty
+from ...logic.objects import PlantableSoil
 
 class Main(Region): pass
 class LostleafCave(Region): pass
@@ -15,13 +17,14 @@ class SunCavernTeleport(Entrance): pass
 class RainbowBench(Entrance): pass
 class FoyerDoor(Entrance): pass
 
+class GalleryLobbySoil(PlantableSoil): pass
+
+
 from . import LostleafLobby
 from . import SunCavern
 from . import MoonCavern
 from . import Rainbow
 from ..GALLERY import Foyer
-
-# [UNFINISHED]
 
 regions = [
   Main.define(
@@ -115,7 +118,8 @@ regions = [
 
   LostleafCave.define(
     locations = {
-      "Egg: Gallery Lobby - Lostleaf Lobby Entryway": None
+      "Egg: Gallery Lobby - Lostleaf Lobby Entryway": None,
+      GalleryLobbySoil: carrying.apple
     },
 
     entrances = [
@@ -126,7 +130,7 @@ regions = [
       Main: Any(
         tech.any_super_jump,
         carrying.jester_boots,
-        item.double_jump & carrying.plant_and_climb_tree
+        event.Collected(GalleryLobbySoil) & item.climb & item.double_jump
       )
     }
   ),

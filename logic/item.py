@@ -23,7 +23,7 @@ air_swim = Collected("Air Swim")
 
 fish_food = Collected("Fish Food")
 
-horn = carrying.no_throwables & Collected("Horn")
-air_tail = carrying.no_throwables & Collected("Aerial Tail")
-ground_tail = carrying.no_throwables & Collected("Grounded Tail")
-climb = carrying.no_throwables & Collected("Climb")
+horn = carrying.no_temp_items & Collected("Horn")
+air_tail = carrying.no_temp_items & Collected("Aerial Tail")
+ground_tail = carrying.no_temp_items & Collected("Grounded Tail")
+climb = carrying.no_temp_items & Collected("Climb")

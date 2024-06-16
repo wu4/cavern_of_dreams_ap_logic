@@ -13,6 +13,8 @@ CarryingItem: TypeAlias = Literal[
   "Lady Opal's Head",
   "Shelnert's Fish",
   "Mr. Kerrington's Wings",
+
+  "Jester Boots"
 ]
 
 CollectedItem: TypeAlias = AnyItem | type[InternalEvent] | CarryingItem
@@ -32,5 +34,6 @@ class Collected(Logic, Generic[I]):
   def __init__(self, item: I) -> None:
     self.item = item
     super().__init__()
+
 
 CollectedAny: TypeAlias = Collected[CollectedItem]
