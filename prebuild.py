@@ -1,10 +1,8 @@
 from csv_parsing import read_locations_csv, parse, FlagListIteration
 
-
 def serialize(item: FlagListIteration) -> list[str]:
     ret: list[str] = []
-    name = f"{item.category}{
-        item.type}" if item.category is not None else f"Any{item.type}"
+    name = f"{item.category}{item.type}" if item.category is not None else f"Any{item.type}"
     ret.append(f"{name}: TypeAlias = Literal[")
 
     for item_name in item.flag_list.values():
@@ -12,7 +10,6 @@ def serialize(item: FlagListIteration) -> list[str]:
 
     ret.append("]")
     return ret
-
 
 if __name__ == "__main__":
     accum: list[str] = []
