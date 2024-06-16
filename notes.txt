@@ -1,0 +1,14 @@
+& consumes neutrals
+| does not
+
+
+| within & requires duplication of parent &
+
+& breadth first
+| depth first
+
+
+& = blocks
+| = separators
+
+

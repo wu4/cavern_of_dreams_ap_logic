@@ -1,227 +1,261 @@
+from . import SunCavern
+from ..MONSTER import EarthDrone
+from . import Sewer
 from ...logic.objects import Region, Entrance, JesterBootsLocation
 from ...logic.comment import Comment
 from ...logic import Any, All
 from ...logic import carrying, item, tech, difficulty, event
 
-class SunCavernDoor(Entrance): pass
-class EarthDroneCannonShot(Entrance): pass
-class EarthDroneCannonShotEarly(Entrance): pass
-class SunCavernTeleport(Entrance): pass
-class SewerDoor(Entrance): pass
 
-from . import SunCavern
-from . import Sewer
-from ..MONSTER import EarthDrone
+class SunCavernDoor(Entrance):
+    pass
 
-class Main(Region): pass
-class JesterBootsPlatform(Region): pass
-class CannonLip(Region): pass
-class FlagPlatform(Region): pass
-class SewerConnector(Region): pass
-class EggPlatform(Region): pass
 
-class ArmadaLobbyBoots(JesterBootsLocation): pass
+class EarthDroneCannonShot(Entrance):
+    pass
+
+
+class EarthDroneCannonShotEarly(Entrance):
+    pass
+
+
+class SunCavernTeleport(Entrance):
+    pass
+
+
+class SewerDoor(Entrance):
+    pass
+
+
+class Main(Region):
+    pass
+
+
+class JesterBootsPlatform(Region):
+    pass
+
+
+class CannonLip(Region):
+    pass
+
+
+class FlagPlatform(Region):
+    pass
+
+
+class SewerConnector(Region):
+    pass
+
+
+class EggPlatform(Region):
+    pass
+
+
+class ArmadaLobbyBoots(JesterBootsLocation):
+    pass
+
 
 regions = [
-  Main.define(
-    locations = {
-      "Shroom: Armada Lobby - Cliffside 1": None,
-      "Shroom: Armada Lobby - Cliffside 2": None,
-      "Shroom: Armada Lobby - Cliffside 3": None,
-      "Shroom: Armada Lobby - Cliffside 4": None,
-      "Shroom: Armada Lobby - Cliffside 5": None,
+    Main.define(
+        locations={
+            "Shroom: Armada Lobby - Cliffside 1": None,
+            "Shroom: Armada Lobby - Cliffside 2": None,
+            "Shroom: Armada Lobby - Cliffside 3": None,
+            "Shroom: Armada Lobby - Cliffside 4": None,
+            "Shroom: Armada Lobby - Cliffside 5": None,
 
-      "Card: Armada Lobby - Jester Boots": Any(
-        carrying.jester_boots,
+            "Card: Armada Lobby - Jester Boots": Any(
+                carrying.jester_boots,
 
-        carrying.mr_kerringtons_wings,
+                carrying.mr_kerringtons_wings,
 
-        tech.wing_jump & tech.bubble_jump_and_recoil,
+                tech.wing_jump & tech.bubble_jump_and_recoil,
 
-        item.double_jump & Any(
-          tech.ability_toggle & item.wings,
-          item.air_tail & item.roll
-        ),
+                item.double_jump & Any(
+                    tech.ability_toggle & item.wings,
+                    item.air_tail & item.roll
+                ),
 
-        Comment(
-          """
+                Comment(
+                    """
           Precise triple tail-bounce from the walls while z-targeting and
           drifting backwards with bubble float
           """,
-          item.air_tail & tech.z_target & tech.bubble_jump & Any(
-            difficulty.intermediate & item.double_jump,
-            difficulty.hard
-          )
-        )
-      )
-    },
+                    item.air_tail & tech.z_target & tech.bubble_jump & Any(
+                        difficulty.intermediate & item.double_jump,
+                        difficulty.hard
+                    )
+                )
+            )
+        },
 
-    entrances = [
-      SunCavernDoor.define(
-        SunCavern.ArmadaLobbyDoor,
-        Any(
-          tech.roll_disjoint & item.ground_tail,
-          carrying.no_jester_boots
-        )
-      ),
-      EarthDroneCannonShotEarly.define(
-        EarthDrone.ArmadaLobbyDoor,
-        Comment(
-          "Early Armada",
-          tech.out_of_bounds & carrying.no_jester_boots
-        )
-      )
-    ],
+        entrances=[
+            SunCavernDoor.define(
+                SunCavern.ArmadaLobbyDoor,
+                Any(
+                    tech.roll_disjoint & item.ground_tail,
+                    carrying.no_jester_boots
+                )
+            ),
+            EarthDroneCannonShotEarly.define(
+                EarthDrone.ArmadaLobbyDoor,
+                Comment(
+                    "Early Armada",
+                    tech.out_of_bounds & carrying.no_jester_boots
+                )
+            )
+        ],
 
-    region_connections = {
-      JesterBootsPlatform: Any(
-        carrying.jester_boots,
-        event.Collected("Raise Armada Lobby Pipes"),
-        carrying.mr_kerringtons_wings,
-        item.wings,
-        item.double_jump,
-        tech.ground_tail_jump,
-        tech.air_tail_jump & (difficulty.intermediate | item.high_jump),
-        item.air_tail & item.roll,
-        item.sprint & item.horn,
-        Comment(
-          "Ejection launch from cannon wheel",
-          tech.ejection_launch & item.roll
-        )
-      ),
+        region_connections={
+            JesterBootsPlatform: Any(
+                carrying.jester_boots,
+                event.Collected("Raise Armada Lobby Pipes"),
+                carrying.mr_kerringtons_wings,
+                item.wings,
+                item.double_jump,
+                tech.ground_tail_jump,
+                tech.air_tail_jump & (
+                    difficulty.intermediate | item.high_jump),
+                item.air_tail & item.roll,
+                item.sprint & item.horn,
+                Comment(
+                    "Ejection launch from cannon wheel",
+                    tech.ejection_launch & item.roll
+                )
+            ),
 
-      CannonLip: Any(
-        tech.any_super_jump,
+            CannonLip: Any(
+                tech.any_super_jump,
 
-        All(
-          event.Collected("Activate Armada Lobby Red Pipe Updraft"),
-          event.Collected("Raise Armada Lobby Pipes"),
-          item.wings
-        ),
+                All(
+                    event.Collected("Activate Armada Lobby Red Pipe Updraft"),
+                    event.Collected("Raise Armada Lobby Pipes"),
+                    item.wings
+                ),
 
-        item.double_jump & Any(
-          Comment(
-            "Fly up to the tree trunk in the back",
-            tech.wing_jump & carrying.mr_kerringtons_wings,
-          ),
+                item.double_jump & Any(
+                    Comment(
+                        "Fly up to the tree trunk in the back",
+                        tech.wing_jump & carrying.mr_kerringtons_wings,
+                    ),
 
-          item.horn,
-          item.high_jump,
-          item.wings,
-          tech.ground_tail_jump,
-          tech.air_tail_jump & difficulty.intermediate,
-        )
-      ),
+                    item.horn,
+                    item.high_jump,
+                    item.wings,
+                    tech.ground_tail_jump,
+                    tech.air_tail_jump & difficulty.intermediate,
+                )
+            ),
 
-      FlagPlatform: Any(
-        carrying.jester_boots,
-        carrying.mr_kerringtons_wings,
-        Comment(
-          "Wing Storage from slope on entry pipe",
-          tech.wing_jump & tech.wing_storage,
-        ),
+            FlagPlatform: Any(
+                carrying.jester_boots,
+                carrying.mr_kerringtons_wings,
+                Comment(
+                    "Wing Storage from slope on entry pipe",
+                    tech.wing_jump & tech.wing_storage,
+                ),
 
-        item.double_jump,
-        item.horn,
-        tech.ground_tail_jump,
-        tech.air_tail_jump & item.high_jump,
+                item.double_jump,
+                item.horn,
+                tech.ground_tail_jump,
+                tech.air_tail_jump & item.high_jump,
 
-        Comment(
-          "Wings + Bubble shoot onto and from the entrance pipe",
-          tech.wing_jump & tech.bubble_jump_and_recoil
-        )
-      )
-    },
-  ),
+                Comment(
+                    "Wings + Bubble shoot onto and from the entrance pipe",
+                    tech.wing_jump & tech.bubble_jump_and_recoil
+                )
+            )
+        },
+    ),
 
-  FlagPlatform.define(
-    region_connections = {
-      Main: None,
-      SewerConnector: item.swim
-    }
-  ),
+    FlagPlatform.define(
+        region_connections={
+            Main: None,
+            SewerConnector: item.swim
+        }
+    ),
 
-  SewerConnector.define(
-    entrances = [
-      SewerDoor.define(Sewer.ArmadaLobbyDoor)
-    ],
+    SewerConnector.define(
+        entrances=[
+            SewerDoor.define(Sewer.ArmadaLobbyDoor)
+        ],
 
-    region_connections = {
-      FlagPlatform: item.swim
-    }
-  ),
+        region_connections={
+            FlagPlatform: item.swim
+        }
+    ),
 
-  JesterBootsPlatform.define(
-    locations = {
-      ArmadaLobbyBoots: Any(
-        item.ground_tail,
-        item.air_tail,
-        carrying.apple | carrying.bubble_conch,
-        # The wall allows destroying it with the horn, but it's impossible
-        # to actually do it
-        # item.horn
-      )
-    },
+    JesterBootsPlatform.define(
+        locations={
+            ArmadaLobbyBoots: Any(
+                item.ground_tail,
+                item.air_tail,
+                carrying.apple | carrying.bubble_conch,
+                # The wall allows destroying it with the horn, but it's impossible
+                # to actually do it
+                # item.horn
+            )
+        },
 
-    region_connections = {
-      # death warp
-      Main: carrying.no_temp_items
-    }
-  ),
+        region_connections={
+            # death warp
+            Main: carrying.no_temp_items
+        }
+    ),
 
-  CannonLip.define(
-    entrances = [
-      SunCavernTeleport.define(
-        default_connection = SunCavern.ArmadaLobbyTeleport,
-        rule = event.Collected("Open Armada Lobby Teleport"),
-      ),
-      EarthDroneCannonShot.define(
-        default_connection = EarthDrone.ArmadaLobbyDoor,
-        rule = carrying.no_jester_boots
-      )
-    ],
+    CannonLip.define(
+        entrances=[
+            SunCavernTeleport.define(
+                default_connection=SunCavern.ArmadaLobbyTeleport,
+                rule=event.Collected("Open Armada Lobby Teleport"),
+            ),
+            EarthDroneCannonShot.define(
+                default_connection=EarthDrone.ArmadaLobbyDoor,
+                rule=carrying.no_jester_boots
+            )
+        ],
 
-    region_connections = {
-      Main: None,
+        region_connections={
+            Main: None,
 
-      EggPlatform: Any(
-        carrying.jester_boots,
-        tech.any_super_jump,
+            EggPlatform: Any(
+                carrying.jester_boots,
+                tech.any_super_jump,
 
-        Comment(
-          """
+                Comment(
+                    """
           Hover jump towards the pipe, enable double-jump, then jump onto the
           pipe. Perform the same trick from the pipe to the ledge
           """,
-          tech.wing_jump & tech.ability_toggle & item.double_jump
-        ),
+                    tech.wing_jump & tech.ability_toggle & item.double_jump
+                ),
 
-        Comment(
-          """
+                Comment(
+                    """
           Double jump and hover-shoot to the pipe, then do the same to the
           platform
           """,
-          tech.wing_jump & tech.bubble_jump_and_recoil & item.double_jump
-        ),
+                    tech.wing_jump & tech.bubble_jump_and_recoil & item.double_jump
+                ),
 
-        Comment(
-          """
+                Comment(
+                    """
           Speedy roll launch to the pipe and double jump, then do the same to
           the platform
           """,
-          item.air_tail & item.roll & item.double_jump
-        )
-      )
-    }
-  ),
+                    item.air_tail & item.roll & item.double_jump
+                )
+            )
+        }
+    ),
 
-  EggPlatform.define(
-    locations = {
-      "Egg: Armada Lobby - Cannon": None,
-    },
+    EggPlatform.define(
+        locations={
+            "Egg: Armada Lobby - Cannon": None,
+        },
 
-    region_connections = {
-      CannonLip: None
-    }
-  )
+        region_connections={
+            CannonLip: None
+        }
+    )
 ]

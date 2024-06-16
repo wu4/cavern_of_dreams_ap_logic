@@ -3,7 +3,8 @@ from ...logic import Region, Entrance, InternalEvent
 from ...logic import All, Any
 from ...logic.quantities import HasEggs, HasGratitude, HasShrooms
 from ...logic.comment import Comment
-from ...logic import item, carrying, difficulty, tech#,  event
+from ...logic import item, carrying, difficulty, tech  # ,  event
+
 
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
@@ -14,15 +15,16 @@ class LostleafLobbyTeleport(Entrance): pass
 class ArmadaLobbyTeleport(Entrance): pass
 class PalaceLobbyTeleport(Entrance): pass
 class GalleryLobbyTeleport(Entrance): pass
-
 class MoonCavernHeartDoorOpened(InternalEvent): pass
 
-# from . import LostleafLobby
-# from . import ArmadaLobby
-# from . import PalaceLobby
-# from . import GalleryLobby
-# from ..LAKE import LostleafLake
-# from . import MoonCavern
+
+from . import LostleafLobby
+from . import ArmadaLobby
+from . import PalaceLobby
+from . import GalleryLobby
+from ..LAKE import LostleafLake
+from . import MoonCavern
+
 
 class Main(Region): pass
 class ArmadaLobbyRoom(Region): pass
@@ -35,377 +37,379 @@ class DucklingsLedge(Region): pass
 class DucklingsDoorway(Region): pass
 class MoonCavernHeartDoorway(Region): pass
 
+
 regions = [
-  Main.define(
-    locations = {
-      "Sun Cavern - Sage's Blessing 1": HasEggs(1),
-      "Sun Cavern - Sage's Blessing 2": HasEggs(6),
-      "Sun Cavern - Sage's Blessing 3": HasEggs(12),
-      "Sun Cavern - Sage's Blessing 4": HasEggs(24),
-      "Sun Cavern - Sage's Blessing 5": HasEggs(40),
+    Main.define(
+        locations={
+            "Sun Cavern - Sage's Blessing 1": HasEggs(1),
+            "Sun Cavern - Sage's Blessing 2": HasEggs(6),
+            "Sun Cavern - Sage's Blessing 3": HasEggs(12),
+            "Sun Cavern - Sage's Blessing 4": HasEggs(24),
+            "Sun Cavern - Sage's Blessing 5": HasEggs(40),
 
-      "Card: Sun Cavern - Air Vent": None,
+            "Card: Sun Cavern - Air Vent": None,
 
-      "Shroom: Sun Cavern - Mighty Wall Ground 1": None,
-      "Shroom: Sun Cavern - Mighty Wall Ground 2": None,
-      "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
-      "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
+            "Shroom: Sun Cavern - Mighty Wall Ground 1": None,
+            "Shroom: Sun Cavern - Mighty Wall Ground 2": None,
+            "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
+            "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
 
-      "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (item.ground_tail | item.air_tail | item.horn),
-      "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail | item.horn),
-      "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (item.ground_tail | item.air_tail | item.horn),
-      "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail | item.horn),
-    },
+            "Fed Lostleaf Lake Fella":         HasShrooms("Lake") & (item.ground_tail | item.air_tail | item.horn),
+            "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail | item.horn),
+            "Fed Prismic Palace Fella":        HasShrooms("Palace") & (item.ground_tail | item.air_tail | item.horn),
+            "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail | item.horn),
+        },
 
-#     entrances = [
-#       LostleafLobbyTeleport.define(
-#         default_connection = LostleafLobby.SunCavernTeleport,
-#         rule = event.Collected("Open Lake Lobby Teleport") & carrying.no_jester_boots
-#       ),
-# 
-#       ArmadaLobbyTeleport.define(
-#         default_connection = ArmadaLobby.SunCavernTeleport,
-#         rule = event.Collected("Open Armada Lobby Teleport") & carrying.no_jester_boots
-#       ),
-# 
-#       PalaceLobbyTeleport.define(
-#         default_connection = PalaceLobby.SunCavernTeleport,
-#         rule = event.Collected("Open Palace Lobby Teleport") & carrying.no_jester_boots
-#       ),
-# 
-#       GalleryLobbyTeleport.define(
-#         default_connection = GalleryLobby.SunCavernTeleport,
-#         rule = event.Collected("Open Gallery Lobby Teleport") & carrying.no_jester_boots
-#       ),
-#     ],
+        #     entrances = [
+        #       LostleafLobbyTeleport.define(
+        #         default_connection = LostleafLobby.SunCavernTeleport,
+        #         rule = event.Collected("Open Lake Lobby Teleport") & carrying.no_jester_boots
+        #       ),
+        #
+        #       ArmadaLobbyTeleport.define(
+        #         default_connection = ArmadaLobby.SunCavernTeleport,
+        #         rule = event.Collected("Open Armada Lobby Teleport") & carrying.no_jester_boots
+        #       ),
+        #
+        #       PalaceLobbyTeleport.define(
+        #         default_connection = PalaceLobby.SunCavernTeleport,
+        #         rule = event.Collected("Open Palace Lobby Teleport") & carrying.no_jester_boots
+        #       ),
+        #
+        #       GalleryLobbyTeleport.define(
+        #         default_connection = GalleryLobby.SunCavernTeleport,
+        #         rule = event.Collected("Open Gallery Lobby Teleport") & carrying.no_jester_boots
+        #       ),
+        #     ],
 
-    region_connections = {
-      ArmadaLobbyRoom: Any(
-        item.horn,
-        item.wings,
-        carrying.mr_kerringtons_wings,
+        region_connections={
+            ArmadaLobbyRoom: Any(
+                item.horn,
+                item.wings,
+                carrying.mr_kerringtons_wings,
 
-        carrying.jester_boots,
-        tech.any_super_jump,
+                carrying.jester_boots,
+                tech.any_super_jump,
 
-        Comment(
-          "Well-spaced high jump into the fan",
-          item.high_jump & (item.sprint | tech.bubble_jump)
-        )
-      ),
+                Comment(
+                    "Well-spaced high jump into the fan",
+                    item.high_jump & (item.sprint | tech.bubble_jump)
+                )
+            ),
 
-      HighJumpLedge: Any(
-        item.high_jump,
-        item.double_jump,
+            HighJumpLedge: Any(
+                item.high_jump,
+                item.double_jump,
 
-        carrying.jester_boots,
-        tech.any_super_jump,
+                carrying.jester_boots,
+                tech.any_super_jump,
 
-        Comment(
-          "Hover-jump into the nearby tutorial stone",
-          tech.wing_jump
-        ),
+                Comment(
+                    "Hover-jump into the nearby tutorial stone",
+                    tech.wing_jump
+                ),
 
-        Comment(
-          "Build speed and roll into the nearby tutorial stone",
-          item.sprint & item.roll
-        )
-      ),
+                Comment(
+                    "Build speed and roll into the nearby tutorial stone",
+                    item.sprint & item.roll
+                )
+            ),
 
-      VineLedge: Any(
-        item.climb,
-        tech.any_super_jump,
+            VineLedge: Any(
+                item.climb,
+                tech.any_super_jump,
 
-        Comment(
-          "Hover-jump up the sun wall",
-          tech.wing_jump
-        ),
+                Comment(
+                    "Hover-jump up the sun wall",
+                    tech.wing_jump
+                ),
 
-        Comment(
-          "Tail jump double jump from the nearby tutorial stone",
-          item.double_jump & Any(
-            tech.ground_tail_jump & (item.high_jump | item.wings),
-            tech.air_tail_jump & (item.high_jump & item.wings)
-          )
-        )
-      ),
+                Comment(
+                    "Tail jump double jump from the nearby tutorial stone",
+                    item.double_jump & Any(
+                        tech.ground_tail_jump & (item.high_jump | item.wings),
+                        tech.air_tail_jump & (item.high_jump & item.wings)
+                    )
+                )
+            ),
 
-      TailSpinLedge: Any(
-        carrying.jester_boots,
-        tech.any_super_jump,
+            TailSpinLedge: Any(
+                carrying.jester_boots,
+                tech.any_super_jump,
 
-        Comment(
-          "Roll jump makes the distance",
-          item.roll
-        ),
+                Comment(
+                    "Roll jump makes the distance",
+                    item.roll
+                ),
 
-        item.high_jump,
+                item.high_jump,
 
-        item.bubble,
+                item.bubble,
 
-        item.wings,
+                item.wings,
 
-        tech.air_tail_jump | tech.ground_tail_jump
-      ),
+                tech.air_tail_jump | tech.ground_tail_jump
+            ),
 
-      MightyWallLedge: Any(
-        item.climb,
-        carrying.jester_boots,
-        tech.any_super_jump,
+            MightyWallLedge: Any(
+                item.climb,
+                carrying.jester_boots,
+                tech.any_super_jump,
 
-        Comment(
-          "Dive-bounce off of shroom",
-          item.horn
-        ),
+                Comment(
+                    "Dive-bounce off of shroom",
+                    item.horn
+                ),
 
-        Comment(
-          "Jump up a tutorial stone and spire to reach the egg ledge",
-          Any(
-            item.double_jump & (item.high_jump | item.wings),
+                Comment(
+                    "Jump up a tutorial stone and spire to reach the egg ledge",
+                    Any(
+                        item.double_jump & (item.high_jump | item.wings),
 
-            difficulty.intermediate & Any(
-              tech.ground_tail_jump,
-              tech.air_tail_jump & (item.high_jump | item.double_jump)
+                        difficulty.intermediate & Any(
+                            tech.ground_tail_jump,
+                            tech.air_tail_jump & (
+                                item.high_jump | item.double_jump)
+                        )
+                    )
+                ),
+            ),
+
+            WaterfallLedge: Any(
+                carrying.jester_boots,
+                tech.any_super_jump,
+
+                Comment(
+                    "Very high jump from one of the nearby gems",
+                    All(
+                        difficulty.intermediate,
+                        tech.ground_tail_jump & item.high_jump & item.double_jump & item.wings
+                    )
+                )
+            ),
+
+            DucklingsLedge: Any(
+                item.horn,
+                item.wings,
+                item.double_jump,
+                tech.any_super_jump,
+
+                item.roll & (item.sprint | item.air_tail),
+
+                tech.ground_tail_jump,
+
+                Comment(
+                    "Tail Spin from the right gem to the tiny leaf, then to the big leaf",
+                    tech.air_tail_jump & Any(
+                        item.high_jump,
+                        difficulty.intermediate
+                    )
+                ),
+            ),
+
+            DucklingsDoorway: Any(
+                tech.any_super_jump,
+
+                Comment(
+                    "Float to the big leaf from the Sage ramp",
+                    item.sprint & (tech.wing_jump | tech.bubble_jump)
+                ),
+
+                Comment(
+                    "Jump to the small leaf from the right crystal",
+                    difficulty.intermediate & tech.air_tail_jump
+                ),
+
+                Comment(
+                    "Speedy launch from the Sage ramp",
+                    item.sprint & item.roll & item.air_tail
+                ),
+
+                Comment(
+                    "Hover shoot from the Sage ramp",
+                    tech.wing_jump & tech.bubble_jump_and_recoil
+                ),
+
+                Comment(
+                    "Precise use of bubble float and shoot jumping to land on the leaf from the right gem",
+                    difficulty.intermediate & tech.bubble_jump
+                ),
+
+                tech.momentum_cancel & item.wings,
+
+                Comment(
+                    "Clever use of wings and riding up the left gem's geometry to jump on a leaf",
+                    difficulty.intermediate & tech.wing_jump
+                )
+            ),
+
+            MoonCavernHeartDoorway:
+            Comment(
+                "Bypass the waterjet",
+                item.swim & Any(
+                    item.horn,
+                    item.sprint,
+                    carrying.bubble_conch,
+                    carrying.shelnerts_fish,
+                    difficulty.intermediate
+                )
             )
-          )
-        ),
-      ),
+        },
+    ),
 
-      WaterfallLedge: Any(
-        carrying.jester_boots,
-        tech.any_super_jump,
+    ArmadaLobbyRoom.define(
+        locations={
+            "Shroom: Sun Cavern - Armada Entrance 1": None,
+            "Shroom: Sun Cavern - Armada Entrance 2": None,
+            "Shroom: Sun Cavern - Armada Entrance 3": None,
+        },
 
-        Comment(
-          "Very high jump from one of the nearby gems",
-          All (
-            difficulty.intermediate,
-            tech.ground_tail_jump & item.high_jump & item.double_jump & item.wings
-          )
-        )
-      ),
+        #     entrances = [
+        #       ArmadaLobbyDoor.define(
+        #         default_connection = ArmadaLobby.SunCavernDoor
+        #       )
+        #     ],
 
-      DucklingsLedge: Any(
-        item.horn,
-        item.wings,
-        item.double_jump,
-        tech.any_super_jump,
+        region_connections={
+            Main: None
+        }
+    ),
 
-        item.roll & (item.sprint | item.air_tail),
+    HighJumpLedge.define(
+        locations={
+            "Shroom: Sun Cavern - High Jump Ledge 1": None,
+            "Shroom: Sun Cavern - High Jump Ledge 2": None
+        },
+        region_connections={
+            Main: None
+        }
+    ),
 
-        tech.ground_tail_jump,
+    VineLedge.define(
+        locations={
+            "Shroom: Sun Cavern - Vine Ledge 1": None,
+            "Shroom: Sun Cavern - Vine Ledge 2": None
+        },
 
-        Comment(
-          "Tail Spin from the right gem to the tiny leaf, then to the big leaf",
-          tech.air_tail_jump & Any(
-            item.high_jump,
-            difficulty.intermediate
-          )
-        ),
-      ),
+        region_connections={
+            Main: None,
+            HighJumpLedge: Any(
+                tech.wing_jump,
+                item.roll & (item.sprint | item.air_tail)
+            )
+        }
+    ),
 
-      DucklingsDoorway: Any(
-        tech.any_super_jump,
+    TailSpinLedge.define(
+        locations={
+            "Shroom: Sun Cavern - Tail Spin Ledge 1": None,
+            "Shroom: Sun Cavern - Tail Spin Ledge 2": None
+        },
 
-        Comment(
-          "Float to the big leaf from the Sage ramp",
-          item.sprint & (tech.wing_jump | tech.bubble_jump)
-        ),
+        region_connections={
+            Main: None
+        }
+    ),
 
-        Comment(
-          "Jump to the small leaf from the right crystal",
-          difficulty.intermediate & tech.air_tail_jump
-        ),
+    MightyWallLedge.define(
+        locations={
+            "Whack Mighty Wall": Any(
+                item.air_tail,
+                item.ground_tail,
+                carrying.apple,
+                carrying.bubble_conch
+            ),
 
-        Comment(
-          "Speedy launch from the Sage ramp",
-          item.sprint & item.roll & item.air_tail
-        ),
+            "Egg: Sun Cavern - Mighty Wall": None,
 
-        Comment(
-          "Hover shoot from the Sage ramp",
-          tech.wing_jump & tech.bubble_jump_and_recoil
-        ),
+            "Shroom: Sun Cavern - Mighty Wall Egg Ledge 1": None,
+            "Shroom: Sun Cavern - Mighty Wall Egg Ledge 2": None,
+            "Shroom: Sun Cavern - Mighty Wall Egg Ledge 3": None
+        },
 
-        Comment(
-          "Precise use of bubble float and shoot jumping to land on the leaf from the right gem",
-          difficulty.intermediate & tech.bubble_jump
-        ),
+        #     entrances = [
+        #       LostleafLobbyDoor.define(
+        #         default_connection = LostleafLobby.SunCavernDoor,
+        #         rule = event.Collected("Topple Mighty Wall")
+        #       )
+        #     ],
 
-        tech.momentum_cancel & item.wings,
+        region_connections={
+            Main: None
+        }
+    ),
 
-        Comment(
-          "Clever use of wings and riding up the left gem's geometry to jump on a leaf",
-          difficulty.intermediate & tech.wing_jump
-        )
-      ),
+    WaterfallLedge.define(
+        locations={
+            "Egg: Sun Cavern - Waterfall": None
+        },
 
-      MoonCavernHeartDoorway:
-        Comment(
-          "Bypass the waterjet",
-          item.swim & Any(
-            item.horn,
-            item.sprint,
-            carrying.bubble_conch,
-            carrying.shelnerts_fish,
-            difficulty.intermediate
-          )
-        )
-    },
-  ),
+        #     entrances = [
+        #       DucklingsDoorUpper.define(
+        #         default_connection = LostleafLake.DucklingsDoorUpper
+        #       )
+        #     ],
 
-  ArmadaLobbyRoom.define(
-    locations = {
-      "Shroom: Sun Cavern - Armada Entrance 1" : None,
-      "Shroom: Sun Cavern - Armada Entrance 2" : None,
-      "Shroom: Sun Cavern - Armada Entrance 3" : None,
-    },
+        region_connections={
+            Main: None,
 
-#     entrances = [
-#       ArmadaLobbyDoor.define(
-#         default_connection = ArmadaLobby.SunCavernDoor
-#       )
-#     ],
+            DucklingsDoorway: Comment(
+                "Simply float down",
+                tech.bubble_jump | tech.wing_jump
+            ),
 
-    region_connections = {
-      Main: None
-    }
-  ),
+            MoonCavernHeartDoorway: Comment(
+                "Jumping down lets you get past the jets",
+                item.swim
+            )
+        }
+    ),
 
-  HighJumpLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - High Jump Ledge 1": None,
-      "Shroom: Sun Cavern - High Jump Ledge 2": None
-    },
-    region_connections = {
-      Main: None
-    }
-  ),
+    DucklingsLedge.define(
+        locations={
+            "Shroom: Sun Cavern - Ducklings Ledge 1": None,
+            "Shroom: Sun Cavern - Ducklings Ledge 2": None
+        },
 
-  VineLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - Vine Ledge 1": None,
-      "Shroom: Sun Cavern - Vine Ledge 2": None
-    },
+        region_connections={
+            Main: None,
+            DucklingsDoorway: templates.high_jump_obstacle | tech.any_super_jump
+        }
+    ),
 
-    region_connections = {
-      Main: None,
-      HighJumpLedge: Any(
-        tech.wing_jump,
-        item.roll & (item.sprint | item.air_tail)
-      )
-    }
-  ),
+    DucklingsDoorway.define(
+        #     entrances = [
+        #       DucklingsDoorLower.define(
+        #         default_connection = LostleafLake.DucklingsDoorLower
+        #       )
+        #     ],
 
-  TailSpinLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - Tail Spin Ledge 1": None,
-      "Shroom: Sun Cavern - Tail Spin Ledge 2": None
-    },
+        region_connections={
+            DucklingsLedge: None
+        }
+    ),
 
-    region_connections = {
-      Main: None
-    }
-  ),
+    MoonCavernHeartDoorway.define(
+        #     entrances = [
+        #       MoonCavernHeartDoor.define(
+        #         default_connection = MoonCavern.SunCavernDoor,
+        #         rule = event.Collected(MoonCavernHeartDoorOpened)
+        #       ),
+        #     ],
 
-  MightyWallLedge.define(
-    locations = {
-      "Whack Mighty Wall": Any(
-        item.air_tail,
-        item.ground_tail,
-        carrying.apple,
-        carrying.bubble_conch
-      ),
+        locations={
+            MoonCavernHeartDoorOpened:
+            HasGratitude(1) & (item.ground_tail | item.air_tail)
+        },
 
-      "Egg: Sun Cavern - Mighty Wall": None,
+        region_connections={
+            Main: item.swim,
 
-      "Shroom: Sun Cavern - Mighty Wall Egg Ledge 1": None,
-      "Shroom: Sun Cavern - Mighty Wall Egg Ledge 2": None,
-      "Shroom: Sun Cavern - Mighty Wall Egg Ledge 3": None
-    },
-
-#     entrances = [
-#       LostleafLobbyDoor.define(
-#         default_connection = LostleafLobby.SunCavernDoor,
-#         rule = event.Collected("Topple Mighty Wall")
-#       )
-#     ],
-
-    region_connections = {
-      Main: None
-    }
-  ),
-
-  WaterfallLedge.define(
-    locations = {
-      "Egg: Sun Cavern - Waterfall": None
-    },
-
-#     entrances = [
-#       DucklingsDoorUpper.define(
-#         default_connection = LostleafLake.DucklingsDoorUpper
-#       )
-#     ],
-
-    region_connections = {
-      Main: None,
-
-      DucklingsDoorway: Comment(
-        "Simply float down",
-        tech.bubble_jump | tech.wing_jump
-      ),
-
-      MoonCavernHeartDoorway: Comment(
-        "Jumping down lets you get past the jets",
-        item.swim
-      )
-    }
-  ),
-
-  DucklingsLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - Ducklings Ledge 1": None,
-      "Shroom: Sun Cavern - Ducklings Ledge 2": None
-    },
-
-    region_connections = {
-      Main: None,
-      DucklingsDoorway: templates.high_jump_obstacle | tech.any_super_jump
-    }
-  ),
-
-  DucklingsDoorway.define(
-#     entrances = [
-#       DucklingsDoorLower.define(
-#         default_connection = LostleafLake.DucklingsDoorLower
-#       )
-#     ],
-
-    region_connections = {
-      DucklingsLedge: None
-    }
-  ),
-
-  MoonCavernHeartDoorway.define(
-#     entrances = [
-#       MoonCavernHeartDoor.define(
-#         default_connection = MoonCavern.SunCavernDoor,
-#         rule = event.Collected(MoonCavernHeartDoorOpened)
-#       ),
-#     ],
-
-    locations = {
-      MoonCavernHeartDoorOpened:
-        HasGratitude(1) & (item.ground_tail | item.air_tail)
-    },
-
-    region_connections = {
-      Main: item.swim,
-
-      DucklingsDoorway:
-        Comment(
-          "Speedy launch from the waterjet",
-          item.swim
-        )
-    }
-  )
+            DucklingsDoorway:
+            Comment(
+                "Speedy launch from the waterjet",
+                item.swim
+            )
+        }
+    )
 ]

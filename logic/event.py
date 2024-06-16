@@ -6,5 +6,6 @@ from ..generated_types import eventItem, teleportItem
 
 HasEventType: TypeAlias = eventItem | teleportItem | type[InternalEvent]
 
+
 class Collected(_Collected[HasEventType]):
-  pass
+    pass

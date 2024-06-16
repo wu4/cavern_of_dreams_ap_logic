@@ -1,5 +1,6 @@
+from . import EarthDrone
 from ...logic import *
 
-class EarthDroneDoor(Entrance): pass
 
-from . import EarthDrone
+class EarthDroneDoor(Entrance):
+    pass
