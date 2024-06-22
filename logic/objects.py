@@ -7,8 +7,9 @@ from ..generated_types import AnyLocation
 from typing import TypeAlias, override
 
 class HasPathName:
-  def name(self) -> str:
-    return f"{self.__module__}.{self.__class__.__name__}"
+  @classmethod
+  def name(cls) -> str:
+    return f"{cls.__module__}.{cls.__name__}"
 
 class InternalEvent(HasPathName):
   @override
@@ -16,7 +17,7 @@ class InternalEvent(HasPathName):
     return f"Has {self.name()}"
 
 class CarryableLocation(InternalEvent):
-  carryable: CarryingItem
+  carryable: CarryingItem  # pyright: ignore[reportUninitializedInstanceVariable]
 
 class PlantableSoil(InternalEvent): pass
 

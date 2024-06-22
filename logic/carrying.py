@@ -30,5 +30,6 @@ shelnerts_fish = Carrying("Shelnert's Fish")
 mr_kerringtons_wings = Carrying("Mr. Kerrington's Wings")
 
 no_temp_items = Carrying(None)
+no_throwables = no_temp_items | jester_boots
 
 no_jester_boots = Not(jester_boots)
