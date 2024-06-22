@@ -1,4 +1,4 @@
-from ...logic.objects import Region, Entrance, JesterBootsLocation
+from ...logic.objects import Region, Entrance, CarryableLocation
 from ...logic.comment import Comment
 from ...logic import Any, All
 from ...logic import carrying, item, tech, difficulty, event
@@ -20,7 +20,8 @@ class FlagPlatform(Region): pass
 class SewerConnector(Region): pass
 class EggPlatform(Region): pass
 
-class ArmadaLobbyBoots(JesterBootsLocation): pass
+class ArmadaLobbyBoots(CarryableLocation):
+  carryable = "Jester Boots"
 
 regions = [
   Main.define(
@@ -124,7 +125,7 @@ regions = [
         item.double_jump,
         item.horn,
         tech.ground_tail_jump,
-        tech.air_tail_jump & item.high_jump,
+        tech.air_tail_jump & (item.high_jump | item.wings | tech.bubble_jump),
 
         Comment(
           "Wings + Bubble shoot onto and from the entrance pipe",
@@ -143,7 +144,9 @@ regions = [
 
   SewerConnector.define(
     entrances = [
-      SewerDoor.define(Sewer.ArmadaLobbyDoor)
+      SewerDoor.define(
+        default_connection = Sewer.ArmadaLobbyDoor
+      )
     ],
 
     region_connections = {
@@ -164,8 +167,24 @@ regions = [
     },
 
     region_connections = {
-      # death warp
-      Main: carrying.no_temp_items
+      Main: Any(
+        tech.any_super_jump,
+        carrying.jester_boots,
+        carrying.mr_kerringtons_wings,
+        item.wings,
+        Comment(
+          "Leap from the red pipe to the right wheel",
+          event.Collected("Raise Armada Lobby Pipes"),
+        ),
+
+        item.high_jump,
+        item.air_tail,
+        tech.ground_tail_jump,
+        item.horn,
+        item.sprint,
+        tech.bubble_jump,
+        item.double_jump
+      )
     }
   ),
 
@@ -193,7 +212,7 @@ regions = [
           Hover jump towards the pipe, enable double-jump, then jump onto the
           pipe. Perform the same trick from the pipe to the ledge
           """,
-          tech.wing_jump & tech.ability_toggle & item.double_jump
+          tech.wing_jump & (carrying.mr_kerringtons_wings | tech.ability_toggle) & item.double_jump
         ),
 
         Comment(

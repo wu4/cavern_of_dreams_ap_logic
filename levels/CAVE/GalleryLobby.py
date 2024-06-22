@@ -31,6 +31,8 @@ regions = [
     locations = {
       "Card: Gallery Lobby - Behind the Gallery": None,
 
+      "Gallery Lobby - Extinguish Torches": item.bubble,
+
       "Shroom: Gallery Lobby - Fountain 1": None,
       "Shroom: Gallery Lobby - Fountain 2": None,
       "Shroom: Gallery Lobby - Fountain 3": None,

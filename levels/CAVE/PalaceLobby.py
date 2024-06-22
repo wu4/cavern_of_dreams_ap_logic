@@ -53,7 +53,9 @@ regions = [
 
   PrismicEntryPlatform.define(
     entrances = [
-      PrismicOutsideDoor.define(PrismicOutside.PalaceLobbyDoor),
+      PrismicOutsideDoor.define(
+        default_connection = PrismicOutside.PalaceLobbyDoor
+      ),
       SunCavernTeleport.define(
         default_connection = SunCavern.PalaceLobbyTeleport,
         rule = event.Collected("Open Palace Lobby Teleport")
