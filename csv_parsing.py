@@ -3,8 +3,6 @@ from dataclasses import dataclass
 from typing import Callable, Literal, cast
 from collections.abc import Iterable
 
-CHECK_DUPLICATE_FIELDS = False
-
 @dataclass
 class CheckData:
     item_name: str
@@ -95,15 +93,5 @@ def read_locations_csv(filename: str) -> dict[str, FlagList]:
                 accum.append(CheckDataWithLocation(row[0], row[2], row[1]))
 
         consume_category()
-
-    # if CHECK_DUPLICATE_FIELDS:
-    #     b: Counter[str] = Counter()
-    #     for a in location_datas.values():
-    #         if isinstance(a[0], CheckDataWithLocation):
-    #             b.update(map(lambda x: x.location_name, cast(list[CheckDataWithLocation], a)))
-
-    #     for a, c in b.items():
-    #         if c > 1:
-    #             print(f"{a}: {c}")
 
     return location_datas

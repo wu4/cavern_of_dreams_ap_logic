@@ -3,6 +3,7 @@ from ..logic import Region, Entrance
 
 from ..levels.CAVE import SunCavern
 
+
 class ConnectionParser:
   def parse(self, region: type[Region]):
     if region in self.seen_regions: return
@@ -21,9 +22,11 @@ class ConnectionParser:
     self.seen_regions: list[type[Region]] = []
     self.seen_entrances: list[type[Entrance]] = []
 
+
 def region_name(region: type[Region]) -> str:
   module = region.__module__.split(".")
   return ".".join([*module[2:], region.__name__])
+
 
 def serialize_region_connections(region: type[Region], assigned_regions: dict[type[Region], str]) -> list[str]:
   connecting_region_names: list[str] = []
@@ -41,6 +44,7 @@ def serialize_region_connections(region: type[Region], assigned_regions: dict[ty
 
   return accum
 
+
 def assign_regions(regions: Iterable[type[Region]]) -> tuple[list[str], dict[type[Region], str]]:
   region_id: int = 0
   str_ret: list[str] = []
@@ -52,9 +56,11 @@ def assign_regions(regions: Iterable[type[Region]]) -> tuple[list[str], dict[typ
 
   return str_ret, regs_ret
 
+
 def indent(lines: Iterable[str], indent_level: int) -> Generator[str, None, None]:
   for line in lines:
     yield ("    " * indent_level) + line
+
 
 def generate():
   parser = ConnectionParser()

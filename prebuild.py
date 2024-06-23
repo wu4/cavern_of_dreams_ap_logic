@@ -6,7 +6,7 @@ def serialize(item: FlagListIteration) -> list[str]:
     ret.append(f"{name}: TypeAlias = Literal[")
 
     for item_name in item.flag_list.values():
-        ret.append(f'"{item_name}",')
+        ret.append(f"{item_name.__repr__()},")
 
     ret.append("]")
     return ret

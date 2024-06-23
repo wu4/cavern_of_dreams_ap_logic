@@ -2,9 +2,11 @@ from collections.abc import Iterable
 import re
 from ..csv_parsing import read_locations_csv, FlagList, FlagListWithLocations
 
+
 _snake_case_re = re.compile('([A-Z]+)')
 def as_snake_case(camel_case: str) -> str:
   return _snake_case_re.sub(r'_\1', camel_case).lower()
+
 
 def parse(location_datas: dict[str, FlagList]) -> Iterable[str]:
   accum: list[str] = []
@@ -30,6 +32,7 @@ def parse(location_datas: dict[str, FlagList]) -> Iterable[str]:
 
   return accum
 
+
 def serialize_dict(items: dict[str, str], name: str) -> list[str]:
   return [
     f"{name}:dict[str,str]=" + "{",
@@ -37,12 +40,14 @@ def serialize_dict(items: dict[str, str], name: str) -> list[str]:
     "}"
   ]
 
+
 def serialize_list(items: Iterable[str], name: str) -> list[str]:
   return [
     f"{name}:list[str]=[",
     *(f'"{i}",' for i in items),
     "]"
   ]
+
 
 def generate():
   """Assumes working directory is cavern_of_dreams_ap_logic"""
