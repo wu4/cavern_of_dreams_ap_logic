@@ -52,8 +52,10 @@ class Region:
     return cls
 
 class EntranceType(Flag):
-  ENTRANCE = 0b01
-  EXIT = 0b10
+  ENTRANCE   = 0b001
+  EXIT       = 0b010
+  BILINEAR   = 0b011
+  UNDERWATER = 0b100
 
 class Entrance:
   _is_defined: bool = False
@@ -63,7 +65,7 @@ class Entrance:
     cls.containing_region = region
 
   @classmethod
-  def define(cls, default_connection: type[Entrance], rule: _MaybeLogic = None, type: EntranceType = EntranceType.ENTRANCE | EntranceType.EXIT) -> type[Entrance]:
+  def define(cls, default_connection: type[Entrance], rule: _MaybeLogic = None, type: EntranceType = EntranceType.BILINEAR) -> type[Entrance]:
     assert not cls._is_defined, f"Tried to redefine {cls.__name__}"
     cls._is_defined = True
 
