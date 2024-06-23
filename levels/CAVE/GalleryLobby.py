@@ -1,4 +1,3 @@
-from logic import has
 from ...logic.objects import Region, Entrance
 from ...logic.comment import Comment
 from ...logic import Any

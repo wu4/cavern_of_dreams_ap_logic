@@ -2,7 +2,6 @@ from ...logic import Any
 from ...logic.objects import Region, Entrance, InternalEvent
 
 from ...logic import item, event, difficulty, carrying, tech, templates
-from ...logic.whackable import Whackable
 from ...logic.comment import Comment
 
 class Main(Region): pass
