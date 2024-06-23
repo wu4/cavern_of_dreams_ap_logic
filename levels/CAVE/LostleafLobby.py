@@ -1,6 +1,5 @@
-from ...logic import Logic
 from ...logic.objects import Region, Entrance, InternalEvent
-from ...logic.whackable import Whackable
+from ...logic import item, carrying
 from ...logic import event
 
 class SunCavernDoor(Entrance): pass
@@ -20,12 +19,7 @@ class HiddenDoorway(Region): pass
 class BrokeHiddenWall(InternalEvent): pass
 # give it an associated region with a dead-end
 class BreakHiddenWall(Region): pass
-CanBreakHiddenWall: Logic = Whackable(
-  ground_tail_works = True,
-  air_tail_works = True,
-  roll_works = True,
-  throwable_works = True
-)
+CanBreakHiddenWall = item.ground_tail | item.air_tail | carrying.apple | carrying.bubble_conch
 
 regions = [
   Main.define(
