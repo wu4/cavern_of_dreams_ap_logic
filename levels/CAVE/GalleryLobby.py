@@ -63,7 +63,7 @@ regions = [
         rule = event.Collected("Open Gallery Lobby Teleport")
       ),
       RainbowBench.define(
-        default_connection = Rainbow.Well
+        default_connection = Rainbow.WellEntrance
       )
     ],
 

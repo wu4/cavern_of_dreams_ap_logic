@@ -1,4 +1,4 @@
-from logic.comment import Comment
+from ...logic.comment import Comment
 from ...logic import Any, Region, Entrance
 from ...logic import item, tech, carrying, difficulty
 
@@ -7,8 +7,9 @@ class Main(Region): pass
 class MoonLedges(Region): pass
 class ShroomLedges(Region): pass
 class Topside(Region): pass
+class Well(Region): pass
 
-class Well(Entrance): pass
+class WellEntrance(Entrance): pass
 
 from ..CAVE import GalleryLobby
 
@@ -34,17 +35,38 @@ regions = [
           "Jump from the well",
           tech.ground_tail_jump & item.double_jump,
         ),
+      ),
+
+      Well: Any(
+        carrying.jester_boots,
+        carrying.mr_kerringtons_wings,
+        tech.bubble_jump,
+        item.double_jump,
+        tech.air_tail_jump,
+        tech.ground_tail_jump,
+        item.sprint & item.roll,
+        tech.momentum_cancel & item.high_jump
       )
+    },
+  ),
+
+  Well.define(
+    region_connections = {
+      Main: None
     },
 
     entrances = [
-      Well.define(GalleryLobby.RainbowBench)
+      WellEntrance.define(
+        default_connection = GalleryLobby.RainbowBench,
+      )
     ]
   ),
 
   MoonLedges.define(
     region_connections = {
       Main: None,
+
+      Well: None,
 
       ShroomLedges: Any(
         tech.any_super_jump,

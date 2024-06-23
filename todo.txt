@@ -24,7 +24,7 @@
   [x] pass through with shelnerts fish
   [x] pass through with mr kerringtons wings
 [ ] levels/CAVE/Rainbow.py
-  [ ] pass through with apple
-  [ ] pass through with bubble conch
-  [ ] pass through with shelnerts fish
+  [x] pass through with apple
+  [x] pass through with bubble conch
+  [x] pass through with shelnerts fish
   [ ] pass through with mr kerringtons wings
