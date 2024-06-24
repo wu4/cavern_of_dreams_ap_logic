@@ -128,6 +128,11 @@ regions = [
             tech.ground_tail_jump & (item.high_jump | item.wings),
             tech.air_tail_jump & (item.high_jump & item.wings)
           )
+        ),
+
+        Comment(
+          "Wing storage + double jump from the nearby tutorial stone",
+          tech.wing_storage & item.double_jump
         )
       ),
 
@@ -153,6 +158,14 @@ regions = [
         item.climb,
         carrying.jester_boots,
         tech.any_super_jump,
+
+        Comment(
+          """
+          Hover-jump up the sun wall to the red eyes, then float from the
+          crystal
+          """,
+          tech.wing_jump & carrying.mr_kerringtons_wings
+        ),
 
         Comment(
           "Dive-bounce off of shroom",
@@ -188,6 +201,7 @@ regions = [
       DucklingsLedge: Any(
         item.horn,
         item.wings,
+        carrying.mr_kerringtons_wings,
         item.double_jump,
         tech.any_super_jump,
 
@@ -206,6 +220,7 @@ regions = [
 
       DucklingsDoorway: Any(
         tech.any_super_jump,
+        carrying.mr_kerringtons_wings,
 
         Comment(
           "Float to the big leaf from the Sage ramp",
