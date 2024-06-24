@@ -2,29 +2,9 @@
 [x] levels/CAVE/MoonCavern.py
 [x] levels/CAVE/LostleafLobby.py
 [x] levels/CAVE/ArmadaLobby.py
-  [x] pass through with apple
-  [x] pass through with bubble conch
-  [x] pass through with shelnerts fish
-  [x] pass through with mr kerringtons wings
-    * you do not need wing jump tech to get to the egg platform
-  [x] finish logic for JesterBootsPlatform
 [x] levels/CAVE/PalaceLobby.py
-  [x] pass through with apple
-  [x] pass through with bubble conch
-  [x] pass through with shelnerts fish
-  [x] pass through with mr kerringtons wings
 [x] levels/CAVE/GalleryLobby.py
-  [x] pass through with apple
-  [x] pass through with bubble conch
-  [x] pass through with shelnerts fish
-  [x] pass through with mr kerringtons wings
 [x] levels/CAVE/Sewer.py
-  [x] pass through with apple
-  [x] pass through with bubble conch
-  [x] pass through with shelnerts fish
-  [x] pass through with mr kerringtons wings
-[ ] levels/CAVE/Rainbow.py
-  [x] pass through with apple
-  [x] pass through with bubble conch
-  [x] pass through with shelnerts fish
-  [ ] pass through with mr kerringtons wings
+[x] levels/CAVE/Rainbow.py
+  * kerringtons wings is technically usable to get to the planet, but it is
+    random enough to where i would prefer not to include in logic
