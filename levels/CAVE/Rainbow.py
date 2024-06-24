@@ -73,13 +73,25 @@ regions = [
 
         carrying.jester_boots,
 
+        carrying.mr_kerringtons_wings & Any(
+          # this is technically performable without any bonus items
+          # but it becomes a lot more consistent with them
+          # losing a temporary item after 1 failed attempt would kinda suck
+          item.sprint,
+          tech.momentum_cancel & item.high_jump,
+          item.double_jump
+        ),
+
         item.bubble,
 
         item.double_jump,
 
         item.air_tail & item.roll & difficulty.hard,
 
-        item.horn & tech.momentum_cancel
+        item.horn & Any(
+          item.wings,
+          tech.momentum_cancel
+        )
       )
     }
   ),

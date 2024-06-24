@@ -6,5 +6,3 @@
 [x] levels/CAVE/GalleryLobby.py
 [x] levels/CAVE/Sewer.py
 [x] levels/CAVE/Rainbow.py
-  * kerringtons wings is technically usable to get to the planet, but it is
-    random enough to where i would prefer not to include in logic
