@@ -1,9 +1,8 @@
 from logic import event
 from ...logic.objects import PlantableSoil
 from ...logic import Region, Entrance, Any
-from ...logic import AppleTreeLocation
+from ...logic.objects import CarryableLocation
 from ...logic.comment import Comment
-from ...logic.whackable import Whackable
 from ...logic import item, difficulty, tech, carrying
 
 class Main(Region): pass
@@ -17,26 +16,25 @@ class DucklingsDoorUpper(Entrance): pass
 class DucklingsDoorLower(Entrance): pass
 
 class BellTowerSoil(PlantableSoil): pass
-
+class LakeAppleTree(CarryableLocation):
+  carryable = "Apple"
 
 from ..CAVE import LostleafLobby
 
 regions = [
   Main.define(
     locations = {
-      AppleTreeLocation: item.carry & Any(
+      LakeAppleTree: item.carry & Any(
         Comment(
           "Grab the apple near the Winky Tree",
           difficulty.intermediate
         ),
-        Whackable(
-          horn_works = True,
-          air_tail_works = True,
-          ground_tail_works = True,
-          roll_works = True,
-          throwable_works = True
-        )
+        item.horn,
+        item.air_tail,
+        item.ground_tail,
+        carrying.apple | carrying.bubble_conch
       ),
+
       BellTowerSoil: carrying.apple
     },
 
@@ -94,12 +92,11 @@ regions = [
         item.air_tail & item.roll
       ),
 
-      RingBell: Whackable(
-        ground_tail_works = True,
-        air_tail_works = True,
-        roll_works = True,
-        throwable_works = True,
-        horn_works = True
+      RingBell: Any(
+        item.ground_tail,
+        item.air_tail,
+        item.horn,
+        carrying.apple | carrying.bubble_conch
       ),
 
       Main: None
