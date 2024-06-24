@@ -1,6 +1,5 @@
-from ...logic import Any
 from ...logic.objects import Region, Entrance, InternalEvent
-
+from ...logic import Any
 from ...logic import item, event, difficulty, carrying, tech, templates
 from ...logic.comment import Comment
 
