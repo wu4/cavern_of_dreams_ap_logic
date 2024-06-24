@@ -8,6 +8,8 @@
 [x] levels/CAVE/Rainbow.py
 [ ] levels/LAKE/LostleafLake.py
   [ ] fully lay out regions and locations
+  [ ] pass through OoB area
+    [ ] dont forget air swim (almost certainly can be used with OoB to get an egg)
   [ ] pass through with apple
   [ ] pass through with bubble conch
   [ ] pass through with shelnerts fish
