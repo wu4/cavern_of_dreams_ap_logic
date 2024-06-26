@@ -13,4 +13,5 @@
   [ ] pass through with apple
   [ ] pass through with bubble conch
   [ ] pass through with shelnerts fish
-  [ ] pass through with mr kerringtons wings
+  [ ] pass through with mk wings
+    [ ] pass through with mk wings + sprint
