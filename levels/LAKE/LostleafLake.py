@@ -1,9 +1,8 @@
-from logic import event
 from ...logic.objects import PlantableSoil
 from ...logic import Region, Entrance, Any
 from ...logic.objects import CarryableLocation
 from ...logic.comment import Comment
-from ...logic import item, difficulty, tech, carrying
+from ...logic import item, difficulty, tech, carrying, event, has
 
 class Main(Region): pass
 class RingBell(Region): pass
@@ -35,7 +34,47 @@ regions = [
         carrying.apple | carrying.bubble_conch
       ),
 
-      BellTowerSoil: carrying.apple
+      BellTowerSoil: carrying.apple,
+
+      "Lostleaf Lake - Help Shelnert": has.Collected("Fish Food"),
+
+      "Egg: Lostleaf Lake - Entry Stump": None,
+
+      "Card: Lostleaf Lake - Entry": None,
+      "Card: Lostleaf Lake - Apple Tree": None,
+
+      "Shroom: Lostleaf Lake - Lake Logs 1": None,
+      "Shroom: Lostleaf Lake - Lake Logs 2": None,
+      "Shroom: Lostleaf Lake - Lake Logs 3": None,
+      "Shroom: Lostleaf Lake - Lake Logs 4": None,
+
+      "Shroom: Lostleaf Lake - Bridge 1": None,
+      "Shroom: Lostleaf Lake - Bridge 2": None,
+      "Shroom: Lostleaf Lake - Bridge 3": None,
+
+      "Shroom: Lostleaf Lake - Winky Apple Tree 1": None,
+      "Shroom: Lostleaf Lake - Winky Apple Tree 2": None,
+      "Shroom: Lostleaf Lake - Winky Apple Tree 3": None,
+      "Shroom: Lostleaf Lake - Winky Apple Tree 4": None,
+
+      "Shroom: Lostleaf Lake - Ramp to Winky Tree 1": None,
+      "Shroom: Lostleaf Lake - Ramp to Winky Tree 2": None,
+      "Shroom: Lostleaf Lake - Ramp to Winky Tree 3": None,
+      "Shroom: Lostleaf Lake - Ramp to Winky Tree 4": None,
+      "Shroom: Lostleaf Lake - Ramp to Winky Tree 5": None,
+
+      "Shroom: Lostleaf Lake - Deep Woods Entryway 1": None,
+      "Shroom: Lostleaf Lake - Deep Woods Entryway 2": None,
+      "Shroom: Lostleaf Lake - Deep Woods Entryway 3": None,
+
+      "Shroom: Lostleaf Lake - Waterfall Logs 1": None,
+      "Shroom: Lostleaf Lake - Waterfall Logs 2": None,
+      "Shroom: Lostleaf Lake - Waterfall Logs 3": None,
+      "Shroom: Lostleaf Lake - Waterfall Logs 4": None,
+
+      "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 1": None,
+      "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 2": None,
+      "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 3": None
     },
 
     entrances = [
