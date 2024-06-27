@@ -1,10 +1,17 @@
 [x] levels/CAVE/SunCavern.py
+  [ ] pass through with mk wings + sprint
 [x] levels/CAVE/MoonCavern.py
+  [ ] pass through with mk wings + sprint
 [x] levels/CAVE/LostleafLobby.py
+  [ ] pass through with mk wings + sprint
 [x] levels/CAVE/ArmadaLobby.py
+  [ ] pass through with mk wings + sprint
 [x] levels/CAVE/PalaceLobby.py
+  [ ] pass through with mk wings + sprint
 [x] levels/CAVE/GalleryLobby.py
+  [ ] pass through with mk wings + sprint
 [x] levels/CAVE/Sewer.py
+  [ ] pass through with mk wings + sprint
 [x] levels/CAVE/Rainbow.py
 [ ] levels/LAKE/LostleafLake.py
   [ ] fully lay out regions and locations
