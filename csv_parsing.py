@@ -76,9 +76,14 @@ def read_locations_csv(filename: str) -> dict[str, FlagList]:
             if current_category is not None:
                 location_datas[current_category] = FlagListWithLocations(cast(list[CheckDataWithLocation], accum)) if has_locations else FlagList(accum)
 
+        # skip header line
+        _ = reader.__next__()
+
         for row in reader:
             if len(row) == 0:
               continue
+            if len(row) != 3:
+              raise Exception(row)
             elif row[1] == "" and row[2] == "":
                 consume_category()
                 current_category = row[0]

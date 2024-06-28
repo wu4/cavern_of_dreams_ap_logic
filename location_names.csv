@@ -1,3 +1,5 @@
+Item,Location,Flag
+
 ability,,
 Tail,Sun Cavern - Sage's Blessing 1,SKILL_ATTACK
 Horn,Sun Cavern - Sage's Blessing 2,SKILL_DIVE
@@ -26,10 +28,10 @@ Open Palace Lobby Teleport,,TELEPORT_PALACE
 Open Gallery Lobby Teleport,,TELEPORT_GALLERY
 
 gratitude,,
-Gratitude 1,,Fed Lostleaf Lake Fella,GRATITUDE1
-Gratitude 2,,Fed Airborne Armada Fella,GRATITUDE2
-Gratitude 3,,Fed Prismic Palace Fella,GRATITUDE3
-Gratitude 4,,Fed Gallery of Nightmares Fella,GRATITUDE4
+Gratitude 1,Fed Lostleaf Lake Fella,GRATITUDE1
+Gratitude 2,Fed Airborne Armada Fella,GRATITUDE2
+Gratitude 3,Fed Prismic Palace Fella,GRATITUDE3
+Gratitude 4,Fed Gallery of Nightmares Fella,GRATITUDE4
 
 pickup,,
 Fish Food,Lostleaf Lake - Treehouse Fish Food,ITEM_FISH_FOOD
