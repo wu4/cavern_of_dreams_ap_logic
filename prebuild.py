@@ -18,5 +18,5 @@ if __name__ == "__main__":
     accum.append("# Generated using prebuild.py")
     accum.append("from typing import TypeAlias, Literal")
     accum += parse(location_datas, serialize)
-    with open("generated.py", "w") as out_py:
+    with open("generated_types.py", "w") as out_py:
         _ = out_py.write("\n".join(accum))

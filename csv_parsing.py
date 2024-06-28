@@ -77,18 +77,17 @@ def read_locations_csv(filename: str) -> dict[str, FlagList]:
                 location_datas[current_category] = FlagListWithLocations(cast(list[CheckDataWithLocation], accum)) if has_locations else FlagList(accum)
 
         for row in reader:
-            columns = len(row)
-            if columns == 0:
-                continue
-            elif columns == 1:
+            if len(row) == 0:
+              continue
+            elif row[1] == "" and row[2] == "":
                 consume_category()
                 current_category = row[0]
                 accum = []
                 continue
-            elif columns == 2:
+            elif row[1] == "":
                 has_locations = False
-                accum.append(CheckData(row[0], row[1]))
-            elif columns == 3:
+                accum.append(CheckData(row[0], row[2]))
+            else:
                 has_locations = True
                 accum.append(CheckDataWithLocation(row[0], row[2], row[1]))
 

@@ -1,43 +1,43 @@
-ability
+ability,,
 Tail,Sun Cavern - Sage's Blessing 1,SKILL_ATTACK
 Horn,Sun Cavern - Sage's Blessing 2,SKILL_DIVE
 Wings,Sun Cavern - Sage's Blessing 3,SKILL_HOVER
 Bubble,Sun Cavern - Sage's Blessing 4,SKILL_PROJECTILE
 Flight,Sun Cavern - Sage's Blessing 5,SKILL_FLIGHT
 
-nonVanillaAbility
-Grounded Tail,SKILL_GROUNDATTACK
-Aerial Tail,SKILL_AIRATTACK
-Double Jump,SKILL_DOUBLEJUMP
-Roll,SKILL_ROLL
-Swim,SKILL_SWIM
-Carry,SKILL_CARRY
-Climb,SKILL_CLIMB
-High Jump,SKILL_HIGHJUMP
-Sprint,SKILL_SPRINT
-Super Bounce,SKILL_SUPERBOUNCE
-Super Bubble Jump,SKILL_SUPERBUBBLEJUMP
-Air Swim,SKILL_AIRSWIM
+nonVanillaAbility,,
+Grounded Tail,,SKILL_GROUNDATTACK
+Aerial Tail,,SKILL_AIRATTACK
+Double Jump,,SKILL_DOUBLEJUMP
+Roll,,SKILL_ROLL
+Swim,,SKILL_SWIM
+Carry,,SKILL_CARRY
+Climb,,SKILL_CLIMB
+High Jump,,SKILL_HIGHJUMP
+Sprint,,SKILL_SPRINT
+Super Bounce,,SKILL_SUPERBOUNCE
+Super Bubble Jump,,SKILL_SUPERBUBBLEJUMP
+Air Swim,,SKILL_AIRSWIM
 
-teleport
-Open Lake Lobby Teleport,TELEPORT_LAKE
-Open Armada Lobby Teleport,TELEPORT_MONSTER
-Open Palace Lobby Teleport,TELEPORT_PALACE
-Open Gallery Lobby Teleport,TELEPORT_GALLERY
+teleport,,
+Open Lake Lobby Teleport,,TELEPORT_LAKE
+Open Armada Lobby Teleport,,TELEPORT_MONSTER
+Open Palace Lobby Teleport,,TELEPORT_PALACE
+Open Gallery Lobby Teleport,,TELEPORT_GALLERY
 
-gratitude
-Gratitude 1,Fed Lostleaf Lake Fella,GRATITUDE1
-Gratitude 2,Fed Airborne Armada Fella,GRATITUDE2
-Gratitude 3,Fed Prismic Palace Fella,GRATITUDE3
-Gratitude 4,Fed Gallery of Nightmares Fella,GRATITUDE4
+gratitude,,
+Gratitude 1,,Fed Lostleaf Lake Fella,GRATITUDE1
+Gratitude 2,,Fed Airborne Armada Fella,GRATITUDE2
+Gratitude 3,,Fed Prismic Palace Fella,GRATITUDE3
+Gratitude 4,,Fed Gallery of Nightmares Fella,GRATITUDE4
 
-pickup
+pickup,,
 Fish Food,Lostleaf Lake - Treehouse Fish Food,ITEM_FISH_FOOD
 Lady Opal's Egg 1,Lady Opal's Egg: Castle,ITEM_PRINCESS_1
 Lady Opal's Egg 2,Lady Opal's Egg: Pool,ITEM_PRINCESS_2
 Lady Opal's Egg 3,Lady Opal's Egg: Poki-Poki,ITEM_PRINCESS_3
 
-event
+event,,
 Topple Mighty Wall,Whack Mighty Wall,CAVE_NURIKABE_FALLEN
 
 Raise Armada Lobby Pipes,Armada Lobby Purple Valve,MONSTER_LOBBY_PIPES_RISEN
@@ -55,6 +55,7 @@ Open Crypt,Lostleaf Lake - Back of the Headstone,LAKE_CRYPT_GATE_OPEN
 Open Church,Lostleaf Lake - Ring Bell,LAKE_BELL_RANG
 Open Church Egg,Lostleaf Lake - Angel Statue Puzzle,LAKE_CHURCH_SUCCESS
 Open Treehouse,Lostleaf Lake - Treehouse Preston,LAKE_BEDROOM_DOOR_OPEN
+Lower Deep Woods Egg,Lostleaf Lake - Tree Puzzle,LAKE_GROVE_HELPED
 
 Open Armada Cockpit,Armada Interior - Help Mr. Kerrington,MONSTER_BOILS_REMOVED
 Free Armada Buddies,Armada Interior - Generators Puzzle,MONSTER_TEST_CHUBES_OPENED
@@ -87,7 +88,7 @@ Extend Fire Lobby Tongue Platform,Gallery of Nightmares - Fire Lobby Preston,GAL
 Extend Fire Lobby Frying Pans,Gallery of Nightmares - Fire Lobby Hoops,GALLERY_HOOP_SUCCESS
 Coils of Agony - Open Snake's Mouth,Coils of Agony - Hidden Pillar,CHALICE_BRIDGE_ACTIVE
 
-card
+card,,
 Card: Shroom,Card: Sun Cavern - Air Vent,CARD_CAVE_MUSHROOM
 Card: Mighty Wall,Card: Lostleaf Lobby - Branches,CARD_CAVE_NURIKABE
 Card: Pale Carpy,Card: Moon Cavern - Statue,CARD_CAVE_KOI_CAVE
@@ -130,7 +131,7 @@ Card: Luna,Card: Gallery Lobby - Behind the Gallery,CARD_CAVE_VILLAIN
 Card: Boxed Nightmare,Card: Palace Dining Room - Top,CARD_CAVE_PANDORA
 Card: Frozen King,Card: Palace Lobby - Top,CARD_CAVE_KING
 
-egg
+egg,,
 Sun Egg,Egg: Sun Cavern - Mighty Wall,FELLA_CAVE1
 Green Starry Egg,Egg: Sun Cavern - Waterfall,FELLA_CAVE2
 Blue Moon Egg,Egg: Moon Cavern - Dive Puzzle,FELLA_CAVE3
@@ -177,7 +178,7 @@ Robot Egg,Egg: Gallery of Nightmares - Mr. Kerrington Painting,FELLA_GALLERY3
 Bricked Egg,Egg: Gallery of Nightmares - Sewer,FELLA_GALLERY4
 Ghost Egg,Egg: Gallery of Nightmares - Deepest Darkness,FELLA_GALLERY5
 
-shroom
+shroom,,
 Cavern Shroom 1,Shroom: Sun Cavern - Mighty Wall Ground 1,NOTE_CAVE2
 Cavern Shroom 2,Shroom: Sun Cavern - Mighty Wall Ground 2,NOTE_CAVE3
 Cavern Shroom 3,Shroom: Sun Cavern - Mighty Wall Ground 3,NOTE_CAVE4
