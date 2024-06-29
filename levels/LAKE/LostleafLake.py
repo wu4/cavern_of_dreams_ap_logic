@@ -30,9 +30,6 @@ class CryptCanopy(Region): pass
 class WaterfallCanopy(Region): pass
 class DeepWoodsPuzzleEgg(Region): pass
 
-class Test:
-  a = 1
-
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
 class DucklingsDoorLower(Entrance): pass
@@ -45,14 +42,11 @@ class TreehouseBackDoor(Entrance): pass
 class BellTowerSoil(PlantableSoil): pass
 class WinkyTreeSoil(PlantableSoil): pass
 class DeepWoodsSoil(PlantableSoil): pass
-class LakeAppleTree(CarryableLocation):
-  carryable = "Apple"
+class BigAppleLedgeSoil(PlantableSoil): pass
 
-class DeepWoodsAppleTree(CarryableLocation):
-  carryable = "Apple"
-
-class DeepWoodsJesterBoots(CarryableLocation):
-  carryable = "Jester Boots"
+class LakeAppleTree(CarryableLocation): carryable = "Apple"
+class DeepWoodsAppleTree(CarryableLocation): carryable = "Apple"
+class DeepWoodsJesterBoots(CarryableLocation): carryable = "Jester Boots"
 
 from ..CAVE import LostleafLobby, SunCavern
 from . import Church, Crypt, Treehouse
@@ -556,6 +550,10 @@ regions = [
   ),
 
   BigAppleLedge.define(
+    locations = {
+      BigAppleLedgeSoil: carrying.apple
+    },
+
     region_connections = {
       TreehouseBranches: None,
 
@@ -568,6 +566,10 @@ regions = [
           item.sprint,
           tech.bubble_jump_and_recoil
         )
+      ),
+
+      CryptCanopy: Any(
+        event.Collected(BigAppleLedgeSoil) & item.climb & item.double_jump & item.wings
       )
     }
   ),
@@ -772,7 +774,11 @@ regions = [
 
       CryptCanopy: Any(
         item.wings,
-        carrying.mr_kerringtons_wings
+        carrying.mr_kerringtons_wings,
+        difficulty.hard & Any(
+          item.roll & (item.air_tail | item.sprint) & item.double_jump
+        ),
+        item.roll & item.sprint & tech.bubble_jump,
       )
     }
   )
