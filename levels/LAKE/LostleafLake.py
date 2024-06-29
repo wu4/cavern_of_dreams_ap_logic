@@ -2,7 +2,7 @@ from ...logic.objects import EntranceType, PlantableSoil
 from ...logic import Region, Entrance, Any
 from ...logic.objects import CarryableLocation
 from ...logic.comment import Comment
-from ...logic import item, difficulty, tech, carrying, event, has
+from ...logic import item, difficulty, tech, carrying, event, has, templates
 
 class Main(Region): pass
 class RingBell(Region): pass
@@ -19,6 +19,19 @@ class InsideCrypt(Region): pass
 class TeepeeIsland(Region): pass
 class PrestonLedge(Region): pass
 class TreehouseBranches(Region): pass
+class WinkyTreeLedge(Region): pass
+class BigAppleLedge(Region): pass
+class TreehouseFrontEntry(Region): pass
+class TreehouseBackEntry(Region): pass
+class TreehouseRoof(Region): pass
+class Ducklings(Region): pass
+class DucklingsLedge(Region): pass
+class CryptCanopy(Region): pass
+class WaterfallCanopy(Region): pass
+class DeepWoodsPuzzleEgg(Region): pass
+
+class Test:
+  a = 1
 
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
@@ -26,13 +39,23 @@ class DucklingsDoorLower(Entrance): pass
 class ChurchDoor(Entrance): pass
 class CryptDoor(Entrance): pass
 class PrismicDoor(Entrance): pass
+class TreehouseFrontDoor(Entrance): pass
+class TreehouseBackDoor(Entrance): pass
 
 class BellTowerSoil(PlantableSoil): pass
+class WinkyTreeSoil(PlantableSoil): pass
+class DeepWoodsSoil(PlantableSoil): pass
 class LakeAppleTree(CarryableLocation):
   carryable = "Apple"
 
-from ..CAVE import LostleafLobby
-from . import Church, Crypt
+class DeepWoodsAppleTree(CarryableLocation):
+  carryable = "Apple"
+
+class DeepWoodsJesterBoots(CarryableLocation):
+  carryable = "Jester Boots"
+
+from ..CAVE import LostleafLobby, SunCavern
+from . import Church, Crypt, Treehouse
 from ..PALACE import PrismicOutside
 
 regions = [
@@ -48,6 +71,8 @@ regions = [
         item.ground_tail,
         carrying.apple | carrying.bubble_conch
       ),
+
+      WinkyTreeSoil: carrying.apple,
 
       BellTowerSoil: carrying.apple,
 
@@ -187,7 +212,29 @@ regions = [
           "Jump from the Winky Tree target",
           item.horn & item.double_jump
         )
-      )
+      ),
+
+      PrestonLedge: Any(
+        tech.any_super_jump,
+
+        event.Collected("Raise Lake Swings"),
+
+        item.double_jump & Any(
+          item.horn,
+          tech.ground_tail_jump,
+          tech.air_tail_jump & item.high_jump,
+          event.Collected(WinkyTreeSoil) & item.climb
+        )
+      ),
+
+      WinkyTreeLedge: Any(
+        tech.any_super_jump,
+
+        item.double_jump,
+        item.high_jump & tech.air_tail_jump,
+        tech.ground_tail_jump,
+        item.horn
+      ),
     }
   ),
 
@@ -478,6 +525,254 @@ regions = [
           "Launch from the nearby fence",
           tech.ejection_launch
         )
+      )
+    }
+  ),
+
+  WinkyTreeLedge.define(
+    locations = {
+      "Shroom: Lostleaf Lake - Winky Apple Tree 1": None,
+      "Shroom: Lostleaf Lake - Winky Apple Tree 2": None,
+      "Shroom: Lostleaf Lake - Winky Apple Tree 3": None,
+      "Shroom: Lostleaf Lake - Winky Apple Tree 4": None,
+    },
+
+    region_connections = {
+      Main: None,
+
+      BigAppleLedge: Any(
+        tech.any_super_jump,
+
+        item.high_jump & tech.ground_tail_jump,
+
+        item.double_jump & Any(
+          item.horn,
+          tech.ground_tail_jump,
+          tech.air_tail_jump,
+          item.high_jump
+        )
+      )
+    }
+  ),
+
+  BigAppleLedge.define(
+    region_connections = {
+      TreehouseBranches: None,
+
+      WinkyTreeLedge: None,
+
+      TreehouseFrontEntry: Any(
+        carrying.mr_kerringtons_wings,
+
+        item.wings & Any(
+          item.sprint,
+          tech.bubble_jump_and_recoil
+        )
+      )
+    }
+  ),
+
+  TreehouseBranches.define(
+    locations = {
+      "Shroom: Lostleaf Lake - Treehouse Branches 1": None,
+      "Shroom: Lostleaf Lake - Treehouse Branches 2": None,
+      "Shroom: Lostleaf Lake - Treehouse Branches 3": None,
+      "Shroom: Lostleaf Lake - Treehouse Branches 4": None,
+      "Shroom: Lostleaf Lake - Treehouse Branches 5": None,
+      "Shroom: Lostleaf Lake - Treehouse Branches 6": None,
+      "Egg: Lostleaf Lake - Near the Treehouse": None
+    },
+
+    region_connections = {
+      Main: None,
+
+      PrestonLedge: None,
+
+      BigAppleLedge: Comment(
+        "Jump onto the egg house",
+        templates.high_jump_obstacle
+      ),
+
+      TreehouseFrontEntry: Any(
+        item.climb,
+
+        item.high_jump & carrying.mr_kerringtons_wings,
+
+        item.wings & Any(
+          item.double_jump,
+          item.horn,
+        ),
+
+        item.double_jump & Any(
+          item.horn,
+          tech.ground_tail_jump,
+          tech.air_tail_jump & item.high_jump,
+        )
+      ),
+    }
+  ),
+
+  TreehouseFrontEntry.define(
+    entrances = [
+      TreehouseFrontDoor.define(
+        default_connection = Treehouse.LostleafFrontDoor,
+        rule = Any(
+          event.Collected("Open Treehouse"),
+          tech.roll_disjoint
+        )
+      )
+    ],
+
+    region_connections = {
+      TreehouseBranches: None,
+
+      TreehouseBackEntry: carrying.jester_boots,
+
+      TreehouseRoof: Any(
+        tech.any_super_jump,
+
+        Comment(
+          "Launch from the ladder",
+          tech.ejection_launch
+        ),
+
+        item.horn & item.double_jump & item.wings,
+
+        difficulty.intermediate & Any(
+          item.high_jump & tech.ground_tail_jump & item.double_jump,
+        ),
+      )
+    }
+  ),
+
+  TreehouseRoof.define(
+    region_connections = {
+      TreehouseFrontEntry: None,
+
+      TreehouseBackEntry: None,
+
+      BigAppleLedge: Any(
+        item.wings,
+        carrying.mr_kerringtons_wings,
+        carrying.jester_boots
+      )
+    }
+  ),
+
+  TreehouseBackEntry.define(
+    entrances = [
+      TreehouseBackDoor.define(
+        default_connection = Treehouse.LostleafBackDoor
+      )
+    ],
+
+    region_connections = {
+      Main: None,
+
+      TreehouseFrontEntry: carrying.jester_boots,
+
+      BigAppleLedge: Any(
+        carrying.jester_boots,
+      ),
+
+      TreehouseBranches: Any(
+        item.wings,
+        carrying.mr_kerringtons_wings,
+        carrying.jester_boots,
+      )
+    }
+  ),
+
+  Ducklings.define(
+    entrances = [
+      DucklingsDoorUpper.define(SunCavern.DucklingsDoorUpper),
+      DucklingsDoorLower.define(SunCavern.DucklingsDoorLower)
+    ],
+
+    region_connections = {
+      DucklingsLedge: Any(
+        tech.any_super_jump,
+        carrying.jester_boots,
+
+        item.horn,
+        item.wings & tech.bubble_jump_and_recoil,
+        item.double_jump & Any(
+          item.high_jump,
+          tech.ground_tail_jump,
+        )
+      )
+    }
+  ),
+
+  DucklingsLedge.define(
+    region_connections = {
+      Ducklings: None,
+      TreehouseBranches: None,
+      PrestonLedge: None,
+      WaterfallCanopy: Any(
+        tech.any_super_jump,
+        tech.ejection_launch & Any(
+          difficulty.hard,
+          item.wings | tech.bubble_jump
+        )
+      )
+    }
+  ),
+
+  DeepWoods.define(
+    locations = {
+      DeepWoodsJesterBoots: None,
+      DeepWoodsAppleTree: item.carry,
+
+      DeepWoodsSoil: carrying.apple,
+
+      "Shroom: Lostleaf Lake - Deep Woods 1": None,
+      "Shroom: Lostleaf Lake - Deep Woods 2": None,
+      "Shroom: Lostleaf Lake - Deep Woods 3": None,
+      "Shroom: Lostleaf Lake - Deep Woods 4": None,
+      "Shroom: Lostleaf Lake - Deep Woods 5": None,
+      "Shroom: Lostleaf Lake - Deep Woods 6": None,
+
+      "Egg: Lostleaf Lake - Jester Boots": Any(
+        event.Collected(DeepWoodsSoil) & Any(
+          templates.high_jump_obstacle,
+        ),
+        carrying.jester_boots,
+      ),
+
+      "Lostleaf Lake - Tree Puzzle": Any(
+        item.ground_tail,
+        item.air_tail,
+        carrying.apple | carrying.bubble_conch,
+      ),
+    },
+
+    region_connections = {
+      Main: event.Collected("Open Deep Woods"),
+      DeepWoodsPuzzleEgg: event.Collected("Lower Deep Woods Egg")
+    }
+  ),
+
+  DeepWoodsPuzzleEgg.define(
+    locations = {
+      "Egg: Lostleaf Lake - Deep Woods Puzzle": None
+    },
+
+    region_connections = {
+      DeepWoods: None
+    }
+  ),
+
+  WaterfallCanopy.define(
+    region_connections = {
+      DeepWoods: None,
+      DeepWoodsPuzzleEgg: None,
+      DucklingsLedge: None,
+      Main: None,
+
+      CryptCanopy: Any(
+        item.wings,
+        carrying.mr_kerringtons_wings
       )
     }
   )
