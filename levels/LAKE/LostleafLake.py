@@ -29,6 +29,7 @@ class DucklingsLedge(Region): pass
 class CryptCanopy(Region): pass
 class WaterfallCanopy(Region): pass
 class DeepWoodsPuzzleEgg(Region): pass
+class FallIntoTeepee(Region): pass
 
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
@@ -38,6 +39,8 @@ class CryptDoor(Entrance): pass
 class PrismicDoor(Entrance): pass
 class TreehouseFrontDoor(Entrance): pass
 class TreehouseBackDoor(Entrance): pass
+class TeepeeFrontDoor(Entrance): pass
+class TeepeeTopside(Entrance): pass
 
 class BellTowerSoil(PlantableSoil): pass
 class WinkyTreeSoil(PlantableSoil): pass
@@ -49,7 +52,7 @@ class DeepWoodsAppleTree(CarryableLocation): carryable = "Apple"
 class DeepWoodsJesterBoots(CarryableLocation): carryable = "Jester Boots"
 
 from ..CAVE import LostleafLobby, SunCavern
-from . import Church, Crypt, Treehouse
+from . import Church, Crypt, Treehouse, Teepee
 from ..PALACE import PrismicOutside
 
 regions = [
@@ -285,8 +288,17 @@ regions = [
       "Card: Lostleaf Lake - Teepee": None,
     },
 
+    entrances = [
+      TeepeeFrontDoor.define(Teepee.FrontDoor),
+    ],
+
     region_connections = {
       Lake: item.swim,
+
+      FallIntoTeepee: Any(
+        tech.any_super_jump,
+        tech.ground_tail_jump & item.double_jump & item.high_jump & item.wings
+      ),
 
       InsideCrypt: event.Collected("Open Crypt"),
 
@@ -376,6 +388,8 @@ regions = [
         tech.out_of_bounds
       ),
 
+      OuterRim: carrying.bubble_conch,
+
       Main: None,
 
       InsideChurch: Any(
@@ -457,6 +471,11 @@ regions = [
     region_connections = {
       TeepeeIsland: None,
       Main: None,
+
+      FallIntoTeepee: Any(
+        carrying.mr_kerringtons_wings,
+        tech.wing_storage
+      ),
 
       PrestonLedge: Any(
         item.ground_tail,
@@ -568,8 +587,11 @@ regions = [
         )
       ),
 
+      WaterfallCanopy: tech.any_super_jump,
+
       CryptCanopy: Any(
-        event.Collected(BigAppleLedgeSoil) & item.climb & item.double_jump & item.wings
+        tech.any_super_jump,
+        event.Collected(BigAppleLedgeSoil) & item.climb & item.double_jump & item.wings,
       )
     }
   ),
@@ -769,6 +791,7 @@ regions = [
     region_connections = {
       DeepWoods: None,
       DeepWoodsPuzzleEgg: None,
+      OuterRim: None,
       DucklingsLedge: None,
       Main: None,
 
@@ -781,5 +804,21 @@ regions = [
         item.roll & item.sprint & tech.bubble_jump,
       )
     }
+  ),
+
+  CryptCanopy.define(
+    region_connections = {
+      BigAppleLedge: None,
+      OuterRim: None,
+    }
+  ),
+
+  FallIntoTeepee.define(
+    entrances = [
+      TeepeeTopside.define(
+        default_connection = Teepee.Topside,
+        type = EntranceType.EXIT
+      )
+    ]
   )
 ]
