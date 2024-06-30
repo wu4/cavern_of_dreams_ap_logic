@@ -1,3 +1,5 @@
+from typing import override
+
 from ...logic.objects import Region, Entrance, CarryableLocation
 from ...logic.comment import Comment
 from ...logic import Any, All
@@ -9,55 +11,48 @@ class EarthDroneCannonShotEarly(Entrance): pass
 class SunCavernTeleport(Entrance): pass
 class SewerDoor(Entrance): pass
 
-from . import SunCavern
-from . import Sewer
-from ..MONSTER import EarthDrone
+class ArmadaLobbyBoots(CarryableLocation): carryable = "Jester Boots"
 
-class Main(Region): pass
-class JesterBootsPlatform(Region): pass
-class CannonLip(Region): pass
-class FlagPlatform(Region): pass
-class SewerConnector(Region): pass
-class EggPlatform(Region): pass
+class Main(Region):
+  locations = {
+    "Shroom: Armada Lobby - Cliffside 1": None,
+    "Shroom: Armada Lobby - Cliffside 2": None,
+    "Shroom: Armada Lobby - Cliffside 3": None,
+    "Shroom: Armada Lobby - Cliffside 4": None,
+    "Shroom: Armada Lobby - Cliffside 5": None,
 
-class ArmadaLobbyBoots(CarryableLocation):
-  carryable = "Jester Boots"
+    "Card: Armada Lobby - Jester Boots": Any(
+      carrying.jester_boots,
 
-regions = [
-  Main.define(
-    locations = {
-      "Shroom: Armada Lobby - Cliffside 1": None,
-      "Shroom: Armada Lobby - Cliffside 2": None,
-      "Shroom: Armada Lobby - Cliffside 3": None,
-      "Shroom: Armada Lobby - Cliffside 4": None,
-      "Shroom: Armada Lobby - Cliffside 5": None,
+      carrying.mr_kerringtons_wings,
 
-      "Card: Armada Lobby - Jester Boots": Any(
-        carrying.jester_boots,
+      tech.wing_jump & tech.bubble_jump_and_recoil,
 
-        carrying.mr_kerringtons_wings,
+      item.double_jump & Any(
+        tech.ability_toggle & item.wings,
+        item.air_tail & item.roll
+      ),
 
-        tech.wing_jump & tech.bubble_jump_and_recoil,
-
-        item.double_jump & Any(
-          tech.ability_toggle & item.wings,
-          item.air_tail & item.roll
-        ),
-
-        Comment(
-          """
-          Precise triple tail-bounce from the walls while z-targeting and
-          drifting backwards with bubble float
-          """,
-          item.air_tail & tech.z_target & tech.bubble_jump & Any(
-            difficulty.intermediate & item.double_jump,
-            difficulty.hard
-          )
+      Comment(
+        """
+        Precise triple tail-bounce from the walls while z-targeting and
+        drifting backwards with bubble float
+        """,
+        item.air_tail & tech.z_target & tech.bubble_jump & Any(
+          difficulty.intermediate & item.double_jump,
+          difficulty.hard
         )
       )
-    },
+    )
+  }
 
-    entrances = [
+  @override
+  @classmethod
+  def load(cls):
+    from . import SunCavern
+    from ..MONSTER import EarthDrone
+
+    cls.entrances = [
       SunCavernDoor.define(
         SunCavern.ArmadaLobbyDoor,
         Any(
@@ -72,9 +67,9 @@ regions = [
           tech.out_of_bounds & carrying.no_jester_boots
         )
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       JesterBootsPlatform: Any(
         carrying.jester_boots,
         event.Collected("Raise Armada Lobby Pipes"),
@@ -132,30 +127,13 @@ regions = [
           tech.wing_jump & tech.bubble_jump_and_recoil
         )
       )
-    },
-  ),
-
-  FlagPlatform.define(
-    region_connections = {
-      Main: None,
-      SewerConnector: item.swim
     }
-  ),
 
-  SewerConnector.define(
-    entrances = [
-      SewerDoor.define(
-        default_connection = Sewer.ArmadaLobbyDoor
-      )
-    ],
-
-    region_connections = {
-      FlagPlatform: item.swim
-    }
-  ),
-
-  JesterBootsPlatform.define(
-    locations = {
+class JesterBootsPlatform(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.locations = {
       ArmadaLobbyBoots: Any(
         item.ground_tail,
         item.air_tail,
@@ -164,9 +142,9 @@ regions = [
         # to actually do it
         # item.horn
       )
-    },
+    }
 
-    region_connections = {
+    cls.region_connections = {
       Main: Any(
         tech.any_super_jump,
         carrying.jester_boots,
@@ -186,10 +164,15 @@ regions = [
         item.double_jump
       )
     }
-  ),
 
-  CannonLip.define(
-    entrances = [
+class CannonLip(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import SunCavern
+    from ..MONSTER import EarthDrone
+
+    cls.entrances = [
       SunCavernTeleport.define(
         default_connection = SunCavern.ArmadaLobbyTeleport,
         rule = event.Collected("Open Armada Lobby Teleport"),
@@ -198,9 +181,9 @@ regions = [
         default_connection = EarthDrone.ArmadaLobbyDoor,
         rule = carrying.no_jester_boots
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Main: None,
 
       EggPlatform: Any(
@@ -232,15 +215,40 @@ regions = [
         )
       )
     }
-  ),
 
-  EggPlatform.define(
-    locations = {
-      "Egg: Armada Lobby - Cannon": None,
-    },
+class FlagPlatform(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      Main: None,
+      SewerConnector: item.swim
+    }
 
-    region_connections = {
+class SewerConnector(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import Sewer
+
+    cls.entrances = [
+      SewerDoor.define(
+        default_connection = Sewer.ArmadaLobbyDoor
+      )
+    ]
+
+    cls.region_connections = {
+      FlagPlatform: item.swim
+    }
+
+class EggPlatform(Region):
+  locations = {
+    "Egg: Armada Lobby - Cannon": None,
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       CannonLip: None
     }
-  )
-]

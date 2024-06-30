@@ -1,3 +1,5 @@
+from typing import override
+
 from ...logic.objects import Region, Entrance, InternalEvent
 from ...logic import item, carrying
 from ...logic import event
@@ -7,29 +9,33 @@ class LostleafLakeDoor(Entrance): pass
 class GalleryLobbyDoor(Entrance): pass
 class SunCavernTeleport(Entrance): pass
 
-from . import SunCavern
-from . import GalleryLobby
-from ..LAKE import LostleafLake
-
-class Main(Region): pass
-class Trees(Region): pass
-class HiddenDoorway(Region): pass
-
 # this wall is unique in that it can be broken from both directions
 class BrokeHiddenWall(InternalEvent): pass
+
 # give it an associated region with a dead-end
-class BreakHiddenWall(Region): pass
-CanBreakHiddenWall = item.ground_tail | item.air_tail | carrying.apple | carrying.bubble_conch
+class BreakHiddenWall(Region):
+  locations = {
+    BrokeHiddenWall: None
+  }
 
-regions = [
-  Main.define(
-    locations = {
-      "Shroom: Lostleaf Lobby - Bridge 1": None,
-      "Shroom: Lostleaf Lobby - Bridge 2": None,
-      "Shroom: Lostleaf Lobby - Bridge 3": None
-    },
+  @override
+  @classmethod
+  def load(cls): pass
 
-    entrances = [
+class Main(Region):
+  locations = {
+    "Shroom: Lostleaf Lobby - Bridge 1": None,
+    "Shroom: Lostleaf Lobby - Bridge 2": None,
+    "Shroom: Lostleaf Lobby - Bridge 3": None
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    from . import SunCavern
+    from ..LAKE import LostleafLake
+
+    cls.entrances = [
       SunCavernDoor.define(SunCavern.LostleafLobbyDoor),
 
       LostleafLakeDoor.define(LostleafLake.LostleafLobbyDoor),
@@ -38,46 +44,46 @@ regions = [
         default_connection = SunCavern.LostleafLobbyTeleport,
         rule = event.Collected("Open Lake Lobby Teleport")
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       BreakHiddenWall: CanBreakHiddenWall,
       HiddenDoorway: event.Collected(BrokeHiddenWall),
 
       Trees: None # difficulty.Intermediate | templates.HighJumpObstacle
-    },
-  ),
-
-  BreakHiddenWall.define(
-    locations = {
-      BrokeHiddenWall: None
     }
-  ),
 
-  Trees.define(
-    locations = {
-      "Shroom: Lostleaf Lobby - Trees 1": None,
-      "Shroom: Lostleaf Lobby - Trees 2": None,
-      "Shroom: Lostleaf Lobby - Trees 3": None,
+class Trees(Region):
+  locations = {
+    "Shroom: Lostleaf Lobby - Trees 1": None,
+    "Shroom: Lostleaf Lobby - Trees 2": None,
+    "Shroom: Lostleaf Lobby - Trees 3": None,
 
-      "Egg: Lostleaf Lobby - Branches": None,
+    "Egg: Lostleaf Lobby - Branches": None,
 
-      "Card: Lostleaf Lobby - Branches": None,
-    },
+    "Card: Lostleaf Lobby - Branches": None,
+  }
 
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None
     }
-  ),
 
-  HiddenDoorway.define(
-    entrances = [
+class HiddenDoorway(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import GalleryLobby
+
+    cls.entrances = [
       GalleryLobbyDoor.define(GalleryLobby.LostleafLobbyDoor)
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       BreakHiddenWall: CanBreakHiddenWall,
       Main: event.Collected(BrokeHiddenWall)
     }
-  )
-]
+
+CanBreakHiddenWall = item.ground_tail | item.air_tail | carrying.apple | carrying.bubble_conch

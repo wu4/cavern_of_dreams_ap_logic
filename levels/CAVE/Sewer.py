@@ -1,3 +1,5 @@
+from typing import override
+
 from ...logic import Entrance, Region, Any, All
 from ...logic import tech, item, carrying, difficulty
 from ...logic.comment import Comment
@@ -5,25 +7,23 @@ from ...logic.comment import Comment
 class ArmadaLobbyDoor(Entrance): pass
 class GalleryDoor(Entrance): pass
 
-class ArmadaLobbySide(Region): pass
-class GallerySide(Region): pass
+class ArmadaLobbySide(Region):
+  locations = {
+    "Card: Sewer - Armada Lobby Side": None
+  }
 
-from . import ArmadaLobby
-from ..GALLERY import WaterLobby
+  @override
+  @classmethod
+  def load(cls):
+    from . import ArmadaLobby
 
-regions = [
-  ArmadaLobbySide.define(
-    locations = {
-      "Card: Sewer - Armada Lobby Side": None
-    },
-
-    entrances = [
+    cls.entrances = [
       ArmadaLobbyDoor.define(
         default_connection = ArmadaLobby.SewerDoor
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       GallerySide: Any(
         tech.any_super_jump,
 
@@ -54,20 +54,24 @@ regions = [
         )
       )
     }
-  ),
 
-  GallerySide.define(
-    locations = {
-      "Card: Sewer - Gallery of Nightmares Side": None
-    },
+class GallerySide(Region):
+  locations = {
+    "Card: Sewer - Gallery of Nightmares Side": None
+  }
 
-    entrances = [
+  @override
+  @classmethod
+  def load(cls):
+    from ..GALLERY import WaterLobby
+
+    cls.entrances = [
       GalleryDoor.define(
         default_connection = WaterLobby.SewerDoor
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       ArmadaLobbySide: Any(
         carrying.jester_boots,
         tech.any_super_jump,
@@ -129,5 +133,3 @@ regions = [
         item.air_tail & item.roll & item.sprint
       )
     }
-  )
-]

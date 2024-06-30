@@ -1,14 +1,10 @@
+from typing import override
+
 from ...logic.objects import Region, Entrance
 from ...logic.comment import Comment
 from ...logic import Any
 from ...logic import event, tech, item, carrying, difficulty
 from ...logic.objects import PlantableSoil
-
-class Main(Region): pass
-class LostleafCave(Region): pass
-class OuterWalls(Region): pass
-class Maze(Region): pass
-class MazeStatue(Region): pass
 
 class LostleafLobbyDoor(Entrance): pass
 class MoonCavernDoor(Entrance): pass
@@ -18,16 +14,14 @@ class FoyerDoor(Entrance): pass
 
 class GalleryLobbySoil(PlantableSoil): pass
 
+class Main(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from ..GALLERY import Foyer
+    from ..CAVE import MoonCavern, SunCavern, Rainbow
 
-from . import LostleafLobby
-from . import SunCavern
-from . import MoonCavern
-from . import Rainbow
-from ..GALLERY import Foyer
-
-regions = [
-  Main.define(
-    locations = {
+    cls.locations = {
       "Card: Gallery Lobby - Behind the Gallery": None,
 
       "Gallery Lobby - Extinguish Torches": item.bubble,
@@ -48,9 +42,9 @@ regions = [
       "Shroom: Gallery Lobby - Entryway 3": None,
       "Shroom: Gallery Lobby - Entryway 4": None,
       "Shroom: Gallery Lobby - Entryway 5": None,
-    },
+    }
 
-    entrances = [
+    cls.entrances = [
       FoyerDoor.define(
         default_connection = Foyer.GalleryLobbyDoor,
         rule = event.Collected("Open Gallery Lobby Door")
@@ -65,9 +59,9 @@ regions = [
       RainbowBench.define(
         default_connection = Rainbow.WellEntrance
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       OuterWalls: Any(
         tech.any_super_jump,
         carrying.jester_boots,
@@ -115,29 +109,35 @@ regions = [
         )
       )
     }
-  ),
 
-  LostleafCave.define(
-    locations = {
+class LostleafCave(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from ..CAVE import LostleafLobby
+
+    cls.locations = {
       "Egg: Gallery Lobby - Lostleaf Lobby Entryway": None,
       GalleryLobbySoil: carrying.apple
-    },
+    }
 
-    entrances = [
+    cls.entrances = [
       LostleafLobbyDoor.define(LostleafLobby.GalleryLobbyDoor)
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Main: Any(
         tech.any_super_jump,
         carrying.jester_boots,
         event.Collected(GalleryLobbySoil) & item.climb & item.double_jump
       )
     }
-  ),
 
-  OuterWalls.define(
-    region_connections = {
+class OuterWalls(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
 
       Maze: Any(
@@ -154,14 +154,16 @@ regions = [
         tech.momentum_cancel
       )
     }
-  ),
 
-  Maze.define(
-    locations = {
+class Maze(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.locations = {
       "Card: Gallery Lobby - Hedge Maze": None
-    },
+    }
 
-    region_connections = {
+    cls.region_connections = {
       Main: Any(
         tech.any_super_jump,
         carrying.jester_boots,
@@ -204,14 +206,16 @@ regions = [
         )
       )
     }
-  ),
 
-  MazeStatue.define(
-    locations = {
+class MazeStatue(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.locations = {
       "Gallery Lobby - Hedge Maze Preston": None
-    },
+    }
 
-    region_connections = {
+    cls.region_connections = {
       Maze: Any(
         event.Collected("Open Gallery Lobby Door"),
 
@@ -220,5 +224,3 @@ regions = [
         tech.ground_tail_jump & item.double_jump & item.wings & item.high_jump
       )
     }
-  )
-]

@@ -1,3 +1,7 @@
+# conversion macro just in case:
+# maw"nyw/n\.definejVk$%k"rdkd2d`af:lC@override@classmethoddef load(cls):j^mbOk"rp`aV`b:s/^\(    [}\]]\),/\1/g`aV`b:s/^    \(locations\|region_connections\|entrances\)/    cls.\1/g`b
+
+
 [x] levels/CAVE/SunCavern.py
   [ ] pass through with mk wings + sprint
 [x] levels/CAVE/MoonCavern.py
@@ -6,6 +10,7 @@
   [ ] pass through with mk wings + sprint
 [x] levels/CAVE/ArmadaLobby.py
   [ ] pass through with mk wings + sprint
+  [ ] find some way of making early armada make sense with ER
 [x] levels/CAVE/PalaceLobby.py
   [ ] pass through with mk wings + sprint
 [x] levels/CAVE/GalleryLobby.py

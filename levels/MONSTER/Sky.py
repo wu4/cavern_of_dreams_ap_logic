@@ -1,5 +1,3 @@
-from ...logic import *
+from ...logic import Entrance, Region
 
 class EarthDroneDoor(Entrance): pass
-
-from . import EarthDrone

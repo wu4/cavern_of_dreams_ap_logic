@@ -1,21 +1,16 @@
+from typing import override
+
 from ...logic.comment import Comment
 from ...logic import Any, Region, Entrance
 from ...logic import item, tech, carrying, difficulty
 
-
-class Main(Region): pass
-class MoonLedges(Region): pass
-class ShroomLedges(Region): pass
-class Topside(Region): pass
-class Well(Region): pass
-
 class WellEntrance(Entrance): pass
 
-from ..CAVE import GalleryLobby
-
-regions = [
-  Main.define(
-    region_connections = {
+class Main(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       MoonLedges: Any(
         tech.any_super_jump,
 
@@ -47,23 +42,13 @@ regions = [
         item.sprint & item.roll,
         tech.momentum_cancel & item.high_jump
       )
-    },
-  ),
+    }
 
-  Well.define(
-    region_connections = {
-      Main: None
-    },
-
-    entrances = [
-      WellEntrance.define(
-        default_connection = GalleryLobby.RainbowBench,
-      )
-    ]
-  ),
-
-  MoonLedges.define(
-    region_connections = {
+class MoonLedges(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
 
       Well: None,
@@ -94,10 +79,12 @@ regions = [
         )
       )
     }
-  ),
 
-  ShroomLedges.define(
-    region_connections = {
+class ShroomLedges(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
 
       Topside: Any(
@@ -125,25 +112,41 @@ regions = [
         tech.z_target & tech.bubble_jump
       )
     }
-  ),
 
-  Topside.define(
-    region_connections = {
+class Topside(Region):
+  locations = {
+    "Card: Dream": Any(
+      tech.any_super_jump,
+
+      item.high_jump,
+
+      item.double_jump,
+
+      item.air_tail & item.roll,
+
+      item.horn
+    )
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None
-    },
-
-    locations = {
-      "Card: Dream": Any(
-        tech.any_super_jump,
-
-        item.high_jump,
-
-        item.double_jump,
-
-        item.air_tail & item.roll,
-
-        item.horn
-      )
     }
-  )
-]
+
+class Well(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import GalleryLobby
+
+    cls.region_connections = {
+      Main: None
+    }
+
+    cls.entrances = [
+      WellEntrance.define(
+        default_connection = GalleryLobby.RainbowBench,
+      )
+    ]

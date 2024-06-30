@@ -1,4 +1,5 @@
 from __future__ import annotations
+from abc import abstractmethod
 from enum import Flag
 
 from .has import CarryingItem
@@ -27,6 +28,19 @@ LocationType: TypeAlias = AnyLocation | type[InternalEvent] | type[CarryableLoca
 
 class Region:
   _is_defined: bool = False
+  region_connections: dict[type[Region], _MaybeLogic] | None = None
+  entrances: list[type[Entrance]] | None = None
+  locations: dict[LocationType, _MaybeLogic] | None = None
+
+  @classmethod
+  def lazy_load(cls):
+    if cls._is_defined: return
+    cls.load()
+    cls._is_defined = True
+
+  @abstractmethod
+  @classmethod
+  def load(cls): pass
 
   @classmethod
   def define(

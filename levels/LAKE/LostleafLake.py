@@ -1,35 +1,9 @@
+from typing import override
 from ...logic.objects import EntranceType, PlantableSoil
 from ...logic import Region, Entrance, Any
 from ...logic.objects import CarryableLocation
 from ...logic.comment import Comment
 from ...logic import item, difficulty, tech, carrying, event, has, templates
-
-class Main(Region): pass
-class RingBell(Region): pass
-class BellTower(Region): pass
-class OuterRim(Region): pass
-class LobbyEntry(Region): pass
-class SecretWorld(Region): pass
-class DeepWoods(Region): pass
-class WaterfallCave(Region): pass
-class Lake(Region): pass
-class LakeStump(Region): pass
-class InsideChurch(Region): pass
-class InsideCrypt(Region): pass
-class TeepeeIsland(Region): pass
-class PrestonLedge(Region): pass
-class TreehouseBranches(Region): pass
-class WinkyTreeLedge(Region): pass
-class BigAppleLedge(Region): pass
-class TreehouseFrontEntry(Region): pass
-class TreehouseBackEntry(Region): pass
-class TreehouseRoof(Region): pass
-class Ducklings(Region): pass
-class DucklingsLedge(Region): pass
-class CryptCanopy(Region): pass
-class WaterfallCanopy(Region): pass
-class DeepWoodsPuzzleEgg(Region): pass
-class FallIntoTeepee(Region): pass
 
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
@@ -51,86 +25,86 @@ class LakeAppleTree(CarryableLocation): carryable = "Apple"
 class DeepWoodsAppleTree(CarryableLocation): carryable = "Apple"
 class DeepWoodsJesterBoots(CarryableLocation): carryable = "Jester Boots"
 
-from ..CAVE import LostleafLobby, SunCavern
-from . import Church, Crypt, Treehouse, Teepee
-from ..PALACE import PrismicOutside
+class Main(Region):
+  locations = {
+    LakeAppleTree: item.carry & Any(
+      Comment(
+        "Grab the apple near the Winky Tree",
+        difficulty.intermediate
+      ),
+      item.horn,
+      item.air_tail,
+      item.ground_tail,
+      carrying.apple | carrying.bubble_conch
+    ),
 
-regions = [
-  Main.define(
-    locations = {
-      LakeAppleTree: item.carry & Any(
-        Comment(
-          "Grab the apple near the Winky Tree",
-          difficulty.intermediate
-        ),
+    WinkyTreeSoil: carrying.apple,
+
+    BellTowerSoil: carrying.apple,
+
+    "Lostleaf Lake - Winky Tree Target": Any(
+      carrying.apple | carrying.bubble_conch,
+      tech.ground_tail_jump,
+      item.air_tail & Any(
+        carrying.jester_boots,
+        tech.air_tail_jump,
         item.horn,
-        item.air_tail,
-        item.ground_tail,
-        carrying.apple | carrying.bubble_conch
+        item.high_jump,
       ),
+      item.double_jump & item.horn
+    ),
 
-      WinkyTreeSoil: carrying.apple,
+    "Lostleaf Lake - Help Shelnert": has.Collected("Fish Food"),
 
-      BellTowerSoil: carrying.apple,
+    "Egg: Lostleaf Lake - Entry Stump": None,
 
-      "Lostleaf Lake - Winky Tree Target": Any(
-        carrying.apple | carrying.bubble_conch,
-        tech.ground_tail_jump,
-        item.air_tail & Any(
-          carrying.jester_boots,
-          tech.air_tail_jump,
-          item.horn,
-          item.high_jump,
-        ),
-        item.double_jump & item.horn
-      ),
+    "Card: Lostleaf Lake - Entry": None,
+    "Card: Lostleaf Lake - Apple Tree": None,
 
-      "Lostleaf Lake - Help Shelnert": has.Collected("Fish Food"),
+    "Shroom: Lostleaf Lake - Lake Logs 1": None,
+    "Shroom: Lostleaf Lake - Lake Logs 2": None,
+    "Shroom: Lostleaf Lake - Lake Logs 3": None,
+    "Shroom: Lostleaf Lake - Lake Logs 4": None,
 
-      "Egg: Lostleaf Lake - Entry Stump": None,
+    "Shroom: Lostleaf Lake - Bridge 1": None,
+    "Shroom: Lostleaf Lake - Bridge 2": None,
+    "Shroom: Lostleaf Lake - Bridge 3": None,
 
-      "Card: Lostleaf Lake - Entry": None,
-      "Card: Lostleaf Lake - Apple Tree": None,
+    "Shroom: Lostleaf Lake - Winky Apple Tree 1": None,
+    "Shroom: Lostleaf Lake - Winky Apple Tree 2": None,
+    "Shroom: Lostleaf Lake - Winky Apple Tree 3": None,
+    "Shroom: Lostleaf Lake - Winky Apple Tree 4": None,
 
-      "Shroom: Lostleaf Lake - Lake Logs 1": None,
-      "Shroom: Lostleaf Lake - Lake Logs 2": None,
-      "Shroom: Lostleaf Lake - Lake Logs 3": None,
-      "Shroom: Lostleaf Lake - Lake Logs 4": None,
+    "Shroom: Lostleaf Lake - Ramp to Winky Tree 1": None,
+    "Shroom: Lostleaf Lake - Ramp to Winky Tree 2": None,
+    "Shroom: Lostleaf Lake - Ramp to Winky Tree 3": None,
+    "Shroom: Lostleaf Lake - Ramp to Winky Tree 4": None,
+    "Shroom: Lostleaf Lake - Ramp to Winky Tree 5": None,
 
-      "Shroom: Lostleaf Lake - Bridge 1": None,
-      "Shroom: Lostleaf Lake - Bridge 2": None,
-      "Shroom: Lostleaf Lake - Bridge 3": None,
+    "Shroom: Lostleaf Lake - Deep Woods Entryway 1": None,
+    "Shroom: Lostleaf Lake - Deep Woods Entryway 2": None,
+    "Shroom: Lostleaf Lake - Deep Woods Entryway 3": None,
 
-      "Shroom: Lostleaf Lake - Winky Apple Tree 1": None,
-      "Shroom: Lostleaf Lake - Winky Apple Tree 2": None,
-      "Shroom: Lostleaf Lake - Winky Apple Tree 3": None,
-      "Shroom: Lostleaf Lake - Winky Apple Tree 4": None,
+    "Shroom: Lostleaf Lake - Waterfall Logs 1": None,
+    "Shroom: Lostleaf Lake - Waterfall Logs 2": None,
+    "Shroom: Lostleaf Lake - Waterfall Logs 3": None,
+    "Shroom: Lostleaf Lake - Waterfall Logs 4": None,
 
-      "Shroom: Lostleaf Lake - Ramp to Winky Tree 1": None,
-      "Shroom: Lostleaf Lake - Ramp to Winky Tree 2": None,
-      "Shroom: Lostleaf Lake - Ramp to Winky Tree 3": None,
-      "Shroom: Lostleaf Lake - Ramp to Winky Tree 4": None,
-      "Shroom: Lostleaf Lake - Ramp to Winky Tree 5": None,
+    "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 1": None,
+    "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 2": None,
+    "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 3": None
+  }
 
-      "Shroom: Lostleaf Lake - Deep Woods Entryway 1": None,
-      "Shroom: Lostleaf Lake - Deep Woods Entryway 2": None,
-      "Shroom: Lostleaf Lake - Deep Woods Entryway 3": None,
+  @override
+  @classmethod
+  def load(cls):
+    from ..CAVE import LostleafLobby
 
-      "Shroom: Lostleaf Lake - Waterfall Logs 1": None,
-      "Shroom: Lostleaf Lake - Waterfall Logs 2": None,
-      "Shroom: Lostleaf Lake - Waterfall Logs 3": None,
-      "Shroom: Lostleaf Lake - Waterfall Logs 4": None,
-
-      "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 1": None,
-      "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 2": None,
-      "Shroom: Lostleaf Lake - Winky Bouncy Mushroom 3": None
-    },
-
-    entrances = [
+    cls.entrances = [
       LostleafLobbyDoor.define(LostleafLobby.LostleafLakeDoor)
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       OuterRim: Any(
         tech.any_super_jump,
 
@@ -163,7 +137,7 @@ regions = [
         tech.ground_tail_jump,
       ),
 
-      WaterfallCave: Any(
+      WaterfallEggCave: Any(
         item.ground_tail,
         item.air_tail,
         carrying.apple | carrying.bubble_conch
@@ -233,14 +207,226 @@ regions = [
         item.horn
       ),
     }
-  ),
 
-  LakeStump.define(
-    locations = {
-      "Card: Lostleaf Lake - Lake Stump": None
-    },
+class WaterfallEggCave(Region):
+  locations = {
+    "Egg: Lostleaf Lake - Waterfall": None
+  }
 
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      Main: None
+    }
+
+class RingBell(Region):
+  locations = {
+    "Lostleaf Lake - Ring Bell": None
+  }
+
+  @override
+  @classmethod
+  def load(cls): pass
+
+class BellTower(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      OuterRim: Any(
+        tech.bubble_jump & Any(
+          item.double_jump,
+          tech.ground_tail_jump,
+          tech.air_tail_jump
+        ),
+        item.wings & Any(
+          tech.bubble_jump_and_recoil,
+          item.horn,
+          item.climb,
+          item.double_jump,
+          tech.ground_tail_jump,
+          tech.air_tail_jump
+        ),
+        item.roll & item.air_tail
+      ),
+
+      RingBell: Any(
+        item.ground_tail,
+        item.air_tail,
+        item.horn,
+        carrying.apple | carrying.bubble_conch
+      ),
+
+      Main: None
+    }
+
+class OuterRim(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from ..CAVE import PrismicOutside
+
+    cls.entrances = [
+      PrismicDoor.define(
+        default_connection = PrismicOutside.LostleafDoor
+      )
+    ]
+
+    cls.region_connections = {
+      TeepeeIsland: None,
+      Main: None,
+
+      FallIntoTeepee: Any(
+        carrying.mr_kerringtons_wings,
+        tech.wing_storage
+      ),
+
+      PrestonLedge: Any(
+        item.ground_tail,
+        item.air_tail,
+        carrying.apple | carrying.bubble_conch,
+
+        carrying.jester_boots,
+
+        Any(
+          item.horn,
+          tech.ground_tail_jump,
+          tech.wing_jump,
+          item.double_jump,
+          difficulty.hard & item.high_jump
+        ) & Any(
+          item.horn,
+          tech.ground_tail_jump,
+          tech.air_tail_jump,
+          item.wings,
+          tech.bubble_jump,
+        )
+      ),
+
+      BellTower: Any(
+        tech.bubble_jump & Any(
+          item.double_jump,
+          tech.ground_tail_jump,
+          tech.air_tail_jump
+        ),
+        item.wings & Any(
+          tech.bubble_jump_and_recoil,
+          item.horn,
+          item.climb,
+          item.double_jump,
+          tech.ground_tail_jump,
+          tech.air_tail_jump
+        ),
+        item.roll & (item.air_tail | item.sprint)
+      )
+    }
+
+class SecretWorld(Region):
+  @override
+  @classmethod
+  def load(cls):
+    # NOTE: this SW implies swim
+
+    cls.region_connections = {
+      Main: None,
+
+      DucklingsLedge: tech.ejection_launch,
+
+      WaterfallEggCave: Any(
+        item.air_swim
+      )
+    }
+
+class DeepWoods(Region):
+  locations = {
+    DeepWoodsJesterBoots: None,
+    DeepWoodsAppleTree: item.carry,
+
+    DeepWoodsSoil: carrying.apple,
+
+    "Shroom: Lostleaf Lake - Deep Woods 1": None,
+    "Shroom: Lostleaf Lake - Deep Woods 2": None,
+    "Shroom: Lostleaf Lake - Deep Woods 3": None,
+    "Shroom: Lostleaf Lake - Deep Woods 4": None,
+    "Shroom: Lostleaf Lake - Deep Woods 5": None,
+    "Shroom: Lostleaf Lake - Deep Woods 6": None,
+
+    "Egg: Lostleaf Lake - Jester Boots": Any(
+      event.Collected(DeepWoodsSoil) & Any(
+        templates.high_jump_obstacle,
+      ),
+      carrying.jester_boots,
+    ),
+
+    "Lostleaf Lake - Tree Puzzle": Any(
+      item.ground_tail,
+      item.air_tail,
+      carrying.apple | carrying.bubble_conch,
+    ),
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      Main: event.Collected("Open Deep Woods"),
+      DeepWoodsPuzzleEgg: event.Collected("Lower Deep Woods Egg")
+    }
+
+class Lake(Region):
+  locations = {
+    "Lostleaf Lake - Back of the Headstone": Any(
+      item.air_tail,
+      item.ground_tail,
+      item.horn,
+      carrying.apple | carrying.bubble_conch
+    ),
+
+    "Egg: Lostleaf Lake - Lake Log": None,
+
+    "Shroom: Lostleaf Lake - Behind Church 1": None,
+    "Shroom: Lostleaf Lake - Behind Church 2": None,
+    "Shroom: Lostleaf Lake - Behind Church 3": None,
+
+    "Shroom: Lostleaf Lake - Church Entryway 1": None,
+    "Shroom: Lostleaf Lake - Church Entryway 2": None,
+    "Shroom: Lostleaf Lake - Church Entryway 3": None,
+
+    "Shroom: Lostleaf Lake - Lake Gravestone 1": None,
+    "Shroom: Lostleaf Lake - Lake Gravestone 2": None,
+    "Shroom: Lostleaf Lake - Lake Gravestone 3": None,
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      SecretWorld: Comment(
+        "Use the tombstone fish to clip out of bounds",
+        tech.out_of_bounds
+      ),
+
+      OuterRim: carrying.bubble_conch,
+
+      Main: None,
+
+      InsideChurch: Any(
+        event.Collected("Open Church")
+      ),
+
+      TeepeeIsland: None,
+    }
+
+class LakeStump(Region):
+  locations = {
+    "Card: Lostleaf Lake - Lake Stump": None
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
 
       TeepeeIsland: Any(
@@ -277,22 +463,59 @@ regions = [
         )
       )
     }
-  ),
 
-  TeepeeIsland.define(
-    locations = {
-      "Shroom: Lostleaf Lake - Teepee 1": None,
-      "Shroom: Lostleaf Lake - Teepee 2": None,
-      "Shroom: Lostleaf Lake - Teepee 3": None,
+class InsideChurch(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import Church
 
-      "Card: Lostleaf Lake - Teepee": None,
-    },
+    cls.entrances = [
+      ChurchDoor.define(
+        default_connection = Church.LostleafLakeDoor,
+        type = EntranceType.BILINEAR | EntranceType.UNDERWATER
+      )
+    ]
 
-    entrances = [
+    cls.region_connections = {
+      Lake: item.swim
+    }
+
+class InsideCrypt(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import Crypt
+
+    cls.entrances = [
+      CryptDoor.define(
+        default_connection = Crypt.LostleafLakeDoorFront
+      )
+    ]
+
+    cls.region_connections = {
+      TeepeeIsland: event.Collected("Open Crypt")
+    }
+
+class TeepeeIsland(Region):
+  locations = {
+    "Shroom: Lostleaf Lake - Teepee 1": None,
+    "Shroom: Lostleaf Lake - Teepee 2": None,
+    "Shroom: Lostleaf Lake - Teepee 3": None,
+
+    "Card: Lostleaf Lake - Teepee": None,
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    from . import Teepee
+
+    cls.entrances = [
       TeepeeFrontDoor.define(Teepee.FrontDoor),
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Lake: item.swim,
 
       FallIntoTeepee: Any(
@@ -356,174 +579,16 @@ regions = [
         )
       )
     }
-  ),
 
-  Lake.define(
-    locations = {
-      "Lostleaf Lake - Back of the Headstone": Any(
-        item.air_tail,
-        item.ground_tail,
-        item.horn,
-        carrying.apple | carrying.bubble_conch
-      ),
+class PrestonLedge(Region):
+  locations = {
+    "Lostleaf Lake - Treehouse Preston": None,
+  }
 
-      "Egg: Lostleaf Lake - Lake Log": None,
-
-      "Shroom: Lostleaf Lake - Behind Church 1": None,
-      "Shroom: Lostleaf Lake - Behind Church 2": None,
-      "Shroom: Lostleaf Lake - Behind Church 3": None,
-
-      "Shroom: Lostleaf Lake - Church Entryway 1": None,
-      "Shroom: Lostleaf Lake - Church Entryway 2": None,
-      "Shroom: Lostleaf Lake - Church Entryway 3": None,
-
-      "Shroom: Lostleaf Lake - Lake Gravestone 1": None,
-      "Shroom: Lostleaf Lake - Lake Gravestone 2": None,
-      "Shroom: Lostleaf Lake - Lake Gravestone 3": None,
-    },
-
-    region_connections = {
-      SecretWorld: Comment(
-        "Use the tombstone fish to clip out of bounds",
-        tech.out_of_bounds
-      ),
-
-      OuterRim: carrying.bubble_conch,
-
-      Main: None,
-
-      InsideChurch: Any(
-        event.Collected("Open Church")
-      ),
-
-      TeepeeIsland: None,
-    }
-  ),
-
-  InsideChurch.define(
-    entrances = [
-      ChurchDoor.define(
-        default_connection = Church.LostleafLakeDoor,
-        type = EntranceType.BILINEAR | EntranceType.UNDERWATER
-      )
-    ],
-
-    region_connections = {
-      Lake: item.swim
-    }
-  ),
-
-  InsideCrypt.define(
-    entrances = [
-      CryptDoor.define(
-        default_connection = Crypt.LostleafLakeDoorFront
-      )
-    ],
-
-    region_connections = {
-      TeepeeIsland: event.Collected("Open Crypt")
-    },
-  ),
-
-  BellTower.define(
-    region_connections = {
-      OuterRim: Any(
-        tech.bubble_jump & Any(
-          item.double_jump,
-          tech.ground_tail_jump,
-          tech.air_tail_jump
-        ),
-        item.wings & Any(
-          tech.bubble_jump_and_recoil,
-          item.horn,
-          item.climb,
-          item.double_jump,
-          tech.ground_tail_jump,
-          tech.air_tail_jump
-        ),
-        item.roll & item.air_tail
-      ),
-
-      RingBell: Any(
-        item.ground_tail,
-        item.air_tail,
-        item.horn,
-        carrying.apple | carrying.bubble_conch
-      ),
-
-      Main: None
-    }
-  ),
-
-  RingBell.define(
-    locations = {
-      "Lostleaf Lake - Ring Bell": None
-    }
-  ),
-
-  OuterRim.define(
-    entrances = [
-      PrismicDoor.define(
-        default_connection = PrismicOutside.LostleafDoor
-      )
-    ],
-
-    region_connections = {
-      TeepeeIsland: None,
-      Main: None,
-
-      FallIntoTeepee: Any(
-        carrying.mr_kerringtons_wings,
-        tech.wing_storage
-      ),
-
-      PrestonLedge: Any(
-        item.ground_tail,
-        item.air_tail,
-        carrying.apple | carrying.bubble_conch,
-
-        carrying.jester_boots,
-
-        Any(
-          item.horn,
-          tech.ground_tail_jump,
-          tech.wing_jump,
-          item.double_jump,
-          difficulty.hard & item.high_jump
-        ) & Any(
-          item.horn,
-          tech.ground_tail_jump,
-          tech.air_tail_jump,
-          item.wings,
-          tech.bubble_jump,
-        )
-      ),
-
-      BellTower: Any(
-        tech.bubble_jump & Any(
-          item.double_jump,
-          tech.ground_tail_jump,
-          tech.air_tail_jump
-        ),
-        item.wings & Any(
-          tech.bubble_jump_and_recoil,
-          item.horn,
-          item.climb,
-          item.double_jump,
-          tech.ground_tail_jump,
-          tech.air_tail_jump
-        ),
-        item.roll & (item.air_tail | item.sprint)
-      )
-    }
-  ),
-
-  PrestonLedge.define(
-    locations = {
-      "Lostleaf Lake - Treehouse Preston": None,
-    },
-
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
 
       TreehouseBranches: Any(
@@ -540,74 +605,22 @@ regions = [
         )
       )
     }
-  ),
 
-  WinkyTreeLedge.define(
-    locations = {
-      "Shroom: Lostleaf Lake - Winky Apple Tree 1": None,
-      "Shroom: Lostleaf Lake - Winky Apple Tree 2": None,
-      "Shroom: Lostleaf Lake - Winky Apple Tree 3": None,
-      "Shroom: Lostleaf Lake - Winky Apple Tree 4": None,
-    },
+class TreehouseBranches(Region):
+  locations = {
+    "Shroom: Lostleaf Lake - Treehouse Branches 1": None,
+    "Shroom: Lostleaf Lake - Treehouse Branches 2": None,
+    "Shroom: Lostleaf Lake - Treehouse Branches 3": None,
+    "Shroom: Lostleaf Lake - Treehouse Branches 4": None,
+    "Shroom: Lostleaf Lake - Treehouse Branches 5": None,
+    "Shroom: Lostleaf Lake - Treehouse Branches 6": None,
+    "Egg: Lostleaf Lake - Near the Treehouse": None
+  }
 
-    region_connections = {
-      Main: None,
-
-      BigAppleLedge: Any(
-        tech.any_super_jump,
-
-        item.high_jump & tech.ground_tail_jump,
-
-        item.double_jump & Any(
-          item.horn,
-          tech.ground_tail_jump,
-          tech.air_tail_jump,
-          item.high_jump
-        )
-      )
-    }
-  ),
-
-  BigAppleLedge.define(
-    locations = {
-      BigAppleLedgeSoil: carrying.apple
-    },
-
-    region_connections = {
-      TreehouseBranches: None,
-
-      WinkyTreeLedge: None,
-
-      TreehouseFrontEntry: Any(
-        carrying.mr_kerringtons_wings,
-
-        item.wings & Any(
-          item.sprint,
-          tech.bubble_jump_and_recoil
-        )
-      ),
-
-      WaterfallCanopy: tech.any_super_jump,
-
-      CryptCanopy: Any(
-        tech.any_super_jump,
-        event.Collected(BigAppleLedgeSoil) & item.climb & item.double_jump & item.wings,
-      )
-    }
-  ),
-
-  TreehouseBranches.define(
-    locations = {
-      "Shroom: Lostleaf Lake - Treehouse Branches 1": None,
-      "Shroom: Lostleaf Lake - Treehouse Branches 2": None,
-      "Shroom: Lostleaf Lake - Treehouse Branches 3": None,
-      "Shroom: Lostleaf Lake - Treehouse Branches 4": None,
-      "Shroom: Lostleaf Lake - Treehouse Branches 5": None,
-      "Shroom: Lostleaf Lake - Treehouse Branches 6": None,
-      "Egg: Lostleaf Lake - Near the Treehouse": None
-    },
-
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
 
       PrestonLedge: None,
@@ -634,10 +647,72 @@ regions = [
         )
       ),
     }
-  ),
 
-  TreehouseFrontEntry.define(
-    entrances = [
+class WinkyTreeLedge(Region):
+  locations = {
+    "Shroom: Lostleaf Lake - Winky Apple Tree 1": None,
+    "Shroom: Lostleaf Lake - Winky Apple Tree 2": None,
+    "Shroom: Lostleaf Lake - Winky Apple Tree 3": None,
+    "Shroom: Lostleaf Lake - Winky Apple Tree 4": None,
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      Main: None,
+
+      BigAppleLedge: Any(
+        tech.any_super_jump,
+
+        item.high_jump & tech.ground_tail_jump,
+
+        item.double_jump & Any(
+          item.horn,
+          tech.ground_tail_jump,
+          tech.air_tail_jump,
+          item.high_jump
+        )
+      )
+    }
+
+class BigAppleLedge(Region):
+  locations = {
+    BigAppleLedgeSoil: carrying.apple
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      TreehouseBranches: None,
+
+      WinkyTreeLedge: None,
+
+      TreehouseFrontEntry: Any(
+        carrying.mr_kerringtons_wings,
+
+        item.wings & Any(
+          item.sprint,
+          tech.bubble_jump_and_recoil
+        )
+      ),
+
+      WaterfallCanopy: tech.any_super_jump,
+
+      CryptCanopy: Any(
+        tech.any_super_jump,
+        event.Collected(BigAppleLedgeSoil) & item.climb & item.double_jump & item.wings,
+      )
+    }
+
+class TreehouseFrontEntry(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import Treehouse
+
+    cls.entrances = [
       TreehouseFrontDoor.define(
         default_connection = Treehouse.LostleafFrontDoor,
         rule = Any(
@@ -645,9 +720,9 @@ regions = [
           tech.roll_disjoint
         )
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       TreehouseBranches: None,
 
       TreehouseBackEntry: carrying.jester_boots,
@@ -667,30 +742,20 @@ regions = [
         ),
       )
     }
-  ),
 
-  TreehouseRoof.define(
-    region_connections = {
-      TreehouseFrontEntry: None,
+class TreehouseBackEntry(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import Treehouse
 
-      TreehouseBackEntry: None,
-
-      BigAppleLedge: Any(
-        item.wings,
-        carrying.mr_kerringtons_wings,
-        carrying.jester_boots
-      )
-    }
-  ),
-
-  TreehouseBackEntry.define(
-    entrances = [
+    cls.entrances = [
       TreehouseBackDoor.define(
         default_connection = Treehouse.LostleafBackDoor
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Main: None,
 
       TreehouseFrontEntry: carrying.jester_boots,
@@ -705,15 +770,35 @@ regions = [
         carrying.jester_boots,
       )
     }
-  ),
 
-  Ducklings.define(
-    entrances = [
+class TreehouseRoof(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      TreehouseFrontEntry: None,
+
+      TreehouseBackEntry: None,
+
+      BigAppleLedge: Any(
+        item.wings,
+        carrying.mr_kerringtons_wings,
+        carrying.jester_boots
+      )
+    }
+
+class Ducklings(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from ..CAVE import SunCavern
+
+    cls.entrances = [
       DucklingsDoorUpper.define(SunCavern.DucklingsDoorUpper),
       DucklingsDoorLower.define(SunCavern.DucklingsDoorLower)
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       DucklingsLedge: Any(
         tech.any_super_jump,
         carrying.jester_boots,
@@ -726,10 +811,12 @@ regions = [
         )
       )
     }
-  ),
 
-  DucklingsLedge.define(
-    region_connections = {
+class DucklingsLedge(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Ducklings: None,
       TreehouseBranches: None,
       PrestonLedge: None,
@@ -741,54 +828,21 @@ regions = [
         )
       )
     }
-  ),
 
-  DeepWoods.define(
-    locations = {
-      DeepWoodsJesterBoots: None,
-      DeepWoodsAppleTree: item.carry,
-
-      DeepWoodsSoil: carrying.apple,
-
-      "Shroom: Lostleaf Lake - Deep Woods 1": None,
-      "Shroom: Lostleaf Lake - Deep Woods 2": None,
-      "Shroom: Lostleaf Lake - Deep Woods 3": None,
-      "Shroom: Lostleaf Lake - Deep Woods 4": None,
-      "Shroom: Lostleaf Lake - Deep Woods 5": None,
-      "Shroom: Lostleaf Lake - Deep Woods 6": None,
-
-      "Egg: Lostleaf Lake - Jester Boots": Any(
-        event.Collected(DeepWoodsSoil) & Any(
-          templates.high_jump_obstacle,
-        ),
-        carrying.jester_boots,
-      ),
-
-      "Lostleaf Lake - Tree Puzzle": Any(
-        item.ground_tail,
-        item.air_tail,
-        carrying.apple | carrying.bubble_conch,
-      ),
-    },
-
-    region_connections = {
-      Main: event.Collected("Open Deep Woods"),
-      DeepWoodsPuzzleEgg: event.Collected("Lower Deep Woods Egg")
+class CryptCanopy(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      BigAppleLedge: None,
+      OuterRim: None,
     }
-  ),
 
-  DeepWoodsPuzzleEgg.define(
-    locations = {
-      "Egg: Lostleaf Lake - Deep Woods Puzzle": None
-    },
-
-    region_connections = {
-      DeepWoods: None
-    }
-  ),
-
-  WaterfallCanopy.define(
-    region_connections = {
+class WaterfallCanopy(Region):
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       DeepWoods: None,
       DeepWoodsPuzzleEgg: None,
       OuterRim: None,
@@ -804,21 +858,28 @@ regions = [
         item.roll & item.sprint & tech.bubble_jump,
       )
     }
-  ),
 
-  CryptCanopy.define(
-    region_connections = {
-      BigAppleLedge: None,
-      OuterRim: None,
+class DeepWoodsPuzzleEgg(Region):
+  locations = {
+    "Egg: Lostleaf Lake - Deep Woods Puzzle": None
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      DeepWoods: None
     }
-  ),
 
-  FallIntoTeepee.define(
-    entrances = [
+class FallIntoTeepee(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import Teepee
+
+    cls.entrances = [
       TeepeeTopside.define(
         default_connection = Teepee.Topside,
         type = EntranceType.EXIT
       )
     ]
-  )
-]

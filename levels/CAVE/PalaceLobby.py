@@ -1,3 +1,5 @@
+from typing import override
+
 from ...logic import Entrance, Region, Any
 from ...logic import item, tech, carrying
 from ...logic.comment import Comment
@@ -8,23 +10,17 @@ class PrismicOutsideDoor(Entrance): pass
 class MoonCavernDoor(Entrance): pass
 class SunCavernTeleport(Entrance): pass
 
-from . import SunCavern
-from . import MoonCavern
-from ..PALACE import PrismicOutside
+class Main(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import MoonCavern
 
-class Main(Region): pass
-class Underwater(Region): pass
-class Ledges(Region): pass
-class PrismicEntryPlatform(Region): pass
-class TopLedge(Region): pass
-
-regions = [
-  Main.define(
-    entrances = [
+    cls.entrances = [
       MoonCavernDoor.define(MoonCavern.PalaceLobbyDoor)
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Underwater: item.swim,
 
       Ledges: Any(
@@ -49,10 +45,106 @@ regions = [
         )
       )
     }
-  ),
 
-  PrismicEntryPlatform.define(
-    entrances = [
+class Underwater(Region):
+  locations = {
+    "Shroom: Palace Lobby - Underwater 1": None,
+    "Shroom: Palace Lobby - Underwater 2": None,
+    "Shroom: Palace Lobby - Underwater 3": None,
+    "Shroom: Palace Lobby - Underwater 4": None,
+    "Shroom: Palace Lobby - Underwater 5": None,
+    "Shroom: Palace Lobby - Underwater 6": None,
+
+    "Palace Lobby Whirlpool Preston": None,
+
+    "Egg: Palace Lobby - Submerged": None,
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      Main: None,
+
+      PrismicEntryPlatform: Any(
+        item.sprint,
+
+        item.air_swim,
+
+        carrying.shelnerts_fish | carrying.bubble_conch
+      ),
+
+      TopLedge: Any(
+        item.air_swim,
+
+        carrying.shelnerts_fish | carrying.bubble_conch
+      )
+    }
+
+class Ledges(Region):
+  locations = {
+    "Shroom: Palace Lobby - Ledges 1": None,
+    "Shroom: Palace Lobby - Ledges 2": None,
+    "Shroom: Palace Lobby - Ledges 3": None,
+    "Shroom: Palace Lobby - Ledges 4": None,
+    "Shroom: Palace Lobby - Ledges 5": None,
+    "Shroom: Palace Lobby - Ledges 6": None
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      Main: Any(
+        item.wings,
+        item.roll & item.air_tail,
+        tech.bubble_jump & Any(
+          item.high_jump,
+          item.sprint,
+          item.horn,
+          tech.ground_tail_jump,
+          tech.air_tail_jump
+        )
+      ),
+
+      PrismicEntryPlatform: Any(
+        event.Collected("Run Palace Lobby Faucet"),
+
+        item.wings & Any(
+          item.double_jump,
+          item.horn
+        ),
+
+        Comment(
+          "High + Wing jump from slanted platform to stationary iceberg",
+          tech.wing_jump & item.high_jump
+        ),
+
+        event.Collected("Activate Palace Lobby Whirlpool") & Any(
+          Comment(
+            "Precise horn jump from extended ledge onto the tall iceberg. Dive late in the jump arc to gain some extra distance",
+            difficulty.hard & item.horn
+          ),
+
+          item.air_tail,
+          item.ground_tail,
+
+          Comment(
+            "Ejection launch from egg iceberg onto tall iceberg as they clip together",
+            tech.ejection_launch
+          )
+        )
+      )
+    }
+
+class PrismicEntryPlatform(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from ..PALACE import PrismicOutside
+    from . import SunCavern
+
+    cls.entrances = [
       PrismicOutsideDoor.define(
         default_connection = PrismicOutside.PalaceLobbyDoor
       ),
@@ -60,9 +152,9 @@ regions = [
         default_connection = SunCavern.PalaceLobbyTeleport,
         rule = event.Collected("Open Palace Lobby Teleport")
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Ledges: Any(
         event.Collected("Activate Palace Lobby Whirlpool"),
         carrying.mr_kerringtons_wings,
@@ -108,103 +200,17 @@ regions = [
         )
       )
     }
-  ),
 
-  Ledges.define(
-    locations = {
-      "Shroom: Palace Lobby - Ledges 1": None,
-      "Shroom: Palace Lobby - Ledges 2": None,
-      "Shroom: Palace Lobby - Ledges 3": None,
-      "Shroom: Palace Lobby - Ledges 4": None,
-      "Shroom: Palace Lobby - Ledges 5": None,
-      "Shroom: Palace Lobby - Ledges 6": None
-    },
+class TopLedge(Region):
+  locations = {
+    "Card: Palace Lobby - Top": None
+  }
 
-    region_connections = {
-      Main: Any(
-        item.wings,
-        item.roll & item.air_tail,
-        tech.bubble_jump & Any(
-          item.high_jump,
-          item.sprint,
-          item.horn,
-          tech.ground_tail_jump,
-          tech.air_tail_jump
-        )
-      ),
-
-      PrismicEntryPlatform: Any(
-        event.Collected("Run Palace Lobby Faucet"),
-
-        item.wings & Any(
-          item.double_jump,
-          item.horn
-        ),
-
-        Comment(
-          "High + Wing jump from slanted platform to stationary iceberg",
-          tech.wing_jump & item.high_jump
-        ),
-
-        event.Collected("Activate Palace Lobby Whirlpool") & Any(
-          Comment(
-            "Precise horn jump from extended ledge onto the tall iceberg. Dive late in the jump arc to gain some extra distance",
-            difficulty.hard & item.horn
-          ),
-
-          item.air_tail,
-          item.ground_tail,
-
-          Comment(
-            "Ejection launch from egg iceberg onto tall iceberg as they clip together",
-            tech.ejection_launch
-          )
-        )
-      )
-    }
-  ),
-
-  Underwater.define(
-    locations = {
-      "Shroom: Palace Lobby - Underwater 1": None,
-      "Shroom: Palace Lobby - Underwater 2": None,
-      "Shroom: Palace Lobby - Underwater 3": None,
-      "Shroom: Palace Lobby - Underwater 4": None,
-      "Shroom: Palace Lobby - Underwater 5": None,
-      "Shroom: Palace Lobby - Underwater 6": None,
-
-      "Palace Lobby Whirlpool Preston": None,
-
-      "Egg: Palace Lobby - Submerged": None,
-    },
-
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
-
-      PrismicEntryPlatform: Any(
-        item.sprint,
-
-        item.air_swim,
-
-        carrying.shelnerts_fish | carrying.bubble_conch
-      ),
-
-      TopLedge: Any(
-        item.air_swim,
-
-        carrying.shelnerts_fish | carrying.bubble_conch
-      )
+      PrismicEntryPlatform: None,
+      Ledges: None
     }
-  ),
-
-  TopLedge.define(
-    locations = {
-      "Card: Palace Lobby - Top": None
-    },
-
-    region_connections = {
-      # if you can get up here, you can get anywhere else
-      Main: None
-    }
-  )
-]

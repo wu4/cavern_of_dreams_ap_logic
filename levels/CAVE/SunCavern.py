@@ -1,10 +1,10 @@
-from logic.objects import EntranceType
-from ...logic import templates
-from ...logic import Region, Entrance, InternalEvent
-from ...logic import All, Any
+from typing import override
+
 from ...logic.quantities import HasEggs, HasGratitude, HasShrooms
 from ...logic.comment import Comment
-from ...logic import item, carrying, difficulty, tech, event
+from ...logic.objects import EntranceType
+from ...logic import Region, Entrance, InternalEvent, All, Any
+from ...logic import item, carrying, difficulty, tech, event, templates
 
 class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
@@ -18,47 +18,33 @@ class GalleryLobbyTeleport(Entrance): pass
 
 class MoonCavernHeartDoorOpened(InternalEvent): pass
 
-from . import LostleafLobby
-from . import ArmadaLobby
-from . import PalaceLobby
-from . import GalleryLobby
-from ..LAKE import LostleafLake
-from . import MoonCavern
+class Main(Region):
+  locations = {
+    "Sun Cavern - Sage's Blessing 1": HasEggs(1),
+    "Sun Cavern - Sage's Blessing 2": HasEggs(6),
+    "Sun Cavern - Sage's Blessing 3": HasEggs(12),
+    "Sun Cavern - Sage's Blessing 4": HasEggs(24),
+    "Sun Cavern - Sage's Blessing 5": HasEggs(40),
 
-class Main(Region): pass
-class ArmadaLobbyRoom(Region): pass
-class HighJumpLedge(Region): pass
-class VineLedge(Region): pass
-class TailSpinLedge(Region): pass
-class MightyWallLedge(Region): pass
-class WaterfallLedge(Region): pass
-class DucklingsLedge(Region): pass
-class DucklingsDoorway(Region): pass
-class MoonCavernHeartDoorway(Region): pass
+    "Card: Sun Cavern - Air Vent": None,
 
-regions = [
-  Main.define(
-    locations = {
-      "Sun Cavern - Sage's Blessing 1": HasEggs(1),
-      "Sun Cavern - Sage's Blessing 2": HasEggs(6),
-      "Sun Cavern - Sage's Blessing 3": HasEggs(12),
-      "Sun Cavern - Sage's Blessing 4": HasEggs(24),
-      "Sun Cavern - Sage's Blessing 5": HasEggs(40),
+    "Shroom: Sun Cavern - Mighty Wall Ground 1": None,
+    "Shroom: Sun Cavern - Mighty Wall Ground 2": None,
+    "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
+    "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
 
-      "Card: Sun Cavern - Air Vent": None,
+    "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (item.ground_tail | item.air_tail | item.horn),
+    "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail | item.horn),
+    "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (item.ground_tail | item.air_tail | item.horn),
+    "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail | item.horn),
+  }
 
-      "Shroom: Sun Cavern - Mighty Wall Ground 1": None,
-      "Shroom: Sun Cavern - Mighty Wall Ground 2": None,
-      "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
-      "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
+  @override
+  @classmethod
+  def load(cls):
+    from . import LostleafLobby, ArmadaLobby, PalaceLobby, GalleryLobby
 
-      "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (item.ground_tail | item.air_tail | item.horn),
-      "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail | item.horn),
-      "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (item.ground_tail | item.air_tail | item.horn),
-      "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail | item.horn),
-    },
-
-    entrances = [
+    cls.entrances = [
       LostleafLobbyTeleport.define(
         default_connection = LostleafLobby.SunCavernTeleport,
         rule = event.Collected("Open Lake Lobby Teleport") & carrying.no_jester_boots
@@ -78,9 +64,9 @@ regions = [
         default_connection = GalleryLobby.SunCavernTeleport,
         rule = event.Collected("Open Gallery Lobby Teleport") & carrying.no_jester_boots
       ),
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       ArmadaLobbyRoom: Any(
         item.horn,
         item.wings,
@@ -266,103 +252,122 @@ regions = [
             difficulty.intermediate
           )
         )
-    },
-  ),
+    }
 
-  ArmadaLobbyRoom.define(
-    locations = {
-      "Shroom: Sun Cavern - Armada Entrance 1" : None,
-      "Shroom: Sun Cavern - Armada Entrance 2" : None,
-      "Shroom: Sun Cavern - Armada Entrance 3" : None,
-    },
+class ArmadaLobbyRoom(Region):
+  locations = {
+    "Shroom: Sun Cavern - Armada Entrance 1" : None,
+    "Shroom: Sun Cavern - Armada Entrance 2" : None,
+    "Shroom: Sun Cavern - Armada Entrance 3" : None,
+  }
 
-    entrances = [
+  @override
+  @classmethod
+  def load(cls):
+    from . import ArmadaLobby
+
+    cls.entrances = [
       ArmadaLobbyDoor.define(
         default_connection = ArmadaLobby.SunCavernDoor
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Main: None
     }
-  ),
 
-  HighJumpLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - High Jump Ledge 1": None,
-      "Shroom: Sun Cavern - High Jump Ledge 2": None
-    },
-    region_connections = {
+class HighJumpLedge(Region):
+  locations = {
+    "Shroom: Sun Cavern - High Jump Ledge 1": None,
+    "Shroom: Sun Cavern - High Jump Ledge 2": None
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None
     }
-  ),
 
-  VineLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - Vine Ledge 1": None,
-      "Shroom: Sun Cavern - Vine Ledge 2": None
-    },
+class VineLedge(Region):
+  locations = {
+    "Shroom: Sun Cavern - Vine Ledge 1": None,
+    "Shroom: Sun Cavern - Vine Ledge 2": None
+  }
 
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
       HighJumpLedge: Any(
         tech.wing_jump,
         item.roll & (item.sprint | item.air_tail)
       )
     }
-  ),
 
-  TailSpinLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - Tail Spin Ledge 1": None,
-      "Shroom: Sun Cavern - Tail Spin Ledge 2": None
-    },
+class TailSpinLedge(Region):
+  locations = {
+    "Shroom: Sun Cavern - Tail Spin Ledge 1": None,
+    "Shroom: Sun Cavern - Tail Spin Ledge 2": None
+  }
 
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None
     }
-  ),
 
-  MightyWallLedge.define(
-    locations = {
-      "Whack Mighty Wall": Any(
-        item.air_tail,
-        item.ground_tail,
-        carrying.apple,
-        carrying.bubble_conch
-      ),
+class MightyWallLedge(Region):
+  locations = {
+    "Whack Mighty Wall": Any(
+      item.air_tail,
+      item.ground_tail,
+      carrying.apple,
+      carrying.bubble_conch
+    ),
 
-      "Egg: Sun Cavern - Mighty Wall": None,
+    "Egg: Sun Cavern - Mighty Wall": None,
 
-      "Shroom: Sun Cavern - Mighty Wall Egg Ledge 1": None,
-      "Shroom: Sun Cavern - Mighty Wall Egg Ledge 2": None,
-      "Shroom: Sun Cavern - Mighty Wall Egg Ledge 3": None
-    },
+    "Shroom: Sun Cavern - Mighty Wall Egg Ledge 1": None,
+    "Shroom: Sun Cavern - Mighty Wall Egg Ledge 2": None,
+    "Shroom: Sun Cavern - Mighty Wall Egg Ledge 3": None
+  }
 
-    entrances = [
+  @override
+  @classmethod
+  def load(cls):
+    from . import LostleafLobby
+
+    cls.entrances = [
       LostleafLobbyDoor.define(
         default_connection = LostleafLobby.SunCavernDoor,
         rule = event.Collected("Topple Mighty Wall")
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Main: None
     }
-  ),
 
-  WaterfallLedge.define(
-    locations = {
-      "Egg: Sun Cavern - Waterfall": None
-    },
+class WaterfallLedge(Region):
+  locations = {
+    "Egg: Sun Cavern - Waterfall": None
+  }
 
-    entrances = [
+  @override
+  @classmethod
+  def load(cls):
+    from ..LAKE import LostleafLake
+
+    cls.entrances = [
       DucklingsDoorUpper.define(
         default_connection = LostleafLake.DucklingsDoorUpper
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       Main: None,
 
       DucklingsDoorway: Comment(
@@ -375,47 +380,57 @@ regions = [
         item.swim
       )
     }
-  ),
 
-  DucklingsLedge.define(
-    locations = {
-      "Shroom: Sun Cavern - Ducklings Ledge 1": None,
-      "Shroom: Sun Cavern - Ducklings Ledge 2": None
-    },
+class DucklingsLedge(Region):
+  locations = {
+    "Shroom: Sun Cavern - Ducklings Ledge 1": None,
+    "Shroom: Sun Cavern - Ducklings Ledge 2": None
+  }
 
-    region_connections = {
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
       Main: None,
       DucklingsDoorway: templates.high_jump_obstacle | tech.any_super_jump
     }
-  ),
 
-  DucklingsDoorway.define(
-    entrances = [
+class DucklingsDoorway(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from ..LAKE import LostleafLake
+
+    cls.entrances = [
       DucklingsDoorLower.define(
         default_connection = LostleafLake.DucklingsDoorLower
       )
-    ],
+    ]
 
-    region_connections = {
+    cls.region_connections = {
       DucklingsLedge: None
     }
-  ),
 
-  MoonCavernHeartDoorway.define(
-    entrances = [
+class MoonCavernHeartDoorway(Region):
+  locations = {
+    MoonCavernHeartDoorOpened:
+      HasGratitude(1) & (item.ground_tail | item.air_tail)
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    from . import MoonCavern
+
+    cls.entrances = [
       MoonCavernHeartDoor.define(
         default_connection = MoonCavern.SunCavernDoor,
         rule = event.Collected(MoonCavernHeartDoorOpened),
         type = EntranceType.BILINEAR | EntranceType.UNDERWATER
       ),
-    ],
+    ]
 
-    locations = {
-      MoonCavernHeartDoorOpened:
-        HasGratitude(1) & (item.ground_tail | item.air_tail)
-    },
-
-    region_connections = {
+    cls.region_connections = {
       Main: item.swim,
 
       DucklingsDoorway:
@@ -424,5 +439,3 @@ regions = [
           item.swim
         )
     }
-  )
-]
