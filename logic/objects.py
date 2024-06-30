@@ -42,29 +42,6 @@ class Region:
   @classmethod
   def load(cls): pass
 
-  @classmethod
-  def define(
-    cls,
-    region_connections: dict[type[Region], _MaybeLogic] | None = None,
-    entrances: list[type[Entrance]] | None = None,
-    locations: dict[LocationType, _MaybeLogic] | None = None
-  ) -> type[Region]:
-    assert not cls._is_defined, f"Tried to redefine {cls.__name__}"
-
-    if region_connections is None: region_connections = {}
-    if entrances is None: entrances = []
-    if locations is None: locations = {}
-
-    cls._is_defined = True
-
-    cls.region_connections = region_connections
-    cls.entrances = entrances
-    cls.locations = locations
-    for entrance in entrances:
-      entrance.set_containing_region(cls)
-
-    return cls
-
 class EntranceType(Flag):
   ENTRANCE   = 0b001
   EXIT       = 0b010
