@@ -332,9 +332,15 @@ class SecretWorld(Region):
       Main: None,
 
       DucklingsLedge: tech.ejection_launch,
+      WaterfallCanopy: tech.ejection_launch,
+      BellTower: tech.ejection_launch,
+
+      InsideChurch: None,
 
       WaterfallEggCave: Any(
-        item.air_swim
+        item.air_swim,
+        difficulty.hard & item.double_jump & item.sprint,
+        carrying.jester_boots
       )
     }
 
