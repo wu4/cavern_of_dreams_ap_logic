@@ -40,7 +40,10 @@ class Region:
 
   @abstractmethod
   @classmethod
-  def load(cls): pass
+  def load(cls):
+    """
+    Overridden by Regions to define attributes that require lazy-loading
+    """
 
 class EntranceType(Flag):
   ENTRANCE   = 0b001

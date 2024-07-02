@@ -130,20 +130,20 @@ class Main(Region):
     }
 
 class JesterBootsPlatform(Region):
+  locations = {
+    ArmadaLobbyBoots: Any(
+      item.ground_tail,
+      item.air_tail,
+      carrying.apple | carrying.bubble_conch,
+      # The wall allows destroying it with the horn, but it's impossible
+      # to actually do it
+      # item.horn
+    )
+  }
+
   @override
   @classmethod
   def load(cls):
-    cls.locations = {
-      ArmadaLobbyBoots: Any(
-        item.ground_tail,
-        item.air_tail,
-        carrying.apple | carrying.bubble_conch,
-        # The wall allows destroying it with the horn, but it's impossible
-        # to actually do it
-        # item.horn
-      )
-    }
-
     cls.region_connections = {
       Main: Any(
         tech.any_super_jump,
