@@ -18,12 +18,12 @@ class TeepeeTopside(Entrance): pass
 
 class BellTowerSoil(PlantableSoil): pass
 class WinkyTreeSoil(PlantableSoil): pass
-class DeepWoodsSoil(PlantableSoil): pass
+class DeepDeepWoodsSoil(PlantableSoil): pass
 class BigAppleLedgeSoil(PlantableSoil): pass
 
 class LakeAppleTree(CarryableLocation): carryable = "Apple"
-class DeepWoodsAppleTree(CarryableLocation): carryable = "Apple"
-class DeepWoodsJesterBoots(CarryableLocation): carryable = "Jester Boots"
+class DeepDeepWoodsAppleTree(CarryableLocation): carryable = "Apple"
+class DeepDeepWoodsJesterBoots(CarryableLocation): carryable = "Jester Boots"
 
 class Main(Region):
   locations = {
@@ -279,7 +279,8 @@ class OuterRim(Region):
 
       FallIntoTeepee: Any(
         carrying.mr_kerringtons_wings,
-        tech.wing_storage
+        tech.wing_storage,
+        carrying.jester_boots
       ),
 
       PrestonLedge: Any(
@@ -335,6 +336,17 @@ class SecretWorld(Region):
       WaterfallCanopy: tech.ejection_launch,
       BellTower: tech.ejection_launch,
 
+      DeepWoods: Any(
+        item.air_swim,
+        difficulty.hard & item.double_jump & item.wings & item.sprint,
+        carrying.jester_boots
+      ),
+
+      DeepDeepWoods: Any(
+        item.air_swim,
+        carrying.jester_boots
+      ),
+
       InsideChurch: None,
 
       WaterfallEggCave: Any(
@@ -346,25 +358,6 @@ class SecretWorld(Region):
 
 class DeepWoods(Region):
   locations = {
-    DeepWoodsJesterBoots: None,
-    DeepWoodsAppleTree: item.carry,
-
-    DeepWoodsSoil: carrying.apple,
-
-    "Shroom: Lostleaf Lake - Deep Woods 1": None,
-    "Shroom: Lostleaf Lake - Deep Woods 2": None,
-    "Shroom: Lostleaf Lake - Deep Woods 3": None,
-    "Shroom: Lostleaf Lake - Deep Woods 4": None,
-    "Shroom: Lostleaf Lake - Deep Woods 5": None,
-    "Shroom: Lostleaf Lake - Deep Woods 6": None,
-
-    "Egg: Lostleaf Lake - Jester Boots": Any(
-      event.Collected(DeepWoodsSoil) & Any(
-        templates.high_jump_obstacle,
-      ),
-      carrying.jester_boots,
-    ),
-
     "Lostleaf Lake - Tree Puzzle": Any(
       item.ground_tail,
       item.air_tail,
@@ -377,7 +370,39 @@ class DeepWoods(Region):
   def load(cls):
     cls.region_connections = {
       Main: event.Collected("Open Deep Woods"),
-      DeepWoodsPuzzleEgg: event.Collected("Lower Deep Woods Egg")
+
+      DeepWoodsPuzzleEgg: event.Collected("Lower Deep Woods Egg"),
+
+      DeepDeepWoods: carrying.no_jester_boots
+    }
+
+class DeepDeepWoods(Region):
+  locations = {
+    "Shroom: Lostleaf Lake - Deep Woods 1": None,
+    "Shroom: Lostleaf Lake - Deep Woods 2": None,
+    "Shroom: Lostleaf Lake - Deep Woods 3": None,
+    "Shroom: Lostleaf Lake - Deep Woods 4": None,
+    "Shroom: Lostleaf Lake - Deep Woods 5": None,
+    "Shroom: Lostleaf Lake - Deep Woods 6": None,
+
+    DeepDeepWoodsJesterBoots: None,
+    DeepDeepWoodsAppleTree: item.carry,
+
+    DeepDeepWoodsSoil: carrying.apple,
+
+    "Egg: Lostleaf Lake - Jester Boots": Any(
+      event.Collected(DeepDeepWoodsSoil) & Any(
+        templates.high_jump_obstacle,
+      ),
+      carrying.jester_boots,
+    ),
+  }
+
+  @override
+  @classmethod
+  def load(cls):
+    cls.region_connections = {
+      DeepWoods: carrying.no_jester_boots
     }
 
 class Lake(Region):
@@ -410,7 +435,7 @@ class Lake(Region):
     cls.region_connections = {
       SecretWorld: Comment(
         "Use the tombstone fish to clip out of bounds",
-        tech.out_of_bounds
+        tech.out_of_bounds & carrying.no_throwables
       ),
 
       OuterRim: carrying.bubble_conch,
@@ -585,6 +610,19 @@ class TeepeeIsland(Region):
         )
       )
     }
+
+class FallIntoTeepee(Region):
+  @override
+  @classmethod
+  def load(cls):
+    from . import Teepee
+
+    cls.entrances = [
+      TeepeeTopside.define(
+        default_connection = Teepee.Topside,
+        type = EntranceType.EXIT
+      )
+    ]
 
 class PrestonLedge(Region):
   locations = {
@@ -876,16 +914,3 @@ class DeepWoodsPuzzleEgg(Region):
     cls.region_connections = {
       DeepWoods: None
     }
-
-class FallIntoTeepee(Region):
-  @override
-  @classmethod
-  def load(cls):
-    from . import Teepee
-
-    cls.entrances = [
-      TeepeeTopside.define(
-        default_connection = Teepee.Topside,
-        type = EntranceType.EXIT
-      )
-    ]
