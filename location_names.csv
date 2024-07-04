@@ -34,7 +34,7 @@ Gratitude 3,Fed Prismic Palace Fella,GRATITUDE3
 Gratitude 4,Fed Gallery of Nightmares Fella,GRATITUDE4
 
 pickup,,
-Fish Food,Lostleaf Lake - Treehouse Fish Food,ITEM_FISH_FOOD
+Fish Food,Treehouse - Fish Food,ITEM_FISH_FOOD
 Lady Opal's Egg 1,Lady Opal's Egg: Castle,ITEM_PRINCESS_1
 Lady Opal's Egg 2,Lady Opal's Egg: Pool,ITEM_PRINCESS_2
 Lady Opal's Egg 3,Lady Opal's Egg: Poki-Poki,ITEM_PRINCESS_3
@@ -55,7 +55,7 @@ Raise Lake Swings,Lostleaf Lake - Winky Tree Target,LAKE_SWINGS_RAISED
 Open Deep Woods,Lostleaf Lake - Help Shelnert,LAKE_KAPPA_SUCCESS
 Open Crypt,Lostleaf Lake - Back of the Headstone,LAKE_CRYPT_GATE_OPEN
 Open Church,Lostleaf Lake - Ring Bell,LAKE_BELL_RANG
-Open Church Egg,Lostleaf Lake - Angel Statue Puzzle,LAKE_CHURCH_SUCCESS
+Open Church Basement,Church - Angel Statue Puzzle,LAKE_CHURCH_SUCCESS
 Open Treehouse,Lostleaf Lake - Treehouse Preston,LAKE_BEDROOM_DOOR_OPEN
 Lower Deep Woods Egg,Lostleaf Lake - Tree Puzzle,LAKE_GROVE_HELPED
 
@@ -103,7 +103,7 @@ Card: Shelwart,Card: Lostleaf Lake - Apple Tree,CARD_LAKE_CRYPT
 Card: Carpy,Card: Lostleaf Lake - Lake Stump,CARD_LAKE_KOI
 Card: Raay,Card: Church - Top,CARD_LAKE_SUN
 Card: Sappleing,Card: Lostleaf Lake - Entry,CARD_LAKE_SAPLING
-Card: Gabby Grove,Card: Lostleaf Lake - Treehouse,CARD_LAKE_GROVE
+Card: Gabby Grove,Card: Treehouse - Top,CARD_LAKE_GROVE
 
 Card: Mr. Kerrington,Card: Armada Interior - Slide,CARD_MONSTER_MONSTER
 Card: Skritch,Card: Armada Interior - Pipe,CARD_MONSTER_SPIN_BLADE

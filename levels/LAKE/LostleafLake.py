@@ -347,6 +347,15 @@ class SecretWorld(Region):
         carrying.jester_boots
       ),
 
+      InsideCrypt: None,
+
+      BigAppleLedge: Any(
+        item.wings,
+        carrying.mr_kerringtons_wings,
+        carrying.jester_boots,
+        item.air_swim,
+      ),
+
       InsideChurch: None,
 
       WaterfallEggCave: Any(
