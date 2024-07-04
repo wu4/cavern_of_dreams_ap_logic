@@ -1,6 +1,4 @@
-from typing import override
-
-from ...logic.objects import Region, Entrance, InternalEvent
+from ...logic.objects import lazy_region, Region, Entrance, InternalEvent
 from ...logic import item, carrying
 from ...logic import event
 
@@ -13,48 +11,44 @@ class SunCavernTeleport(Entrance): pass
 class BrokeHiddenWall(InternalEvent): pass
 
 # give it an associated region with a dead-end
-class BreakHiddenWall(Region):
-  locations = {
+@lazy_region
+def BreakHiddenWall(r: Region):
+  r.locations = {
     BrokeHiddenWall: None
   }
 
-  @override
-  @classmethod
-  def load(cls): pass
-
-class Main(Region):
-  locations = {
+@lazy_region
+def Main(r: Region):
+  r.locations = {
     "Shroom: Lostleaf Lobby - Bridge 1": None,
     "Shroom: Lostleaf Lobby - Bridge 2": None,
     "Shroom: Lostleaf Lobby - Bridge 3": None
   }
 
-  @override
-  @classmethod
-  def load(cls):
-    from . import SunCavern
-    from ..LAKE import LostleafLake
+  from . import SunCavern
+  from ..LAKE import LostleafLake
 
-    cls.entrances = [
-      SunCavernDoor.define(SunCavern.LostleafLobbyDoor),
+  r.entrances = [
+    SunCavernDoor.define(SunCavern.LostleafLobbyDoor),
 
-      LostleafLakeDoor.define(LostleafLake.LostleafLobbyDoor),
+    LostleafLakeDoor.define(LostleafLake.LostleafLobbyDoor),
 
-      SunCavernTeleport.define(
-        default_connection = SunCavern.LostleafLobbyTeleport,
-        rule = event.Collected("Open Lake Lobby Teleport")
-      )
-    ]
+    SunCavernTeleport.define(
+      default_connection = SunCavern.LostleafLobbyTeleport,
+      rule = event.Collected("Open Lake Lobby Teleport")
+    )
+  ]
 
-    cls.region_connections = {
-      BreakHiddenWall: CanBreakHiddenWall,
-      HiddenDoorway: event.Collected(BrokeHiddenWall),
+  r.region_connections = {
+    BreakHiddenWall: CanBreakHiddenWall,
+    HiddenDoorway: event.Collected(BrokeHiddenWall),
 
-      Trees: None # difficulty.Intermediate | templates.HighJumpObstacle
-    }
+    Trees: None # difficulty.Intermediate | templates.HighJumpObstacle
+  }
 
-class Trees(Region):
-  locations = {
+@lazy_region
+def Trees(r: Region):
+  r.locations = {
     "Shroom: Lostleaf Lobby - Trees 1": None,
     "Shroom: Lostleaf Lobby - Trees 2": None,
     "Shroom: Lostleaf Lobby - Trees 3": None,
@@ -64,26 +58,21 @@ class Trees(Region):
     "Card: Lostleaf Lobby - Branches": None,
   }
 
-  @override
-  @classmethod
-  def load(cls):
-    cls.region_connections = {
-      Main: None
-    }
+  r.region_connections = {
+    Main: None
+  }
 
-class HiddenDoorway(Region):
-  @override
-  @classmethod
-  def load(cls):
-    from . import GalleryLobby
+@lazy_region
+def HiddenDoorway(r: Region):
+  from . import GalleryLobby
 
-    cls.entrances = [
-      GalleryLobbyDoor.define(GalleryLobby.LostleafLobbyDoor)
-    ]
+  r.entrances = [
+    GalleryLobbyDoor.define(GalleryLobby.LostleafLobbyDoor)
+  ]
 
-    cls.region_connections = {
-      BreakHiddenWall: CanBreakHiddenWall,
-      Main: event.Collected(BrokeHiddenWall)
-    }
+  r.region_connections = {
+    BreakHiddenWall: CanBreakHiddenWall,
+    Main: event.Collected(BrokeHiddenWall)
+  }
 
 CanBreakHiddenWall = item.ground_tail | item.air_tail | carrying.apple | carrying.bubble_conch

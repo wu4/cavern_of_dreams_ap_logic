@@ -1,12 +1,12 @@
-from typing import override
 from ...logic.objects import EntranceType
-from ...logic import Region, Entrance, Any
+from ...logic import lazy_region, Region, Entrance, Any
 from ...logic import item, tech, carrying, event
 
 class LostleafLakeDoor(Entrance): pass
 
-class Main(Region):
-  locations = {
+@lazy_region
+def Main(r: Region):
+  r.locations = {
     "Shroom: Church - Pews 1": None,
     "Shroom: Church - Pews 2": None,
     "Shroom: Church - Pews 3": None,
@@ -26,29 +26,26 @@ class Main(Region):
       carrying.bubble_conch
     )
   }
-  @override
-  @classmethod
-  def load(cls):
-    from . import LostleafLake
-    cls.entrances = [
-      LostleafLakeDoor.define(
-        default_connection = LostleafLake.ChurchDoor,
-        type = EntranceType.BILINEAR | EntranceType.UNDERWATER
-      )
-    ]
 
-    cls.region_connections = {
-      Basement: event.Collected("Open Church Basement")
-    }
+  from . import LostleafLake
 
-class Basement(Region):
-  locations = {
+  r.entrances = [
+    LostleafLakeDoor.define(
+      default_connection = LostleafLake.ChurchDoor,
+      type = EntranceType.BILINEAR | EntranceType.UNDERWATER
+    )
+  ]
+
+  r.region_connections = {
+    Basement: event.Collected("Open Church Basement")
+  }
+
+@lazy_region
+def Basement(r: Region):
+  r.locations = {
     "Egg: Church - Below the Angel Statues": None
   }
 
-  @override
-  @classmethod
-  def load(cls):
-    cls.region_connections = {
-      Main: None
-    }
+  r.region_connections = {
+    Main: None
+  }

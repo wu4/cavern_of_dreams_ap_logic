@@ -1,23 +1,26 @@
-from typing import override
 from ...logic.objects import EntranceType, InternalEvent, PlantableSoil
-from ...logic import Region, Entrance, Any
+from ...logic import lazy_region, Region, Entrance, Any
 from ...logic.objects import CarryableLocation
 from ...logic.comment import Comment
 from ...logic import item, difficulty, tech, carrying, event, has, templates
 
 class PrestonAccess(InternalEvent): pass
 
-class Main(Region):
+@lazy_region
+def Main(r: Region):
   pass
 
-class LeftPlatform(Region):
+@lazy_region
+def LeftPlatform(r: Region):
   pass
 
-class RightPlatform(Region):
+@lazy_region
+def RightPlatform(r: Region):
   pass
 
-class EggPlatform(Region):
-  locations = {
+@lazy_region
+def EggPlatform(r: Region):
+  r.locations = {
     "Egg: Crypt - Shelwart's Gravestone": Any(
       (item.bubble | difficulty.intermediate) & Any(
         item.double_jump,
@@ -33,17 +36,16 @@ class EggPlatform(Region):
     )
   }
 
-class BackExit(Region):
+@lazy_region
+def BackExit(r: Region):
   pass
 
-class PrestonRoom(Region):
-  locations = {
+@lazy_region
+def PrestonRoom(r: Region):
+  r.locations = {
     PrestonAccess: None
   }
 
-  @override
-  @classmethod
-  def load(cls):
-    cls.region_connections = {
-      Main: None
-    }
+  r.region_connections = {
+    Main: None
+  }

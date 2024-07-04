@@ -1,12 +1,12 @@
-from typing import override
-from ...logic import Region, Entrance, Any
+from ...logic import lazy_region, Region, Entrance, Any
 from ...logic import tech, event
 
 class LostleafFrontDoor(Entrance): pass
 class LostleafBackDoor(Entrance): pass
 
-class Main(Region):
-  locations = {
+@lazy_region
+def Main(r: Region):
+  r.locations = {
     "Shroom: Treehouse - Corners 1": None,
     "Shroom: Treehouse - Corners 2": None,
     "Shroom: Treehouse - Corners 3": None,
@@ -19,21 +19,18 @@ class Main(Region):
     "Treehouse - Fish Food": None
   }
 
-  @override
-  @classmethod
-  def load(cls):
-    from . import LostleafLake
+  from . import LostleafLake
 
-    cls.entrances = [
-      LostleafFrontDoor.define(
-        default_connection = LostleafLake.TreehouseFrontDoor,
-        rule = Any(
-          event.Collected("Open Treehouse"),
-          tech.roll_disjoint
-        )
-      ),
-
-      LostleafBackDoor.define(
-        default_connection = LostleafLake.TreehouseBackDoor
+  r.entrances = [
+    LostleafFrontDoor.define(
+      default_connection = LostleafLake.TreehouseFrontDoor,
+      rule = Any(
+        event.Collected("Open Treehouse"),
+        tech.roll_disjoint
       )
-    ]
+    ),
+
+    LostleafBackDoor.define(
+      default_connection = LostleafLake.TreehouseBackDoor
+    )
+  ]

@@ -1,5 +1,37 @@
-# conversion macro just in case:
-# maw"nyw/n\.definejVk$%k"rdkd2d`af:lC@override@classmethoddef load(cls):j^mbOk"rp`aV`b:s/^\(    [}\]]\),/\1/g`aV`b:s/^    \(locations\|region_connections\|entrances\)/    cls.\1/g`b
+conversion macro just in case:
+maw"nyw/n\.definejVk$%k"rdkd2d`af:lC@override@classmethoddef load(cls):j^mbOk"rp`aV`b:s/^\(    [}\]]\),/\1/g`aV`b:s/^    \(locations\|region_connections\|entrances\)/    cls.\1/g`b
+
+cw@lazy_regiondef f(ar: ^ma]]mb`a"cy`b:cal ConversionMacro()`b
+
+function! ConversionMacro()
+  if @c =~ "  locations"
+    /^  locations
+    exe "norm! Ir."
+    exe "norm! `a"
+  en
+  if @c =~ "    from"
+    exe "norm! V`b:s/^    from/  from/g"
+  en
+  if @c =~ "@override"
+    /^  @override
+    exe "norm! d3d"
+    exe "norm! `a"
+  en
+  if @c =~ "    cls.region_connections"
+    /^    cls.region_connections
+    exe "norm! ^cwr"
+    exe "norm! V%<"
+    exe "norm! `a"
+    echom "reg"
+  en
+  if @c =~ "    cls.entrances"
+    /^    cls.entrances
+    exe "norm! ^cwr"
+    exe "norm! V%<"
+    exe "norm! `a"
+    echom "entr"
+  en
+endfu
 
 
 [x] levels/CAVE/SunCavern.py

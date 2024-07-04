@@ -6,7 +6,7 @@ from .has import CarryingItem
 from .logic import MaybeLogic as _MaybeLogic
 from ..generated_types import AnyLocation
 
-from typing import TypeAlias, override
+from typing import Callable, TypeAlias, override
 
 class HasPathName:
   @classmethod
@@ -28,22 +28,32 @@ LocationType: TypeAlias = AnyLocation | type[InternalEvent] | type[CarryableLoca
 
 class Region:
   _is_defined: bool = False
-  region_connections: dict[type[Region], _MaybeLogic] | None = None
+  name: str
+  region_connections: dict[Region, _MaybeLogic] | None = None
   entrances: list[type[Entrance]] | None = None
   locations: dict[LocationType, _MaybeLogic] | None = None
 
-  @classmethod
-  def lazy_load(cls):
-    if cls._is_defined: return
-    cls.load()
-    cls._is_defined = True
+  def __init__(self, name: str):
+    super().__init__()
+    self.name = name
+
+  def lazy_load(self):
+    if self._is_defined: return
+    self.load()
+    self._is_defined = True
 
   @abstractmethod
-  @classmethod
-  def load(cls):
+  def load(self):
     """
     Overridden by Regions to define attributes that require lazy-loading
     """
+
+def lazy_region(func: Callable[[Region], None]):
+  r = Region(func.__name__)
+  def wrapped():
+    func(r)
+  r.load = wrapped
+  return r
 
 class EntranceType(Flag):
   ENTRANCE   = 0b001
