@@ -23,7 +23,8 @@ def Main(r: Region):
         tech.bubble_jump_and_recoil
       ),
       item.sprint,
-      carrying.bubble_conch
+      carrying.bubble_conch,
+      carrying.jester_boots & tech.super_bubble_jump & item.roll
     )
   }
 

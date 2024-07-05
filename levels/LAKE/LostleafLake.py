@@ -8,19 +8,22 @@ class LostleafLobbyDoor(Entrance): pass
 class DucklingsDoorUpper(Entrance): pass
 class DucklingsDoorLower(Entrance): pass
 class ChurchDoor(Entrance): pass
-class CryptDoor(Entrance): pass
+class CryptDoorFront(Entrance): pass
+class CryptDoorBack(Entrance): pass
 class PrismicDoor(Entrance): pass
 class TreehouseFrontDoor(Entrance): pass
 class TreehouseBackDoor(Entrance): pass
 class TeepeeFrontDoor(Entrance): pass
 class TeepeeTopside(Entrance): pass
 
+class CryptSoil(PlantableSoil): pass
 class BellTowerSoil(PlantableSoil): pass
 class WinkyTreeSoil(PlantableSoil): pass
 class DeepDeepWoodsSoil(PlantableSoil): pass
 class BigAppleLedgeSoil(PlantableSoil): pass
 
 class LakeAppleTree(CarryableLocation): carryable = "Apple"
+class CryptAppleTree(CarryableLocation): carryable = "Apple"
 class DeepDeepWoodsAppleTree(CarryableLocation): carryable = "Apple"
 class DeepDeepWoodsJesterBoots(CarryableLocation): carryable = "Jester Boots"
 
@@ -502,13 +505,68 @@ def InsideCrypt(r: Region):
   from . import Crypt
 
   r.entrances = [
-    CryptDoor.define(
+    CryptDoorFront.define(
       default_connection = Crypt.LostleafLakeDoorFront
     )
   ]
 
   r.region_connections = {
     TeepeeIsland: event.Collected("Open Crypt")
+  }
+
+@lazy_region
+def CryptBackLedge(r: Region):
+  r.locations = {
+    CryptAppleTree: item.carry & Any(
+      item.ground_tail | item.air_tail,
+      carrying.apple | carrying.bubble_conch,
+
+      item.high_jump,
+      item.double_jump,
+      item.horn
+    ),
+
+    CryptSoil: carrying.apple
+  }
+
+  from . import Crypt
+
+  r.entrances = [
+    CryptDoorBack.define(
+      default_connection = Crypt.LostleafLakeDoorBack
+    )
+  ]
+
+  r.region_connections = {
+    OverCryptBackFence: Any(
+      event.Collected(CryptSoil) & item.climb,
+      item.high_jump,
+      item.double_jump,
+      item.horn,
+      tech.ground_tail_jump,
+      tech.air_tail_jump,
+    )
+  }
+
+@lazy_region
+def OverCryptBackFence(r: Region):
+  r.region_connections = {
+    CryptCanopy: tech.out_of_bounds & tech.ejection_launch & Any(
+      difficulty.intermediate,
+      tech.bubble_jump,
+      item.wings
+    ),
+
+    OuterRim: tech.out_of_bounds & Any(
+      item.wings,
+      tech.bubble_jump,
+      carrying.jester_boots,
+      tech.z_target & item.air_tail & Any(
+        item.swim,
+        tech.bubble_jump,
+        item.wings
+      )
+    )
   }
 
 @lazy_region
@@ -839,6 +897,7 @@ def CryptCanopy(r: Region):
   r.region_connections = {
     BigAppleLedge: None,
     OuterRim: None,
+    CryptBackLedge: None
   }
 
 @lazy_region

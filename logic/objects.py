@@ -49,6 +49,9 @@ class Region:
     """
 
 def lazy_region(func: Callable[[Region], None]):
+  """
+  Creates a new Region, using the provided function for its name and lazy-loading.
+  """
   r = Region(func.__name__)
   def wrapped():
     func(r)
