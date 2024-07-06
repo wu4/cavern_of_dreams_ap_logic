@@ -59,9 +59,11 @@ Open Church Basement,Church - Angel Statue Puzzle,LAKE_CHURCH_SUCCESS
 Open Treehouse,Lostleaf Lake - Treehouse Preston,LAKE_BEDROOM_DOOR_OPEN
 Lower Deep Woods Egg,Lostleaf Lake - Tree Puzzle,LAKE_GROVE_HELPED
 
-Open Armada Cockpit,Armada Interior - Help Mr. Kerrington,MONSTER_BOILS_REMOVED
-Free Armada Buddies,Armada Interior - Generators Puzzle,MONSTER_TEST_CHUBES_OPENED
+Open Armada Cockpit,Kerrington - Soothe Mr. Kerrington's Boils,MONSTER_BOILS_REMOVED
+Free Armada Buddies,Kerrington - Generators Puzzle,MONSTER_TEST_CHUBES_OPENED
 Unclog Kerrington's Heart,Heart - Generators Puzzle,MONSTER_HEART_ROOM_SUCCESS
+Open Kerrington's Heart,Kerrington - Race,MONSTER_HEART_GATE_OPEN
+Open Medicine Pool,Kerrington - Medicine Pool Preston,MONSTER_TAIL_GATE_OPEN
 
 Open Prismic Palace Basement,Prismic Palace - Basement Star Hoops,PALACE_ABYSS_HOOP_SUCCESS
 Open Palace-Lostleaf Connector,Palace-Lostleaf Connector - Preston,PALACE_LAKE_GATE_OPEN
@@ -105,12 +107,12 @@ Card: Raay,Card: Church - Top,CARD_LAKE_SUN
 Card: Sappleing,Card: Lostleaf Lake - Entry,CARD_LAKE_SAPLING
 Card: Gabby Grove,Card: Treehouse - Top,CARD_LAKE_GROVE
 
-Card: Mr. Kerrington,Card: Armada Interior - Slide,CARD_MONSTER_MONSTER
-Card: Skritch,Card: Armada Interior - Pipe,CARD_MONSTER_SPIN_BLADE
-Card: Boiby,Card: Armada Interior - Broken Wing,CARD_MONSTER_BOIL
+Card: Mr. Kerrington,Card: Kerrington - Slide,CARD_MONSTER_MONSTER
+Card: Skritch,Card: Kerrington - Pipe,CARD_MONSTER_SPIN_BLADE
+Card: Boiby,Card: Airborne Armada - Broken Wing,CARD_MONSTER_BOIL
 Card: Dumpling,Card: Airborne Armada - Behind Entry Drone,CARD_MONSTER_DUMPLING
-Card: F.I.S.H,Card: Armada Interior - Hammocks,CARD_MONSTER_FISH
-Card: Reaper,Card: Armada Interior - Near Mr. Kerrington's Heart,CARD_MONSTER_FF
+Card: F.I.S.H,Card: Kerrington - Hammocks,CARD_MONSTER_FISH
+Card: Reaper,Card: Kerrington - Near Mr. Kerrington's Heart,CARD_MONSTER_FF
 
 Card: Lady Opal,Card: Prismic Palace - Observatory,CARD_PALACE_PRINCESS
 Card: Poki-Poki,Card: Prismic Palace - Top of Observatory,CARD_PALACE_URCHIN
@@ -154,12 +156,12 @@ Stained Glass Egg,Egg: Church - Below the Angel Statues,FELLA_LAKE8
 
 Hatchable Egg: Airborne Armada,Egg: Airborne Armada - Mr. Kerrington's Tail,FELLA_MONSTER1
 Burning Egg,Egg: Fire Drone,FELLA_MONSTER2
-Bat Egg,Egg: Armada Interior - Slide,FELLA_MONSTER3
-Doggy Egg,Egg: Armada Interior - Dog Food,FELLA_MONSTER4
-Spooky Egg,Egg: Armada Interior - Boiler,FELLA_MONSTER5
-Smiley Egg,Egg: Armada Interior - Pipe,FELLA_MONSTER6
+Bat Egg,Egg: Kerrington - Slide,FELLA_MONSTER3
+Doggy Egg,Egg: Kerrington - Dog Food,FELLA_MONSTER4
+Spooky Egg,Egg: Kerrington - Boiler,FELLA_MONSTER5
+Smiley Egg,Egg: Kerrington - Pipe,FELLA_MONSTER6
 Heart Egg,Egg: Mr. Kerrington's Heart,FELLA_MONSTER7
-Dumpling Egg,Egg: Armada Interior - Dumpling,FELLA_MONSTER8
+Dumpling Egg,Egg: Kerrington - Dumpling,FELLA_MONSTER8
 
 Hatchable Egg: Prismic Palace,Egg: Prismic Palace - Snowcastle,FELLA_PALACE1
 Ornate Egg,Egg: Palace Dining Room,FELLA_PALACE2
@@ -333,7 +335,7 @@ Armada Shroom 7,Shroom: Airborne Armada - Front Entrance 2,NOTE_MONSTER7
 Armada Shroom 8,Shroom: Airborne Armada - Front Entrance 3,NOTE_MONSTER8
 Armada Shroom 9,Shroom: Airborne Armada - Side 1,NOTE_MONSTER9
 Armada Shroom 10,Shroom: Airborne Armada - Side 2,NOTE_MONSTER10
-Armada Shroom 11,Shroom: Airborne Armada - Side 3,NOTE_MONSTER11
+Armada Shroom 11,Shroom: Airborne Armada - Side Yellow Ledge,NOTE_MONSTER11
 Armada Shroom 12,Shroom: Airborne Armada - Back Entrance 1,NOTE_MONSTER12
 Armada Shroom 13,Shroom: Airborne Armada - Back Entrance 2,NOTE_MONSTER13
 Armada Shroom 14,Shroom: Airborne Armada - Back Entrance 3,NOTE_MONSTER14
@@ -347,54 +349,54 @@ Armada Shroom 21,Shroom: Airborne Armada - Entry Pathway 1,NOTE_MONSTER21
 Armada Shroom 22,Shroom: Airborne Armada - Entry Pathway 2,NOTE_MONSTER22
 Armada Shroom 23,Shroom: Airborne Armada - Entry Pathway 3,NOTE_MONSTER23
 Armada Shroom 24,Shroom: Airborne Armada - Entry Pathway 4,NOTE_MONSTER24
-Armada Shroom 25,Shroom: Armada Interior - Rain Entryway 4,NOTE_MONSTER25
-Armada Shroom 26,Shroom: Armada Interior - Rain Entryway 3,NOTE_MONSTER26
-Armada Shroom 27,Shroom: Armada Interior - Rain Entryway 2,NOTE_MONSTER27
-Armada Shroom 28,Shroom: Armada Interior - Hammocks Entryway 2,NOTE_MONSTER28
-Armada Shroom 29,Shroom: Armada Interior - Hammocks Entryway 1,NOTE_MONSTER29
-Armada Shroom 30,Shroom: Armada Interior - Cockpit Entry 3,NOTE_MONSTER30
-Armada Shroom 31,Shroom: Armada Interior - Cockpit Entry 2,NOTE_MONSTER31
-Armada Shroom 32,Shroom: Armada Interior - Cockpit Entry 1,NOTE_MONSTER32
-Armada Shroom 33,Shroom: Armada Interior - Cockpit Entry 6,NOTE_MONSTER33
-Armada Shroom 34,Shroom: Armada Interior - Cockpit Entry 5,NOTE_MONSTER34
-Armada Shroom 35,Shroom: Armada Interior - Cockpit Entry 4,NOTE_MONSTER35
-Armada Shroom 36,Shroom: Armada Interior - Rain Below Medicine 3,NOTE_MONSTER36
-Armada Shroom 37,Shroom: Armada Interior - Rain Below Medicine 2,NOTE_MONSTER37
-Armada Shroom 38,Shroom: Armada Interior - Rain Below Boiler 1,NOTE_MONSTER38
-Armada Shroom 39,Shroom: Armada Interior - Rain Below Boiler 2,NOTE_MONSTER39
-Armada Shroom 40,Shroom: Armada Interior - Rain Below Boiler 3,NOTE_MONSTER40
-Armada Shroom 41,Shroom: Armada Interior - Rain Below Medicine 1,NOTE_MONSTER41
-Armada Shroom 42,Shroom: Armada Interior - Rain Plant Base,NOTE_MONSTER42
-Armada Shroom 43,Shroom: Armada Interior - Rain Plant 1,NOTE_MONSTER43
-Armada Shroom 44,Shroom: Armada Interior - Lab Rain Connector 5,NOTE_MONSTER44
-Armada Shroom 45,Shroom: Armada Interior - Lab Rain Connector 6,NOTE_MONSTER45
-Armada Shroom 46,Shroom: Armada Interior - Lab Rain Connector 4,NOTE_MONSTER46
-Armada Shroom 47,Shroom: Armada Interior - Lab Rain Connector 3,NOTE_MONSTER47
-Armada Shroom 48,Shroom: Armada Interior - Lab Rain Connector 2,NOTE_MONSTER48
-Armada Shroom 49,Shroom: Armada Interior - Lab Rain Connector 1,NOTE_MONSTER49
-Armada Shroom 50,Shroom: Armada Interior - Lab Entryway 4,NOTE_MONSTER50
-Armada Shroom 51,Shroom: Armada Interior - Lab Entryway 3,NOTE_MONSTER51
-Armada Shroom 52,Shroom: Armada Interior - Lab Entryway 2,NOTE_MONSTER52
-Armada Shroom 53,Shroom: Armada Interior - Lab Entryway 1,NOTE_MONSTER53
-Armada Shroom 54,Shroom: Armada Interior - Pipe 5,NOTE_MONSTER54
-Armada Shroom 55,Shroom: Armada Interior - Pipe 4,NOTE_MONSTER55
-Armada Shroom 56,Shroom: Armada Interior - Pipe 3,NOTE_MONSTER56
-Armada Shroom 57,Shroom: Armada Interior - Pipe 2,NOTE_MONSTER57
-Armada Shroom 58,Shroom: Armada Interior - Pipe 1,NOTE_MONSTER58
-Armada Shroom 59,Shroom: Armada Interior - Pipe Ramp 3,NOTE_MONSTER59
-Armada Shroom 60,Shroom: Armada Interior - Pipe Ramp 2,NOTE_MONSTER60
-Armada Shroom 61,Shroom: Armada Interior - Pipe Ramp 1,NOTE_MONSTER61
-Armada Shroom 62,Shroom: Armada Interior - Rain Entryway 1,NOTE_MONSTER62
-Armada Shroom 63,Shroom: Armada Interior - Slide Entryway 1,NOTE_MONSTER63
-Armada Shroom 64,Shroom: Armada Interior - Slide Entryway 2,NOTE_MONSTER64
-Armada Shroom 65,Shroom: Armada Interior - Slide Entryway 3,NOTE_MONSTER65
-Armada Shroom 66,Shroom: Armada Interior - Rain Plant 2,NOTE_MONSTER66
-Armada Shroom 67,Shroom: Armada Interior - Rain Plant 3,NOTE_MONSTER67
-Armada Shroom 68,Shroom: Armada Interior - Rain Plant 4,NOTE_MONSTER68
-Armada Shroom 69,Shroom: Armada Interior - Rain Above Boiler 4,NOTE_MONSTER69
-Armada Shroom 70,Shroom: Armada Interior - Rain Above Boiler 2,NOTE_MONSTER70
-Armada Shroom 71,Shroom: Armada Interior - Rain Above Boiler 1,NOTE_MONSTER71
-Armada Shroom 72,Shroom: Armada Interior - Rain Above Boiler 3,NOTE_MONSTER72
+Armada Shroom 25,Shroom: Kerrington - Rain Entryway 4,NOTE_MONSTER25
+Armada Shroom 26,Shroom: Kerrington - Rain Entryway 3,NOTE_MONSTER26
+Armada Shroom 27,Shroom: Kerrington - Rain Entryway 2,NOTE_MONSTER27
+Armada Shroom 28,Shroom: Kerrington - Hammocks Entryway 2,NOTE_MONSTER28
+Armada Shroom 29,Shroom: Kerrington - Hammocks Entryway 1,NOTE_MONSTER29
+Armada Shroom 30,Shroom: Kerrington - Cockpit Entry 3,NOTE_MONSTER30
+Armada Shroom 31,Shroom: Kerrington - Cockpit Entry 2,NOTE_MONSTER31
+Armada Shroom 32,Shroom: Kerrington - Cockpit Entry 1,NOTE_MONSTER32
+Armada Shroom 33,Shroom: Kerrington - Cockpit Entry 6,NOTE_MONSTER33
+Armada Shroom 34,Shroom: Kerrington - Cockpit Entry 5,NOTE_MONSTER34
+Armada Shroom 35,Shroom: Kerrington - Cockpit Entry 4,NOTE_MONSTER35
+Armada Shroom 36,Shroom: Kerrington - Rain Below Medicine 3,NOTE_MONSTER36
+Armada Shroom 37,Shroom: Kerrington - Rain Below Medicine 2,NOTE_MONSTER37
+Armada Shroom 38,Shroom: Kerrington - Rain Below Boiler 1,NOTE_MONSTER38
+Armada Shroom 39,Shroom: Kerrington - Rain Below Boiler 2,NOTE_MONSTER39
+Armada Shroom 40,Shroom: Kerrington - Rain Below Boiler 3,NOTE_MONSTER40
+Armada Shroom 41,Shroom: Kerrington - Rain Below Medicine 1,NOTE_MONSTER41
+Armada Shroom 42,Shroom: Kerrington - Rain Plant Base,NOTE_MONSTER42
+Armada Shroom 43,Shroom: Kerrington - Rain Plant 1,NOTE_MONSTER43
+Armada Shroom 44,Shroom: Kerrington - Lab Rain Connector 5,NOTE_MONSTER44
+Armada Shroom 45,Shroom: Kerrington - Lab Rain Connector 6,NOTE_MONSTER45
+Armada Shroom 46,Shroom: Kerrington - Lab Rain Connector 4,NOTE_MONSTER46
+Armada Shroom 47,Shroom: Kerrington - Lab Rain Connector 3,NOTE_MONSTER47
+Armada Shroom 48,Shroom: Kerrington - Lab Rain Connector 2,NOTE_MONSTER48
+Armada Shroom 49,Shroom: Kerrington - Lab Rain Connector 1,NOTE_MONSTER49
+Armada Shroom 50,Shroom: Kerrington - Lab Entryway 4,NOTE_MONSTER50
+Armada Shroom 51,Shroom: Kerrington - Lab Entryway 3,NOTE_MONSTER51
+Armada Shroom 52,Shroom: Kerrington - Lab Entryway 2,NOTE_MONSTER52
+Armada Shroom 53,Shroom: Kerrington - Lab Entryway 1,NOTE_MONSTER53
+Armada Shroom 54,Shroom: Kerrington - Pipe 5,NOTE_MONSTER54
+Armada Shroom 55,Shroom: Kerrington - Pipe 4,NOTE_MONSTER55
+Armada Shroom 56,Shroom: Kerrington - Pipe 3,NOTE_MONSTER56
+Armada Shroom 57,Shroom: Kerrington - Pipe 2,NOTE_MONSTER57
+Armada Shroom 58,Shroom: Kerrington - Pipe 1,NOTE_MONSTER58
+Armada Shroom 59,Shroom: Kerrington - Pipe Ramp 3,NOTE_MONSTER59
+Armada Shroom 60,Shroom: Kerrington - Pipe Ramp 2,NOTE_MONSTER60
+Armada Shroom 61,Shroom: Kerrington - Pipe Ramp 1,NOTE_MONSTER61
+Armada Shroom 62,Shroom: Kerrington - Rain Entryway 1,NOTE_MONSTER62
+Armada Shroom 63,Shroom: Kerrington - Slide Entryway 1,NOTE_MONSTER63
+Armada Shroom 64,Shroom: Kerrington - Slide Entryway 2,NOTE_MONSTER64
+Armada Shroom 65,Shroom: Kerrington - Slide Entryway 3,NOTE_MONSTER65
+Armada Shroom 66,Shroom: Kerrington - Rain Plant 2,NOTE_MONSTER66
+Armada Shroom 67,Shroom: Kerrington - Rain Plant 3,NOTE_MONSTER67
+Armada Shroom 68,Shroom: Kerrington - Rain Plant 4,NOTE_MONSTER68
+Armada Shroom 69,Shroom: Kerrington - Rain Above Boiler 4,NOTE_MONSTER69
+Armada Shroom 70,Shroom: Kerrington - Rain Above Boiler 2,NOTE_MONSTER70
+Armada Shroom 71,Shroom: Kerrington - Rain Above Boiler 1,NOTE_MONSTER71
+Armada Shroom 72,Shroom: Kerrington - Rain Above Boiler 3,NOTE_MONSTER72
 Armada Shroom 73,Shroom: Armada Entry Drone - Ledges 6,NOTE_MONSTER73
 Armada Shroom 74,Shroom: Armada Entry Drone - Ledges 5,NOTE_MONSTER74
 Armada Shroom 75,Shroom: Armada Entry Drone - Ledges 4,NOTE_MONSTER75
