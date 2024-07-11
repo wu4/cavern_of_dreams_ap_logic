@@ -1,8 +1,14 @@
 from ...logic import lazy_region, Region, Entrance, Any
 from ...logic import tech, event
 
-class LostleafFrontDoor(Entrance): pass
-class LostleafBackDoor(Entrance): pass
+area_path = "LAKE/Bedroom"
+
+class LostleafFrontDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromBedroomFrontTolake" # [sic]
+  dest_path = f"{area_path}/Warps/DestFromLakeToFrontBedroom"
+class LostleafBackDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromBedroomBackToLake"
+  dest_path = f"{area_path}/Warps/DestFromLakeToBackBedroom"
 
 @lazy_region
 def Main(r: Region):

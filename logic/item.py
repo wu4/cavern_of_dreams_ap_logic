@@ -22,6 +22,9 @@ carry = Collected("Carry")
 air_swim = Collected("Air Swim")
 
 fish_food = Collected("Fish Food")
+lady_opal_egg_1 = Collected("Lady Opal's Egg 1")
+lady_opal_egg_2 = Collected("Lady Opal's Egg 2")
+lady_opal_egg_3 = Collected("Lady Opal's Egg 3")
 
 horn = carrying.no_throwables & Collected("Horn")
 air_tail = carrying.no_throwables & Collected("Aerial Tail")

@@ -2,10 +2,20 @@ from ...logic.objects import lazy_region, Region, Entrance, InternalEvent
 from ...logic import item, carrying
 from ...logic import event
 
-class SunCavernDoor(Entrance): pass
-class LostleafLakeDoor(Entrance): pass
-class GalleryLobbyDoor(Entrance): pass
-class SunCavernTeleport(Entrance): pass
+area_path = "CAVE/Lake Lobby"
+
+class SunCavernDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeLobbyToCave"
+  dest_path = f"{area_path}/Warps/DestFromCaveToLakeLobby"
+class LostleafLakeDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeLobbyToLake"
+  dest_path = f"{area_path}/Warps/DestFromLakeToLakeLobby"
+class GalleryLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeLobbyToGalleryLobby"
+  dest_path = f"{area_path}/Warps/DestFromGalleryLobbyToLakeLobby"
+class SunCavernTeleport(Entrance):
+  warp_path = f"{area_path}/Warps/Portal"
+  dest_path = f"{warp_path}/Warps/DestFromPortal???"
 
 # this wall is unique in that it can be broken from both directions
 class BrokeHiddenWall(InternalEvent): pass

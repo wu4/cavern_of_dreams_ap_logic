@@ -1,8 +1,12 @@
-from ...logic.objects import EntranceType
 from ...logic import lazy_region, Region, Entrance, Any
 from ...logic import item, tech, carrying, event
 
-class LostleafLakeDoor(Entrance): pass
+area_path = "LAKE/Church"
+
+class LostleafLakeDoor(Entrance):
+  is_underwater = True
+  warp_path = f"{area_path}/Warps/WarpFromChurchToLake"
+  dest_path = f"{area_path}/Warps/DestFromLakeToChurch"
 
 @lazy_region
 def Main(r: Region):
@@ -23,7 +27,7 @@ def Main(r: Region):
         tech.bubble_jump_and_recoil
       ),
       item.sprint,
-      carrying.bubble_conch,
+      carrying.bubble_conch | carrying.shelnerts_fish,
       carrying.jester_boots & tech.super_bubble_jump & item.roll
     )
   }
@@ -31,10 +35,7 @@ def Main(r: Region):
   from . import LostleafLake
 
   r.entrances = [
-    LostleafLakeDoor.define(
-      default_connection = LostleafLake.ChurchDoor,
-      type = EntranceType.BILINEAR | EntranceType.UNDERWATER
-    )
+    LostleafLakeDoor.define(LostleafLake.ChurchDoor)
   ]
 
   r.region_connections = {

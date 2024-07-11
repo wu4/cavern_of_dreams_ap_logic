@@ -1,18 +1,41 @@
 from ...logic.quantities import HasEggs, HasGratitude, HasShrooms
 from ...logic.comment import Comment
-from ...logic.objects import EntranceType
 from ...logic import lazy_region, Region, Entrance, InternalEvent, All, Any
 from ...logic import item, carrying, difficulty, tech, event, templates
 
-class LostleafLobbyDoor(Entrance): pass
-class DucklingsDoorUpper(Entrance): pass
-class DucklingsDoorLower(Entrance): pass
-class MoonCavernHeartDoor(Entrance): pass
-class ArmadaLobbyDoor(Entrance): pass
-class LostleafLobbyTeleport(Entrance): pass
-class ArmadaLobbyTeleport(Entrance): pass
-class PalaceLobbyTeleport(Entrance): pass
-class GalleryLobbyTeleport(Entrance): pass
+area_path = "CAVE/Sun Cavern (Main)"
+
+def portal(name: str):
+  return f"{area_path}/Fellas/Nest FellaHatchable {name}/Portal"
+
+class LostleafLobbyDoor(Entrance):
+  warp_path = f"{area_path}/WarpFromCaveToLakeLobby"
+  dest_path = f"{area_path}/DestFromLakeLobbyToCave"
+class DucklingsDoorUpper(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromCaveWaterfallToLake"
+  dest_path = f"{area_path}/Warps/DestFromLakeToWaterfall"
+class DucklingsDoorLower(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromCaveSecretToLake"
+  dest_path = f"{area_path}/Warps/DestFromLakeToCaveSecret"
+class MoonCavernHeartDoor(Entrance):
+  is_underwater = True
+  warp_path = f"{area_path}/Warps/WarpFromCaveToDepths"
+  dest_path = f"{area_path}/Warps/DestFromDepthsToCave"
+class ArmadaLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromCaveToMonsterLobby"
+  dest_path = f"{area_path}/Warps/DestFromMonsterLobbyToCave"
+class LostleafLobbyTeleport(Entrance):
+  warp_path = portal("Lake")
+  dest_path = f"{warp_path}/DestFromPortal???"
+class ArmadaLobbyTeleport(Entrance):
+  warp_path = portal("Monster")
+  dest_path = f"{warp_path}/DestFromPortal???"
+class PalaceLobbyTeleport(Entrance):
+  warp_path = portal("Palace")
+  dest_path = f"{warp_path}/DestFromPortal???"
+class GalleryLobbyTeleport(Entrance):
+  warp_path = portal("Gallery")
+  dest_path = f"{warp_path}/DestFromPortal???"
 
 class MoonCavernHeartDoorOpened(InternalEvent): pass
 
@@ -403,9 +426,8 @@ def MoonCavernHeartDoorway(r: Region):
   r.entrances = [
     MoonCavernHeartDoor.define(
       default_connection = MoonCavern.SunCavernDoor,
-      rule = event.Collected(MoonCavernHeartDoorOpened),
-      type = EntranceType.BILINEAR | EntranceType.UNDERWATER
-    ),
+      rule = event.Collected(MoonCavernHeartDoorOpened)
+    )
   ]
 
   r.region_connections = {

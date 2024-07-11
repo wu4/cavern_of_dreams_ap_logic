@@ -4,11 +4,23 @@ from ...logic import Any
 from ...logic import event, tech, item, carrying, difficulty
 from ...logic.objects import PlantableSoil
 
-class LostleafLobbyDoor(Entrance): pass
-class MoonCavernDoor(Entrance): pass
-class SunCavernTeleport(Entrance): pass
-class RainbowBench(Entrance): pass
-class FoyerDoor(Entrance): pass
+area_path = "CAVE/Gallery Lobby"
+
+class LostleafLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromGalleryLobbyToLakeLobby"
+  dest_path = f"{area_path}/Warps/DestFromLakeLobbyToGalleryLobby"
+class MoonCavernDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromGalleryLobbyToDepths"
+  dest_path = f"{area_path}/Warps/DestFromDepthsToGalleryLobby"
+class SunCavernTeleport(Entrance):
+  warp_path = f"{area_path}/Warps/Portal"
+  dest_path = f"{warp_path}/DestFromPortal???"
+class RainbowBench(Entrance):
+  warp_path = f"{area_path}/Cutscenes/WarpDream/CutsceneWarpEvent"
+  dest_path = f"{area_path}/Warps/DestFromRainbowToGalleryLobby"
+class FoyerDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromGalleryLobbyToFoyer"
+  dest_path = f"{area_path}/Warps/DestFromFoyerToGalleryLobby"
 
 class GalleryLobbySoil(PlantableSoil): pass
 

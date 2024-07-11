@@ -1,17 +1,32 @@
-from ...logic.objects import EntranceType, InternalEvent
+from ...logic.objects import InternalEvent
 from ...logic import lazy_region, Entrance, Region, CarryableLocation
 from ...logic.comment import Comment
 from ...logic import item, tech, carrying, difficulty, event
 from ...logic import Any
 
+area_path = "MONSTER/Monster"
+
+class SkyDoorFront(Entrance):
+  warp_path = f"{area_path}/Rotate (Inside Monster)/Warps/WarpFromInteriorToMonsterHead"
+  dest_path = f"{area_path}/Rotate (Inside Monster)/Warps/DestFromMonsterToInteriorHead"
+class SkyDoorBack(Entrance):
+  warp_path = f"{area_path}/Rotate (Inside Monster)/Warps/WarpFromInteriorToMonsterTail"
+  dest_path = f"{area_path}/NoRotate (Inside Monster)/Warps/DestFromMonsterToInteriorTail"
+class SkyDogDoor(Entrance):
+  warp_path = f"{area_path}/Rotate (Inside Monster)/Warps/WarpFromStorageRoomToSky"
+  dest_path = f"{area_path}/Rotate (Inside Monster)/Warps/DestFromSkyToStorageRoom"
+class SkyFenceDoor(Entrance):
+  warp_path = f"{area_path}/Rotate (Inside Monster)/Warps/WarpFromGardenRoomToSky"
+  dest_path = f"{area_path}/Rotate (Inside Monster)/Warps/DestFromSkyToGardenRoom"
+class EarthLobbyCauldron(Entrance):
+  warp_path = f"{area_path}/Rotate (Inside Monster)/Warps/WarpFroMonsterToEarthLobby" # [sic]
+  dest_path = f"{area_path}/Rotate (Inside Monster)/Warps/DestFromEarthLobbyToMonster"
+class HeartDoor(Entrance):
+  warp_path = f"{area_path}/Rotate (Inside Monster)/Warps/WarpFroMonsterToHeart" # [sic]
+  dest_path = f"{area_path}/Rotate (Inside Monster)/Warps/DestFromHeartToMonster"
+
 class GreenMedicine(CarryableLocation): carryable = "Medicine"
 class MainMedicine(CarryableLocation): carryable = "Medicine"
-class SkyDoorFront(Entrance): pass
-class SkyDoorBack(Entrance): pass
-class SkyDogDoor(Entrance): pass
-class SkyFenceDoor(Entrance): pass
-class EarthLobbyCauldron(Entrance): pass
-class HeartDoor(Entrance): pass
 
 class MainBoils(InternalEvent): pass
 class GreenBoil(InternalEvent): pass
@@ -389,7 +404,7 @@ def MedicinePool(r: Region):
   r.entrances = [
     SkyDoorBack.define(
       default_connection = Sky.KerringtonDoorBack,
-      type = EntranceType.ENTRANCE
+      rule = carrying.jester_boots & tech.super_bubble_jump
     )
   ]
 

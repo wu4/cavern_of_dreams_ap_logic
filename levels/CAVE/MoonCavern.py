@@ -3,9 +3,17 @@ from ...logic import Any
 from ...logic import item, event, difficulty, carrying, tech, templates
 from ...logic.comment import Comment
 
-class SunCavernDoor(Entrance): pass
-class PalaceLobbyDoor(Entrance): pass
-class GalleryLobbyDoor(Entrance): pass
+area_path = "CAVE/Moon Cavern"
+
+class SunCavernDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromDepthsToCave"
+  dest_path = f"{area_path}/Warps/DestFromCaveToDepths"
+class PalaceLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromDepthsToPalaceLobby"
+  dest_path = f"{area_path}/Warps/DestFromPalaceLobbyToDepths"
+class GalleryLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromDepthsToGalleryLobby"
+  dest_path = f"{area_path}/Warps/DestFromGalleryLobbyToDepths"
 
 class DousedGalleryLobbyFlame(InternalEvent): pass
 class SolvedDivePuzzle(InternalEvent): pass

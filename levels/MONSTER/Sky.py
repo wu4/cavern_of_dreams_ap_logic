@@ -3,13 +3,29 @@ from ...logic.comment import Comment
 from ...logic import item, tech, carrying
 from ...logic import Any
 
-class EarthDroneDoor(Entrance): pass
-class FireDroneDoor(Entrance): pass
-class WaterDroneDoor(Entrance): pass
-class KerringtonDoorFront(Entrance): pass
-class KerringtonDoorBack(Entrance): pass
-class YellowDoor(Entrance): pass
-class GreenDoor(Entrance): pass
+area_path = "MONSTER/Sky (Main)"
+
+class EarthDroneDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromSkyToDroneEarth"
+  dest_path = f"{area_path}/Warps/DestFromDroneEarthToSky"
+class FireDroneDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromSkyToDroneFire"
+  dest_path = f"{area_path}/Warps/DestFromDroneFireToSky"
+class WaterDroneDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromSkyToDroneWater"
+  dest_path = f"{area_path}/Warps/DestFromDroneWaterToSky"
+class KerringtonDoorFront(Entrance):
+  warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToInteriorHead"
+  dest_path = f"{area_path}/Monster/Warps/DestFromInteriorToMonsterHead"
+class KerringtonDoorBack(Entrance):
+  warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToInteriorTail"
+  dest_path = f"{area_path}/Monster/Warps/DestFromInteriorToMonsterTail"
+class YellowDoor(Entrance):
+  warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToStorageRoom"
+  dest_path = f"{area_path}/Monster/Warps/DestFromStorageRoomToMonster"
+class GreenDoor(Entrance):
+  warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToGardenRoom"
+  dest_path = f"{area_path}/Monster/Warps/DestFromGardenRoomToMonster"
 
 class SkyKerringtonWings(CarryableLocation): carryable = "Mr. Kerrington's Wings"
 

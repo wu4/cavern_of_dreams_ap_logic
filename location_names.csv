@@ -71,6 +71,9 @@ Open Prismic Palace Gate,Prismic Palace - Angel Statue Puzzle,PALACE_GATE_RISEN
 Unfreeze Prismic Palace,Prismic Palace - Help Lady Opal,PALACE_MELTED_ICE
 Open Prismic Palace Snowcastle,Prismic Palace - Snowcastle Preston,PALACE_SNOW_CASTLE_GATE_OPEN
 Open Observatory Shortcut,Prismic Palace - Observatory Preston,PALACE_OBSERVATORY_SHORTCUT
+Open Bigstar Cave,Prismic Palace - Bigstar Preston,PALACE_ICE_WALL_STARFISH_REMOVED
+Open Gobbler Cave,Prismic Palace - Gobbler Preston,PALACE_ICE_WALL_MORAY_REMOVED
+Snooze Gobbler,Prismic Palace - Feed Gobbler,PALACE_MORAY_FED
 
 Disable Prismic Palace Seedragons,Palace Interior - Sentry Control Preston,PALACE_SENTRIES_DISABLED
 Open Bubble Conch Room,Palace Interior - Seastar Puzzle,PALACE_TORPEDO_DOOR_OPENED
@@ -79,6 +82,8 @@ Open Heaven's Path Exit,Heaven's Path - Finished Race,PALACE_SANCTUM_RACE_FINISH
 Open Heaven's Path Race Entrance,Heaven's Path - Bottom Preston,PALACE_SANCTUM_STOPPER_RAISED
 
 Raise Dining Room Platform,Palace Dining Room - Preston,PALACE_DINING_ROOM_RISEN
+
+Reveal Observatory Item,Observatory - Telescope Puzzle,OBSERVATORY_SUCCESS
 
 Open Gallery Doors,Gallery of Nightmares - Sage's Painting,GALLERY_SAGE_PAINTING_SUCCESS
 Open Mr. Kerrington Painting Gate,Gallery of Nightmares - Mr. Kerrington's Painting,GALLERY_MONSTER_PAINTING_SUCCESS
@@ -114,7 +119,7 @@ Card: Dumpling,Card: Airborne Armada - Behind Entry Drone,CARD_MONSTER_DUMPLING
 Card: F.I.S.H,Card: Kerrington - Hammocks,CARD_MONSTER_FISH
 Card: Reaper,Card: Kerrington - Near Mr. Kerrington's Heart,CARD_MONSTER_FF
 
-Card: Lady Opal,Card: Prismic Palace - Observatory,CARD_PALACE_PRINCESS
+Card: Lady Opal,Card: Observatory,CARD_PALACE_PRINCESS
 Card: Poki-Poki,Card: Prismic Palace - Top of Observatory,CARD_PALACE_URCHIN
 Card: Pom,Card: Prismic Palace - Snowcastle,CARD_PALACE_PALM_TREE_FLOAT
 Card: Bigstar,Card: Prismic Palace - Top of Palace,CARD_PALACE_SEASTAR

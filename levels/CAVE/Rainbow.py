@@ -2,7 +2,11 @@ from ...logic.comment import Comment
 from ...logic import lazy_region, Region, Any, Entrance
 from ...logic import item, tech, carrying, difficulty
 
-class WellEntrance(Entrance): pass
+area_path = "CAVE/Rainbow"
+
+class WellEntrance(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromRainbowToGalleryLobby"
+  dest_path = f"{area_path}/Warps/DestFromGalleryLobbyToRainbow"
 
 @lazy_region
 def Main(r: Region):

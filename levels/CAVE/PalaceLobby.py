@@ -4,9 +4,17 @@ from ...logic.comment import Comment
 from ...logic import event
 from ...logic import difficulty
 
-class PrismicOutsideDoor(Entrance): pass
-class MoonCavernDoor(Entrance): pass
-class SunCavernTeleport(Entrance): pass
+area_path = "CAVE/Palace Lobby"
+
+class ValleyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromPalaceLobbyToPalace"
+  dest_path = f"{area_path}/Warps/DestFromPalaceToPalaceLobby"
+class MoonCavernDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromPalaceLobbyToDepths"
+  dest_path = f"{area_path}/Warps/DestFromDepthsToPalaceLobby"
+class SunCavernTeleport(Entrance):
+  warp_path = f"{area_path}/Warps/Portal"
+  dest_path = f"{warp_path}/DestFromPortal???"
 
 @lazy_region
 def Main(r: Region):
@@ -131,12 +139,12 @@ def Ledges(r: Region):
 
 @lazy_region
 def PrismicEntryPlatform(r: Region):
-  from ..PALACE import PrismicOutside
+  from ..PALACE import Valley
   from . import SunCavern
 
   r.entrances = [
-    PrismicOutsideDoor.define(
-      default_connection = PrismicOutside.PalaceLobbyDoor
+    ValleyDoor.define(
+      default_connection = Valley.PalaceLobbyDoor
     ),
     SunCavernTeleport.define(
       default_connection = SunCavern.PalaceLobbyTeleport,

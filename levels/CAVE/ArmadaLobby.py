@@ -3,11 +3,20 @@ from ...logic.comment import Comment
 from ...logic import Any, All
 from ...logic import carrying, item, tech, difficulty, event
 
-class SunCavernDoor(Entrance): pass
-class EarthDroneCannonShot(Entrance): pass
-class EarthDroneCannonShotEarly(Entrance): pass
-class SunCavernTeleport(Entrance): pass
-class SewerDoor(Entrance): pass
+area_path = "CAVE/Monster Lobby"
+
+class SunCavernDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromMonsterLobbyToCave"
+  dest_path = f"{area_path}/Warps/DestFromCaveToMonsterLobby"
+class EarthDroneCannonShot(Entrance):
+  warp_path = f"{area_path}/Cutscenes/CannonShot/WarpEvent"
+  dest_path = f"{area_path}/Warps/DestFromDroneEarthToMonsterLobby"
+class SewerDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromMonsterLobbyToCave"
+  dest_path = f"{area_path}/Warps/DestFromCaveToMonsterLobby"
+class SunCavernTeleport(Entrance):
+  warp_path = f"{area_path}/Warps/Portal"
+  dest_path = f"{warp_path}/DestFromPortal???"
 
 class ArmadaLobbyBoots(CarryableLocation): carryable = "Jester Boots"
 
@@ -46,7 +55,6 @@ def Main(r: Region):
   }
 
   from . import SunCavern
-  from ..MONSTER import EarthDrone
 
   r.entrances = [
     SunCavernDoor.define(
@@ -54,13 +62,6 @@ def Main(r: Region):
       Any(
         tech.roll_disjoint & item.ground_tail,
         carrying.no_jester_boots
-      )
-    ),
-    EarthDroneCannonShotEarly.define(
-      EarthDrone.ArmadaLobbyDoor,
-      Comment(
-        "Early Armada",
-        tech.out_of_bounds & carrying.no_jester_boots
       )
     )
   ]
@@ -80,6 +81,11 @@ def Main(r: Region):
         "Ejection launch from cannon wheel",
         tech.ejection_launch & item.roll
       )
+    ),
+
+    EnterCannon: Comment(
+      "Early Armada",
+      tech.out_of_bounds & carrying.no_jester_boots
     ),
 
     CannonLip: Any(
@@ -160,15 +166,10 @@ def JesterBootsPlatform(r: Region):
   }
 
 @lazy_region
-def CannonLip(r: Region):
-  from . import SunCavern
+def EnterCannon(r: Region):
   from ..MONSTER import EarthDrone
 
   r.entrances = [
-    SunCavernTeleport.define(
-      default_connection = SunCavern.ArmadaLobbyTeleport,
-      rule = event.Collected("Open Armada Lobby Teleport"),
-    ),
     EarthDroneCannonShot.define(
       default_connection = EarthDrone.ArmadaLobbyDoor,
       rule = carrying.no_jester_boots
@@ -176,7 +177,23 @@ def CannonLip(r: Region):
   ]
 
   r.region_connections = {
+    CannonLip: None
+  }
+
+@lazy_region
+def CannonLip(r: Region):
+  from . import SunCavern
+
+  r.entrances = [
+    SunCavernTeleport.define(
+      default_connection = SunCavern.ArmadaLobbyTeleport,
+      rule = event.Collected("Open Armada Lobby Teleport"),
+    ),
+  ]
+
+  r.region_connections = {
     Main: None,
+    EnterCannon: None,
 
     EggPlatform: Any(
       carrying.jester_boots,

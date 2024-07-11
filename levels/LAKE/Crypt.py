@@ -3,11 +3,17 @@ from ...logic import lazy_region, Region, Entrance, Any
 from ...logic.comment import Comment
 from ...logic import item, difficulty, tech, carrying, event
 
+area_path = "LAKE/Crypt"
+
+class LostleafLakeDoorFront(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromCryptToLake"
+  dest_path = f"{area_path}/Warps/DestFromLakeToCrypt"
+class LostleafLakeDoorBack(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromCryptToLakeCliff"
+  dest_path = f"{area_path}/Warps/DestFromLakeCliffToCrypt"
+
 class PrestonAccess(InternalEvent): pass
 class BrokeBackExitWithHorn(InternalEvent): pass
-
-class LostleafLakeDoorFront(Entrance): pass
-class LostleafLakeDoorBack(Entrance): pass
 
 CanBreakBackExit = Any(
   item.air_tail | item.ground_tail,

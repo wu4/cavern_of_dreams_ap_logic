@@ -1,6 +1,10 @@
 from ...logic import lazy_region, Entrance, Region
 
-class SkyDoor(Entrance): pass
+area_path = "MONSTER/DroneWater"
+
+class SkyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromDroneWaterToSky"
+  dest_path = f"{area_path}/Warps/DestFromSkyToDroneWater"
 
 @lazy_region
 def Main(r: Region):

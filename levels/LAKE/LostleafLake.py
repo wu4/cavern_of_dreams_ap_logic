@@ -1,20 +1,44 @@
-from ...logic.objects import EntranceType, PlantableSoil
+from ...logic.objects import PlantableSoil
 from ...logic import lazy_region, Region, Entrance, Any
 from ...logic.objects import CarryableLocation
 from ...logic.comment import Comment
 from ...logic import item, difficulty, tech, carrying, event, has, templates
 
-class LostleafLobbyDoor(Entrance): pass
-class DucklingsDoorUpper(Entrance): pass
-class DucklingsDoorLower(Entrance): pass
-class ChurchDoor(Entrance): pass
-class CryptDoorFront(Entrance): pass
-class CryptDoorBack(Entrance): pass
-class PrismicDoor(Entrance): pass
-class TreehouseFrontDoor(Entrance): pass
-class TreehouseBackDoor(Entrance): pass
-class TeepeeFrontDoor(Entrance): pass
-class TeepeeTopside(Entrance): pass
+area_path = "LAKE/Lake (Main)"
+
+class LostleafLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToLakeLobby"
+  dest_path = f"{area_path}/Warps/DestFromLakeLobbyToLake"
+class DucklingsDoorUpper(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToCaveWaterfall"
+  dest_path = f"{area_path}/Warps/DestFromCaveWaterfallToLake"
+class DucklingsDoorLower(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToCaveSecret"
+  dest_path = f"{area_path}/Warps/DestFromCaveSecretToLake"
+class ChurchDoor(Entrance):
+  is_underwater = True
+  warp_path = f"{area_path}/Warps/WarpFromLakeToChurch"
+  dest_path = f"{area_path}/Warps/DestFromChurchToLake"
+class CryptDoorFront(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToCrypt"
+  dest_path = f"{area_path}/Warps/DestFromCryptToLake"
+class CryptDoorBack(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeCliffToCrypt"
+  dest_path = f"{area_path}/Warps/DestFromCryptToLakeCliff"
+class ValleyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToPalace"
+  dest_path = f"{area_path}/Warps/DestFromPalaceToLake"
+class TreehouseFrontDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToFrontBedroom"
+  dest_path = f"{area_path}/Warps/DestFromFrontBedroomToLake"
+class TreehouseBackDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToBehindBedroom"
+  dest_path = f"{area_path}/Warps/DestFromBehindBedroomToLake"
+class TeepeeFrontDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToTent"
+  dest_path = f"{area_path}/Warps/DestFromTentToLake"
+class TeepeeTopside(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromLakeToTentTop"
 
 class CryptSoil(PlantableSoil): pass
 class BellTowerSoil(PlantableSoil): pass
@@ -256,11 +280,11 @@ def BellTower(r: Region):
 
 @lazy_region
 def OuterRim(r: Region):
-  from ..CAVE import PrismicOutside
+  from ..PALACE import Valley
 
   r.entrances = [
-    PrismicDoor.define(
-      default_connection = PrismicOutside.LostleafDoor
+    ValleyDoor.define(
+      default_connection = Valley.LostleafDoor
     )
   ]
 
@@ -430,7 +454,7 @@ def Lake(r: Region):
       tech.out_of_bounds & carrying.no_throwables
     ),
 
-    OuterRim: carrying.bubble_conch,
+    OuterRim: carrying.bubble_conch | carrying.shelnerts_fish,
 
     Main: None,
 
@@ -490,10 +514,7 @@ def InsideChurch(r: Region):
   from . import Church
 
   r.entrances = [
-    ChurchDoor.define(
-      default_connection = Church.LostleafLakeDoor,
-      type = EntranceType.BILINEAR | EntranceType.UNDERWATER
-    )
+    ChurchDoor.define(Church.LostleafLakeDoor)
   ]
 
   r.region_connections = {

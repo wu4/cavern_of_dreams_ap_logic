@@ -1,8 +1,12 @@
 from ...logic import lazy_region, Region, Entrance
-from ...logic.objects import EntranceType
 
-class FrontDoor(Entrance): pass
-class Topside(Entrance): pass
+area_path = "LAKE/Tent"
+
+class FrontDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromTentToLake"
+  dest_path = f"{area_path}/Warps/DestFromLakeToTent"
+class Topside(Entrance):
+  dest_path = f"{area_path}/Warps/DestFromLakeToTentTop"
 
 @lazy_region
 def Main(r: Region):
@@ -10,8 +14,5 @@ def Main(r: Region):
   r.entrances = [
     FrontDoor.define(LostleafLake.TeepeeFrontDoor),
 
-    Topside.define(
-      default_connection = LostleafLake.TeepeeTopside,
-      type = EntranceType.ENTRANCE
-    )
+    Topside.define(LostleafLake.TeepeeTopside)
   ]

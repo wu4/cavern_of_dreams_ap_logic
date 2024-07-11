@@ -2,7 +2,11 @@ from ...logic import lazy_region, Entrance, Region
 from ...logic import item, tech, carrying, event
 from ...logic import Any
 
-class KerringtonDoor(Entrance): pass
+area_path = "MONSTER/Heart"
+
+class KerringtonDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromHeartToMonster"
+  dest_path = f"{area_path}/Warps/DestFromMonsterToHeart"
 
 @lazy_region
 def Main(r: Region):

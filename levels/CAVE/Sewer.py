@@ -2,8 +2,14 @@ from ...logic import lazy_region, Region, Entrance, Any, All
 from ...logic import tech, item, carrying, difficulty
 from ...logic.comment import Comment
 
-class ArmadaLobbyDoor(Entrance): pass
-class GalleryDoor(Entrance): pass
+area_path = "CAVE/Sewer"
+
+class ArmadaLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromSewerToMonsterLobby"
+  dest_path = f"{area_path}/Warps/DestFromMonsterLobbyToSewer"
+class GalleryDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromSewerToWaterLobby"
+  dest_path = f"{area_path}/Warps/DestFromWaterLobbyToSewer"
 
 @lazy_region
 def ArmadaLobbySide(r: Region):

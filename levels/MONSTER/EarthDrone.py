@@ -2,8 +2,14 @@ from typing import override
 
 from ...logic import Entrance, Region
 
-class ArmadaLobbyDoor(Entrance): pass
-class SkyDoor(Entrance): pass
+area_path = "MONSTER/DroneEarth"
+
+class ArmadaLobbyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromDroneEarthToMonsterLobby"
+  dest_path = f"{area_path}/Warps/DestFromMonsterLobbyToDroneEarth"
+class SkyDoor(Entrance):
+  warp_path = f"{area_path}/Warps/WarpFromDroneEarthToSky"
+  dest_path = f"{area_path}/Warps/DestFromSkyToDroneEarth"
 
 class Main(Region):
   locations = {
