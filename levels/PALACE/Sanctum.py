@@ -4,7 +4,7 @@ from ...logic import item, carrying, tech, event
 area_path = "PALACE/Sanctum"
 
 class PalaceDoor(Entrance):
-  is_underwater = True
+  is_dest_underwater = True
   warp_path = f"{area_path}/Warps/WarpFromSanctumToPalace"
   dest_path = f"{area_path}/Warps/DestFromPalaceToSanctum"
 class ValleyDoor(Entrance):

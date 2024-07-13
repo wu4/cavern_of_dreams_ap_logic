@@ -1,8 +1,6 @@
-from ...logic.objects import InternalEvent
-from ...logic import lazy_region, Entrance, Region, CarryableLocation
+from ...logic import lazy_region, Entrance, Region, CarryableLocation, Any, InternalEvent
 from ...logic.comment import Comment
 from ...logic import item, tech, carrying, difficulty, event
-from ...logic import Any
 
 area_path = "MONSTER/Monster"
 

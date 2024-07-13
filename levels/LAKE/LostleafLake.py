@@ -16,7 +16,7 @@ class DucklingsDoorLower(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromLakeToCaveSecret"
   dest_path = f"{area_path}/Warps/DestFromCaveSecretToLake"
 class ChurchDoor(Entrance):
-  is_underwater = True
+  is_dest_underwater = True
   warp_path = f"{area_path}/Warps/WarpFromLakeToChurch"
   dest_path = f"{area_path}/Warps/DestFromChurchToLake"
 class CryptDoorFront(Entrance):
@@ -676,10 +676,7 @@ def FallIntoTeepee(r: Region):
   from . import Teepee
 
   r.entrances = [
-    TeepeeTopside.define(
-      default_connection = Teepee.Topside,
-      type = EntranceType.EXIT
-    )
+    TeepeeTopside.define(Teepee.Topside)
   ]
 
 @lazy_region

@@ -26,11 +26,11 @@ class ObservatoryDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromValleyToObservatory"
   dest_path = f"{area_path}/Warps/DestFromObservatoryToValley"
 class PalaceFrontDoor(Entrance):
-  is_underwater = True
+  is_dest_underwater = True
   warp_path = f"{area_path}/Warps/WarpFromValleyToPalace"
   dest_path = f"{area_path}/Warps/DestFromPalaceToValley"
 class PalaceBasementDoor(Entrance):
-  is_underwater = True
+  is_dest_underwater = True
   warp_path = f"{area_path}/Warps/WarpFromAbyssToPalace"
   dest_path = f"{area_path}/Warps/DestFromPalaceToAbyss"
 

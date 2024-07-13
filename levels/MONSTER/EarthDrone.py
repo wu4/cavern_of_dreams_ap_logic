@@ -1,6 +1,4 @@
-from typing import override
-
-from ...logic import Entrance, Region
+from ...logic import lazy_region, Entrance, Region
 
 area_path = "MONSTER/DroneEarth"
 
@@ -11,8 +9,9 @@ class SkyDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromDroneEarthToSky"
   dest_path = f"{area_path}/Warps/DestFromSkyToDroneEarth"
 
-class Main(Region):
-  locations = {
+@lazy_region
+def Main(r: Region):
+  r.locations = {
     "Shroom: Armada Entry Drone - Ledges 1": None,
     "Shroom: Armada Entry Drone - Ledges 2": None,
     "Shroom: Armada Entry Drone - Ledges 3": None,
@@ -23,19 +22,10 @@ class Main(Region):
     "Shroom: Armada Entry Drone - Ledges 8": None
   }
 
-  @override
-  @classmethod
-  def load(cls):
-    from ..CAVE import ArmadaLobby
-    from . import Sky
+  from ..CAVE import ArmadaLobby
+  from . import Sky
 
-    cls.entrances = [
-      ArmadaLobbyDoor.define(
-        default_connection = ArmadaLobby.EarthDroneCannonShot,
-        rule = None
-      ),
-      SkyDoor.define(
-        default_connection = Sky.EarthDroneDoor,
-        rule = None
-      )
-    ]
+  r.entrances = [
+    ArmadaLobbyDoor.define(ArmadaLobby.EarthDroneCannonShot),
+    SkyDoor.define(Sky.EarthDroneDoor)
+  ]

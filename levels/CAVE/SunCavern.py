@@ -18,7 +18,7 @@ class DucklingsDoorLower(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromCaveSecretToLake"
   dest_path = f"{area_path}/Warps/DestFromLakeToCaveSecret"
 class MoonCavernHeartDoor(Entrance):
-  is_underwater = True
+  is_dest_underwater = True
   warp_path = f"{area_path}/Warps/WarpFromCaveToDepths"
   dest_path = f"{area_path}/Warps/DestFromDepthsToCave"
 class ArmadaLobbyDoor(Entrance):

@@ -1,8 +1,9 @@
 from __future__ import annotations
-from typing import Generic, Literal, TypeAlias, override, TypeVar
+from typing import TYPE_CHECKING, Generic, Literal, TypeAlias, override, TypeVar
 
 from ..generated_types import AnyItem
-from .objects import InternalEvent
+if TYPE_CHECKING:
+  from .objects import InternalEvent
 from .logic import Logic
 
 CarryingItem: TypeAlias = Literal[
@@ -17,7 +18,7 @@ CarryingItem: TypeAlias = Literal[
   "Jester Boots"
 ]
 
-CollectedItem: TypeAlias = AnyItem | type[InternalEvent] | CarryingItem
+CollectedItem: TypeAlias = AnyItem | type["InternalEvent"] | CarryingItem
 I = TypeVar("I", bound=CollectedItem)
 
 class Collected(Logic, Generic[I]):
@@ -29,11 +30,10 @@ class Collected(Logic, Generic[I]):
 
   @override
   def into_server_code(self) -> str:
-    return f"s.has({str(self.item).__repr__()}, p)"
+    return f"s.has_all({repr(str(self.item))}, p)"
 
   def __init__(self, item: I) -> None:
     self.item = item
     super().__init__()
-
 
 CollectedAny: TypeAlias = Collected[CollectedItem]
