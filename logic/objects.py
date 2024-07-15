@@ -8,15 +8,16 @@ from ..generated_types import AnyLocation
 
 from typing import Callable, Literal, TypeAlias, override
 
-class HasPathName:
-  @classmethod
-  def name(cls) -> str:
-    return f"{cls.__module__}.{cls.__name__}"
+class PathNameMeta(type):
+  @override
+  def __str__(cls) -> str:
+    return f"{'.'.join(cls.__module__.split(".")[-2:])}.{cls.__name__}"
+
+class HasPathName(metaclass=PathNameMeta):
+  pass
 
 class InternalEvent(HasPathName):
-  @override
-  def __str__(self) -> str:
-    return f"Has {self.name()}"
+  pass
 
 WhackableRule: TypeAlias = _MaybeLogic | Literal[False]
 
@@ -36,7 +37,7 @@ class Whackable(InternalEvent):
     from .item import air_tail, ground_tail, horn, bubble
     from .carrying import bubble_conch, apple
 
-    r = Region(f"{cls.name()}.WhackableRegion")
+    r = Region(f"{str(cls)}.WhackableRegion")
     total_logic: list[Logic] = []
     if cls.ground_tail_works: total_logic.append(ground_tail)
     if cls.bubble_works: total_logic.append(bubble)
@@ -71,10 +72,6 @@ class Whackable(InternalEvent):
       r: event.Collected(cls)
     }
 
-  @override
-  def __str__(self) -> str:
-    return f"Whacked {self.name()}"
-
 class CarryableLocation(InternalEvent):
   carryable: CarryingItem  # pyright: ignore[reportUninitializedInstanceVariable]
 
@@ -100,7 +97,6 @@ class Region:
   def lazy_load(self):
     if self._is_defined: return
     self._is_defined = True
-    print(f"loading {self.name}")
     self.load()
     for entrance in self.entrances:
       entrance.set_containing_region(self)
@@ -120,11 +116,14 @@ class Region:
     Overridden by Regions to define attributes that require lazy-loading
     """
 
+def module_path(modname: str, name: str) -> str:
+  return f"{".".join(modname.split(".")[-2:])}.{name}"
+
 def lazy_region(func: Callable[[Region], None]):
   """
   Creates a new Region, using the provided function for its name and lazy-loading.
   """
-  r = Region(f"{".".join(func.__module__.split(".")[-2:])}.{func.__name__}")
+  r = Region(module_path(func.__module__, func.__name__))
   def wrapped():
     func(r)
   r.load = wrapped
@@ -138,6 +137,10 @@ class Entrance:
   dest_path: str | None = None
 
   _is_defined: bool = False
+
+  @classmethod
+  def name(cls):
+    return module_path(cls.__module__, cls.__name__)
 
   @classmethod
   def set_containing_region(cls, region: Region):

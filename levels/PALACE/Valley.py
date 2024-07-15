@@ -432,6 +432,8 @@ def ObservatoryPlatform(r: Region):
     "Shroom: Prismic Palace - Observatory Slide 3": None,
     "Shroom: Prismic Palace - Observatory Slide 4": None,
     "Shroom: Prismic Palace - Observatory Slide 5": None,
+
+    "Prismic Palace - Observatory Preston": None
   }
 
   r.entrances = [

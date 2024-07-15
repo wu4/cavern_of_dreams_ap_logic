@@ -27,6 +27,6 @@ lady_opal_egg_2 = Collected("Lady Opal's Egg 2")
 lady_opal_egg_3 = Collected("Lady Opal's Egg 3")
 
 horn = carrying.no_throwables & Collected("Horn")
-air_tail = carrying.no_throwables & Collected("Aerial Tail")
-ground_tail = carrying.no_throwables & Collected("Grounded Tail")
+air_tail = carrying.no_throwables & (Collected("Aerial Tail") | Collected("Tail"))
+ground_tail = carrying.no_throwables & (Collected("Grounded Tail") | Collected("Tail"))
 climb = carrying.no_throwables & Collected("Climb")

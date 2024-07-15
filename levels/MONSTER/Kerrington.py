@@ -46,6 +46,11 @@ def Main(r: Region):
     "Kerrington - Soothe Mr. Kerrington's Boils":
       event.Collected(MainBoils) & event.Collected(GreenBoil),
 
+    "Kerrington - Race": Any(
+      event.Collected("Free Armada Buddies"),
+      tech.any_super_jump
+    ),
+
     "Egg: Kerrington - Pipe": None,
 
     "Card: Kerrington - Pipe": None,
@@ -277,7 +282,8 @@ def LabGreenConnector(r: Region):
 @lazy_region
 def LowerLabContainers(r: Region):
   r.locations = {
-    HornOnAnnoyingGenerator: item.horn
+    HornOnAnnoyingGenerator: item.horn,
+    "Egg: Kerrington - Dumpling": event.Collected("Free Armada Buddies") & item.swim
   }
 
   r.region_connections = {

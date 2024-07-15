@@ -39,5 +39,4 @@ class HasShrooms(Logic):
 
   @override
   def into_server_code(self) -> str:
-    print("warning: unimplemented HasShrooms")
-    return f"True"
+    return f"s._cavernofdreams_has_shrooms_for(p,{repr(self.shroom_count_source)})"

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABCMeta, abstractmethod
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, Callable, TypeAlias, TypeVar, override
+from typing import TYPE_CHECKING, Callable, Generic, TypeAlias, TypeVar, override
 
 class Logic(metaclass=ABCMeta):
   def __and__(self, other: Logic) -> All:
@@ -29,9 +29,16 @@ def splitter(data: list[T], pred: Callable[[T], bool]) -> tuple[list[T], list[T]
 
 if TYPE_CHECKING:
   from .has import CollectedAny
+  from .carrying import Carrying
+
+def list_as_str_set(a: list[str | None]):
+  return "{" + repr(a)[1:-1] + "}"
 
 def serialize_collecteds(collecteds: Iterable["CollectedAny"]) -> str:
-  return [str(x.item) for x in collecteds].__repr__()
+  return repr([str(x.item) for x in collecteds])
+
+def serialize_carryings(carryings: Iterable["Carrying"]) -> str:
+  return f"s._cavernofdreams_carrying[p] in {list_as_str_set([x.carryable for x in carryings])}"
 
 class ChainableLogic(Logic):
   server_code_separator: str = ""
@@ -52,7 +59,15 @@ class ChainableLogic(Logic):
     from .has import Collected
     logics: list[str] = []
     collected_operands, other_operands = splitter(self.operands, lambda x: isinstance(x, Collected))
+    from .carrying import Carrying
+    carrying_operands, other_operands = splitter(other_operands, lambda x: isinstance(x, Carrying))
     co_len = len(collected_operands)
+    cr_len = len(carrying_operands)
+    if cr_len == 1:
+      logics.append(carrying_operands[0].into_server_code())
+    elif cr_len > 1:
+      logics.append(serialize_carryings(carrying_operands)) # pyright: ignore[reportArgumentType]
+
     if co_len == 1:
       logics.append(collected_operands[0].into_server_code())
     elif co_len > 1:
@@ -62,7 +77,7 @@ class ChainableLogic(Logic):
       # collected_operands is guaranteed to be list[CollectedAny]
       serialized = serialize_collecteds(collected_operands) # pyright: ignore[reportArgumentType]
 
-      logics.append(f"s.{self.server_code_function}({serialized}, p))")
+      logics.append(f"s.{self.server_code_function}({serialized}, p)")
 
     if len(other_operands) > 0:
       for op in other_operands:

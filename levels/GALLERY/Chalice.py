@@ -19,6 +19,14 @@ class OpenedLowerSnake(InternalEvent): pass
 
 @lazy_region
 def Main(r: Region):
+  r.locations = {
+    "Coils of Agony - Hidden Pillar": Any(
+      item.ground_tail, item.air_tail,
+      carrying.bubble_conch, carrying.apple,
+      item.horn
+    )
+  }
+
   from . import FireLobby
 
   r.entrances = [

@@ -1,4 +1,4 @@
-from ...logic.objects import lazy_region, Region, Entrance, CarryableLocation
+from ...logic.objects import lazy_region, Region, Entrance, CarryableLocation, Whackable
 from ...logic.comment import Comment
 from ...logic import Any, All
 from ...logic import carrying, item, tech, difficulty, event
@@ -18,6 +18,14 @@ class SunCavernTeleport(Entrance):
   warp_path = f"{area_path}/Warps/Portal"
   dest_path = f"{warp_path}/DestFromPortal???"
 
+class ArmadaLobbyBootsWall(Whackable):
+  ground_tail_works = True
+  air_tail_works = True
+  throwables_work = True
+  # The wall allows destroying it with the horn, but it's impossible
+  # to actually do it
+  # horn_works = True
+
 class ArmadaLobbyBoots(CarryableLocation): carryable = "Jester Boots"
 
 @lazy_region
@@ -28,6 +36,16 @@ def Main(r: Region):
     "Shroom: Armada Lobby - Cliffside 3": None,
     "Shroom: Armada Lobby - Cliffside 4": None,
     "Shroom: Armada Lobby - Cliffside 5": None,
+
+    "Armada Lobby Green Valve": Any(
+      item.ground_tail,
+      item.air_tail
+    ),
+
+    "Armada Lobby Purple Valve": Any(
+      item.ground_tail,
+      item.air_tail
+    ),
 
     "Card: Armada Lobby - Jester Boots": Any(
       carrying.jester_boots,
@@ -132,19 +150,17 @@ def Main(r: Region):
   }
 
 @lazy_region
-def JesterBootsPlatform(r: Region):
+def JesterBootsRoom(r: Region):
   r.locations = {
-    ArmadaLobbyBoots: Any(
-      item.ground_tail,
-      item.air_tail,
-      carrying.apple | carrying.bubble_conch,
-      # The wall allows destroying it with the horn, but it's impossible
-      # to actually do it
-      # item.horn
-    )
+    ArmadaLobbyBoots: None
   }
 
+  r.region_connections = ArmadaLobbyBootsWall.connecting_to(JesterBootsPlatform)
+
+@lazy_region
+def JesterBootsPlatform(r: Region):
   r.region_connections = {
+    **ArmadaLobbyBootsWall.connecting_to(JesterBootsRoom),
     Main: Any(
       tech.any_super_jump,
       carrying.jester_boots,

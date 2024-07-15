@@ -1,7 +1,6 @@
-from ...logic import lazy_region, Entrance, Region, CarryableLocation
+from ...logic import lazy_region, Entrance, Region, CarryableLocation, Any
+from ...logic import item, tech, carrying, templates
 from ...logic.comment import Comment
-from ...logic import item, tech, carrying
-from ...logic import Any
 
 area_path = "MONSTER/Sky (Main)"
 
@@ -43,7 +42,12 @@ def Main(r: Region):
     "Shroom: Airborne Armada - Front Entrance 3": None,
 
     "Shroom: Airborne Armada - Side 1": None,
-    "Shroom: Airborne Armada - Side 2": None
+    "Shroom: Airborne Armada - Side 2": None,
+
+    "Card: Airborne Armada - Behind Entry Drone": Any(
+      carrying.mr_kerringtons_wings,
+      templates.high_jump_obstacle
+    )
   }
 
   from . import EarthDrone, Kerrington
@@ -196,6 +200,10 @@ def Topside(r: Region):
     Main: None,
     Tail: None,
     YellowLedge: None,
+    FireDronePlatform: Any(
+      item.wings,
+      carrying.mr_kerringtons_wings
+    ),
     UpperWings: Any(
       carrying.jester_boots,
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Generic, Literal, TypeAlias, override, TypeVar
 
+
 from ..generated_types import AnyItem
 if TYPE_CHECKING:
   from .objects import InternalEvent
@@ -30,7 +31,7 @@ class Collected(Logic, Generic[I]):
 
   @override
   def into_server_code(self) -> str:
-    return f"s.has_all({repr(str(self.item))}, p)"
+    return f"s.has({repr(str(self.item))}, p)"
 
   def __init__(self, item: I) -> None:
     self.item = item

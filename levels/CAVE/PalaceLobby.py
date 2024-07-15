@@ -139,6 +139,10 @@ def Ledges(r: Region):
 
 @lazy_region
 def PrismicEntryPlatform(r: Region):
+  r.locations = {
+    "Palace Lobby Faucet Preston": None
+  }
+
   from ..PALACE import Valley
   from . import SunCavern
 

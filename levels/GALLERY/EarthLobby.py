@@ -270,6 +270,14 @@ def InsideCastle(r: Region):
     GrowCastleBushes: item.bubble | carrying.medicine,
     Main: event.Collected("Open Gallery of Nightmares Swamp Door"),
     CastleUnderwater: item.swim,
+    KerringtonCauldronPlatform: Any(
+      carrying.mr_kerringtons_wings,
+      carrying.jester_boots,
+      tech.any_super_jump,
+      tech.air_tail_jump,
+      tech.ground_tail_jump,
+      item.wings,
+    ),
     CastleWingsPlatform: Any(
       event.Collected(GrewCastleBushes),
       tech.any_super_jump,
