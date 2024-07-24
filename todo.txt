@@ -59,3 +59,14 @@ endfu
   [ ] pass through with shelnerts fish
   [ ] pass through with mk wings
     [ ] pass through with mk wings + sprint
+
+[ ] opening armada cockpit erroneously heals the boils upon entry
+[ ] opening palace basement disables the stars
+[ ] extending pans disables fire lobby rings
+[ ] opening lunas door makes the giant happy
+
+[ ] armada race needs more rules
+[ ] rename "Open Gallery Doors" to "Open Foyer Doors"
+[ ] fix collectible hitbox size
+[ ] finish victory condition
+[ ] colored text

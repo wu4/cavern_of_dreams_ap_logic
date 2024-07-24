@@ -20,6 +20,15 @@ class HasEggs(HasQuantity):
   def __str__(self) -> str:
     return f"Has at least {self.amount} eggs"
 
+class AllEggs(Logic):
+  @override
+  def __str__(self) -> str:
+    return f"Has all eggs"
+
+  @override
+  def into_server_code(self) -> str:
+    return f"s.has_all(all_eggs,p)"
+
 class HasGratitude(HasQuantity):
   def __init__(self, amount: int) -> None:
     super().__init__("Gratitude", amount)

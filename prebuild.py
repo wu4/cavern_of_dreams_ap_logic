@@ -1,22 +1,21 @@
-from csv_parsing import read_locations_csv, parse, FlagListIteration
-
-def serialize(item: FlagListIteration) -> list[str]:
-    ret: list[str] = []
-    name = f"{item.category}{item.type}" if item.category is not None else f"Any{item.type}"
-    ret.append(f"{name}: TypeAlias = Literal[")
-
-    for item_name in item.flag_list.values():
-        ret.append(f"{item_name.__repr__()},")
-
-    ret.append("]")
-    return ret
+import all_locations
 
 if __name__ == "__main__":
     accum: list[str] = []
 
-    location_datas = read_locations_csv("location_names.csv")
     accum.append("# Generated using prebuild.py")
     accum.append("from typing import TypeAlias, Literal")
-    accum += parse(location_datas, serialize)
+
+    accum.extend(all_locations.generate_item_lines(
+      lambda category: f"{category}Item:TypeAlias=Literal[",
+      lambda item: repr(item) + ",",
+      "]"
+    ))
+
+    accum.extend(all_locations.generate_location_lines(
+      lambda category: f"{category}Location:TypeAlias=Literal[",
+      lambda location: repr(location) + ",",
+      "]"
+    ))
     with open("generated_types.py", "w") as out_py:
         _ = out_py.write("\n".join(accum))

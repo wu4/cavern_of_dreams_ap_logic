@@ -4,13 +4,11 @@ import re
 from ..logic.objects import CarryableLocation
 # from ..csv_parsing import read_locations_csv, FlagList, FlagListWithLocations
 from .. import all_locations
-from . import connection_parser
+from .connection_parser import all_regions
 
 _snake_case_re = re.compile('([A-Z]+)')
 def as_snake_case(camel_case: str) -> str:
   return _snake_case_re.sub(r'_\1', camel_case).lower()
-
-REGIONS, ENTRANCES = connection_parser.parse()
 
 # def parse(location_datas: dict[str, FlagList]) -> Iterable[str]:
 #   accum: list[str] = []
@@ -54,7 +52,7 @@ def serialize_list(items: Iterable[str], name: str) -> list[str]:
 
 def get_vanilla_locations():
   ret: dict[str, str] = {}
-  for name, cat in all_locations.all_categories():
+  for _name, cat in all_locations.all_categories():
     if not isinstance(cat, all_locations.Category): continue
     for i in cat.rows:
       ret[i.location] = i.item
@@ -77,17 +75,18 @@ def generate():
   accum += serialize_dict({v: k for k, v in get_vanilla_locations().items()}, "vanilla_locations_by_name")
 
 
-  accum.append("item_groups:dict[str,set[str]]={")
+  accum.append("item_groups:dict[str,list[str]]={")
   for name, cat in all_locations.all_categories():
     capital = name[0].upper() + name[1:]
-    accum.append(repr(capital) + ":{")
+    accum.append(repr(capital) + ":[")
     accum.extend(repr(i.item) + "," for i in cat.rows)
-    accum.append("},")
+    accum.append("],")
   accum.append("}")
+  accum.append("item_group_sets:dict[str,set[str]]={group:set(ls) for group,ls in item_groups.items()}")
 
   carryable_locations: dict[str, str | None] = {}
 
-  for region in REGIONS:
+  for region in all_regions:
     for location in region.locations.keys():
       if isinstance(location, str): continue
       if not issubclass(location, CarryableLocation): continue

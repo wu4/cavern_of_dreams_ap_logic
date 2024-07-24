@@ -1,4 +1,4 @@
-from ...logic.quantities import HasEggs, HasGratitude, HasShrooms
+from ...logic.quantities import HasEggs, HasGratitude, HasShrooms, AllEggs
 from ...logic.comment import Comment
 from ...logic import lazy_region, Region, Entrance, InternalEvent, All, Any
 from ...logic import item, carrying, difficulty, tech, event, templates
@@ -38,15 +38,26 @@ class GalleryLobbyTeleport(Entrance):
   dest_path = f"{warp_path}/DestFromPortal???"
 
 class MoonCavernHeartDoorOpened(InternalEvent): pass
+class HasSageBlessing1(InternalEvent): pass
+class HasSageBlessing2(InternalEvent): pass
+class HasSageBlessing3(InternalEvent): pass
+class HasSageBlessing4(InternalEvent): pass
+class HasSageBlessing5(InternalEvent): pass
 
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    "Sun Cavern - Sage's Blessing 1": HasEggs(1),
-    "Sun Cavern - Sage's Blessing 2": HasEggs(6),
-    "Sun Cavern - Sage's Blessing 3": HasEggs(12),
-    "Sun Cavern - Sage's Blessing 4": HasEggs(24),
-    "Sun Cavern - Sage's Blessing 5": HasEggs(40),
+    HasSageBlessing1: HasEggs(1),
+    HasSageBlessing2: event.Collected(HasSageBlessing1) & HasEggs(6),
+    HasSageBlessing3: event.Collected(HasSageBlessing2) & HasEggs(12),
+    HasSageBlessing4: event.Collected(HasSageBlessing3) & HasEggs(24),
+    HasSageBlessing5: event.Collected(HasSageBlessing4) & AllEggs(),
+
+    "Sun Cavern - Sage's Blessing 1": event.Collected(HasSageBlessing1),
+    "Sun Cavern - Sage's Blessing 2": event.Collected(HasSageBlessing2),
+    "Sun Cavern - Sage's Blessing 3": event.Collected(HasSageBlessing3),
+    "Sun Cavern - Sage's Blessing 4": event.Collected(HasSageBlessing4),
+    "Sun Cavern - Sage's Blessing 5": event.Collected(HasSageBlessing5),
 
     "Card: Sun Cavern - Air Vent": None,
 
@@ -156,7 +167,8 @@ def Main(r: Region):
 
       item.wings,
 
-      tech.air_tail_jump | tech.ground_tail_jump
+      tech.air_tail_jump,
+      tech.ground_tail_jump
     ),
 
     MightyWallLedge: Any(

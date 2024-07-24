@@ -43,6 +43,7 @@ def serialize_carryings(carryings: Iterable["Carrying"]) -> str:
 class ChainableLogic(Logic):
   server_code_separator: str = ""
   server_code_function: str = ""
+  operands: list[Logic]
 
   def __init__(self, *args: Logic) -> None:
     super().__init__()

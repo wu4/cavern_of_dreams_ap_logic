@@ -113,15 +113,18 @@ def LunaHouse(r: Region):
     Spooky: event.Collected("Open Luna's House")
   }
 
+class ReachSpookyPlatform(InternalEvent): pass
+
 @lazy_region
 def Spooky(r: Region):
   r.locations = {
-    "Gallery of Nightmares - Sewer Angel Statue Puzzle": Any(
+    ReachSpookyPlatform: Any(
       event.Collected(AirSwimFromSpooky),
       event.Collected(AirSwimFromMain),
       carrying.jester_boots,
       templates.high_jump_obstacle
-    ) & Any(
+    ),
+    "Gallery of Nightmares - Sewer Angel Statue Puzzle": event.Collected(ReachSpookyPlatform) & Any(
       item.air_tail, item.ground_tail,
       carrying.bubble_conch, carrying.apple,
     ),

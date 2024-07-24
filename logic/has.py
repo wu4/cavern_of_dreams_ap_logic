@@ -26,6 +26,16 @@ class Collected(Logic, Generic[I]):
   item: I
 
   @override
+  def __eq__(self, other) -> bool:
+    if isinstance(other, Collected):
+      return self.item == other.item
+    return super().__eq__(other)
+
+  @override
+  def __hash__(self) -> int:
+    return hash(self.item)
+
+  @override
   def __str__(self) -> str:
     return f"Has {self.item}"
 

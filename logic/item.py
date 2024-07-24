@@ -1,3 +1,4 @@
+from .option import Option
 # from typing import TypeAlias
 
 from . import carrying
@@ -10,16 +11,17 @@ from .has import Collected
 # class Collected(has.Collected[HasItemType]):
 #   pass
 
-wings = Collected("Wings")
-double_jump = Collected("Double Jump")
+double_jump = Collected("Double Jump") & Option("include_double_jump")
+flight = Collected("Flight") & Option("exclude_flight", 0)
+air_swim = Collected("Air Swim") & Option("air_swim", 1, True)
+
+wings = Collected("Wings") & Option("exclude_wings", 0)
 bubble = Collected("Bubble")
-flight = Collected("Flight")
 roll = Collected("Roll")
 sprint = Collected("Sprint")
 high_jump = Collected("High Jump")
 swim = Collected("Swim")
 carry = Collected("Carry")
-air_swim = Collected("Air Swim")
 
 fish_food = Collected("Fish Food")
 lady_opal_egg_1 = Collected("Lady Opal's Egg 1")

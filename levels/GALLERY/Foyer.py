@@ -1,5 +1,6 @@
 from ...logic import lazy_region, Region, Entrance, Any
 from ...logic import item, carrying, tech, event
+from ...logic.quantities import HasGratitude
 
 area_path = "GALLERY/Foyer (Main)"
 
@@ -15,9 +16,9 @@ class EarthLobbyDoor(Entrance):
 class FireLobbyDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromFoyerToFireLobby"
   dest_path = f"{area_path}/Warps/DestFromFireLobbyToFoyer"
-class AtelierDoor(Entrance):
-  warp_path = f"{area_path}/Warps/WarpFromFoyerToAtelier"
-  dest_path = f"{area_path}/Warps/DestFromAtelierToFoyer"
+# class AtelierDoor(Entrance):
+#   warp_path = f"{area_path}/Warps/WarpFromFoyerToAtelier"
+#   dest_path = f"{area_path}/Warps/DestFromAtelierToFoyer"
 class WaterLobbyHole(Entrance):
   warp_path = f"{area_path}/Warps/WarpTrapdoor"
 
@@ -57,7 +58,8 @@ def Main(r: Region):
   ]
 
   r.region_connections = {
-    SideDoors: event.Collected("Open Gallery Doors")
+    SideDoors: event.Collected("Open Gallery Doors"),
+    Endgame: HasGratitude(4) & (item.air_tail | item.ground_tail) & item.swim
   }
 
 @lazy_region
@@ -73,3 +75,7 @@ def SideDoors(r: Region):
     FireLobbyDoor.define(FireLobby.FoyerDoor),
     EarthLobbyDoor.define(EarthLobby.FoyerDoor)
   ]
+
+@lazy_region
+def Endgame(r: Region):
+  pass

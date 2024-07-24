@@ -245,7 +245,7 @@ def CannonLip(r: Region):
 def FlagPlatform(r: Region):
   r.region_connections = {
     Main: None,
-    SewerConnector: item.swim
+    SewerConnector: item.swim & carrying.no_jester_boots
   }
 
 @lazy_region
@@ -259,7 +259,7 @@ def SewerConnector(r: Region):
   ]
 
   r.region_connections = {
-    FlagPlatform: item.swim
+    FlagPlatform: item.swim & carrying.no_jester_boots
   }
 
 @lazy_region

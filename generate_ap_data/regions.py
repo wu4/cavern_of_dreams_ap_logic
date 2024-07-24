@@ -2,7 +2,9 @@ from abc import abstractmethod
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, TypeAlias, override
 from .. import all_locations
-from . import connection_parser
+from .connection_parser import all_regions, all_entrances
+from ..logic_parsing.options import get_required_options
+from ..logic_parsing.helpers import nested_list_to_logic
 
 if TYPE_CHECKING:
   from ..logic.logic import MaybeLogic
@@ -15,8 +17,7 @@ def name_regions(regs: Iterable[Region]) -> dict[Region, str]:
     for region_id, region in enumerate(regs)
   )
 
-REGIONS, ENTRANCES = connection_parser.parse()
-REGION_NAMES = name_regions(REGIONS)
+region_names = name_regions(all_regions)
 
 class Builder:
   lines: list[str]
@@ -72,10 +73,12 @@ class RegionsBuilder(Builder):
   def run(self):
     from ..levels.CAVE import SunCavern
     from ..levels.GALLERY import Foyer
-    self.add_line("from BaseClasses import Entrance as E, Location as L")
-    self.add_line("from ..regions import CavernOfDreamsRegion as R")
+    self.add_line("from ..regions import CavernOfDreamsRegion as R, CavernOfDreamsEntrance as E, CavernOfDreamsLocation as L, CavernOfDreamsCarryableRegion as CR")
     # self.add_line("from ..items import CavernOfDreamsEvent as EV")
     self.add_line("from ..entrance_rando import randomize_entrances")
+    self.add_line("from .data import item_group_sets")
+    self.add_line("all_eggs=item_group_sets['Egg']")
+    # self.add_line("from ..item_rules import is_shroom")
     self.define_entrances()
     self.add_line("def create_regions(w):")
     self.indent += 1
@@ -98,26 +101,21 @@ class RegionsBuilder(Builder):
     # self.indent += 1
     self.connect_str(
       "Menu", "M",
-      SunCavern.Main.name, REGION_NAMES[SunCavern.Main],
+      SunCavern.Main.name, region_names[SunCavern.Main],
       None
     )
     self.add_line("mw.regions.append(M)")
-    self.add_line(f"V=R('Victory',p,mw)")
-    self.connect_str(
-      "Victory", "V",
-      Foyer.Main.name, REGION_NAMES[Foyer.Main],
-      None
-    )
     self.add_line(f"e=w.create_event('Victory')")
-    self.add_line(f"l=L(p,'Victory',None,{REGION_NAMES[Foyer.Main]})")
+    self.add_line(f"l=L(p,'VictoryLocation',False,{region_names[Foyer.Endgame]})")
     self.add_line(f"l.place_locked_item(e)")
-    self.add_line(f"{REGION_NAMES[Foyer.Main]}.locations.append(l)")
+    self.add_line(f"{region_names[Foyer.Endgame]}.locations.append(l)")
 
   def connect_short(
     self, start_name: str, to_name: str, rule: "MaybeLogic",
     name: str | None = None
   ):
-    self.add_line(f"{start_name}.connect({to_name},{repr(name)},{into_ap_rule(rule)})")
+    rule_var = 'rule' if self.define_rule(rule) else 'None'
+    self.add_line(f"{start_name}.connect({to_name},{repr(name)},{rule_var})")
 
   def connect_str(
     self,
@@ -129,10 +127,63 @@ class RegionsBuilder(Builder):
     self.add_line(f"# {start_name} -> {to_name}")
     self.connect_short(start_short_name, to_short_name, rule, name)
 
+  def define_rule(self, rule: "MaybeLogic"):
+    if rule is None: return False
+    self.add_line("def rule(s):")
+    self.indent += 1
+    from ..logic_parsing.carryables import distribute_carryable_logic
+    from ..logic_parsing.helpers import simplify
+    from ..logic.logic import Not
+    distributed = distribute_carryable_logic(rule)
+    def sort_key(k):
+      return sum(map(len, distributed[k]))
+    distributed_keys = list(distributed.keys())
+
+    # anything that does not care about carryables
+    if "default" in distributed_keys:
+      logic = simplify(distributed["default"])
+      self.add_line(f"if {logic.into_server_code()}: return True")
+
+    if len(list(filter("default".__ne__, distributed_keys))) > 0:
+      self.add_line("carryable=s._cavernofdreams_carrying[p]")
+
+    # process Nots before the rest
+    # NOTE: Nots should not early-out if they return false
+    for key in sorted(filter(lambda k: isinstance(k, Not), distributed_keys), key=sort_key):
+      self.add_line(f"if carryable!={repr(key.logic.carryable)}:")
+      self.indent += 1
+      nested_list = distributed[key]
+      if nested_list == []:
+        self.add_line("return True")
+      else:
+        logic = simplify(nested_list)
+        self.add_line(f"if {logic.into_server_code()}: return True")
+      self.indent -= 1
+
+    is_first = True
+    for key in sorted(filter(lambda k: k != "default" and not isinstance(k, Not), distributed_keys), key=sort_key):
+      if key.carryable is None:
+        self.add_line(f"{'' if is_first else 'el'}if carryable is None:")
+      else:
+        self.add_line(f"{'' if is_first else 'el'}if carryable=={repr(key.carryable)}:")
+      self.indent += 1
+      nested_list = distributed[key]
+      if nested_list == []:
+        self.add_line("return True")
+      else:
+        logic = simplify(nested_list)
+        self.add_line(f"return {logic.into_server_code()}")
+      self.indent -= 1
+      is_first = False
+
+    self.add_line("return False")
+    self.indent -= 1
+    return True
+
   def connect(self, start: Region, to: Region, rule: "MaybeLogic", name: str | None = None):
     self.connect_str(
-      start.name, REGION_NAMES[start],
-      to.name, REGION_NAMES[to],
+      start.name, region_names[start],
+      to.name, region_names[to],
       rule,
       name
     )
@@ -142,60 +193,75 @@ class RegionsBuilder(Builder):
 
     locations: dict[str, RegionAndRule] = {}
     carryable_locations: dict[type[CarryableLocation], RegionAndRule] = {}
-    events: dict[type[InternalEvent], RegionAndRule] = {}
+    internal_events: dict[type[InternalEvent], RegionAndRule] = {}
 
-    for region in REGIONS:
+    for region in all_regions:
       for location, rule in region.locations.items():
         if isinstance(location, str):
           locations[location] = (region, rule)
         elif issubclass(location, CarryableLocation):
           carryable_locations[location] = (region, rule)
         else:
-          events[location] = (region, rule)
+          internal_events[location] = (region, rule)
 
-    for category, locations_list in all_locations.locations_by_category():
+    self.add_line("shroomsanity=o.shroomsanity.value==1")
+    for category_name, locations_list in all_locations.locations_by_category():
       # self.add_line(f"if o.{category}_rando:")
       # self.indent += 1
       for location in locations_list:
         region, rule = locations[location]
-        self.add_line(f"l=L(p,{repr(location)},None,{REGION_NAMES[region]})")
-        if rule is not None:
-          self.add_line(f"l.access_rule={into_ap_rule(rule)}")
-        self.add_line(f"{REGION_NAMES[region]}.locations.append(l)")
+        self.add_line(f"l=L(p,{repr(location)},True,{region_names[region]})")
+        # if category_name == "shroom":
+        #   self.add_line("if not shroomsanity:l.item_rule=is_shroom")
+        if self.define_rule(rule):
+          self.add_line(f"l.access_rule=rule")
+        self.add_line(f"{region_names[region]}.locations.append(l)")
 
-    for location, (region, rule) in events.items():
-      self.add_line(f"l=L(p,{repr(str(location))},None,{REGION_NAMES[region]})")
+    for location, (region, rule) in internal_events.items():
+      rule_indent = 0
       if rule is not None:
-        self.add_line(f"l.access_rule={into_ap_rule(rule)}")
+        required_options = get_required_options(rule)
+        if len(required_options) > 0:
+          logic = nested_list_to_logic(required_options)
+          self.add_line(f"if {logic.into_server_code()}:")
+          rule_indent = 1
+
+      self.indent += rule_indent
+      self.add_line(f"l=L(p,{repr(str(location))},False,{region_names[region]})")
+      if self.define_rule(rule):
+        self.add_line(f"l.access_rule=rule")
 
       self.add_line(f"e=w.create_event({repr(str(location))})")
       self.add_line(f"l.place_locked_item(e)")
 
-      self.add_line(f"{REGION_NAMES[region]}.locations.append(l)")
+      self.add_line(f"{region_names[region]}.locations.append(l)")
+      self.indent -= rule_indent
 
     for location, (region, rule) in carryable_locations.items():
-      self.add_line(f"r=R({repr(str(location))},p,mw)")
-      self.add_line(f"l=L(p,{repr(str(location))},None,r)")
-      if rule is not None:
-        self.add_line(f"l.access_rule={into_ap_rule(rule)}")
+      name = repr(str(location))
+      self.add_line(f"r=CR({name},p,mw,{repr(location.carryable)})")
+      # self.add_line(f"l=L(p,{name},None,r)")
+      # if rule is not None:
+      #   self.add_line(f"l.access_rule={into_ap_rule(rule)}")
 
-      self.add_line(f"e=w.create_event({repr(str(location))})")
-      self.add_line(f"l.place_locked_item(e)")
+      # self.add_line(f"e=w.create_event({name})")
+      # self.add_line(f"l.place_locked_item(e)")
 
-      self.add_line(f"r.locations.append(l)")
-      self.add_line(f"{REGION_NAMES[region]}.connect(r)")
-      self.add_line(f"r.connect({REGION_NAMES[region]})")
+      # self.add_line(f"r.locations.append(l)")
+      self.add_line(f"{region_names[region]}.connect(r)")
+      self.add_line(f"r.connect({region_names[region]})")
       self.add_line(f"mw.regions.append(r)")
 
     # self.indent -= 1
 
   def assign_regions(self):
-    for region in REGIONS:
-      name = REGION_NAMES[region]
+    for region in all_regions:
+      name = region_names[region]
       self.add_line(f"{name}=R({repr(region.name)},p,mw)")
+      self.add_line(f"mw.regions.append({name})")
 
   def connect_regions(self):
-    for region in REGIONS:
+    for region in all_regions:
       for connecting_region, rule in region.region_connections.items():
         self.connect(region, connecting_region, rule)
 
@@ -226,19 +292,19 @@ class RegionsBuilder(Builder):
     self.indent -= 1
 
   def define_entrance_rules(self):
-    self.add_line("entrance_rules={")
-    self.indent += 1
-    for entrance in ENTRANCES:
-      if entrance.rule is not None:
-        self.add_line(f"{repr(entrance.name())}:{into_ap_rule(entrance.rule)},")
-    self.indent -= 1
-    self.add_line("}")
+    self.add_line("entrance_rules={}")
+    # self.indent += 1
+    for entrance in all_entrances:
+      rule_var = 'rule' if self.define_rule(entrance.rule) else 'None'
+      self.add_line(f"entrance_rules[{repr(entrance.name())}]={rule_var}")
+    # self.indent -= 1
+    # self.add_line("}")
 
   def define_entrance_map(self):
     self.add_line("entrance_map:dict[str,R]={")
     self.indent += 1
-    for entrance in ENTRANCES:
-      self.add_line(f"{repr(entrance.name())}:{REGION_NAMES[entrance.containing_region]},")
+    for entrance in all_entrances:
+      self.add_line(f"{repr(entrance.name())}:{region_names[entrance.containing_region]},")
     self.indent -= 1
     self.add_line("}")
 
@@ -246,7 +312,7 @@ class RegionsBuilder(Builder):
     bilinear_connections: set[tuple[type[Entrance], type[Entrance]]] = set()
     one_way_connections: set[tuple[type[Entrance], type[Entrance]]] = set()
 
-    for entrance in ENTRANCES:
+    for entrance in all_entrances:
       if entrance.warp_path is None:
         if (entrance.default_connection, entrance) in one_way_connections: continue
         one_way_connections.add((entrance.default_connection, entrance))
@@ -261,12 +327,9 @@ class RegionsBuilder(Builder):
     self.define_entrance_list("one_way", list(one_way_connections))
 
   def no_entrance_rando(self):
-    for entrance in ENTRANCES:
+    for entrance in all_entrances:
       if entrance.warp_path is not None:
         self.connect(entrance.containing_region, entrance.default_connection.containing_region, entrance.rule, entrance.name())
-
-def into_ap_rule(l: "MaybeLogic") -> str:
-  return 'None' if l is None else 'lambda s:' + l.into_server_code()
 
 def generate():
   with open("ap_generated/regions.py", "w") as out_py:

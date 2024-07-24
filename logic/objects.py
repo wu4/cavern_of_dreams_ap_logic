@@ -1,6 +1,5 @@
 from __future__ import annotations
 from abc import abstractmethod
-from types import ModuleType
 
 from .has import CarryingItem
 from .logic import MaybeLogic as _MaybeLogic
@@ -101,15 +100,6 @@ class Region:
     for entrance in self.entrances:
       entrance.set_containing_region(self)
 
-    from inspect import getmodule
-    for entrance in self.entrances:
-      mod = getmodule(entrance.default_connection)
-      if mod is not None and mod not in loaded_modules:
-        loaded_modules.add(mod)
-        for k, v in mod.__dict__.items():
-          if isinstance(v, Region):
-            v.lazy_load()
-
   @abstractmethod
   def load(self):
     """
@@ -128,8 +118,6 @@ def lazy_region(func: Callable[[Region], None]):
     func(r)
   r.load = wrapped
   return r
-
-loaded_modules: set[ModuleType] = set()
 
 class Entrance:
   is_dest_underwater: bool = False

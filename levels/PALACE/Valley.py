@@ -1,5 +1,6 @@
 from ...logic.comment import Comment
 from ...logic import lazy_region, Region, Entrance, InternalEvent, Any, CarryableLocation
+from ...logic.logic import Not
 from ...logic import item, carrying, difficulty, tech, event, templates
 
 area_path = "PALACE/Valley (Main)"
@@ -96,6 +97,14 @@ def Main(r: Region):
       tech.any_super_jump
     ),
 
+    JesterBootsCoveDryJBRemovalField: Any(
+      carrying.jester_boots,
+      item.climb,
+      tech.wing_storage,
+      templates.high_jump_obstacle,
+      tech.wing_jump & tech.bubble_jump_and_recoil
+    ),
+
     Pool: item.swim & Any(
       item.horn,
       event.Collected("Unfreeze Prismic Palace")
@@ -122,6 +131,13 @@ def Main(r: Region):
         tech.wing_jump,
       )
     )
+  }
+
+@lazy_region
+def JesterBootsCoveDryJBRemovalField(r: Region):
+  r.region_connections = {
+    Main: carrying.no_jester_boots,
+    JesterBootsCoveLowerPlatforms: carrying.no_jester_boots
   }
 
 @lazy_region
@@ -236,29 +252,76 @@ def JesterBootsCove(r: Region):
       item.high_jump & tech.ground_tail_jump & tech.z_target
     ),
 
-    JesterBootsCoveLowerPlatforms: Any(
+    JesterBootsCoveDryJBRemovalField: Any(
       carrying.jester_boots,
       templates.high_jump_obstacle,
       item.climb,
       tech.wing_jump & tech.bubble_jump_and_recoil
+    ),
+
+    JesterBootsCoveUnderwater: event.Collected("Unfreeze Prismic Palace")
+  }
+
+@lazy_region
+def JesterBootsCoveUnderwater(r: Region):
+  r.locations = {
+    UnstuckBigstar: item.horn
+  }
+
+  r.region_connections = {
+    JesterBootsCove: event.Collected("Unfreeze Prismic Palace"),
+    UpperWater: carrying.no_jester_boots,
+    JesterBootsCoveLowerPlatforms: event.Collected("Unfreeze Prismic Palace") & Any(
+      item.sprint,
+      carrying.bubble_conch,
+      carrying.shelnerts_fish,
+    ),
+    JesterBootsCoveFloatingPoms: event.Collected("Unfreeze Prismic Palace") & carrying.bubble_conch,
+    LowerWater: Any(
+      event.Collected("Open Palace-Lostleaf Connector"),
+      event.Collected(UnstuckBigstar)
     )
   }
 
 @lazy_region
-def LostleafEntryway(r: Region):
-  r.locations = {
-    AirSwimFromLostleafEntryway: item.swim & item.air_swim & tech.momentum_cancel
-  }
-
+def EnterLostleaf(r: Region):
   from ..LAKE import LostleafLake
 
   r.entrances = [
-    LostleafDoor.define(LostleafLake.ValleyDoor)
+    LostleafDoor.define(
+      LostleafLake.ValleyDoor,
+      rule = carrying.no_jester_boots
+    )
   ]
 
   r.region_connections = {
+    LostleafEntryway: carrying.no_jester_boots
+  }
+
+
+@lazy_region
+def LostleafEntryway(r: Region):
+  r.locations = {
+    AirSwimFromLostleafEntryway: carrying.no_jester_boots & item.swim & item.air_swim & tech.momentum_cancel
+  }
+
+  r.region_connections = {
+    EnterLostleaf: None,
     JesterBootsCove: Any(
-      event.Collected(AirSwimFromLostleafEntryway)
+      event.Collected("Open Palace-Lostleaf Connector"),
+      carrying.no_jester_boots & Any(
+        event.Collected(AirSwimFromLostleafEntryway),
+        item.roll & item.sprint & item.high_jump & difficulty.intermediate,
+        tech.any_super_jump,
+        item.double_jump & Any(
+          item.wings,
+          item.high_jump,
+          tech.ground_tail_jump,
+          tech.air_tail_jump,
+          item.horn
+        ),
+        item.high_jump & tech.ground_tail_jump & tech.z_target
+      ),
     )
   }
 
@@ -273,7 +336,7 @@ def JesterBootsCoveLowerPlatforms(r: Region):
 
   r.region_connections = {
     JesterBootsCove: None,
-    Main: None,
+    Main: carrying.no_jester_boots,
     JesterBootsCoveCastlePlatform: Any(
       carrying.jester_boots,
       carrying.mr_kerringtons_wings & tech.wing_jump,
@@ -609,8 +672,6 @@ def UpperWater(r: Region):
       item.ground_tail, item.air_tail,
       carrying.apple, carrying.bubble_conch
     ),
-
-    UnstuckBigstar: item.horn,
   }
 
   from . import Palace
@@ -628,13 +689,7 @@ def UpperWater(r: Region):
   r.region_connections = {
     Main: event.Collected("Unfreeze Prismic Palace"),
     GobblerCave: event.Collected("Snooze Gobbler"),
-    JesterBootsCove: event.Collected("Unfreeze Prismic Palace"),
-    JesterBootsCoveLowerPlatforms: event.Collected("Unfreeze Prismic Palace") & Any(
-      item.sprint,
-      carrying.bubble_conch,
-      carrying.shelnerts_fish,
-    ),
-    JesterBootsCoveFloatingPoms: event.Collected("Unfreeze Prismic Palace") & carrying.bubble_conch,
+    JesterBootsCoveUnderwater: carrying.no_jester_boots,
     BreakLowerWaterWall: Any(
       item.roll & Any(
         item.ground_tail,
@@ -645,7 +700,6 @@ def UpperWater(r: Region):
     ),
     LowerWater: Any(
       event.Collected(BrokeLowerWaterWall),
-      event.Collected("Open Palace-Lostleaf Connector")
     )
   }
 
@@ -702,7 +756,11 @@ def LowerWater(r: Region):
   r.region_connections = {
     UpperWater: Any(
       event.Collected(BrokeLowerWaterWall),
-      event.Collected("Open Palace-Lostleaf Connector")
+    ),
+
+    JesterBootsCoveUnderwater: Any(
+      event.Collected("Open Palace-Lostleaf Connector"),
+      event.Collected(UnstuckBigstar)
     ),
 
     BigstarCave: event.Collected("Open Bigstar Cave"),
