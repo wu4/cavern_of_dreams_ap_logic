@@ -1,10 +1,10 @@
 from .logic_parsing.helpers import simplify, nested_list_to_logic
 from .logic_parsing.carryables import distribute_carryable_logic
-from .levels.PALACE.Valley import PokiPokiCave
+from .levels.CAVE.SunCavern import Main, DucklingsDoorway
 # from .levels.GALLERY.WaterLobby import Spooky
 
-PokiPokiCave.lazy_load()
-logic_to_test = PokiPokiCave.locations["Lady Opal's Egg: Poki-Poki"]
+Main.lazy_load()
+logic_to_test = Main.region_connections[DucklingsDoorway]
 # logic_to_test = Spooky.locations["Gallery of Nightmares - Sewer Angel Statue Puzzle"]
 assert logic_to_test is not None
 

@@ -111,21 +111,75 @@ class RegionsBuilder(Builder):
     self.add_line(f"{region_names[Foyer.Endgame]}.locations.append(l)")
 
   def connect_short(
-    self, start_name: str, to_name: str, rule: "MaybeLogic",
+    self, start_id: str, to_id: str, rule: "MaybeLogic",
     name: str | None = None
   ):
-    rule_var = 'rule' if self.define_rule(rule) else 'None'
-    self.add_line(f"{start_name}.connect({to_name},{repr(name)},{rule_var})")
+    if name is None:
+      name_str = f"{start_id}.name+'->'+{to_id}.name"
+    else:
+      name_str = repr(name)
+    self.add_line(f"e=E(p,{name_str},{start_id})")
+    self.add_line(f"{start_id}.exits.append(e)")
+    self.add_line(f"e.connect({to_id})")
+
+    self.define_rules(rule, "e")
 
   def connect_str(
     self,
-    start_name: str, start_short_name: str,
-    to_name: str, to_short_name: str,
+    start_name: str, start_id: str,
+    to_name: str, to_id: str,
     rule: "MaybeLogic",
     name: str | None = None
   ):
     self.add_line(f"# {start_name} -> {to_name}")
-    self.connect_short(start_short_name, to_short_name, rule, name)
+    self.connect_short(start_id, to_id, rule, name)
+
+  def define_rules(self, rule: "MaybeLogic", var_name: str):
+    if rule is None:
+      # self.add_line(f"{var_name}.can_reach={var_name}.simple_can_reach")
+      return
+
+    from ..logic_parsing.carryables import distribute_carryable_logic
+    from ..logic_parsing.helpers import simplify
+    from ..logic.logic import Not
+
+    distributed = distribute_carryable_logic(rule)
+    def sort_key(k):
+      return sum(map(len, distributed[k]))
+    distributed_keys = list(distributed.keys())
+
+    # anything that does not care about carryables
+    if "default" in distributed_keys:
+      logic = simplify(distributed["default"])
+      self.add_line(f"{var_name}.access_rule=lambda s:{logic.into_server_code()}")
+    else:
+      self.add_line(f"{var_name}.access_rule=lambda s:False")
+
+    self.add_line(f"{var_name}.not_carryable_access_rules="+'{')
+    self.indent += 1
+    for key in sorted(filter(lambda k: isinstance(k, Not), distributed_keys), key=sort_key):
+      nested_list = distributed[key]
+      if nested_list == []:
+        logic_str = "lambda s:True"
+      else:
+        logic = simplify(nested_list)
+        logic_str = f"lambda s:{logic.into_server_code()}"
+      self.add_line(f"{repr(key.logic.carryable)}:{logic_str},")
+    self.indent -= 1
+    self.add_line("}")
+
+    self.add_line(f"{var_name}.carryable_access_rules="+'{')
+    self.indent += 1
+    for key in sorted(filter(lambda k: k != "default" and not isinstance(k, Not), distributed_keys), key=sort_key):
+      nested_list = distributed[key]
+      if nested_list == []:
+        logic_str = "lambda s:True"
+      else:
+        logic = simplify(nested_list)
+        logic_str = f"lambda s:{logic.into_server_code()}"
+      self.add_line(f"{repr(key.carryable)}:{logic_str},")
+    self.indent -= 1
+    self.add_line("}")
 
   def define_rule(self, rule: "MaybeLogic"):
     if rule is None: return False
@@ -213,8 +267,7 @@ class RegionsBuilder(Builder):
         self.add_line(f"l=L(p,{repr(location)},True,{region_names[region]})")
         # if category_name == "shroom":
         #   self.add_line("if not shroomsanity:l.item_rule=is_shroom")
-        if self.define_rule(rule):
-          self.add_line(f"l.access_rule=rule")
+        self.define_rules(rule, "l")
         self.add_line(f"{region_names[region]}.locations.append(l)")
 
     for location, (region, rule) in internal_events.items():
@@ -228,8 +281,7 @@ class RegionsBuilder(Builder):
 
       self.indent += rule_indent
       self.add_line(f"l=L(p,{repr(str(location))},False,{region_names[region]})")
-      if self.define_rule(rule):
-        self.add_line(f"l.access_rule=rule")
+      self.define_rules(rule, "l")
 
       self.add_line(f"e=w.create_event({repr(str(location))})")
       self.add_line(f"l.place_locked_item(e)")

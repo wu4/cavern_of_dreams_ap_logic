@@ -60,13 +60,31 @@ endfu
   [ ] pass through with mk wings
     [ ] pass through with mk wings + sprint
 
-[ ] opening armada cockpit erroneously heals the boils upon entry
-[ ] opening palace basement disables the stars
-[ ] extending pans disables fire lobby rings
-[ ] opening lunas door makes the giant happy
+[x] opening armada cockpit erroneously heals the boils upon entry
+[x] opening palace basement disables the stars
+[x] extending pans disables fire lobby rings
+[x] opening lunas door makes the giant happy
 
 [ ] armada race needs more rules
-[ ] rename "Open Gallery Doors" to "Open Foyer Doors"
-[ ] fix collectible hitbox size
 [ ] finish victory condition
-[ ] colored text
+
+[x] rename "Open Gallery Doors" to "Open Foyer Doors"
+[x] fix collectible hitbox size
+[x] colored text
+
+[x] teleports?
+
+[x] sniffles infinite loop
+[x] remove atelier door twostate
+
+[x] tethered events:
+  [x] deep woods trees
+  [x] observatory puzzle
+  [x] shelnert dialogue
+
+  [x] undead painting
+  [x] visuals for all paintings
+  [x] all angel statue puzzles
+  [x] foyer matryoshka egg
+  [x] gallery lobby flames are tethered
+  [x] hoops still not functional

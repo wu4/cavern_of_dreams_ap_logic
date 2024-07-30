@@ -25,7 +25,7 @@ def Main(r: Region):
   r.locations = {
     DouseRaceFlame: item.bubble | carrying.medicine,
 
-    "Gallery of Nightmares - Fire Lobby Hoops": event.Collected(DouseRaceFlame) & Any(
+    "Fire Lobby Hoops": event.Collected(DouseRaceFlame) & Any(
       item.wings,
       carrying.mr_kerringtons_wings,
       # tech.z_target & tech.bubble_jump_and_recoil & item.double_jump,
@@ -34,7 +34,7 @@ def Main(r: Region):
       # idea of this project coming to a release a bit more.
     ),
 
-    "Card: Gallery of Nightmares - Frying Pans": Any(
+    "Card: Fire Lobby - Frying Pans": Any(
       carrying.jester_boots,
       carrying.mr_kerringtons_wings,
       (item.bubble | carrying.no_temp_items) & tech.any_super_jump,
@@ -123,7 +123,7 @@ def FishPlatform(r: Region):
 @lazy_region
 def EarthLobbyEntryway(r: Region):
   r.locations = {
-    "Gallery of Nightmares - Fire Lobby Preston": None
+    "Fire Lobby Preston": None
   }
 
   from . import EarthLobby
@@ -139,8 +139,8 @@ def EarthLobbyEntryway(r: Region):
 @lazy_region
 def KerringtonPaintingPlatform(r: Region):
   r.locations = {
-    "Gallery of Nightmares - Mr. Kerrington's Painting": carrying.mr_kerringtons_wings,
-    "Egg: Gallery of Nightmares - Mr. Kerrington Painting": event.Collected("Open Mr. Kerrington Painting Gate")
+    "Fire Lobby - Mr. Kerrington's Painting": carrying.mr_kerringtons_wings,
+    "Egg: Fire Lobby - Mr. Kerrington Painting": event.Collected("Open Mr. Kerrington Painting Gate")
   }
 
   r.region_connections = {

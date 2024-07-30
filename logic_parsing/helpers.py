@@ -117,6 +117,9 @@ def simplify(in_lss: Sequence[Sequence[Logic]]) -> Any:
   # remove all supersets
   lss: list[list[Logic]] = list(map(list, filter(lambda ls: not any(map(lambda other_ls: set(ls).issuperset(set(other_ls)), filter(lambda x: ls != x, in_lss))), in_lss)))
 
+  # print("\033[31mUNIMPLEMENTED: SIMPLIFY\033[0m")
+  # return nested_list_to_logic(lss)
+
   if len(lss) <= 1:
     return nested_list_to_logic(lss)
 
@@ -149,8 +152,13 @@ def simplify(in_lss: Sequence[Sequence[Logic]]) -> Any:
     logics_by_chunks.setdefault(tuple(sorted(indices)), []).append(logic)
 
   # print(mismatched_chunks)
+  print("matched:")
+  for indices, logic in logics_by_chunks.items():
+    print(indices, Any(*logic))
 
+  print("mismatched:")
   for indices, logic in mismatched_chunks.items():
+    print(indices, Any(*logic))
     indices_set = set(indices)
     # print(indices_set, chunks)
     chunks_by_size = sorted(chunks, key=len)
@@ -160,22 +168,26 @@ def simplify(in_lss: Sequence[Sequence[Logic]]) -> Any:
       if superset is None:
         logics_by_chunks.setdefault(tuple(sorted(indices_set)), []).extend(logic)
         break
-      inter = superset.intersection(indices_set)
-      indices_set -= inter
-      if inter != superset:
+      common_indices = superset.intersection(indices_set)
+      indices_set -= common_indices
+      if common_indices != superset:
         if indices_set:
-          chunks.append(inter)
+          chunks.append(common_indices)
           superset.clear()
           superset.update(indices_set)
         else:
           superset.clear()
-      logics_by_chunks.setdefault(tuple(sorted(inter)), []).extend(logic)
+      logics_by_chunks.setdefault(tuple(sorted(common_indices)), []).extend(logic)
+  print("end mismatched")
 
   all_logics = sorted(
     ((k, Chunk(All(*logics_by_chunks[k]))) for k in logics_by_chunks.keys()),
     key=lambda x: len(x[0]),
     reverse=False
   )
+
+  for indices, chunk in all_logics:
+    print(indices, chunk.consume())
 
   seen: set[tuple[int, ...]] = set()
 

@@ -54,10 +54,10 @@ def GrowMainBush(r: Region):
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    "Card: Gallery of Nightmares - Swamp Castle": None,
-    "Gallery of Nightmares - Shelnert's Painting": carrying.shelnerts_fish,
-    "Egg: Gallery of Nightmares - Skull's Eye": event.Collected("Open Skull's Diamond Eye"),
-    "Gallery of Nightmares - Swamp Angel Statue Puzzle": All(
+    "Card: Earth Lobby - Swamp Castle": None,
+    "Earth Lobby - Shelnert's Painting": carrying.shelnerts_fish,
+    "Egg: Earth Lobby - Skull's Eye": event.Collected("Open Skull's Diamond Eye"),
+    "Earth Lobby - Angel Statue Puzzle": All(
       event.Collected(RealignMainStatue),
       event.Collected(RealignDragonHeadStatue),
       event.Collected(RealignCoffinsStatue)
@@ -69,7 +69,7 @@ def Main(r: Region):
   r.region_connections = {
     MainUnderwater: item.swim,
 
-    InsideCastle: event.Collected("Open Gallery of Nightmares Swamp Door"),
+    InsideCastle: event.Collected("Open Earth Lobby Castle Door"),
 
     GrowMainBush: item.bubble | carrying.medicine,
 
@@ -106,7 +106,7 @@ def Main(r: Region):
 @lazy_region
 def MainUnderwater(r: Region):
   r.locations = {
-    "Card: Gallery of Nightmares - Swamp": None
+    "Card: Earth Lobby - Swamp": None
   }
 
   from . import WaterLobby
@@ -257,7 +257,7 @@ def CastleUnderwater(r: Region):
 @lazy_region
 def InsideCastle(r: Region):
   r.locations = {
-    "Gallery of Nightmares - Moisten Wastes of Eternity Painting": item.bubble
+    "Earth Lobby - Moisten Wastes of Eternity Painting": item.bubble
   }
 
   from . import Undead
@@ -268,7 +268,7 @@ def InsideCastle(r: Region):
 
   r.region_connections = {
     GrowCastleBushes: item.bubble | carrying.medicine,
-    Main: event.Collected("Open Gallery of Nightmares Swamp Door"),
+    Main: event.Collected("Open Earth Lobby Castle Door"),
     CastleUnderwater: item.swim,
     KerringtonCauldronPlatform: Any(
       carrying.mr_kerringtons_wings,
@@ -304,7 +304,7 @@ def CastleWingsPlatform(r: Region):
 @lazy_region
 def KerringtonCauldronPlatform(r: Region):
   r.locations = {
-    "Gallery-Armada Connector - Preston": None
+    "Earth Lobby - Armada Connector Preston": None
   }
 
   r.region_connections = {

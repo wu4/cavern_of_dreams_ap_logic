@@ -1,4 +1,4 @@
-from ...logic import lazy_region, Entrance, Region, CarryableLocation, Any, InternalEvent
+from ...logic import lazy_region, Entrance, Region, CarryableLocation, Any, InternalEvent, Whackable
 from ...logic.comment import Comment
 from ...logic import item, tech, carrying, difficulty, event
 
@@ -29,12 +29,13 @@ class MainMedicine(CarryableLocation): carryable = "Medicine"
 class MainBoils(InternalEvent): pass
 class GreenBoil(InternalEvent): pass
 class HornOnAnnoyingGenerator(InternalEvent): pass
-class CockpitAccess(InternalEvent): pass
+class SlowCockpitAccess(InternalEvent): pass
+class FastCockpitAccess(InternalEvent): pass
 
-CanEnterCockpit = Any(
-  tech.any_super_jump,
-  event.Collected("Open Armada Cockpit")
-)
+class CauldronRoomWall(Whackable):
+  air_tail_works = True
+  ground_tail_works = True
+  throwables_work = True
 
 @lazy_region
 def Main(r: Region):
@@ -43,12 +44,24 @@ def Main(r: Region):
 
     MainBoils: carrying.medicine,
 
+    SlowCockpitAccess: tech.any_super_jump | event.Collected(FastCockpitAccess),
+
+    FastCockpitAccess: event.Collected("Open Armada Cockpit"),
+
     "Kerrington - Soothe Mr. Kerrington's Boils":
       event.Collected(MainBoils) & event.Collected(GreenBoil),
 
     "Kerrington - Race": Any(
-      event.Collected("Free Armada Buddies"),
-      tech.any_super_jump
+      # NOTE: this is likely too lax.
+      # VERY likely to result in difficult races
+
+      event.Collected(FastCockpitAccess) & Any(
+        event.Collected("Free Armada Buddies"),
+        tech.any_super_jump
+      ),
+      event.Collected(SlowCockpitAccess) & Any(
+        event.Collected("Free Armada Buddies"),
+      )
     ),
 
     "Egg: Kerrington - Pipe": None,
@@ -100,9 +113,9 @@ def Main(r: Region):
   }
 
   r.region_connections = {
-    MedicinePool: event.Collected("Open Medicine Pool"),
+    MedicinePool: event.Collected("Open Kerrington's Medicine Pool"),
 
-    Cockpit: CanEnterCockpit,
+    **CauldronRoomWall.connecting_to(CauldronRoom),
 
     HeartEntryway: event.Collected("Open Kerrington's Heart") & Any(
       event.Collected("Free Armada Buddies"),
@@ -305,6 +318,8 @@ def LowerLabContainers(r: Region):
     ),
 
     UpperLabContainers: Any(
+      item.air_tail & item.roll & item.double_jump,
+
       item.double_jump & Any(
         carrying.mr_kerringtons_wings,
         item.wings
@@ -413,7 +428,7 @@ def MedicinePool(r: Region):
   ]
 
   r.region_connections = {
-    Main: event.Collected("Open Medicine Pool"),
+    Main: event.Collected("Open Kerrington's Medicine Pool"),
 
     MedicinePoolSlide: Any(
       tech.any_super_jump,
@@ -462,16 +477,6 @@ def MedicinePoolEggPlatform(r: Region):
 
   r.region_connections = {
     MedicinePool: None
-  }
-
-@lazy_region
-def Cockpit(r: Region):
-  r.locations = {
-    CockpitAccess: None
-  }
-
-  r.region_connections = {
-    Main: CanEnterCockpit
   }
 
 @lazy_region
@@ -548,5 +553,5 @@ def CauldronRoom(r: Region):
   ]
 
   r.region_connections = {
-    Main: CanOpenCauldronRoom
+    **CauldronRoomWall.connecting_to(Main)
   }

@@ -32,7 +32,7 @@ def Main(r: Region):
     "Shroom: Palace Interior - Star Puzzle 2": None,
     "Shroom: Palace Interior - Star Puzzle 3": None,
 
-    "Card: Prismic Palace - Inside Palace": Any(
+    "Card: Palace": Any(
       carrying.bubble_conch | carrying.shelnerts_fish,
       item.sprint & Any(
         item.double_jump,

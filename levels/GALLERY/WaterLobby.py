@@ -53,7 +53,7 @@ class SpookyWall(Whackable):
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    "Card: Gallery of Nightmares - Above Pits of Despair Painting": Any(
+    "Card: Water Lobby - Above Pits of Despair Painting": Any(
       event.Collected(AirSwimFromMain),
       carrying.jester_boots & Any(
         tech.super_bubble_jump,
@@ -124,12 +124,12 @@ def Spooky(r: Region):
       carrying.jester_boots,
       templates.high_jump_obstacle
     ),
-    "Gallery of Nightmares - Sewer Angel Statue Puzzle": event.Collected(ReachSpookyPlatform) & Any(
+    "Water Lobby - Angel Statue Puzzle": event.Collected(ReachSpookyPlatform) & Any(
       item.air_tail, item.ground_tail,
       carrying.bubble_conch, carrying.apple,
     ),
     AirSwimFromSpooky: item.swim & item.air_swim,
-    LadyOpalsHead: event.Collected("Open Gallery of Nightmares Sewer Chest #1") & item.carry
+    LadyOpalsHead: event.Collected("Open Water Lobby Chest #1") & item.carry
   }
 
   r.region_connections = {
@@ -141,8 +141,8 @@ def Spooky(r: Region):
 @lazy_region
 def SpookyWaterUpper(r: Region):
   r.locations = {
-    "Gallery of Nightmares - Lady Opal's Painting": carrying.lady_opals_head,
-    JesterBoots: event.Collected("Open Gallery of Nightmares Sewer Chest #2"),
+    "Water Lobby - Lady Opal's Painting": carrying.lady_opals_head,
+    JesterBoots: event.Collected("Open Water Lobby Chest #2"),
   }
 
   r.region_connections = {
@@ -153,7 +153,7 @@ def SpookyWaterUpper(r: Region):
 @lazy_region
 def SpookyWaterLower(r: Region):
   r.locations = {
-    "Egg: Gallery of Nightmares - Deepest Darkness": None
+    "Egg: Water Lobby - Deepest Darkness": None
   }
 
   r.region_connections = {
@@ -212,7 +212,7 @@ def LobbySewerMiddle(r: Region):
 @lazy_region
 def LobbySewerUnderwater(r: Region):
   r.locations = {
-    "Card: Gallery of Nightmares - Sewer Bottom": None
+    "Card: Water Lobby - Sewer Bottom": None
   }
 
   from ..CAVE import Sewer
@@ -229,7 +229,7 @@ def LobbySewerUnderwater(r: Region):
 @lazy_region
 def LobbySewerGiant(r: Region):
   r.locations = {
-    "Gallery of Nightmares - Helped Sniffles": item.bubble | carrying.medicine
+    "Water Lobby - Helped Sniffles": item.bubble | carrying.medicine
   }
 
   from . import EarthLobby
@@ -245,7 +245,7 @@ def LobbySewerGiant(r: Region):
 @lazy_region
 def LobbySewerEgg(r: Region):
   r.locations = {
-    "Egg: Gallery of Nightmares - Sewer": Any(
+    "Egg: Water Lobby - Sewer": Any(
       templates.high_jump_obstacle,
       carrying.jester_boots,
       item.wings,

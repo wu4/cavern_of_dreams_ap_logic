@@ -44,6 +44,11 @@ class HasSageBlessing3(InternalEvent): pass
 class HasSageBlessing4(InternalEvent): pass
 class HasSageBlessing5(InternalEvent): pass
 
+class HasLakeFella(InternalEvent): pass
+class HasMonsterFella(InternalEvent): pass
+class HasPalaceFella(InternalEvent): pass
+class HasGalleryFella(InternalEvent): pass
+
 @lazy_region
 def Main(r: Region):
   r.locations = {
@@ -66,10 +71,15 @@ def Main(r: Region):
     "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
     "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
 
-    "Fed Lostleaf Lake Fella":         HasShrooms("Lake")    & (item.ground_tail | item.air_tail | item.horn),
-    "Fed Airborne Armada Fella":       HasShrooms("Monster") & (item.ground_tail | item.air_tail | item.horn),
-    "Fed Prismic Palace Fella":        HasShrooms("Palace")  & (item.ground_tail | item.air_tail | item.horn),
-    "Fed Gallery of Nightmares Fella": HasShrooms("Gallery") & (item.ground_tail | item.air_tail | item.horn),
+    HasLakeFella: (item.ground_tail | item.air_tail | item.horn) & HasShrooms("Lake"),
+    HasMonsterFella: event.Collected(HasLakeFella) & HasShrooms("Monster"),
+    HasPalaceFella: event.Collected(HasMonsterFella) & HasShrooms("Palace"),
+    HasGalleryFella: event.Collected(HasPalaceFella) & HasShrooms("Gallery"),
+
+    "Fed Lostleaf Lake Fella": event.Collected(HasLakeFella),
+    "Fed Airborne Armada Fella": event.Collected(HasMonsterFella),
+    "Fed Prismic Palace Fella": event.Collected(HasPalaceFella),
+    "Fed Gallery of Nightmares Fella": event.Collected(HasGalleryFella),
   }
 
   from . import LostleafLobby, ArmadaLobby, PalaceLobby, GalleryLobby

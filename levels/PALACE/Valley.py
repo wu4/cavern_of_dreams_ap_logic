@@ -1,6 +1,5 @@
 from ...logic.comment import Comment
 from ...logic import lazy_region, Region, Entrance, InternalEvent, Any, CarryableLocation
-from ...logic.logic import Not
 from ...logic import item, carrying, difficulty, tech, event, templates
 
 area_path = "PALACE/Valley (Main)"
@@ -48,24 +47,24 @@ CanAirSwim = Any(
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Entry 1": None,
-    "Shroom: Prismic Palace - Entry 2": None,
-    "Shroom: Prismic Palace - Entry 3": None,
+    "Shroom: Valley - Entry 1": None,
+    "Shroom: Valley - Entry 2": None,
+    "Shroom: Valley - Entry 3": None,
 
-    "Shroom: Prismic Palace - Pool Bridges 1": None,
-    "Shroom: Prismic Palace - Pool Bridges 2": None,
-    "Shroom: Prismic Palace - Pool Bridges 3": None,
-    "Shroom: Prismic Palace - Pool Bridges 4": None,
-    "Shroom: Prismic Palace - Pool Bridges 5": None,
-    "Shroom: Prismic Palace - Pool Bridges 6": None,
+    "Shroom: Valley - Pool Bridges 1": None,
+    "Shroom: Valley - Pool Bridges 2": None,
+    "Shroom: Valley - Pool Bridges 3": None,
+    "Shroom: Valley - Pool Bridges 4": None,
+    "Shroom: Valley - Pool Bridges 5": None,
+    "Shroom: Valley - Pool Bridges 6": None,
 
-    "Shroom: Prismic Palace - Poki-Poki Cave 1": None,
-    "Shroom: Prismic Palace - Poki-Poki Cave 2": None,
-    "Shroom: Prismic Palace - Poki-Poki Cave 3": None,
-    "Shroom: Prismic Palace - Poki-Poki Cave 4": None,
-    "Shroom: Prismic Palace - Poki-Poki Cave 5": None,
+    "Shroom: Valley - Poki-Poki Cave 1": None,
+    "Shroom: Valley - Poki-Poki Cave 2": None,
+    "Shroom: Valley - Poki-Poki Cave 3": None,
+    "Shroom: Valley - Poki-Poki Cave 4": None,
+    "Shroom: Valley - Poki-Poki Cave 5": None,
 
-    "Prismic Palace - Help Lady Opal":
+    "Valley - Help Lady Opal":
       item.lady_opal_egg_1 & item.lady_opal_egg_2 & item.lady_opal_egg_3,
   }
 
@@ -145,11 +144,11 @@ def Pool(r: Region):
   r.locations = {
     "Lady Opal's Egg: Pool": None,
 
-    "Shroom: Prismic Palace - Pool 1": None,
-    "Shroom: Prismic Palace - Pool 2": None,
-    "Shroom: Prismic Palace - Pool 3": None,
-    "Shroom: Prismic Palace - Pool 4": None,
-    "Shroom: Prismic Palace - Pool 5": None
+    "Shroom: Valley - Pool 1": None,
+    "Shroom: Valley - Pool 2": None,
+    "Shroom: Valley - Pool 3": None,
+    "Shroom: Valley - Pool 4": None,
+    "Shroom: Valley - Pool 5": None
   }
 
   r.region_connections = {
@@ -172,7 +171,7 @@ def Pool(r: Region):
 @lazy_region
 def PoolCardLedge(r: Region):
   r.locations = {
-    "Card: Prismic Palace - Above Pool": None
+    "Card: Valley - Above Pool": None
   }
 
   r.region_connections = {
@@ -182,9 +181,9 @@ def PoolCardLedge(r: Region):
 @lazy_region
 def EntrancePomLedge(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Entry Tree 1": None,
-    "Shroom: Prismic Palace - Entry Tree 2": None,
-    "Shroom: Prismic Palace - Entry Tree 3": None,
+    "Shroom: Valley - Entry Tree 1": None,
+    "Shroom: Valley - Entry Tree 2": None,
+    "Shroom: Valley - Entry Tree 3": None,
   }
 
   r.region_connections = {
@@ -194,11 +193,11 @@ def EntrancePomLedge(r: Region):
 @lazy_region
 def PokiPokiCave(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Poms 1": None,
-    "Shroom: Prismic Palace - Poms 2": None,
-    "Shroom: Prismic Palace - Poms 3": None,
-    "Shroom: Prismic Palace - Poms 4": None,
-    "Shroom: Prismic Palace - Poms 5": None,
+    "Shroom: Valley - Poms 1": None,
+    "Shroom: Valley - Poms 2": None,
+    "Shroom: Valley - Poms 3": None,
+    "Shroom: Valley - Poms 4": None,
+    "Shroom: Valley - Poms 5": None,
 
     "Lady Opal's Egg: Poki-Poki": Any(
       carrying.jester_boots,
@@ -232,8 +231,8 @@ def PokiPokiCave(r: Region):
 @lazy_region
 def JesterBootsCove(r: Region):
   r.locations = {
-    "Card: Prismic Palace - Snowcastle": None,
-    "Egg: Prismic Palace - Snowcastle": event.Collected("Open Prismic Palace Snowcastle")
+    "Card: Valley - Snowcastle": None,
+    "Egg: Valley - Snowcastle": event.Collected("Open Valley Snowcastle")
   }
 
   r.region_connections = {
@@ -328,10 +327,10 @@ def LostleafEntryway(r: Region):
 @lazy_region
 def JesterBootsCoveLowerPlatforms(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Jester Boots 1": None,
-    "Shroom: Prismic Palace - Jester Boots 2": None,
-    "Shroom: Prismic Palace - Jester Boots 3": None,
-    "Shroom: Prismic Palace - Jester Boots 4": None,
+    "Shroom: Valley - Jester Boots 1": None,
+    "Shroom: Valley - Jester Boots 2": None,
+    "Shroom: Valley - Jester Boots 3": None,
+    "Shroom: Valley - Jester Boots 4": None,
   }
 
   r.region_connections = {
@@ -360,7 +359,7 @@ def JesterBootsCoveLowerPlatforms(r: Region):
 @lazy_region
 def JesterBootsCoveCastlePlatform(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Jester Boots 5": None
+    "Shroom: Valley - Jester Boots 5": None
   }
 
   r.region_connections = {
@@ -431,7 +430,7 @@ def JesterBootsCoveFloatingPoms(r: Region):
 @lazy_region
 def JesterBootsCovePrestonPlatform(r: Region):
   r.locations = {
-    "Prismic Palace - Snowcastle Preston": None
+    "Valley - Snowcastle Preston": None
   }
 
   r.region_connections = {
@@ -442,17 +441,17 @@ def JesterBootsCovePrestonPlatform(r: Region):
 @lazy_region
 def Spires(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Pom Spire 1": None,
-    "Shroom: Prismic Palace - Pom Spire 2": None,
-    "Shroom: Prismic Palace - Pom Spire 3": None,
-    "Shroom: Prismic Palace - Pom Spire 4": None,
-    "Shroom: Prismic Palace - Pom Spire 5": None,
+    "Shroom: Valley - Pom Spire 1": None,
+    "Shroom: Valley - Pom Spire 2": None,
+    "Shroom: Valley - Pom Spire 3": None,
+    "Shroom: Valley - Pom Spire 4": None,
+    "Shroom: Valley - Pom Spire 5": None,
 
-    "Shroom: Prismic Palace - Observatory Spire 1": None,
-    "Shroom: Prismic Palace - Observatory Spire 2": None,
-    "Shroom: Prismic Palace - Observatory Spire 3": None,
-    "Shroom: Prismic Palace - Observatory Spire 4": None,
-    "Shroom: Prismic Palace - Observatory Spire 5": None,
+    "Shroom: Valley - Observatory Spire 1": None,
+    "Shroom: Valley - Observatory Spire 2": None,
+    "Shroom: Valley - Observatory Spire 3": None,
+    "Shroom: Valley - Observatory Spire 4": None,
+    "Shroom: Valley - Observatory Spire 5": None,
 
     "Lady Opal's Egg: Castle": None,
   }
@@ -490,13 +489,13 @@ def ObservatoryEntry(r: Region):
 @lazy_region
 def ObservatoryPlatform(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Observatory Slide 1": None,
-    "Shroom: Prismic Palace - Observatory Slide 2": None,
-    "Shroom: Prismic Palace - Observatory Slide 3": None,
-    "Shroom: Prismic Palace - Observatory Slide 4": None,
-    "Shroom: Prismic Palace - Observatory Slide 5": None,
+    "Shroom: Valley - Observatory Slide 1": None,
+    "Shroom: Valley - Observatory Slide 2": None,
+    "Shroom: Valley - Observatory Slide 3": None,
+    "Shroom: Valley - Observatory Slide 4": None,
+    "Shroom: Valley - Observatory Slide 5": None,
 
-    "Prismic Palace - Observatory Preston": None
+    "Valley - Observatory Preston": None
   }
 
   r.entrances = [
@@ -542,7 +541,7 @@ def ObservatoryPlatform(r: Region):
 @lazy_region
 def ObservatoryRoof(r: Region):
   r.locations = {
-    "Card: Prismic Palace - Top of Observatory": None
+    "Card: Valley - Top of Observatory": None
   }
 
   r.region_connections = {
@@ -559,7 +558,7 @@ def ObservatoryRoof(r: Region):
 @lazy_region
 def ObservatorySlideEnd(r: Region):
   r.locations = {
-    "Egg: Prismic Palace - Observatory Slide": None
+    "Egg: Valley - Observatory Slide": None
   }
 
   r.region_connections = {
@@ -594,7 +593,7 @@ def OuterRim(r: Region):
 @lazy_region
 def PalaceCardLedge(r: Region):
   r.locations = {
-    "Card: Prismic Palace - Top of Palace": None
+    "Card: Valley - Top of Palace": None
   }
 
   r.region_connections = {
@@ -618,7 +617,7 @@ def PalaceCardLedge(r: Region):
 @lazy_region
 def PalaceTop(r: Region):
   r.locations = {
-    "Egg: Prismic Palace - Top of the Palace": None
+    "Egg: Valley - Top of the Palace": None
   }
 
   from . import Sanctum
@@ -647,28 +646,28 @@ def ClipIntoIce(r: Region):
 @lazy_region
 def UpperWater(r: Region):
   r.locations = {
-    "Shroom: Prismic Palace - Lake Corner 1": None,
-    "Shroom: Prismic Palace - Lake Corner 2": None,
-    "Shroom: Prismic Palace - Lake Corner 3": None,
+    "Shroom: Valley - Lake Corner 1": None,
+    "Shroom: Valley - Lake Corner 2": None,
+    "Shroom: Valley - Lake Corner 3": None,
 
-    "Shroom: Prismic Palace - Lake Plants 1": None,
-    "Shroom: Prismic Palace - Lake Plants 2": None,
-    "Shroom: Prismic Palace - Lake Plants 3": None,
-    "Shroom: Prismic Palace - Lake Plants 4": None,
-    "Shroom: Prismic Palace - Lake Plants 5": None,
-    "Shroom: Prismic Palace - Lake Plants 6": None,
+    "Shroom: Valley - Lake Plants 1": None,
+    "Shroom: Valley - Lake Plants 2": None,
+    "Shroom: Valley - Lake Plants 3": None,
+    "Shroom: Valley - Lake Plants 4": None,
+    "Shroom: Valley - Lake Plants 5": None,
+    "Shroom: Valley - Lake Plants 6": None,
 
-    "Shroom: Prismic Palace - Lake Behind 1": None,
-    "Shroom: Prismic Palace - Lake Behind 2": None,
-    "Shroom: Prismic Palace - Lake Behind 3": None,
+    "Shroom: Valley - Lake Behind 1": None,
+    "Shroom: Valley - Lake Behind 2": None,
+    "Shroom: Valley - Lake Behind 3": None,
 
-    "Shroom: Prismic Palace - Lake Gobbler 1": None,
-    "Shroom: Prismic Palace - Lake Gobbler 2": None,
-    "Shroom: Prismic Palace - Lake Gobbler 3": None,
+    "Shroom: Valley - Lake Gobbler 1": None,
+    "Shroom: Valley - Lake Gobbler 2": None,
+    "Shroom: Valley - Lake Gobbler 3": None,
 
-    "Prismic Palace - Feed Gobbler": carrying.apple,
+    "Valley - Feed Gobbler": carrying.apple,
 
-    "Prismic Palace - Angel Statue Puzzle": Any(
+    "Valley - Angel Statue Puzzle": Any(
       item.ground_tail, item.air_tail,
       carrying.apple, carrying.bubble_conch
     ),
@@ -706,8 +705,8 @@ def UpperWater(r: Region):
 @lazy_region
 def BigstarCave(r: Region):
   r.locations = {
-    "Egg: Prismic Palace - Bigstar": None,
-    "Prismic Palace - Bigstar Preston": None
+    "Egg: Valley - Bigstar": None,
+    "Valley - Bigstar Preston": None
   }
 
   r.region_connections = {
@@ -718,30 +717,30 @@ def BigstarCave(r: Region):
 @lazy_region
 def LowerWater(r: Region):
   r.locations = {
-    "Palace-Lostleaf Connector - Preston": None,
+    "Valley - Lostleaf Connector Preston": None,
 
-    "Shroom: Prismic Palace - Lake Basement Entry 1": None,
-    "Shroom: Prismic Palace - Lake Basement Entry 2": None,
-    "Shroom: Prismic Palace - Lake Basement Entry 3": None,
-    "Shroom: Prismic Palace - Lake Basement Entry 4": None,
-    "Shroom: Prismic Palace - Lake Basement Entry 5": None,
-    "Shroom: Prismic Palace - Lake Basement Entry 6": None,
-    "Shroom: Prismic Palace - Lake Basement Entry 7": None,
-    "Shroom: Prismic Palace - Lake Basement Entry 8": None,
+    "Shroom: Valley - Lake Depths Entry 1": None,
+    "Shroom: Valley - Lake Depths Entry 2": None,
+    "Shroom: Valley - Lake Depths Entry 3": None,
+    "Shroom: Valley - Lake Depths Entry 4": None,
+    "Shroom: Valley - Lake Depths Entry 5": None,
+    "Shroom: Valley - Lake Depths Entry 6": None,
+    "Shroom: Valley - Lake Depths Entry 7": None,
+    "Shroom: Valley - Lake Depths Entry 8": None,
 
-    "Shroom: Prismic Palace - Lake Mushroom Cave 1": None,
-    "Shroom: Prismic Palace - Lake Mushroom Cave 2": None,
-    "Shroom: Prismic Palace - Lake Mushroom Cave 3": None,
-    "Shroom: Prismic Palace - Lake Mushroom Cave 4": None,
-    "Shroom: Prismic Palace - Lake Mushroom Cave 5": None,
+    "Shroom: Valley - Lake Mushroom Cave 1": None,
+    "Shroom: Valley - Lake Mushroom Cave 2": None,
+    "Shroom: Valley - Lake Mushroom Cave 3": None,
+    "Shroom: Valley - Lake Mushroom Cave 4": None,
+    "Shroom: Valley - Lake Mushroom Cave 5": None,
 
-    "Shroom: Prismic Palace - Lake Basement Overpass 1": None,
-    "Shroom: Prismic Palace - Lake Basement Overpass 2": None,
-    "Shroom: Prismic Palace - Lake Basement Overpass 3": None,
-    "Shroom: Prismic Palace - Lake Basement Overpass 4": None,
-    "Shroom: Prismic Palace - Lake Basement Overpass 5": None,
+    "Shroom: Valley - Lake Depths Overpass 1": None,
+    "Shroom: Valley - Lake Depths Overpass 2": None,
+    "Shroom: Valley - Lake Depths Overpass 3": None,
+    "Shroom: Valley - Lake Depths Overpass 4": None,
+    "Shroom: Valley - Lake Depths Overpass 5": None,
 
-    "Prismic Palace - Basement Star Hoops": None,
+    "Valley - Depths Star Hoops": None,
   }
 
   from . import Palace
@@ -782,8 +781,8 @@ def BreakLowerWaterWall(r: Region):
 @lazy_region
 def GobblerCave(r: Region):
   r.locations = {
-    "Egg: Prismic Palace - Gobbler": None,
-    "Prismic Palace - Gobbler Preston": None
+    "Egg: Valley - Gobbler": None,
+    "Valley - Gobbler Preston": None
   }
 
   r.region_connections = {

@@ -22,11 +22,15 @@ class FireLobbyDoor(Entrance):
 class WaterLobbyHole(Entrance):
   warp_path = f"{area_path}/Warps/WarpTrapdoor"
 
+CanFinishEndgame = Any(
+    tech.momentum_cancel & tech.damage_boost & item.swim,
+)
+
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    "Gallery of Nightmares - Sage's Painting": carrying.sages_gloves,
-    "Card: Gallery of Nightmares - Basement Entrance": Any(
+    "Foyer - Sage's Painting": carrying.sages_gloves,
+    "Card: Foyer - Water Lobby Entrance": Any(
       item.wings,
       carrying.mr_kerringtons_wings,
       carrying.jester_boots,
@@ -40,7 +44,7 @@ def Main(r: Region):
       tech.ground_tail_jump,
       tech.air_tail_jump,
     ),
-    "Egg: Gallery of Nightmares - Matryoshka Egg": Any(
+    "Egg: Foyer - Matryoshka Egg": Any(
       item.horn,
       tech.ground_tail_jump,
       item.air_tail,
@@ -58,8 +62,8 @@ def Main(r: Region):
   ]
 
   r.region_connections = {
-    SideDoors: event.Collected("Open Gallery Doors"),
-    Endgame: HasGratitude(4) & (item.air_tail | item.ground_tail) & item.swim
+    SideDoors: event.Collected("Open Foyer Doors"),
+    Endgame: HasGratitude(4) & (item.air_tail | item.ground_tail) & CanFinishEndgame
   }
 
 @lazy_region

@@ -17,7 +17,7 @@ def Main(r: Region):
       item.horn & item.double_jump
     ),
 
-    "Egg: Mr. Kerrington's Heart": Any(
+    "Egg: Heart": Any(
       tech.any_super_jump,
       event.Collected("Unclog Kerrington's Heart")
     )
