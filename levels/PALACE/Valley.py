@@ -34,7 +34,9 @@ class PalaceBasementDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromAbyssToPalace"
   dest_path = f"{area_path}/Warps/DestFromPalaceToAbyss"
 
-class ValleyJesterBoots(CarryableLocation): carryable = "Jester Boots"
+class ValleyJesterBoots(CarryableLocation):
+  location_name = "Valley - Jester Boots"
+  carryable = "Jester Boots"
 class AirSwimFromLostleafEntryway(InternalEvent): pass
 class UnstuckBigstar(InternalEvent): pass
 class BrokeLowerWaterWall(InternalEvent): pass
@@ -586,7 +588,11 @@ def OuterRim(r: Region):
         item.wings,
         tech.bubble_jump
       ),
-      tech.super_bubble_jump
+      tech.super_bubble_jump,
+      carrying.jester_boots & Any(
+        item.climb,
+        tech.super_bounce & item.double_jump
+      )
     )
   }
 

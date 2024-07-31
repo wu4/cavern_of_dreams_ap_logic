@@ -193,9 +193,12 @@ def Main(r: Region):
     ),
 
     UpperLabContainers: Any(
-      tech.ability_toggle & item.wings & item.double_jump
+      tech.ability_toggle & item.wings & item.double_jump,
     ),
 
+    LabGreenConnector: Any(
+      tech.damage_boost & tech.momentum_cancel,
+    )
   }
 
 @lazy_region

@@ -72,7 +72,8 @@ class Whackable(InternalEvent):
     }
 
 class CarryableLocation(InternalEvent):
-  carryable: CarryingItem  # pyright: ignore[reportUninitializedInstanceVariable]
+  location_name: str
+  carryable: CarryingItem
 
 class PlantableSoil(InternalEvent): pass
 

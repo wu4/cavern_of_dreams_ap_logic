@@ -4,7 +4,7 @@ from ..logic.carrying import Carrying
 from ..logic.logic import Logic, Not
 from .helpers import dnf, get_carryings_from_logics
 
-CarryableKey: TypeAlias = Not | Carrying | Literal["default"]
+CarryableKey: TypeAlias = Not | Carrying | Literal["dont-care"]
 
 def distribute_carryable_logic(l: Logic) -> dict[CarryableKey, list[list[Logic]]]:
   logics_by_carryable: dict[CarryableKey, list[list[Logic]]] = {}
@@ -15,7 +15,7 @@ def distribute_carryable_logic(l: Logic) -> dict[CarryableKey, list[list[Logic]]
       d_and = list(filter(carrying.__ne__, d_and))
       group = carrying
     else:
-      group = "default"
+      group = "dont-care"
 
     logics_by_carryable.setdefault(group, []).append(d_and)
 

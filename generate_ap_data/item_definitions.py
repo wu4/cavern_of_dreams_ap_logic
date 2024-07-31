@@ -92,7 +92,7 @@ def generate():
       if not issubclass(location, CarryableLocation): continue
       carryable_locations[str(location)] = location.carryable
 
-  carryable_locations["default"] = None
+  carryable_locations["dont-care"] = None
   accum += serialize_dict(carryable_locations, "carryable_locations")
 
   # location_datas = read_locations_csv("location_names.csv")

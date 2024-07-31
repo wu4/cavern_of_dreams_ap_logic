@@ -154,7 +154,7 @@ def ChalicePlatform(r: Region):
   r.entrances = [
     ChalicePainting.define(
       default_connection = Chalice.FireLobbyDoor,
-      rule = carrying.jester_boots | templates.high_jump_obstacle
+      rule = carrying.jester_boots | templates.high_jump_obstacle | item.sprint
     )
   ]
 

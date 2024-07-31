@@ -1,6 +1,8 @@
 from abc import abstractmethod
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, TypeAlias, override
+
+from logic.carrying import Carrying
 from .. import all_locations
 from .connection_parser import all_regions, all_entrances
 from ..logic_parsing.options import get_required_options
@@ -8,6 +10,7 @@ from ..logic_parsing.helpers import nested_list_to_logic
 
 if TYPE_CHECKING:
   from ..logic.logic import MaybeLogic
+  from ..logic_parsing.carryables import CarryableKey
 
 from ..logic import Region, Entrance
 
@@ -144,20 +147,23 @@ class RegionsBuilder(Builder):
     from ..logic.logic import Not
 
     distributed = distribute_carryable_logic(rule)
-    def sort_key(k):
+    def sort_by_branch_count(k: "CarryableKey"):
       return sum(map(len, distributed[k]))
-    distributed_keys = list(distributed.keys())
 
-    # anything that does not care about carryables
-    if "default" in distributed_keys:
-      logic = simplify(distributed["default"])
-      self.add_line(f"{var_name}.access_rule=lambda s:{logic.into_server_code()}")
+    carryable_keys_by_branch_count = sorted(list(distributed.keys()), key=sort_by_branch_count)
+
+    if "dont-care" in carryable_keys_by_branch_count:
+      logic = simplify(distributed["dont-care"])
+      self.add_line(f"{var_name}.dont_care_access_rule=lambda s:{logic.into_server_code()}")
     else:
-      self.add_line(f"{var_name}.access_rule=lambda s:False")
+      self.add_line(f"{var_name}.dont_care_access_rule=lambda s:False")
 
     self.add_line(f"{var_name}.not_carryable_access_rules="+'{')
     self.indent += 1
-    for key in sorted(filter(lambda k: isinstance(k, Not), distributed_keys), key=sort_key):
+    for key in carryable_keys_by_branch_count:
+      if not isinstance(key, Not): continue
+      assert isinstance(key.logic, Carrying)
+
       nested_list = distributed[key]
       if nested_list == []:
         logic_str = "lambda s:True"
@@ -170,7 +176,10 @@ class RegionsBuilder(Builder):
 
     self.add_line(f"{var_name}.carryable_access_rules="+'{')
     self.indent += 1
-    for key in sorted(filter(lambda k: k != "default" and not isinstance(k, Not), distributed_keys), key=sort_key):
+    for key in carryable_keys_by_branch_count:
+      if key == "default": continue
+      if isinstance(key, Not): continue
+
       nested_list = distributed[key]
       if nested_list == []:
         logic_str = "lambda s:True"

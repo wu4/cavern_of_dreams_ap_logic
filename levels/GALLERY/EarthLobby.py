@@ -35,7 +35,9 @@ class ToiletPainting(Entrance):
 
 class GrewCastleBushes(InternalEvent): pass
 class GrewMainBush(InternalEvent): pass
-class KerringtonWings(CarryableLocation): carryable = "Mr. Kerrington's Wings"
+class KerringtonWings(CarryableLocation):
+  location_name = "Earth Lobby - Mr. Kerrington's Wings"
+  carryable = "Mr. Kerrington's Wings"
 
 class RealignDragonHeadStatue(InternalEvent): pass
 class RealignMainStatue(InternalEvent): pass

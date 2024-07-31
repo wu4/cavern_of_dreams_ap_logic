@@ -82,9 +82,13 @@ endfu
   [x] observatory puzzle
   [x] shelnert dialogue
 
-  [x] undead painting
-  [x] visuals for all paintings
   [x] all angel statue puzzles
   [x] foyer matryoshka egg
   [x] gallery lobby flames are tethered
   [x] hoops still not functional
+  [x] visuals for all paintings
+  [x] dining room preston is visually down
+  [x] armada lobby valves spin
+  [x] drown is tied to its egg
+  [x] chalice is tied to its egg
+  [x] rattles is helped after door is opened

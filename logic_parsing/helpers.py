@@ -106,7 +106,8 @@ class Chunk:
     branches_as_logic = list(map(lambda branch: branch.consume(), self.branches))
     if len(branches_as_logic) > 1:
       if isinstance(self.logic, ChainableLogic):
-        branches_as_logic = list(filter(lambda x: x not in self.logic.operands, branches_as_logic))
+        operands = self.logic.operands
+        branches_as_logic = list(filter(lambda x: x not in operands, branches_as_logic))
       return self.logic & Any(*unique_only(branches_as_logic))
     else:
       return self.logic
@@ -117,8 +118,8 @@ def simplify(in_lss: Sequence[Sequence[Logic]]) -> Any:
   # remove all supersets
   lss: list[list[Logic]] = list(map(list, filter(lambda ls: not any(map(lambda other_ls: set(ls).issuperset(set(other_ls)), filter(lambda x: ls != x, in_lss))), in_lss)))
 
-  # print("\033[31mUNIMPLEMENTED: SIMPLIFY\033[0m")
-  # return nested_list_to_logic(lss)
+  print("\033[31mUNIMPLEMENTED: SIMPLIFY\033[0m")
+  return nested_list_to_logic(lss)
 
   if len(lss) <= 1:
     return nested_list_to_logic(lss)
