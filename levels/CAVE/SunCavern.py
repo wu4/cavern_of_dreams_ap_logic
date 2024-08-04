@@ -117,7 +117,7 @@ def Main(r: Region):
 
       Comment(
         "Well-spaced high jump into the fan",
-        item.high_jump & (item.sprint | tech.bubble_jump)
+        difficulty.intermediate & item.high_jump & (item.sprint | tech.bubble_jump)
       )
     ),
 

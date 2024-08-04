@@ -92,3 +92,5 @@ endfu
   [x] drown is tied to its egg
   [x] chalice is tied to its egg
   [x] rattles is helped after door is opened
+
+[ ] update restrictive starts
