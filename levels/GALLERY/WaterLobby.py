@@ -1,4 +1,4 @@
-from ...logic import Whackable, lazy_region, Region, Entrance, InternalEvent, Any, CarryableLocation
+from ...logic import Whackable, lazy_region, Region, Entrance, InternalEvent, Any
 from ...logic import item, carrying, tech, templates, event
 from ...logic.comment import Comment
 
@@ -37,10 +37,6 @@ class DrownPainting(Entrance):
   warp_path = f"{_painting_path}/WarpCutscene/WarpEvent"
   dest_path = f"{_painting_path}/DestFromPaintingDROWN"
 
-class SagesGloves(CarryableLocation): carryable = "Sage's Gloves"
-class LadyOpalsHead(CarryableLocation): carryable = "Lady Opal's Head"
-class JesterBoots(CarryableLocation): carryable = "Jester Boots"
-
 class AirSwimFromMain(InternalEvent): pass
 class AirSwimFromSpooky(InternalEvent): pass
 
@@ -64,7 +60,7 @@ def Main(r: Region):
         item.double_jump,
       )
     ),
-    SagesGloves: item.carry & templates.high_jump_obstacle,
+    "Water Lobby - Sage's Gloves": templates.high_jump_obstacle,
     AirSwimFromMain: item.swim & item.air_swim,
   }
 
@@ -129,7 +125,7 @@ def Spooky(r: Region):
       carrying.bubble_conch, carrying.apple,
     ),
     AirSwimFromSpooky: item.swim & item.air_swim,
-    LadyOpalsHead: event.Collected("Open Water Lobby Chest #1") & item.carry
+    "Water Lobby - Lady Opal's Head": event.Collected("Open Water Lobby Chest #1")
   }
 
   r.region_connections = {
@@ -142,7 +138,7 @@ def Spooky(r: Region):
 def SpookyWaterUpper(r: Region):
   r.locations = {
     "Water Lobby - Lady Opal's Painting": carrying.lady_opals_head,
-    JesterBoots: event.Collected("Open Water Lobby Chest #2"),
+    "Water Lobby - Jester Boots": event.Collected("Open Water Lobby Chest #2"),
   }
 
   r.region_connections = {

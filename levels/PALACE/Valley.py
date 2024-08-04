@@ -1,5 +1,5 @@
 from ...logic.comment import Comment
-from ...logic import lazy_region, Region, Entrance, InternalEvent, Any, CarryableLocation
+from ...logic import lazy_region, Region, Entrance, InternalEvent, Any
 from ...logic import item, carrying, difficulty, tech, event, templates
 
 area_path = "PALACE/Valley (Main)"
@@ -34,9 +34,6 @@ class PalaceBasementDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromAbyssToPalace"
   dest_path = f"{area_path}/Warps/DestFromPalaceToAbyss"
 
-class ValleyJesterBoots(CarryableLocation):
-  location_name = "Valley - Jester Boots"
-  carryable = "Jester Boots"
 class AirSwimFromLostleafEntryway(InternalEvent): pass
 class UnstuckBigstar(InternalEvent): pass
 class BrokeLowerWaterWall(InternalEvent): pass
@@ -373,7 +370,7 @@ def JesterBootsCoveCastlePlatform(r: Region):
 @lazy_region
 def JesterBootsCoveLowerCastle(r: Region):
   r.locations = {
-    ValleyJesterBoots: None
+    "Valley - Jester Boots": None
   }
 
   r.region_connections = {

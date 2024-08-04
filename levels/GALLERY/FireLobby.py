@@ -1,4 +1,4 @@
-from ...logic import lazy_region, Region, Entrance, InternalEvent, Any, CarryableLocation
+from ...logic import lazy_region, Region, Entrance, InternalEvent, Any
 from ...logic import item, carrying, tech, event, difficulty, templates
 
 area_path = "GALLERY/Fire Lobby"
@@ -17,8 +17,6 @@ class ChalicePainting(Entrance):
   dest_path = f"{painting_path}/DestFromPaintingChalice"
 
 class DouseRaceFlame(InternalEvent): pass
-
-class ShelnertsFish(CarryableLocation): carryable = "Shelnert's Fish"
 
 @lazy_region
 def Main(r: Region):
@@ -113,7 +111,7 @@ def ClimbToKerringtonPaintingPlatform(r: Region):
 @lazy_region
 def FishPlatform(r: Region):
   r.locations = {
-    ShelnertsFish: item.carry
+    "Fire Lobby - Shelnert's Fish": None
   }
 
   r.region_connections = {

@@ -1,4 +1,4 @@
-from ...logic import lazy_region, Entrance, Region, CarryableLocation, Any
+from ...logic import lazy_region, Entrance, Region, Any
 from ...logic import item, tech, carrying, templates
 from ...logic.comment import Comment
 
@@ -26,7 +26,9 @@ class GreenDoor(Entrance):
   warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToGardenRoom"
   dest_path = f"{area_path}/Monster/Warps/DestFromGardenRoomToMonster"
 
-class SkyKerringtonWings(CarryableLocation): carryable = "Mr. Kerrington's Wings"
+# class SkyKerringtonWings(CarryableLocation):
+#   location_name = "Airborne Armada - Mr. Kerrington's Wings"
+#   carryable = "Mr. Kerrington's Wings"
 
 @lazy_region
 def Main(r: Region):
@@ -256,7 +258,7 @@ def FireDronePlatform(r: Region):
 @lazy_region
 def WaterDronePlatform(r: Region):
   r.locations = {
-    SkyKerringtonWings: item.carry
+    "Airborne Armada - Mr. Kerrington's Wings": None
   }
 
   from . import WaterDrone

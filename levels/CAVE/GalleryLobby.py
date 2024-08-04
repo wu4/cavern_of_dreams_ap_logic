@@ -62,7 +62,7 @@ def Main(r: Region):
     ),
     SunCavernTeleport.define(
       default_connection = SunCavern.GalleryLobbyTeleport,
-      rule = event.Collected("Open Gallery Lobby Teleport")
+      rule = event.Collected("Open Gallery Lobby Teleport") & carrying.no_jester_boots
     ),
     RainbowBench.define(
       default_connection = Rainbow.WellEntrance

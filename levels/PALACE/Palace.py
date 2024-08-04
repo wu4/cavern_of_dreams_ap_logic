@@ -1,4 +1,4 @@
-from ...logic import lazy_region, Region, Entrance, InternalEvent, Any, CarryableLocation
+from ...logic import lazy_region, Region, Entrance, InternalEvent, Any
 from ...logic import item, carrying, tech, event
 
 area_path = "PALACE/Palace"
@@ -16,7 +16,6 @@ class BasementDoor(Entrance):
   dest_path = f"{area_path}/Warps/DestFromAbyssToPalace"
 
 class KnockedPillarsDown(InternalEvent): pass
-class BubbleConch(CarryableLocation): carryable = "Bubble Conch"
 
 @lazy_region
 def Main(r: Region):
@@ -80,7 +79,7 @@ def BubbleConchRoom(r: Region):
     "Shroom: Palace Interior - Bubble Conch Room 2": None,
     "Shroom: Palace Interior - Bubble Conch Room 3": None,
 
-    BubbleConch: item.carry
+    "Palace Interior - Bubble Conch": None
   }
 
   r.region_connections = {

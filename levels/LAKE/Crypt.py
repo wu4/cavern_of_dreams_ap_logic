@@ -1,4 +1,4 @@
-from ...logic.objects import InternalEvent
+from ...logic.objects import InternalEvent, Whackable
 from ...logic import lazy_region, Region, Entrance, Any
 from ...logic.comment import Comment
 from ...logic import item, difficulty, tech, carrying, event
@@ -13,6 +13,21 @@ class LostleafLakeDoorBack(Entrance):
   dest_path = f"{area_path}/Warps/DestFromLakeCliffToCrypt"
 
 class PrestonAccess(InternalEvent): pass
+class OutOfBounds(InternalEvent): pass
+
+class PrestonDoor(Whackable):
+  air_tail_works = True
+  ground_tail_works = True
+  throwables_work = True
+
+class SecretBackDoor(InternalEvent): pass
+
+class BackDoor(Whackable):
+  air_tail_works = True
+  ground_tail_works = True
+  throwables_work = True
+  custom_rule = event.Collected(SecretBackDoor)
+
 class BrokeBackExitWithHorn(InternalEvent): pass
 
 CanBreakBackExit = Any(
@@ -32,6 +47,8 @@ def Main(r: Region):
   ]
 
   r.region_connections = {
+    **PrestonDoor.connecting_to(PrestonRoom),
+
     RightPlatform: Any(
       carrying.jester_boots,
       tech.any_super_jump,
@@ -42,7 +59,6 @@ def Main(r: Region):
       tech.air_tail_jump,
       item.high_jump & Any(difficulty.intermediate, item.wings, tech.bubble_jump),
       tech.wing_storage
-
     ),
 
     LeftPlatform: Any(
@@ -62,7 +78,7 @@ def LeftPlatform(r: Region):
   r.region_connections = {
     Main: None,
 
-    BackExit: CanBreakBackExit,
+    **BackDoor.connecting_to(BackExit),
 
     EggPlatform: Any(
       item.climb,
@@ -109,12 +125,21 @@ def TimedPlatform(r: Region):
   }
 
 @lazy_region
-def EggPlatform(r: Region):
+def SecretWorld(r: Region):
   r.locations = {
-    BrokeBackExitWithHorn: Comment(
+    SecretBackDoor: Comment(
       "Precisely fall onto the block with a dive",
       difficulty.hard & item.horn & Any(item.wings, tech.bubble_jump) & tech.out_of_bounds & tech.ejection_launch & tech.damage_boost & tech.z_target
     ),
+  }
+
+  r.region_connections = {
+    BackExit: None
+  }
+
+@lazy_region
+def EggPlatform(r: Region):
+  r.locations = {
 
     "Egg: Crypt - Shelwart's Gravestone": Any(
       (item.bubble | difficulty.intermediate) & Any(
@@ -145,7 +170,7 @@ def EggPlatform(r: Region):
       tech.bubble_jump
     ),
 
-    BackExit: tech.out_of_bounds & tech.ejection_launch & tech.damage_boost & tech.z_target & Any(
+    SecretWorld: tech.out_of_bounds & tech.ejection_launch & tech.damage_boost & tech.z_target & Any(
       difficulty.intermediate & tech.momentum_cancel & item.double_jump & (item.wings | tech.bubble_jump),
 
       difficulty.hard & Any(
@@ -166,9 +191,7 @@ def BackExit(r: Region):
     )
   ]
 
-  r.region_connections = {
-    LeftPlatform: CanBreakBackExit
-  }
+  r.region_connections = BackDoor.connecting_to(LeftPlatform)
 
 @lazy_region
 def PrestonRoom(r: Region):
@@ -176,9 +199,4 @@ def PrestonRoom(r: Region):
     PrestonAccess: None
   }
 
-  r.region_connections = {
-    Main: Any(
-      item.air_tail | item.ground_tail,
-      carrying.apple | carrying.bubble_conch
-    )
-  }
+  r.region_connections = PrestonDoor.connecting_to(Main)

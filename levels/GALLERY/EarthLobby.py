@@ -1,4 +1,4 @@
-from ...logic import lazy_region, Region, Entrance, InternalEvent, Any, All, CarryableLocation
+from ...logic import lazy_region, Region, Entrance, InternalEvent, Any, All
 from ...logic import item, carrying, tech, event, difficulty
 from ...logic.comment import Comment
 
@@ -35,9 +35,6 @@ class ToiletPainting(Entrance):
 
 class GrewCastleBushes(InternalEvent): pass
 class GrewMainBush(InternalEvent): pass
-class KerringtonWings(CarryableLocation):
-  location_name = "Earth Lobby - Mr. Kerrington's Wings"
-  carryable = "Mr. Kerrington's Wings"
 
 class RealignDragonHeadStatue(InternalEvent): pass
 class RealignMainStatue(InternalEvent): pass
@@ -296,7 +293,7 @@ def InsideCastle(r: Region):
 @lazy_region
 def CastleWingsPlatform(r: Region):
   r.locations = {
-    KerringtonWings: item.carry
+    "Earth Lobby - Mr. Kerrington's Wings": None
   }
 
   r.region_connections = {

@@ -1,5 +1,5 @@
-from ...logic import lazy_region, Region, Entrance, Any
-from ...logic import item, carrying, tech, event
+from ...logic import lazy_region, Region, Entrance, Any, InternalEvent
+from ...logic import item, carrying, tech, event, difficulty
 from ...logic.quantities import HasGratitude
 
 area_path = "GALLERY/Foyer (Main)"
@@ -22,13 +22,29 @@ class FireLobbyDoor(Entrance):
 class WaterLobbyHole(Entrance):
   warp_path = f"{area_path}/Warps/WarpTrapdoor"
 
+class OpenedGratitudeDoor(InternalEvent): pass
+
 CanFinishEndgame = Any(
-    tech.momentum_cancel & tech.damage_boost & item.swim,
+    (item.sprint | difficulty.intermediate) & Any(
+      carrying.mr_kerringtons_wings,
+      item.wings & item.double_jump,
+    ),
+
+    difficulty.intermediate & item.swim & Any(carrying.bubble_conch, carrying.shelnerts_fish),
+
+    difficulty.hard & Any(
+      item.swim & Any(
+        tech.momentum_cancel & tech.damage_boost,
+        tech.bubble_jump,
+      ),
+      item.wings & item.double_jump & tech.ability_toggle
+    )
 )
 
 @lazy_region
 def Main(r: Region):
   r.locations = {
+    OpenedGratitudeDoor: HasGratitude(4) & (item.air_tail | item.ground_tail),
     "Foyer - Sage's Painting": carrying.sages_gloves,
     "Card: Foyer - Water Lobby Entrance": Any(
       item.wings,
@@ -63,7 +79,7 @@ def Main(r: Region):
 
   r.region_connections = {
     SideDoors: event.Collected("Open Foyer Doors"),
-    Endgame: HasGratitude(4) & (item.air_tail | item.ground_tail) & CanFinishEndgame
+    Finale: event.Collected(OpenedGratitudeDoor)
   }
 
 @lazy_region
@@ -79,6 +95,12 @@ def SideDoors(r: Region):
     FireLobbyDoor.define(FireLobby.FoyerDoor),
     EarthLobbyDoor.define(EarthLobby.FoyerDoor)
   ]
+
+@lazy_region
+def Finale(r: Region):
+  r.region_connections = {
+    Endgame: CanFinishEndgame
+  }
 
 @lazy_region
 def Endgame(r: Region):

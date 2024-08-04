@@ -1,7 +1,6 @@
 from __future__ import annotations
 from abc import abstractmethod
 
-from .has import CarryingItem
 from .logic import MaybeLogic as _MaybeLogic
 from ..generated_types import AnyLocation
 
@@ -71,14 +70,14 @@ class Whackable(InternalEvent):
       r: event.Collected(cls)
     }
 
-class CarryableLocation(InternalEvent):
-  location_name: str
-  carryable: CarryingItem
+# class CarryableLocation(InternalEvent):
+#   location_name: str
+#   carryable: CarryingItem
 
 class PlantableSoil(InternalEvent): pass
 
 
-LocationType: TypeAlias = AnyLocation | type[InternalEvent] | type[CarryableLocation]
+LocationType: TypeAlias = AnyLocation | type[InternalEvent]
 
 class Region:
   _is_defined: bool = False

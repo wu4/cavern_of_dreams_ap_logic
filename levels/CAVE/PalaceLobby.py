@@ -152,7 +152,7 @@ def PrismicEntryPlatform(r: Region):
     ),
     SunCavernTeleport.define(
       default_connection = SunCavern.PalaceLobbyTeleport,
-      rule = event.Collected("Open Palace Lobby Teleport")
+      rule = event.Collected("Open Palace Lobby Teleport") & carrying.no_jester_boots
     )
   ]
 

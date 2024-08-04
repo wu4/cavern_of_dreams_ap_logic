@@ -118,7 +118,7 @@ def simplify(in_lss: Sequence[Sequence[Logic]]) -> Any:
   # remove all supersets
   lss: list[list[Logic]] = list(map(list, filter(lambda ls: not any(map(lambda other_ls: set(ls).issuperset(set(other_ls)), filter(lambda x: ls != x, in_lss))), in_lss)))
 
-  print("\033[31mUNIMPLEMENTED: SIMPLIFY\033[0m")
+  # print("\033[31mUNIMPLEMENTED: SIMPLIFY\033[0m")
   return nested_list_to_logic(lss)
 
   if len(lss) <= 1:

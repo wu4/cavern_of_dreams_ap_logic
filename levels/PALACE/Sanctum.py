@@ -1,4 +1,4 @@
-from ...logic import lazy_region, Region, Entrance, Any, CarryableLocation
+from ...logic import lazy_region, Region, Entrance, Any
 from ...logic import item, carrying, tech, event
 
 area_path = "PALACE/Sanctum"
@@ -12,12 +12,10 @@ class ValleyDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromSanctumToValleyTop"
   dest_path = f"{area_path}/Warps/DestFromValleyToSanctum"
 
-class BubbleConch(CarryableLocation): carryable = "Bubble Conch"
-
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    BubbleConch: item.carry,
+    "Heaven's Path - Bubble Conch": None,
 
     "Heaven's Path - Bottom Preston": item.swim
   }

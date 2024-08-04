@@ -14,8 +14,9 @@ if __name__ == "__main__":
 
     accum.extend(all_locations.generate_location_lines(
       lambda category: f"{category}Location:TypeAlias=Literal[",
-      lambda location: repr(location) + ",",
+      lambda location: f"{repr(location)},",
       "]"
     ))
+
     with open("generated_types.py", "w") as out_py:
         _ = out_py.write("\n".join(accum))

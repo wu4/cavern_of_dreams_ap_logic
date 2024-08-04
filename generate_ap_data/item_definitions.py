@@ -1,7 +1,6 @@
 from collections.abc import Iterable, Mapping
 import re
 
-from ..logic.objects import CarryableLocation
 # from ..csv_parsing import read_locations_csv, FlagList, FlagListWithLocations
 from .. import all_locations
 from .connection_parser import all_regions
@@ -83,14 +82,24 @@ def generate():
     accum.append("],")
   accum.append("}")
   accum.append("item_group_sets:dict[str,set[str]]={group:set(ls) for group,ls in item_groups.items()}")
+  accum.append("location_groups:dict[str,list[str]]={")
+  for name, cat in all_locations.all_categories():
+    if isinstance(cat, all_locations.CategoryNoLocation): continue
+    capital = name[0].upper() + name[1:]
+    accum.append(repr(capital) + ":[")
+    accum.extend(repr(i.location) + "," for i in cat.rows)
+    accum.append("],")
+  accum.append("}")
+  accum.append("location_group_sets:dict[str,set[str]]={group:set(ls) for group,ls in location_groups.items()}")
 
   carryable_locations: dict[str, str | None] = {}
 
   for region in all_regions:
     for location in region.locations.keys():
-      if isinstance(location, str): continue
-      if not issubclass(location, CarryableLocation): continue
-      carryable_locations[str(location)] = location.carryable
+      if not isinstance(location, str): continue
+      carryable_location_entry = next(filter(lambda row: row.location == location, all_locations.carryable.rows), None)
+      if carryable_location_entry is None: continue
+      carryable_locations[str(location)] = carryable_location_entry.item
 
   carryable_locations["dont-care"] = None
   accum += serialize_dict(carryable_locations, "carryable_locations")

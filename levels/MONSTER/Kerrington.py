@@ -1,4 +1,4 @@
-from ...logic import lazy_region, Entrance, Region, CarryableLocation, Any, InternalEvent, Whackable
+from ...logic import lazy_region, Entrance, Region, Any, InternalEvent, Whackable
 from ...logic.comment import Comment
 from ...logic import item, tech, carrying, difficulty, event
 
@@ -23,9 +23,6 @@ class HeartDoor(Entrance):
   warp_path = f"{area_path}/Rotate (Inside Monster)/Warps/WarpFroMonsterToHeart" # [sic]
   dest_path = f"{area_path}/Rotate (Inside Monster)/Warps/DestFromHeartToMonster"
 
-class GreenMedicine(CarryableLocation): carryable = "Medicine"
-class MainMedicine(CarryableLocation): carryable = "Medicine"
-
 class MainBoils(InternalEvent): pass
 class GreenBoil(InternalEvent): pass
 class HornOnAnnoyingGenerator(InternalEvent): pass
@@ -40,7 +37,10 @@ class CauldronRoomWall(Whackable):
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    MainMedicine: item.carry,
+    "Kerrington - Main Medicine": None,
+    "Kerrington - Lab Medicine": None,
+    "Kerrington - Medicine Pool Medicine": None,
+    "Kerrington - Bedroom Medicine": None,
 
     MainBoils: carrying.medicine,
 
@@ -216,7 +216,7 @@ def IntoFrontDoor(r: Region):
 @lazy_region
 def GreenRoom(r: Region):
   r.locations = {
-    GreenMedicine: item.carry,
+    "Kerrington - Rain Medicine": None,
 
     GreenBoil: carrying.medicine,
 

@@ -45,7 +45,7 @@ def Main(r: Region):
 
     SunCavernTeleport.define(
       default_connection = SunCavern.LostleafLobbyTeleport,
-      rule = event.Collected("Open Lake Lobby Teleport")
+      rule = event.Collected("Open Lake Lobby Teleport") & carrying.no_jester_boots
     )
   ]
 

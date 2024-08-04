@@ -1,6 +1,5 @@
 from ...logic.objects import PlantableSoil
 from ...logic import lazy_region, Region, Entrance, Any
-from ...logic.objects import CarryableLocation
 from ...logic.comment import Comment
 from ...logic import item, difficulty, tech, carrying, event, has, templates
 
@@ -46,42 +45,12 @@ class WinkyTreeSoil(PlantableSoil): pass
 class DeepDeepWoodsSoil(PlantableSoil): pass
 class BigAppleLedgeSoil(PlantableSoil): pass
 
-class LakeApple(CarryableLocation):
-  location_name = "Lostleaf Lake - Lake Apple"
-  carryable = "Apple"
-class EntryApple(CarryableLocation):
-  location_name = "Lostleaf Lake - Entry Apple"
-  carryable = "Apple"
-class DeepWoodsEntrywayApple(CarryableLocation):
-  location_name = "Lostleaf Lake - Deep Woods Entryway Apple"
-  carryable = "Apple"
-class CryptApple(CarryableLocation):
-  location_name = "Lostleaf Lake - Crypt Apple"
-  carryable = "Apple"
-class DeepWoodsApple(CarryableLocation):
-  location_name = "Lostleaf Lake - Deep Woods Apple"
-  carryable = "Apple"
-class DeepWoodsJesterBoots(CarryableLocation):
-  location_name = "Lostleaf Lake - Deep Woods Jester Boots"
-  carryable = "Jester Boots"
-
 @lazy_region
 def Main(r: Region):
   r.locations = {
-    LakeApple: None,
-    EntryApple: None,
-    DeepWoodsEntrywayApple: None,
-
-    # LakeApple: item.carry & Any(
-    #   Comment(
-    #     "Grab the apple near the Winky Tree",
-    #     difficulty.intermediate
-    #   ),
-    #   item.horn,
-    #   item.air_tail,
-    #   item.ground_tail,
-    #   carrying.apple | carrying.bubble_conch
-    # ),
+    "Lostleaf Lake - Lake Apple": None,
+    "Lostleaf Lake - Entry Apple": None,
+    "Lostleaf Lake - Deep Woods Entryway Apple": None,
 
     WinkyTreeSoil: carrying.apple,
 
@@ -424,8 +393,8 @@ def DeepDeepWoods(r: Region):
     "Shroom: Lostleaf Lake - Deep Woods 5": None,
     "Shroom: Lostleaf Lake - Deep Woods 6": None,
 
-    DeepWoodsJesterBoots: None,
-    DeepWoodsApple: item.carry,
+    "Lostleaf Lake - Deep Woods Jester Boots": None,
+    "Lostleaf Lake - Deep Woods Apple": None,
 
     DeepDeepWoodsSoil: carrying.apple,
 
@@ -556,14 +525,7 @@ def InsideCrypt(r: Region):
 @lazy_region
 def CryptBackLedge(r: Region):
   r.locations = {
-    CryptApple: item.carry & Any(
-      item.ground_tail | item.air_tail,
-      carrying.apple | carrying.bubble_conch,
-
-      item.high_jump,
-      item.double_jump,
-      item.horn
-    ),
+    "Lostleaf Lake - Crypt Apple": None,
 
     CryptSoil: carrying.apple
   }

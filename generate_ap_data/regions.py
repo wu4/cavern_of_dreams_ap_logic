@@ -2,7 +2,7 @@ from abc import abstractmethod
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, TypeAlias, override
 
-from logic.carrying import Carrying
+from ..logic.carrying import Carrying
 from .. import all_locations
 from .connection_parser import all_regions, all_entrances
 from ..logic_parsing.options import get_required_options
@@ -76,10 +76,11 @@ class RegionsBuilder(Builder):
   def run(self):
     from ..levels.CAVE import SunCavern
     from ..levels.GALLERY import Foyer
-    self.add_line("from ..regions import CavernOfDreamsRegion as R, CavernOfDreamsEntrance as E, CavernOfDreamsLocation as L, CavernOfDreamsCarryableRegion as CR")
+    self.add_line("from ..regions import CavernOfDreamsRegion as R, CavernOfDreamsEntrance as E, CavernOfDreamsLocation as L")
     # self.add_line("from ..items import CavernOfDreamsEvent as EV")
     self.add_line("from ..entrance_rando import randomize_entrances")
     self.add_line("from .data import item_group_sets")
+    self.add_line("from ..item_rules import no_carryables, no_carryables_or_eggs")
     self.add_line("all_eggs=item_group_sets['Egg']")
     # self.add_line("from ..item_rules import is_shroom")
     self.define_entrances()
@@ -111,7 +112,9 @@ class RegionsBuilder(Builder):
     self.add_line(f"e=w.create_event('Victory')")
     self.add_line(f"l=L(p,'VictoryLocation',False,{region_names[Foyer.Endgame]})")
     self.add_line(f"l.place_locked_item(e)")
+    self.add_line(f"l.access_rule = lambda s:True")
     self.add_line(f"{region_names[Foyer.Endgame]}.locations.append(l)")
+    self.add_line("return cl")
 
   def connect_short(
     self, start_id: str, to_id: str, rule: "MaybeLogic",
@@ -137,9 +140,17 @@ class RegionsBuilder(Builder):
     self.add_line(f"# {start_name} -> {to_name}")
     self.connect_short(start_id, to_id, rule, name)
 
+  def define_dict(self, var_name: str, dictionary: dict[str, str]):
+    self.add_line(f"{var_name}="+'{')
+    self.indent += 1
+    for k, v in dictionary.items():
+      self.add_line(f"{k}:{v},")
+    self.indent -= 1
+    self.add_line("}")
+
   def define_rules(self, rule: "MaybeLogic", var_name: str):
     if rule is None:
-      # self.add_line(f"{var_name}.can_reach={var_name}.simple_can_reach")
+      self.add_line(f"{var_name}.dont_care_access_rule=lambda s:True")
       return
 
     from ..logic_parsing.carryables import distribute_carryable_logic
@@ -147,101 +158,36 @@ class RegionsBuilder(Builder):
     from ..logic.logic import Not
 
     distributed = distribute_carryable_logic(rule)
-    def sort_by_branch_count(k: "CarryableKey"):
+    def sort_by_branch_size(k: "CarryableKey"):
       return sum(map(len, distributed[k]))
 
-    carryable_keys_by_branch_count = sorted(list(distributed.keys()), key=sort_by_branch_count)
+    cases_by_branch_size = sorted(list(distributed.keys()), key=sort_by_branch_size)
 
-    if "dont-care" in carryable_keys_by_branch_count:
-      logic = simplify(distributed["dont-care"])
-      self.add_line(f"{var_name}.dont_care_access_rule=lambda s:{logic.into_server_code()}")
-    else:
-      self.add_line(f"{var_name}.dont_care_access_rule=lambda s:False")
+    def get_simplified_logic(case: "CarryableKey"):
+      logic = distributed[case]
+      return "True" if logic == [] else simplify(logic).into_server_code()
 
-    self.add_line(f"{var_name}.not_carryable_access_rules="+'{')
-    self.indent += 1
-    for key in carryable_keys_by_branch_count:
-      if not isinstance(key, Not): continue
-      assert isinstance(key.logic, Carrying)
+    inverse_rules: dict[str, str] = {}
+    rules: dict[str, str] = {}
 
-      nested_list = distributed[key]
-      if nested_list == []:
-        logic_str = "lambda s:True"
+    for case in cases_by_branch_size:
+      # handle this below
+      if case == "dont-care": continue
+
+      case_rule = f"lambda s:{get_simplified_logic(case)}"
+      if isinstance(case, Not):
+        assert isinstance(case.logic, Carrying)
+        inverse_rules[repr(case.logic.carryable)] = case_rule
       else:
-        logic = simplify(nested_list)
-        logic_str = f"lambda s:{logic.into_server_code()}"
-      self.add_line(f"{repr(key.logic.carryable)}:{logic_str},")
-    self.indent -= 1
-    self.add_line("}")
+        rules[repr(case.carryable)] = case_rule
 
-    self.add_line(f"{var_name}.carryable_access_rules="+'{')
-    self.indent += 1
-    for key in carryable_keys_by_branch_count:
-      if key == "default": continue
-      if isinstance(key, Not): continue
+    if "dont-care" in cases_by_branch_size:
+      dont_care_rule = f"lambda s:{get_simplified_logic('dont-care')}"
+      self.add_line(f"{var_name}.dont_care_access_rule={dont_care_rule}")
 
-      nested_list = distributed[key]
-      if nested_list == []:
-        logic_str = "lambda s:True"
-      else:
-        logic = simplify(nested_list)
-        logic_str = f"lambda s:{logic.into_server_code()}"
-      self.add_line(f"{repr(key.carryable)}:{logic_str},")
-    self.indent -= 1
-    self.add_line("}")
+    self.define_dict(f"{var_name}.inverse_carryable_access_rules", inverse_rules)
+    self.define_dict(f"{var_name}.carryable_access_rules", rules)
 
-  def define_rule(self, rule: "MaybeLogic"):
-    if rule is None: return False
-    self.add_line("def rule(s):")
-    self.indent += 1
-    from ..logic_parsing.carryables import distribute_carryable_logic
-    from ..logic_parsing.helpers import simplify
-    from ..logic.logic import Not
-    distributed = distribute_carryable_logic(rule)
-    def sort_key(k):
-      return sum(map(len, distributed[k]))
-    distributed_keys = list(distributed.keys())
-
-    # anything that does not care about carryables
-    if "default" in distributed_keys:
-      logic = simplify(distributed["default"])
-      self.add_line(f"if {logic.into_server_code()}: return True")
-
-    if len(list(filter("default".__ne__, distributed_keys))) > 0:
-      self.add_line("carryable=s._cavernofdreams_carrying[p]")
-
-    # process Nots before the rest
-    # NOTE: Nots should not early-out if they return false
-    for key in sorted(filter(lambda k: isinstance(k, Not), distributed_keys), key=sort_key):
-      self.add_line(f"if carryable!={repr(key.logic.carryable)}:")
-      self.indent += 1
-      nested_list = distributed[key]
-      if nested_list == []:
-        self.add_line("return True")
-      else:
-        logic = simplify(nested_list)
-        self.add_line(f"if {logic.into_server_code()}: return True")
-      self.indent -= 1
-
-    is_first = True
-    for key in sorted(filter(lambda k: k != "default" and not isinstance(k, Not), distributed_keys), key=sort_key):
-      if key.carryable is None:
-        self.add_line(f"{'' if is_first else 'el'}if carryable is None:")
-      else:
-        self.add_line(f"{'' if is_first else 'el'}if carryable=={repr(key.carryable)}:")
-      self.indent += 1
-      nested_list = distributed[key]
-      if nested_list == []:
-        self.add_line("return True")
-      else:
-        logic = simplify(nested_list)
-        self.add_line(f"return {logic.into_server_code()}")
-      self.indent -= 1
-      is_first = False
-
-    self.add_line("return False")
-    self.indent -= 1
-    return True
 
   def connect(self, start: Region, to: Region, rule: "MaybeLogic", name: str | None = None):
     self.connect_str(
@@ -252,32 +198,61 @@ class RegionsBuilder(Builder):
     )
 
   def define_locations(self):
-    from ..logic.objects import CarryableLocation, InternalEvent
+    from ..logic.objects import InternalEvent
 
     locations: dict[str, RegionAndRule] = {}
-    carryable_locations: dict[type[CarryableLocation], RegionAndRule] = {}
+    # carryable_locations: dict[type[CarryableLocation], RegionAndRule] = {}
     internal_events: dict[type[InternalEvent], RegionAndRule] = {}
 
     for region in all_regions:
       for location, rule in region.locations.items():
         if isinstance(location, str):
           locations[location] = (region, rule)
-        elif issubclass(location, CarryableLocation):
-          carryable_locations[location] = (region, rule)
+        # elif issubclass(location, CarryableLocation):
+        #   carryable_locations[location] = (region, rule)
         else:
           internal_events[location] = (region, rule)
 
-    self.add_line("shroomsanity=o.shroomsanity.value==1")
+    # self.add_line("shroomsanity=o.shroomsanity.value==1")
+    self.add_line("cl=[]")
     for category_name, locations_list in all_locations.locations_by_category():
       # self.add_line(f"if o.{category}_rando:")
       # self.indent += 1
+      category_no_carryables = category_name in {
+        "event", "gratitude", "ability"
+      }
+
       for location in locations_list:
         region, rule = locations[location]
+
         self.add_line(f"l=L(p,{repr(location)},True,{region_names[region]})")
+
+        location_no_carryables = category_no_carryables or (location in all_locations.carryables_blacklist)
+        if location_no_carryables:
+          if location == "Sun Cavern - Sage's Blessing 5":
+            self.add_line("l.item_rule=no_carryables_or_eggs")
+          else:
+            self.add_line("l.item_rule=no_carryables")
+        else:
+          cl_indent = 0
+          if category_name == "shroom":
+            self.add_line("if o.shroomsanity:")
+            cl_indent = 1
+
+          self.indent += cl_indent
+          self.add_line("cl.append(l)")
+          self.indent -= cl_indent
+
         # if category_name == "shroom":
         #   self.add_line("if not shroomsanity:l.item_rule=is_shroom")
         self.define_rules(rule, "l")
         self.add_line(f"{region_names[region]}.locations.append(l)")
+
+    # for location, (region, rule) in carryable_locations.items():
+    #   name = repr(location.location_name)
+    #   self.add_line(f"l=L(p,{name},True,{region_names[region]})")
+    #   self.define_rules(rule, "l")
+    #   self.add_line(f"{region_names[region]}.locations.append(l)")
 
     for location, (region, rule) in internal_events.items():
       rule_indent = 0
@@ -294,24 +269,10 @@ class RegionsBuilder(Builder):
 
       self.add_line(f"e=w.create_event({repr(str(location))})")
       self.add_line(f"l.place_locked_item(e)")
+      self.add_line(f"l.item_rule=no_carryables")
 
       self.add_line(f"{region_names[region]}.locations.append(l)")
       self.indent -= rule_indent
-
-    for location, (region, rule) in carryable_locations.items():
-      name = repr(str(location))
-      self.add_line(f"r=CR({name},p,mw,{repr(location.carryable)})")
-      # self.add_line(f"l=L(p,{name},None,r)")
-      # if rule is not None:
-      #   self.add_line(f"l.access_rule={into_ap_rule(rule)}")
-
-      # self.add_line(f"e=w.create_event({name})")
-      # self.add_line(f"l.place_locked_item(e)")
-
-      # self.add_line(f"r.locations.append(l)")
-      self.add_line(f"{region_names[region]}.connect(r)")
-      self.add_line(f"r.connect({region_names[region]})")
-      self.add_line(f"mw.regions.append(r)")
 
     # self.indent -= 1
 
@@ -355,9 +316,9 @@ class RegionsBuilder(Builder):
   def define_entrance_rules(self):
     self.add_line("entrance_rules={}")
     # self.indent += 1
-    for entrance in all_entrances:
-      rule_var = 'rule' if self.define_rule(entrance.rule) else 'None'
-      self.add_line(f"entrance_rules[{repr(entrance.name())}]={rule_var}")
+    # for entrance in all_entrances:
+    #   rule_var = 'rule' if self.define_rule(entrance.rule) else 'None'
+    #   self.add_line(f"entrance_rules[{repr(entrance.name())}]={rule_var}")
     # self.indent -= 1
     # self.add_line("}")
 

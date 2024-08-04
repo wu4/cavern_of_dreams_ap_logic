@@ -84,6 +84,40 @@ gratitude = Category(
   "Gratitude 4", "Fed Gallery of Nightmares Fella", "GRATITUDE4",
 )
 
+carryable = Category(
+  "Apple", "Lostleaf Lake - Lake Apple", "LAKE_CARRYABLE_APPLE_LAKE",
+  "Apple", "Lostleaf Lake - Entry Apple", "LAKE_CARRYABLE_APPLE_ENTRY",
+  "Apple", "Lostleaf Lake - Deep Woods Entryway Apple", "LAKE_CARRYABLE_APPLE_DEEPENTRY",
+
+  "Apple", "Lostleaf Lake - Deep Woods Apple", "LAKE_CARRYABLE_APPLE_DEEPWOODS",
+  "Apple", "Lostleaf Lake - Crypt Apple", "LAKE_CARRYABLE_APPLE_CRYPT",
+  "Jester Boots", "Lostleaf Lake - Deep Woods Jester Boots", "LAKE_CARRYABLE_BOOTS_DEEPWOODS",
+
+  "Bubble Conch", "Pits of Despair - Bubble Conch", "DROWN_CARRYABLE_BUBBLECONCH",
+
+  "Jester Boots", "Armada Lobby - Jester Boots", "CAVE_CARRYABLE_BOOTS_MONSTERLOBBY",
+
+  "Mr. Kerrington's Wings", "Earth Lobby - Mr. Kerrington's Wings", "GALLERY_CARRYABLE_WINGS_EARTHLOBBY",
+
+  "Shelnert's Fish", "Fire Lobby - Shelnert's Fish", "GALLERY_CARRYABLE_FISH_FIRELOBBY",
+
+  "Sage's Gloves", "Water Lobby - Sage's Gloves", "GALLERY_CARRYABLE_GLOVES_WATERLOBBY",
+  "Lady Opal's Head", "Water Lobby - Lady Opal's Head", "GALLERY_CARRYABLE_HEAD_WATERLOBBY",
+  "Jester Boots", "Water Lobby - Jester Boots", "GALLERY_CARRYABLE_BOOTS_WATERLOBBY",
+
+  "Medicine", "Kerrington - Main Medicine", "MONSTER_CARRYABLE_MEDICINE_MAIN",
+  "Medicine", "Kerrington - Lab Medicine", "MONSTER_CARRYABLE_MEDICINE_LAB",
+  "Medicine", "Kerrington - Rain Medicine", "MONSTER_CARRYABLE_MEDICINE_GREEN",
+  "Medicine", "Kerrington - Bedroom Medicine", "MONSTER_CARRYABLE_MEDICINE_BEDROOM",
+  "Medicine", "Kerrington - Medicine Pool Medicine", "MONSTER_CARRYABLE_MEDICINE_POOL",
+
+  "Mr. Kerrington's Wings", "Airborne Armada - Mr. Kerrington's Wings", "MONSTER_CARRYABLE_WINGS",
+
+  "Jester Boots", "Valley - Jester Boots", "PALACE_CARRYABLE_BOOTS",
+  "Bubble Conch", "Palace Interior - Bubble Conch", "PALACE_CARRYABLE_BUBBLECONCH_PALACE",
+  "Bubble Conch", "Heaven's Path - Bubble Conch", "PALACE_CARRYABLE_BUBBLECONCH_SANCTUM",
+)
+
 pickup = Category(
   "Fish Food", "Treehouse - Fish Food", "ITEM_FISH_FOOD",
   "Lady Opal's Egg 1", "Lady Opal's Egg: Castle", "ITEM_PRINCESS_1",
@@ -571,6 +605,10 @@ shroom = Category(
 
 categories = list(set(dir()) - others)
 
+carryables_blacklist: set[str] = {
+  "Card: Armada Lobby - Jester Boots"
+}
+
 CategoryGenerator: TypeAlias = Generator[tuple[str, Category | CategoryNoLocation], None, None]
 
 def all_categories() -> CategoryGenerator:
@@ -584,7 +622,7 @@ def items_by_category():
     yield k, list(i.item for i in v.rows)
 
 def all_items():
-  for k, v in all_categories():
+  for _k, v in all_categories():
     for i in v.rows:
       yield i.item
 
@@ -594,7 +632,7 @@ def locations_by_category():
     yield k, list(i.location for i in v.rows)
 
 def all_locations():
-  for k, v in all_categories():
+  for _k, v in all_categories():
     if not isinstance(v, Category): continue
     for i in v.rows:
       yield i.location

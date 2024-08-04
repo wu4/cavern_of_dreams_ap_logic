@@ -1,4 +1,4 @@
-from ...logic.objects import lazy_region, Region, Entrance, CarryableLocation, Whackable
+from ...logic.objects import lazy_region, Region, Entrance, Whackable
 from ...logic.comment import Comment
 from ...logic import Any, All
 from ...logic import carrying, item, tech, difficulty, event
@@ -25,8 +25,6 @@ class ArmadaLobbyBootsWall(Whackable):
   # The wall allows destroying it with the horn, but it's impossible
   # to actually do it
   # horn_works = True
-
-class ArmadaLobbyBoots(CarryableLocation): carryable = "Jester Boots"
 
 @lazy_region
 def Main(r: Region):
@@ -152,7 +150,7 @@ def Main(r: Region):
 @lazy_region
 def JesterBootsRoom(r: Region):
   r.locations = {
-    ArmadaLobbyBoots: None
+    "Armada Lobby - Jester Boots": None
   }
 
   r.region_connections = ArmadaLobbyBootsWall.connecting_to(JesterBootsPlatform)
@@ -203,7 +201,7 @@ def CannonLip(r: Region):
   r.entrances = [
     SunCavernTeleport.define(
       default_connection = SunCavern.ArmadaLobbyTeleport,
-      rule = event.Collected("Open Armada Lobby Teleport"),
+      rule = event.Collected("Open Armada Lobby Teleport") & carrying.no_jester_boots,
     ),
   ]
 
