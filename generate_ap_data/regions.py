@@ -2,14 +2,16 @@ from abc import abstractmethod
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, TypeAlias, override
 
+
 from ..logic.carrying import Carrying
 from .. import all_locations
 from .connection_parser import all_regions, all_entrances
-from ..logic_parsing.options import get_required_options
+from ..logic_parsing.options import OptionKey, distribute_logic_by_options, get_required_options
 from ..logic_parsing.helpers import nested_list_to_logic
 
+from ..logic.logic import All
 if TYPE_CHECKING:
-  from ..logic.logic import MaybeLogic
+  from ..logic.logic import MaybeLogic, Logic
   from ..logic_parsing.carryables import CarryableKey
 
 from ..logic import Region, Entrance
@@ -80,8 +82,8 @@ class RegionsBuilder(Builder):
     # self.add_line("from ..items import CavernOfDreamsEvent as EV")
     self.add_line("from ..entrance_rando import randomize_entrances")
     self.add_line("from .data import item_group_sets")
+    self.add_line("from ..generated_helpers import construct_rule")
     self.add_line("from ..item_rules import no_carryables, no_carryables_or_eggs")
-    self.add_line("all_eggs=item_group_sets['Egg']")
     # self.add_line("from ..item_rules import is_shroom")
     self.define_entrances()
     self.add_line("def create_regions(w):")
@@ -154,35 +156,55 @@ class RegionsBuilder(Builder):
       return
 
     from ..logic_parsing.carryables import distribute_carryable_logic
-    from ..logic_parsing.helpers import simplify
+    from ..logic_parsing.helpers import simplify, nested_list_to_logic
     from ..logic.logic import Not
 
     distributed = distribute_carryable_logic(rule)
-    def sort_by_branch_size(k: "CarryableKey"):
-      return sum(map(len, distributed[k]))
 
-    cases_by_branch_size = sorted(list(distributed.keys()), key=sort_by_branch_size)
+    def full_logic(case: "CarryableKey"):
+      all_logic = distributed[case]
+      if all_logic == []:
+        return "lambda s:True"
 
-    def get_simplified_logic(case: "CarryableKey"):
-      logic = distributed[case]
-      return "True" if logic == [] else simplify(logic).into_server_code()
+      string_builder = "construct_rule(p,("
+
+      def sort_by_branch_size(logic: "tuple[OptionKey, list[list[Logic]]]"):
+        return sum(map(len, logic[1]))
+
+      by_options = sorted(distribute_logic_by_options(nested_list_to_logic(all_logic)), key=sort_by_branch_size)
+      for options, logics in by_options:
+        if options == "dont-care":
+          test = "True"
+        else:
+          test = All(*options).into_server_code()
+
+        if logics == []:
+          logic_str = "True"
+        else:
+          logic_str = simplify(logics).into_server_code()
+
+        string_builder += f"({test}, {repr(logic_str)}),"
+      string_builder += "))"
+      return string_builder
 
     inverse_rules: dict[str, str] = {}
     rules: dict[str, str] = {}
 
-    for case in cases_by_branch_size:
+    for case in distributed:
       # handle this below
       if case == "dont-care": continue
 
-      case_rule = f"lambda s:{get_simplified_logic(case)}"
+      case_rule = full_logic(case)
+      # case_rule = simplified_logic(case)
       if isinstance(case, Not):
         assert isinstance(case.logic, Carrying)
         inverse_rules[repr(case.logic.carryable)] = case_rule
       else:
         rules[repr(case.carryable)] = case_rule
 
-    if "dont-care" in cases_by_branch_size:
-      dont_care_rule = f"lambda s:{get_simplified_logic('dont-care')}"
+    if "dont-care" in distributed:
+      dont_care_rule = full_logic('dont-care')
+      # dont_care_rule = simplified_logic('dont-care')
       self.add_line(f"{var_name}.dont_care_access_rule={dont_care_rule}")
 
     self.define_dict(f"{var_name}.inverse_carryable_access_rules", inverse_rules)
