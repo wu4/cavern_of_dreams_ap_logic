@@ -115,9 +115,14 @@ def Main(r: Region):
       carrying.jester_boots,
       tech.any_super_jump,
 
+      item.high_jump & tech.bubble_jump & tech.momentum_cancel,
+
       Comment(
         "Well-spaced high jump into the fan",
-        difficulty.intermediate & item.high_jump & (item.sprint | tech.bubble_jump)
+        item.high_jump & item.sprint & Any(
+          difficulty.hard,
+          difficulty.intermediate & item.roll
+        )
       )
     ),
 
@@ -152,13 +157,18 @@ def Main(r: Region):
         "Tail jump double jump from the nearby tutorial stone",
         item.double_jump & Any(
           tech.ground_tail_jump & (item.high_jump | item.wings),
-          tech.air_tail_jump & (item.high_jump & item.wings)
+          tech.air_tail_jump    & (item.high_jump & item.wings)
         )
       ),
 
       Comment(
         "Wing storage + double jump from the nearby tutorial stone",
         tech.wing_storage & item.double_jump
+      ),
+
+      Comment(
+        "Wing storage + tail jump from the nearby tutorial stone",
+        tech.wing_storage & tech.ground_tail_jump
       )
     ),
 
