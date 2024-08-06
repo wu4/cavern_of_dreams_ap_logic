@@ -3,6 +3,14 @@ from .logic import Logic, Not
 from .has import CarryingItem
 
 class Carrying(Logic):
+  def __hash__(self) -> int:
+    return hash(self.carryable)
+
+  def __eq__(self, value: object, /) -> bool:
+    if isinstance(value, Carrying):
+      return self.carryable == value.carryable
+    return super().__eq__(value)
+
   def __init__(self, carryable: CarryingItem | None):
     self.carryable: CarryingItem | None = carryable
     super().__init__()
