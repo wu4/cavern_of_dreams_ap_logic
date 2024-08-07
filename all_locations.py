@@ -88,6 +88,7 @@ carryable = Category(
   "Apple", "Lostleaf Lake - Lake Apple", "LAKE_CARRYABLE_APPLE_LAKE",
   "Apple", "Lostleaf Lake - Entry Apple", "LAKE_CARRYABLE_APPLE_ENTRY",
   "Apple", "Lostleaf Lake - Deep Woods Entryway Apple", "LAKE_CARRYABLE_APPLE_DEEPENTRY",
+  "Apple", "Lostleaf Lake - Winky Tree Ledge Apple", "LAKE_CARRYABLE_APPLE_WINKYLEDGE",
 
   "Apple", "Lostleaf Lake - Deep Woods Apple", "LAKE_CARRYABLE_APPLE_DEEPWOODS",
   "Apple", "Lostleaf Lake - Crypt Apple", "LAKE_CARRYABLE_APPLE_CRYPT",
@@ -606,7 +607,13 @@ shroom = Category(
 categories = list(set(dir()) - others)
 
 carryables_blacklist: set[str] = {
-  "Card: Armada Lobby - Jester Boots"
+  "Card: Armada Lobby - Jester Boots",
+  "Shroom: Lostleaf Lake - Deep Woods 1",
+  "Shroom: Lostleaf Lake - Deep Woods 2",
+  "Shroom: Lostleaf Lake - Deep Woods 3",
+  "Shroom: Lostleaf Lake - Deep Woods 4",
+  "Shroom: Lostleaf Lake - Deep Woods 5",
+  "Shroom: Lostleaf Lake - Deep Woods 6",
 }
 
 CategoryGenerator: TypeAlias = Generator[tuple[str, Category | CategoryNoLocation], None, None]
