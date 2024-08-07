@@ -726,6 +726,7 @@ def TreehouseBranches(r: Region):
 @lazy_region
 def WinkyTreeLedge(r: Region):
   r.locations = {
+    "Lostleaf Lake - Winky Tree Ledge Apple": None,
     "Shroom: Lostleaf Lake - Winky Apple Tree 1": None,
     "Shroom: Lostleaf Lake - Winky Apple Tree 2": None,
     "Shroom: Lostleaf Lake - Winky Apple Tree 3": None,

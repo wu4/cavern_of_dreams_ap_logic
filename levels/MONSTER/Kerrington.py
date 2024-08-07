@@ -245,7 +245,9 @@ def GreenRoom(r: Region):
     GreenFence: None,
     LabGreenConnector: Any(
       tech.any_super_jump,
+      carrying.mr_kerringtons_wings
     ),
+
     GreenBoiler: Any(
       item.wings,
       tech.bubble_jump & (item.high_jump | item.roll),
