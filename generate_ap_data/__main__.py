@@ -1,3 +1,4 @@
+from .entrance_rando import generate_entrance_rando
 from .item_definitions import generate as generate_item_definitions
 from .regions import generate as generate_regions
 
@@ -19,3 +20,4 @@ if __name__ == "__main__":
 
   generate_item_definitions()
   generate_regions()
+  generate_entrance_rando()
