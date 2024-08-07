@@ -13,6 +13,7 @@ class FireDroneDoor(Entrance):
 class WaterDroneDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromSkyToDroneWater"
   dest_path = f"{area_path}/Warps/DestFromDroneWaterToSky"
+
 class KerringtonDoorFront(Entrance):
   warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToInteriorHead"
   dest_path = f"{area_path}/Monster/Warps/DestFromInteriorToMonsterHead"
@@ -21,10 +22,10 @@ class KerringtonDoorBack(Entrance):
   dest_path = f"{area_path}/Monster/Warps/DestFromInteriorToMonsterTail"
 class YellowDoor(Entrance):
   warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToStorageRoom"
-  dest_path = f"{area_path}/Monster/Warps/DestFromStorageRoomToMonster"
+  dest_path = f"{area_path}/Monster/Warps/DestFromStorageRoomToSky"
 class GreenDoor(Entrance):
   warp_path = f"{area_path}/Monster/Warps/WarpFromMonsterToGardenRoom"
-  dest_path = f"{area_path}/Monster/Warps/DestFromGardenRoomToMonster"
+  dest_path = f"{area_path}/Monster/Warps/DestFromGardenRoomToSky"
 
 # class SkyKerringtonWings(CarryableLocation):
 #   location_name = "Airborne Armada - Mr. Kerrington's Wings"

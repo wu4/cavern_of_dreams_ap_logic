@@ -15,7 +15,7 @@ class GalleryLobbyDoor(Entrance):
   dest_path = f"{area_path}/Warps/DestFromGalleryLobbyToLakeLobby"
 class SunCavernTeleport(Entrance):
   warp_path = f"{area_path}/Warps/Portal"
-  dest_path = f"{warp_path}/Warps/DestFromPortal???"
+  dest_path = f"{warp_path}/DestFromPortal???"
 
 # this wall is unique in that it can be broken from both directions
 class BrokeHiddenWall(InternalEvent): pass

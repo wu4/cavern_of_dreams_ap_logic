@@ -9,8 +9,8 @@ def portal(name: str):
   return f"{area_path}/Fellas/Nest FellaHatchable {name}/Portal"
 
 class LostleafLobbyDoor(Entrance):
-  warp_path = f"{area_path}/WarpFromCaveToLakeLobby"
-  dest_path = f"{area_path}/DestFromLakeLobbyToCave"
+  warp_path = f"{area_path}/Warps/WarpFromCaveToLakeLobby"
+  dest_path = f"{area_path}/Warps/DestFromLakeLobbyToCave"
 class DucklingsDoorUpper(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromCaveWaterfallToLake"
   dest_path = f"{area_path}/Warps/DestFromLakeToWaterfall"
