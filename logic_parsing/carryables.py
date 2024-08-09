@@ -2,7 +2,7 @@ from typing import Literal, TypeAlias
 
 from ..logic.carrying import Carrying
 from ..logic.logic import Logic, Not
-from .helpers import dnf, get_carryings_from_logics
+from .helpers import dnf, get_carryings_from_logics, unique_only
 
 CarryableKey: TypeAlias = Not | Carrying | Literal["dont-care"]
 
@@ -10,9 +10,16 @@ def distribute_carryable_logic(l: Logic) -> dict[CarryableKey, list[list[Logic]]
   logics_by_carryable: dict[CarryableKey, list[list[Logic]]] = {}
   d_or = list(map(list, dnf(l)))
   for d_and in d_or:
-    carrying = next(get_carryings_from_logics(d_and), None)
+    unique_carryings = unique_only(get_carryings_from_logics(d_and))
+    carrying = next(
+      iter(sorted(
+        unique_carryings,
+        key=lambda x: isinstance(x, Carrying)
+      )),
+      None
+    )
     if carrying is not None:
-      d_and = list(filter(carrying.__ne__, d_and))
+      d_and = list(logic for logic in d_and if logic not in unique_carryings)
       group = carrying
     else:
       group = "dont-care"

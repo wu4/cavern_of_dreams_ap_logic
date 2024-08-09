@@ -1,5 +1,5 @@
 from collections.abc import Iterable, Generator, Sequence
-from typing import TypeAlias, TypeVar
+from typing import Literal, TypeAlias, TypeVar
 from itertools import product as itertools_product
 
 from ..logic.logic import ChainableLogic, Logic, Any, All, Not
@@ -39,8 +39,22 @@ def is_valid_logic(ls: Sequence[Logic]):
   If the logic asks for carrying multiple different carryables, it is not
   valid.
   """
-  unique_carryables = unique_only(get_carryings_from_logics(ls))
-  return len(unique_carryables) <= 1
+  unique_carryings = unique_only(get_carryings_from_logics(ls))
+
+  positive_unique_carryings: list[Carrying] = list(filter(lambda x: isinstance(x, Carrying), unique_carryings))
+
+  if len(positive_unique_carryings) > 1:
+    return False
+
+  inverse_unique_carryings: list[Not] = list(filter(lambda x: isinstance(x, Not), unique_carryings))
+
+  for inverse_carrying in inverse_unique_carryings:
+    assert isinstance(inverse_carrying.logic, Carrying)
+    for positive_carrying in positive_unique_carryings:
+      if inverse_carrying.logic.carryable == positive_carrying.carryable:
+        return False
+
+  return True
 
 def cleanup(lss: Sequence[Sequence[Logic]]) -> Sequence[Sequence[Logic]]:
   return unique_only(filter(is_valid_logic, lss))
