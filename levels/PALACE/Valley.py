@@ -247,10 +247,11 @@ def JesterBootsCove(r: Region):
         tech.air_tail_jump,
         item.horn
       ),
-      item.high_jump & tech.ground_tail_jump & tech.z_target
+
+      item.high_jump & tech.ground_tail_jump & tech.z_target,
     ),
 
-    JesterBootsCoveDryJBRemovalField: Any(
+    JesterBootsCoveLowerPlatforms: Any(
       carrying.jester_boots,
       templates.high_jump_obstacle,
       item.climb,
@@ -332,7 +333,9 @@ def JesterBootsCoveLowerPlatforms(r: Region):
 
   r.region_connections = {
     JesterBootsCove: None,
-    Main: carrying.no_jester_boots,
+
+    JesterBootsCoveDryJBRemovalField: None,
+
     JesterBootsCoveCastlePlatform: Any(
       carrying.jester_boots,
       carrying.mr_kerringtons_wings & tech.wing_jump,
@@ -341,16 +344,28 @@ def JesterBootsCoveLowerPlatforms(r: Region):
 
       tech.wing_jump & tech.bubble_jump_and_recoil & tech.z_target
     ),
+
     JesterBootsCoveLowerCastle: Any(
       item.wings,
       carrying.jester_boots,
       carrying.mr_kerringtons_wings,
-      tech.bubble_jump
+      tech.bubble_jump,
     ),
+
     LostleafEntryway: Any(
-      item.air_tail & item.roll & tech.bubble_jump
+      carrying.jester_boots,
+      Comment(
+        "Drop from the standable ground at the cove's entryway",
+        Any(
+          tech.bubble_jump,
+          tech.momentum_cancel,
+          item.wings,
+          carrying.mr_kerringtons_wings
+        )
+      )
     ),
-    JesterBootsCoveFloatingPoms: tech.any_super_jump
+
+    JesterBootsCoveFloatingPoms: tech.any_super_jump,
   }
 
 @lazy_region
