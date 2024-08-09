@@ -22,7 +22,7 @@ ground_tail_jump = Option("ground_tail_jump") & item.ground_tail
 air_tail_jump = Option("air_tail_jump") & item.air_tail
 
 # these techs are given to the player as items
-super_bounce      = Option("super_bounce", value = 1, greater_or_equal = True) & Collected("Super Bounce") & item.roll & item.air_tail
+super_bounce      = Option("super_bounce", value = 1, greater_or_equal = True) & Collected("Super Bounce") & carrying.no_jester_boots & item.roll & item.air_tail
 super_bubble_jump = Option("super_bubble_jump", value = 1, greater_or_equal = True) & Collected("Super Bubble Jump") & item.roll & item.bubble
 
 any_super_jump = super_bounce | super_bubble_jump
