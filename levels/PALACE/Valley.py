@@ -18,10 +18,10 @@ class DiningRoomDoor(Entrance):
   dest_path = f"{area_path}/Warps/DestFromDiningRoomToValley"
 class ObservatoryShortcutDoorBottom(Entrance):
   warp_path = f"{area_path}/Warps/WarpObservatoryBottomToTop"
-  dest_path = f"{area_path}/Warps/DestObservatoryBottomToTop"
+  dest_path = f"{area_path}/Warps/DestObservatoryTopToBottom"
 class ObservatoryShortcutDoorTop(Entrance):
   warp_path = f"{area_path}/Warps/WarpObservatoryTopToBottom"
-  dest_path = f"{area_path}/Warps/DestObservatoryTopToBottom"
+  dest_path = f"{area_path}/Warps/DestObservatoryBottomToTop"
 class ObservatoryDoor(Entrance):
   warp_path = f"{area_path}/Warps/WarpFromValleyToObservatory"
   dest_path = f"{area_path}/Warps/DestFromObservatoryToValley"
@@ -275,10 +275,8 @@ def JesterBootsCoveUnderwater(r: Region):
       carrying.shelnerts_fish,
     ),
     JesterBootsCoveFloatingPoms: event.Collected("Unfreeze Prismic Palace") & carrying.bubble_conch,
-    LowerWater: Any(
-      event.Collected("Open Palace-Lostleaf Connector"),
-      event.Collected(UnstuckBigstar)
-    )
+    LowerWater: event.Collected("Open Palace-Lostleaf Connector"),
+    BigstarCave: event.Collected(UnstuckBigstar)
   }
 
 @lazy_region

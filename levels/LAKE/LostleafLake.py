@@ -52,10 +52,6 @@ def Main(r: Region):
     "Lostleaf Lake - Entry Apple": None,
     "Lostleaf Lake - Deep Woods Entryway Apple": None,
 
-    WinkyTreeSoil: carrying.apple,
-
-    BellTowerSoil: carrying.apple,
-
     "Lostleaf Lake - Winky Tree Target": Any(
       carrying.apple | carrying.bubble_conch,
       tech.ground_tail_jump,
@@ -156,10 +152,11 @@ def Main(r: Region):
 
     DeepWoods: event.Collected("Open Deep Woods"),
 
+    BellTowerSoil.get_soil_region(): None,
     BellTower: Any(
       tech.any_super_jump,
 
-      event.Collected(BellTowerSoil) & item.climb,
+      BellTowerSoil.climb_rule(),
       Comment(
         "Climb the ladder",
         Any(
@@ -196,6 +193,7 @@ def Main(r: Region):
       )
     ),
 
+    WinkyTreeSoil.get_soil_region(): None,
     PrestonLedge: Any(
       tech.any_super_jump,
 
@@ -205,7 +203,7 @@ def Main(r: Region):
         item.horn,
         tech.ground_tail_jump,
         tech.air_tail_jump & item.high_jump,
-        event.Collected(WinkyTreeSoil) & item.climb
+        WinkyTreeSoil.climb_rule()
       )
     ),
 
@@ -396,10 +394,8 @@ def DeepDeepWoods(r: Region):
     "Lostleaf Lake - Deep Woods Jester Boots": None,
     "Lostleaf Lake - Deep Woods Apple": None,
 
-    DeepDeepWoodsSoil: carrying.apple,
-
     "Egg: Lostleaf Lake - Jester Boots": Any(
-      event.Collected(DeepDeepWoodsSoil) & Any(
+      DeepDeepWoodsSoil.climb_rule() & Any(
         templates.high_jump_obstacle,
       ),
       carrying.jester_boots,
@@ -407,6 +403,8 @@ def DeepDeepWoods(r: Region):
   }
 
   r.region_connections = {
+    DeepDeepWoodsSoil.get_soil_region(): None,
+
     DeepWoods: carrying.no_jester_boots
   }
 
@@ -526,8 +524,6 @@ def InsideCrypt(r: Region):
 def CryptBackLedge(r: Region):
   r.locations = {
     "Lostleaf Lake - Crypt Apple": None,
-
-    CryptSoil: carrying.apple
   }
 
   from . import Crypt
@@ -539,8 +535,9 @@ def CryptBackLedge(r: Region):
   ]
 
   r.region_connections = {
+    CryptSoil.get_soil_region(): None,
     OverCryptBackFence: Any(
-      event.Collected(CryptSoil) & item.climb,
+      CryptSoil.climb_rule(),
       item.high_jump,
       item.double_jump,
       item.horn,
@@ -752,10 +749,6 @@ def WinkyTreeLedge(r: Region):
 
 @lazy_region
 def BigAppleLedge(r: Region):
-  r.locations = {
-    BigAppleLedgeSoil: carrying.apple
-  }
-
   r.region_connections = {
     TreehouseBranches: None,
 
@@ -772,9 +765,10 @@ def BigAppleLedge(r: Region):
 
     WaterfallCanopy: tech.any_super_jump,
 
+    BigAppleLedgeSoil.get_soil_region(): None,
     CryptCanopy: Any(
       tech.any_super_jump,
-      event.Collected(BigAppleLedgeSoil) & item.climb & item.double_jump & item.wings,
+      BigAppleLedgeSoil.climb_rule() & item.double_jump & item.wings,
     )
   }
 

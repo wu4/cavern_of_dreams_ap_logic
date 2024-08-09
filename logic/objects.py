@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import abstractmethod
 
-from .logic import MaybeLogic as _MaybeLogic
+from .logic import All, Any, Logic, MaybeLogic as _MaybeLogic
 from ..generated_types import AnyLocation
 
 from typing import Callable, Literal, TypeAlias, override
@@ -74,7 +74,43 @@ class Whackable(InternalEvent):
 #   location_name: str
 #   carryable: CarryingItem
 
-class PlantableSoil(InternalEvent): pass
+class PlantableSoil(InternalEvent):
+  soil_region: Region | None = None
+
+  @classmethod
+  def create_soil_region(cls) -> Region:
+    from .carrying import apple
+
+    r = Region(f"{str(cls)}.PlantableSoil")
+
+    r.locations = {
+      cls: apple
+    }
+
+    return r
+
+  @classmethod
+  def get_soil_region(cls) -> Region:
+    if cls.soil_region is None:
+      cls.soil_region = cls.create_soil_region()
+
+    return cls.soil_region
+
+  @classmethod
+  def climb_rule(cls, additional_climb_rules: _MaybeLogic = None) -> Logic:
+    from .event import Collected
+    from .item import tree_climb
+    climb_rules: list[Logic] = [Collected(cls), tree_climb]
+    if additional_climb_rules is not None:
+      climb_rules.append(additional_climb_rules)
+    return All(*climb_rules)
+
+  @classmethod
+  def connecting_to(cls, r: Region, additional_climb_rules: _MaybeLogic = None) -> dict[Region, _MaybeLogic]:
+    return {
+      cls.get_soil_region(): None,
+      r: cls.climb_rule(additional_climb_rules)
+    }
 
 
 LocationType: TypeAlias = AnyLocation | type[InternalEvent]

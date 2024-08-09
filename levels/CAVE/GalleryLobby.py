@@ -124,7 +124,6 @@ def LostleafCave(r: Region):
 
   r.locations = {
     "Egg: Gallery Lobby - Lostleaf Lobby Entryway": None,
-    GalleryLobbySoil: carrying.apple
   }
 
   r.entrances = [
@@ -132,10 +131,11 @@ def LostleafCave(r: Region):
   ]
 
   r.region_connections = {
+    GalleryLobbySoil.get_soil_region(): None,
     Main: Any(
       tech.any_super_jump,
       carrying.jester_boots,
-      event.Collected(GalleryLobbySoil) & item.climb & item.double_jump
+      GalleryLobbySoil.climb_rule() & item.double_jump
     )
   }
 
