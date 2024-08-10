@@ -1,7 +1,7 @@
 from ...logic.quantities import HasEggs, HasGratitude, HasShrooms, AllEggs
 from ...logic.comment import Comment
 from ...logic import lazy_region, Region, Entrance, InternalEvent, All, Any
-from ...logic import item, carrying, difficulty, tech, event, templates
+from ...logic import item, carrying, difficulty, tech, event, templates, has
 
 area_path = "CAVE/Sun Cavern (Main)"
 
@@ -44,10 +44,18 @@ class HasSageBlessing3(InternalEvent): pass
 class HasSageBlessing4(InternalEvent): pass
 class HasSageBlessing5(InternalEvent): pass
 
-class HasLakeFella(InternalEvent): pass
-class HasMonsterFella(InternalEvent): pass
-class HasPalaceFella(InternalEvent): pass
-class HasGalleryFella(InternalEvent): pass
+@lazy_region
+def Fellas(r: Region):
+  r.locations = {
+    "Fed Lostleaf Lake Fella":
+      has.Collected("Hatchable Egg: Lostleaf Lake") & HasShrooms("Lake"),
+    "Fed Airborne Armada Fella":
+      has.Collected("Hatchable Egg: Airborne Armada") & HasShrooms("Monster"),
+    "Fed Prismic Palace Fella":
+      has.Collected("Hatchable Egg: Prismic Palace") & HasShrooms("Palace"),
+    "Fed Gallery of Nightmares Fella":
+      has.Collected("Hatchable Egg: Gallery of Nightmares") & HasShrooms("Gallery"),
+  }
 
 @lazy_region
 def Main(r: Region):
@@ -70,16 +78,6 @@ def Main(r: Region):
     "Shroom: Sun Cavern - Mighty Wall Ground 2": None,
     "Shroom: Sun Cavern - Mighty Wall Ground 3": None,
     "Shroom: Sun Cavern - Mighty Wall Ground 4": None,
-
-    HasLakeFella: (item.ground_tail | item.air_tail | item.horn) & HasShrooms("Lake"),
-    HasMonsterFella: event.Collected(HasLakeFella) & HasShrooms("Monster"),
-    HasPalaceFella: event.Collected(HasMonsterFella) & HasShrooms("Palace"),
-    HasGalleryFella: event.Collected(HasPalaceFella) & HasShrooms("Gallery"),
-
-    "Fed Lostleaf Lake Fella": event.Collected(HasLakeFella),
-    "Fed Airborne Armada Fella": event.Collected(HasMonsterFella),
-    "Fed Prismic Palace Fella": event.Collected(HasPalaceFella),
-    "Fed Gallery of Nightmares Fella": event.Collected(HasGalleryFella),
   }
 
   from . import LostleafLobby, ArmadaLobby, PalaceLobby, GalleryLobby
@@ -107,6 +105,12 @@ def Main(r: Region):
   ]
 
   r.region_connections = {
+    Fellas: Any(
+      item.ground_tail,
+      item.air_tail,
+      item.horn
+    ),
+
     ArmadaLobbyRoom: Any(
       item.horn,
       item.wings,
