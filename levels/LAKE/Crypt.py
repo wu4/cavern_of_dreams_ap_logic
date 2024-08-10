@@ -111,7 +111,10 @@ def RightPlatform(r: Region):
 
       item.high_jump & item.double_jump,
       tech.ground_tail_jump,
-      tech.air_tail_jump
+      tech.air_tail_jump,
+
+      item.horn,
+      item.wings
     )
   }
 
