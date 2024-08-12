@@ -11,7 +11,7 @@ logic_to_test = Main.region_connections[VineLedge]
 assert logic_to_test is not None
 
 for kind, rules in distribute_carryable_logic(logic_to_test).items():
-  if kind != Carrying(None): continue
+  print(kind)
   print(f"\033[33mBEFORE:\033[0m")
   for branch in rules:
     print(All(*branch))

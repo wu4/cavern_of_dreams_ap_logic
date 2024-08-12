@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, TypeAlias, override
+import subprocess
 
 from .builder import Builder
 
@@ -188,5 +189,7 @@ class RegionsBuilder(Builder):
   #       self.connect(entrance.containing_region, entrance.default_connection.containing_region, entrance.rule, entrance.name())
 
 def generate():
+  subprocess.check_call(["git", "update-index", "--refresh"])
+  subprocess.check_call(["git", "diff-index", "--quiet", "HEAD", "--"])
   with open("ap_generated/regions.py", "w") as out_py:
     _ = out_py.write(RegionsBuilder.build())

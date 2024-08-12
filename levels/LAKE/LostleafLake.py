@@ -882,6 +882,26 @@ def DucklingsLedge(r: Region):
         difficulty.hard,
         item.wings | tech.bubble_jump
       )
+    ),
+
+    TreehouseBackEntry: Any(
+      tech.wing_jump,
+
+      difficulty.intermediate & item.air_tail & item.roll,
+
+      item.wings & Any(
+        item.horn,
+        item.high_jump,
+        item.sprint,
+      )
+    ),
+
+    TreehouseRoof: Any(
+      item.double_jump & tech.bubble_jump,
+
+      difficulty.intermediate & item.air_tail & item.roll,
+
+      item.wings,
     )
   }
 
