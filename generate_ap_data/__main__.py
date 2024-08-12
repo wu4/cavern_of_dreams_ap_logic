@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
   subprocess.check_call(["git", "update-index", "--refresh"])
   subprocess.check_call(["git", "diff-index", "--quiet", "HEAD", "--"])
-  commit_hash = subprocess.getoutput(["git", "rev-parse", "--short", "HEAD"])
+  exitcode, commit_hash = subprocess.getstatusoutput(["git", "rev-parse", "--short", "HEAD"])
 
   first_line = f"# generated from cavern_of_dreams_ap_logic @ {commit_hash}"
 
