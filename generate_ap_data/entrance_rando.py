@@ -74,6 +74,7 @@ class EntranceRandoBuilder(Builder):
       self.add_line(f"entrances[{entrance_name_and_path(entrance)}]=(e,{repr(entrance.is_dest_underwater)})")
     self.add_line("return entrances")
 
-def generate_entrance_rando():
+def generate_entrance_rando(first_line: str):
   with open("ap_generated/entrance_rando.py", "w") as out_py:
+    _ = out_py.write(f"{first_line}\n")
     _ = out_py.write(EntranceRandoBuilder.build())

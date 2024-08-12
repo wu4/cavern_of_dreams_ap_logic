@@ -57,7 +57,7 @@ def get_vanilla_locations():
       ret[i.location] = i.item
   return ret
 
-def generate():
+def generate(first_line: str):
   """Assumes working directory is cavern_of_dreams_ap_logic"""
 
   accum: list[str] = []
@@ -108,4 +108,5 @@ def generate():
   accum.append("# Generated using cavern_of_dreams_ap_logic/generate_ap_data")
   # accum += parse(location_datas)
   with open("ap_generated/data.py", "w") as out_py:
+    _ = out_py.write(f"{first_line}\n")
     _ = out_py.write("\n".join(accum))

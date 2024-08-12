@@ -188,8 +188,7 @@ class RegionsBuilder(Builder):
   #     if entrance.warp_path is not None:
   #       self.connect(entrance.containing_region, entrance.default_connection.containing_region, entrance.rule, entrance.name())
 
-def generate():
-  subprocess.check_call(["git", "update-index", "--refresh"])
-  subprocess.check_call(["git", "diff-index", "--quiet", "HEAD", "--"])
+def generate(first_line: str):
   with open("ap_generated/regions.py", "w") as out_py:
+    _ = out_py.write(f"{first_line}\n")
     _ = out_py.write(RegionsBuilder.build())

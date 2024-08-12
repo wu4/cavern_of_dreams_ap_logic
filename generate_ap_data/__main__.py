@@ -1,7 +1,8 @@
+import subprocess
+
 from .entrance_rando import generate_entrance_rando
 from .item_definitions import generate as generate_item_definitions
 from .regions import generate as generate_regions
-
 
 def switch_to_this_script_parent_dir():
   """
@@ -18,6 +19,12 @@ def switch_to_this_script_parent_dir():
 if __name__ == "__main__":
   switch_to_this_script_parent_dir()
 
-  generate_item_definitions()
-  generate_regions()
-  generate_entrance_rando()
+  subprocess.check_call(["git", "update-index", "--refresh"])
+  subprocess.check_call(["git", "diff-index", "--quiet", "HEAD", "--"])
+  commit_hash = subprocess.getoutput(["git", "rev-parse", "--verify", "--short", "HEAD"])
+
+  first_line = f"# generated from cavern_of_dreams_ap_logic @ {commit_hash}"
+
+  generate_item_definitions(first_line)
+  generate_regions(first_line)
+  generate_entrance_rando(first_line)
