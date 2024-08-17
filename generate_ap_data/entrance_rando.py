@@ -71,17 +71,7 @@ class EntranceRandoBuilder(Builder):
       if entrance.warp_path is None:
         self.add_line(f"entrances[{entrance_name_and_path(entrance)}]=(None,{repr(entrance.is_dest_underwater)})")
       self.add_line(f"e=E(p,{entrance_name_and_path(entrance)})")
-      self.add_line("if o.carry_through_doors:")
-      self.indent += 1
       self.define_rules(entrance.rule, "e")
-      self.indent -= 1
-      self.add_line("else:")
-      self.indent += 1
-      if entrance.rule is not None:
-        self.define_rules(carrying.no_temp_items & entrance.rule, "e")
-      else:
-        self.define_rules(carrying.no_temp_items, "e")
-      self.indent -= 1
       self.add_line(f"entrances[{entrance_name_and_path(entrance)}]=(e,{repr(entrance.is_dest_underwater)})")
     self.add_line("return entrances")
 
