@@ -47,6 +47,10 @@ def Main(r: Region):
         "Egg iceberg works as a platform",
         event.Collected("Activate Palace Lobby Whirlpool")
       )
+    ),
+
+    TopLedge: Any(
+      event.Collected("Run Palace Lobby Faucet"),
     )
   }
 
