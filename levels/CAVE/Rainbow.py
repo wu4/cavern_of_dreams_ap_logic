@@ -16,7 +16,7 @@ def Main(r: Region):
 
       Comment(
         "Build height on the outside of the gate",
-        carrying.jester_boots
+        tech.jester_boots_slope_movement
       ),
 
       Comment(
@@ -87,9 +87,8 @@ def ShroomLedges(r: Region):
       Comment(
         """Walk all of the way out of bounds to the green dragon, then
         carefully walk off to gain enough height for the final platform""",
-        difficulty.hard & carrying.jester_boots
+        difficulty.hard & tech.out_of_bounds & tech.jester_boots_slope_movement
       ),
-
 
       item.horn,
 

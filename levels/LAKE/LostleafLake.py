@@ -1,7 +1,7 @@
 from ...logic.objects import PlantableSoil
 from ...logic import lazy_region, Region, Entrance, Any
 from ...logic.comment import Comment
-from ...logic import item, difficulty, tech, carrying, event, has, templates
+from ...logic import item, difficulty, tech, carrying, event, has, templates, option
 
 area_path = "LAKE/Lake (Main)"
 
@@ -397,8 +397,13 @@ def DeepDeepWoods(r: Region):
     "Egg: Lostleaf Lake - Jester Boots": Any(
       DeepDeepWoodsSoil.climb_rule() & Any(
         templates.high_jump_obstacle,
+
+        # jester boots are implied here, as Allow Fun always forces jester
+        # boots to spawn in the vanilla location
+        option.allow_fun,
       ),
-      carrying.jester_boots,
+
+      tech.jester_boots_slope_movement
     ),
   }
 
@@ -859,7 +864,7 @@ def Ducklings(r: Region):
   r.region_connections = {
     DucklingsLedge: Any(
       tech.any_super_jump,
-      carrying.jester_boots,
+      tech.jester_boots_slope_movement,
 
       item.horn,
       item.wings & tech.bubble_jump_and_recoil,

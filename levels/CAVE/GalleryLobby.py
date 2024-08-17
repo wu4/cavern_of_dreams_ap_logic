@@ -168,7 +168,7 @@ def Maze(r: Region):
   r.region_connections = {
     Main: Any(
       tech.any_super_jump,
-      carrying.jester_boots,
+      tech.jester_boots_slope_movement,
 
       event.Collected("Open Gallery Lobby Hedge Maze")
     ),
@@ -176,12 +176,12 @@ def Maze(r: Region):
     MazeStatue: Any(
       tech.any_super_jump,
 
-      carrying.jester_boots & Any(
-        Comment(
-          "Walk outside of the maze near its entrance and repeatedly walk into an invisible wall to gain height",
-          tech.out_of_bounds
-        ),
+      Comment(
+        "Walk outside of the maze near its entrance and repeatedly walk into an invisible wall to gain height",
+        tech.out_of_bounds & tech.jester_boots_slope_movement,
+      ),
 
+      carrying.jester_boots & Any(
         item.double_jump,
         tech.ground_tail_jump
       ),

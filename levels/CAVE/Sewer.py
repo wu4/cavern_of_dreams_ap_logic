@@ -40,19 +40,20 @@ def ArmadaLobbySide(r: Region):
         item.wings & (tech.air_tail_jump | tech.ground_tail_jump | item.horn),
       ),
 
-      carrying.jester_boots & Any(
+      tech.jester_boots_slope_movement & Any(
         difficulty.intermediate & (item.double_jump | tech.ground_tail_jump),
         item.double_jump & tech.ground_tail_jump
       ),
 
       Comment(
-        "Shoot to bounce upwards from the top of the pipe and carry wing storage to the bars",
-        All(
-          difficulty.hard,
-          carrying.jester_boots,
-          tech.wing_storage,
+        """
+        Shoot to bounce upwards from the slope of the pipe, gaining height with
+        the jester boots, and carry wing storage to the bars
+        """,
+        difficulty.hard &
+          tech.jester_boots_slope_movement &
+          tech.wing_storage &
           tech.bubble_jump_and_recoil
-        )
       )
     )
   }
