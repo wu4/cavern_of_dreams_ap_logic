@@ -158,6 +158,8 @@ def Pool(r: Region):
         item.sprint & item.double_jump
       ),
 
+      item.sprint & item.horn,
+
       # launch from the tiny dive hole
       item.sprint & item.double_jump & item.wings,
       (carrying.bubble_conch | carrying.shelnerts_fish) & Any(
