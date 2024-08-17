@@ -1,4 +1,4 @@
-from ...logic.objects import InternalEvent, Whackable
+from ...logic.objects import InternalEvent, PlantableSoil, Whackable
 from ...logic import lazy_region, Region, Entrance, Any
 from ...logic.comment import Comment
 from ...logic import item, difficulty, tech, carrying, event
@@ -29,6 +29,8 @@ class BackDoor(Whackable):
   custom_rule = event.Collected(SecretBackDoor)
 
 class BrokeBackExitWithHorn(InternalEvent): pass
+
+class EggSoil(PlantableSoil): pass
 
 CanBreakBackExit = Any(
   item.air_tail | item.ground_tail,
@@ -143,8 +145,9 @@ def SecretWorld(r: Region):
 @lazy_region
 def EggPlatform(r: Region):
   r.locations = {
-
     "Egg: Crypt - Shelwart's Gravestone": Any(
+      EggSoil.climb_rule(),
+
       (item.bubble | difficulty.intermediate) & Any(
         item.double_jump,
         item.high_jump,
@@ -160,6 +163,8 @@ def EggPlatform(r: Region):
   }
 
   r.region_connections = {
+    EggSoil.get_soil_region(): None,
+
     TimedPlatform: event.Collected(PrestonAccess),
 
     LeftPlatform: Any(
