@@ -14,7 +14,7 @@ def distribute_carryable_logic(l: Logic) -> dict[CarryableKey, list[list[Logic]]
     carrying = next(
       iter(sorted(
         unique_carryings,
-        key=lambda x: isinstance(x, Carrying) and not (x.carryable is None)
+        key=lambda x: not (isinstance(x, Carrying) and x.carryable is None)
       )),
       None
     )
