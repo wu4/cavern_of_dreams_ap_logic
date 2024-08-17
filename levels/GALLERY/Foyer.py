@@ -24,23 +24,6 @@ class WaterLobbyHole(Entrance):
 
 class OpenedGratitudeDoor(InternalEvent): pass
 
-CanFinishEndgame = Any(
-    (item.sprint | difficulty.intermediate) & Any(
-      carrying.mr_kerringtons_wings,
-      item.wings & item.double_jump,
-    ),
-
-    difficulty.intermediate & item.swim & Any(carrying.bubble_conch, carrying.shelnerts_fish),
-
-    difficulty.hard & Any(
-      item.swim & Any(
-        tech.momentum_cancel & tech.damage_boost,
-        tech.bubble_jump,
-      ),
-      item.wings & item.double_jump & tech.ability_toggle
-    )
-)
-
 @lazy_region
 def Main(r: Region):
   r.locations = {
@@ -99,7 +82,26 @@ def SideDoors(r: Region):
 @lazy_region
 def Finale(r: Region):
   r.region_connections = {
-    Endgame: CanFinishEndgame
+    Endgame: Any(
+      item.swim & item.wings,
+
+      (item.sprint | difficulty.intermediate) & Any(
+        carrying.mr_kerringtons_wings,
+        item.wings & item.double_jump,
+      ),
+
+      difficulty.intermediate & Any(
+        item.wings & item.double_jump & tech.ability_toggle,
+        item.swim & Any(carrying.bubble_conch, carrying.shelnerts_fish),
+      ),
+
+      difficulty.hard & Any(
+        item.swim & Any(
+          tech.momentum_cancel & tech.damage_boost,
+          tech.bubble_jump,
+        ),
+      )
+    )
   }
 
 @lazy_region
