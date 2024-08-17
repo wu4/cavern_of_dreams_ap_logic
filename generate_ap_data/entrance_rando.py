@@ -1,7 +1,6 @@
 from typing import override
 
-from logic import carrying
-
+from ..logic import carrying
 from ..logic.objects import Entrance
 from .builder import Builder
 from .connection_parser import all_entrances
