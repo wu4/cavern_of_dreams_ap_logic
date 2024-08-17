@@ -74,7 +74,7 @@ class EntranceRandoBuilder(Builder):
       self.add_line("if o.no_carryables_through_doors:")
       self.indent += 1
       if entrance.rule is not None:
-        self.define_rules(entrance.rule & carrying.no_temp_items, "e")
+        self.define_rules(carrying.no_temp_items & entrance.rule, "e")
       else:
         self.define_rules(carrying.no_temp_items, "e")
       self.indent -= 1
