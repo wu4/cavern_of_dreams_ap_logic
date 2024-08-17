@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import abstractmethod
 
-from .logic import All, Any, Logic, MaybeLogic as _MaybeLogic
+from .logic import All, Logic, MaybeLogic as _MaybeLogic
 from ..generated_types import AnyLocation
 
 from typing import Callable, Literal, TypeAlias, override
@@ -31,7 +31,7 @@ class Whackable(InternalEvent):
 
   @classmethod
   def create_whackable_region(cls) -> Region:
-    from .logic import Logic, Any
+    from .logic import Any
     from .item import air_tail, ground_tail, horn, bubble
     from .carrying import bubble_conch, apple
 
