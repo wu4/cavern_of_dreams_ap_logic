@@ -395,14 +395,33 @@ def DeepDeepWoods(r: Region):
     "Lostleaf Lake - Deep Woods Apple": None,
 
     "Egg: Lostleaf Lake - Jester Boots": Any(
-      DeepDeepWoodsSoil.climb_rule() & Any(
-        templates.high_jump_obstacle,
-
-        # jester boots are implied here, as Allow Fun always forces jester
-        # boots to spawn in the vanilla location
-        option.allow_fun,
+      item.double_jump & Any(
+        item.horn & item.wings,
+        tech.wing_storage,
+        item.high_jump & Any(
+          tech.ground_tail_jump,
+          item.wings & Any(
+            tech.air_tail_jump,
+            tech.ability_toggle
+          )
+        )
       ),
 
+      Comment(
+        """
+        Airswim from the tombstone fish out-of-bounds
+        """,
+        item.swim & item.air_swim & tech.out_of_bounds,
+      ),
+
+      tech.wing_jump & carrying.mr_kerringtons_wings,
+
+      difficulty.intermediate & item.air_tail & item.roll,
+
+      # jester boots is implicitly available, and you will be allowed to use them to climb
+      DeepDeepWoodsSoil.climb_rule() & templates.high_jump_obstacle,
+
+      # otherwise...
       tech.jester_boots_slope_movement
     ),
   }
