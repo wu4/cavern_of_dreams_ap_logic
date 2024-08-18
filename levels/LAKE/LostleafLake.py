@@ -818,6 +818,15 @@ def TreehouseFrontEntry(r: Region):
     TreehouseRoof: Any(
       tech.any_super_jump,
 
+      event.Collected("Open Treehouse") & Any(
+        item.double_jump & Any(
+          difficulty.intermediate,
+          item.horn,
+          tech.ground_tail_jump,
+          tech.air_tail_jump
+        )
+      ),
+
       Comment(
         "Launch from the ladder",
         tech.ejection_launch
