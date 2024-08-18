@@ -12,8 +12,8 @@ class EarthDroneCannonShot(Entrance):
   warp_path = f"{area_path}/Cutscenes/CannonShot/WarpEvent"
   dest_path = f"{area_path}/Warps/DestFromDroneEarthToMonsterLobby"
 class SewerDoor(Entrance):
-  warp_path = f"{area_path}/Warps/WarpFromMonsterLobbyToCave"
-  dest_path = f"{area_path}/Warps/DestFromCaveToMonsterLobby"
+  warp_path = f"{area_path}/Warps/WarpFromMonsterLobbyToSewer"
+  dest_path = f"{area_path}/Warps/DestFromSewerToMonsterLobby"
 class SunCavernTeleport(Entrance):
   warp_path = f"{area_path}/Warps/Portal"
   dest_path = f"{warp_path}/DestFromPortal???"
