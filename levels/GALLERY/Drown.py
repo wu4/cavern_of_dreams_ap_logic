@@ -1,6 +1,6 @@
 from ...logic.objects import Whackable
 from ...logic import lazy_region, Region, Entrance
-from ...logic import item
+from ...logic import item, carrying
 
 area_path = "DROWN/Drown (Main)"
 
@@ -16,18 +16,28 @@ class BubbleConchWhackableWall(Whackable):
   horn_works = True
 
 @lazy_region
+def Entry(r: Region):
+  from . import WaterLobby
+
+  r.entrances = [
+    WaterLobbyDoor.define(
+      WaterLobby.DrownPainting,
+      carrying.no_jester_boots
+    )
+  ]
+
+  r.region_connections = {
+    Main: carrying.no_jester_boots
+  }
+
+@lazy_region
 def Main(r: Region):
   r.locations = {
     "Egg: Pits of Despair": item.horn
   }
 
-  from . import WaterLobby
-
-  r.entrances = [
-    WaterLobbyDoor.define(WaterLobby.DrownPainting)
-  ]
-
   r.region_connections = {
+    Entry: None,
     **BubbleConchWhackableWall.connecting_to(BubbleConchPipe)
   }
 
