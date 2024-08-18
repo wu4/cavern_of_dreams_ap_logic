@@ -1,19 +1,17 @@
-from abc import abstractmethod
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, Callable, TypeAlias, override
-import subprocess
+from typing import TYPE_CHECKING, TypeAlias, override
 
 from .builder import Builder
 
 from .. import all_locations
-from .connection_parser import all_regions, all_entrances
+from .connection_parser import all_regions
 from ..logic_parsing.options import get_required_options
 from ..logic_parsing.helpers import nested_list_to_logic
 
 if TYPE_CHECKING:
   from ..logic.logic import MaybeLogic
 
-from ..logic import Region, Entrance
+from ..logic import Region
 
 def name_regions(regs: Iterable[Region]) -> dict[Region, str]:
   return dict(
@@ -27,18 +25,17 @@ RegionAndRule: TypeAlias = tuple[Region, "MaybeLogic"]
 
 class ConditionalIndent:
   builder: Builder
-  def __init__(self, builder: Builder, condition: bool, conditional_block_starter: str) -> None:
+  def __init__(self, builder: Builder, block_starter: str | None) -> None:
     self.builder = builder
-    self.condition = condition
-    self.conditional_block_starter = conditional_block_starter
+    self.block_starter = block_starter
 
   def __enter__(self):
-    if self.condition:
-      self.builder.add_line(self.conditional_block_starter)
+    if self.block_starter is not None:
+      self.builder.add_line(self.block_starter)
       self.builder.indent += 1
 
   def __exit__(self, exc_type, exc_value, traceback):
-    if self.condition:
+    if self.block_starter is not None:
       self.builder.indent -= 1
 
 class RegionsBuilder(Builder):
@@ -146,14 +143,10 @@ class RegionsBuilder(Builder):
           else:
             self.add_line("l.item_rule=no_carryables")
         else:
-          cl_indent = 0
-          if category_name == "shroom":
-            self.add_line("if o.shroomsanity:")
-            cl_indent = 1
-
-          self.indent += cl_indent
-          self.add_line("cl.append(l)")
-          self.indent -= cl_indent
+          with ConditionalIndent(self,
+            "if o.shroomsanity:" if category_name == "shroom" else None
+          ):
+            self.add_line("cl.append(l)")
 
         # if category_name == "shroom":
         #   self.add_line("if not shroomsanity:l.item_rule=is_shroom")
@@ -167,69 +160,49 @@ class RegionsBuilder(Builder):
     #   self.add_line(f"{region_names[region]}.locations.append(l)")
 
     for location, (region, rule) in internal_events.items():
-      extra_indent = 0
-      if region.unreachable_if_no_carry_through_doors:
-        extra_indent = 1
-        self.add_line("if o.carry_through_doors:")
-      self.indent += extra_indent
+      with ConditionalIndent(self,
+        "if o.carry_through_doors:" if region.unreachable_if_no_carry_through_doors else None
+      ):
+        def maybe_get_option_conditions():
+          if rule is None: return None
+          required_options = get_required_options(rule)
 
-      rule_indent = 0
-      if rule is not None:
-        required_options = get_required_options(rule)
-        if len(required_options) > 0:
+          if len(required_options) == 0: return None
+
           logic = nested_list_to_logic(required_options)
-          self.add_line(f"if {logic.into_server_code()}:")
-          rule_indent = 1
+          return f"if {logic.into_server_code()}:"
 
-      self.indent += rule_indent
-      self.add_line(f"l=L(p,{repr(str(location))},False,{region_names[region]})")
-      self.define_rules(rule, "l")
+        with ConditionalIndent(self, maybe_get_option_conditions()):
+          self.add_line(f"l=L(p,{repr(str(location))},False,{region_names[region]})")
+          self.define_rules(rule, "l")
 
-      self.add_line(f"e=w.create_event({repr(str(location))})")
-      self.add_line(f"l.place_locked_item(e)")
-      self.add_line(f"l.item_rule=no_carryables")
+          self.add_line(f"e=w.create_event({repr(str(location))})")
+          self.add_line(f"l.place_locked_item(e)")
+          self.add_line(f"l.item_rule=no_carryables")
 
-      self.add_line(f"{region_names[region]}.locations.append(l)")
-      self.indent -= rule_indent
-      self.indent -= extra_indent
+          self.add_line(f"{region_names[region]}.locations.append(l)")
 
     # self.indent -= 1
 
   def assign_regions(self):
     for region in all_regions:
       name = region_names[region]
-      @self.conditional_block(region.unreachable_if_no_carry_through_doors,
-                              "if o.carry_through_doors:")
-      def block():
+      with ConditionalIndent(self,
+        "if o.carry_through_doors:" if region.unreachable_if_no_carry_through_doors else None
+      ):
         self.add_line(f"{name}=R({repr(region.name)},p,mw)")
         self.add_line(f"mw.regions.append({name})")
-      block()
-
-  def conditional_block(self, condition: bool, block_starter: str):
-    def inner(inner_block: Callable[[], None]):
-      def func():
-        indent = 0
-        if condition:
-          self.add_line(block_starter)
-          indent = 1
-        self.indent += indent
-        inner_block()
-        self.indent -= indent
-      return func
-    return inner
 
   def connect_regions(self):
     for region in all_regions:
       if len(region.region_connections) == 0: continue
 
       with ConditionalIndent(self,
-        region.unreachable_if_no_carry_through_doors,
-        "if o.carry_through_doors:"
+        "if o.carry_through_doors:" if region.unreachable_if_no_carry_through_doors else None
       ):
         for connecting_region, rule in region.region_connections.items():
           with ConditionalIndent(self,
-            connecting_region.unreachable_if_no_carry_through_doors,
-            "if o.carry_through_doors:"
+            "if o.carry_through_doors:" if connecting_region.unreachable_if_no_carry_through_doors else None
           ):
             self.connect(region, connecting_region, rule)
 
