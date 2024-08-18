@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, TypeAlias, override
+from typing import TYPE_CHECKING, Callable, TypeAlias, override
 import subprocess
 
 from .builder import Builder
@@ -24,6 +24,22 @@ def name_regions(regs: Iterable[Region]) -> dict[Region, str]:
 region_names = name_regions(all_regions)
 
 RegionAndRule: TypeAlias = tuple[Region, "MaybeLogic"]
+
+class ConditionalIndent:
+  builder: Builder
+  def __init__(self, builder: Builder, condition: bool, conditional_block_starter: str) -> None:
+    self.builder = builder
+    self.condition = condition
+    self.conditional_block_starter = conditional_block_starter
+
+  def __enter__(self):
+    if self.condition:
+      self.builder.add_line(self.conditional_block_starter)
+      self.builder.indent += 1
+
+  def __exit__(self, exc_type, exc_value, traceback):
+    if self.condition:
+      self.builder.indent -= 1
 
 class RegionsBuilder(Builder):
   @override
@@ -182,34 +198,40 @@ class RegionsBuilder(Builder):
   def assign_regions(self):
     for region in all_regions:
       name = region_names[region]
-      extra_indent = 0
-      if region.unreachable_if_no_carry_through_doors:
-        extra_indent = 1
-        self.add_line("if o.carry_through_doors:")
-      self.indent += extra_indent
-      self.add_line(f"{name}=R({repr(region.name)},p,mw)")
-      self.add_line(f"mw.regions.append({name})")
-      self.indent -= extra_indent
+      @self.conditional_block(region.unreachable_if_no_carry_through_doors,
+                              "if o.carry_through_doors:")
+      def block():
+        self.add_line(f"{name}=R({repr(region.name)},p,mw)")
+        self.add_line(f"mw.regions.append({name})")
+      block()
+
+  def conditional_block(self, condition: bool, block_starter: str):
+    def inner(inner_block: Callable[[], None]):
+      def func():
+        indent = 0
+        if condition:
+          self.add_line(block_starter)
+          indent = 1
+        self.indent += indent
+        inner_block()
+        self.indent -= indent
+      return func
+    return inner
 
   def connect_regions(self):
     for region in all_regions:
       if len(region.region_connections) == 0: continue
 
-      extra_indent = 0
-      if region.unreachable_if_no_carry_through_doors:
-        self.add_line("if o.carry_through_doors:")
-        extra_indent = 1
-      self.indent += extra_indent
-
-      for connecting_region, rule in region.region_connections.items():
-        other_extra_indent = 0
-        if connecting_region.unreachable_if_no_carry_through_doors:
-          self.add_line("if o.carry_through_doors:")
-          other_extra_indent = 1
-        self.indent += other_extra_indent
-        self.connect(region, connecting_region, rule)
-        self.indent -= other_extra_indent
-      self.indent -= extra_indent
+      with ConditionalIndent(self,
+        region.unreachable_if_no_carry_through_doors,
+        "if o.carry_through_doors:"
+      ):
+        for connecting_region, rule in region.region_connections.items():
+          with ConditionalIndent(self,
+            connecting_region.unreachable_if_no_carry_through_doors,
+            "if o.carry_through_doors:"
+          ):
+            self.connect(region, connecting_region, rule)
 
   # def no_entrance_rando(self):
   #   for entrance in all_entrances:
