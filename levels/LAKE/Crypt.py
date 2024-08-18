@@ -31,6 +31,7 @@ class BackDoor(Whackable):
 class BrokeBackExitWithHorn(InternalEvent): pass
 
 class EggSoil(PlantableSoil): pass
+EggSoil.get_soil_region().unreachable_if_no_carry_through_doors = True
 
 CanBreakBackExit = Any(
   item.air_tail | item.ground_tail,

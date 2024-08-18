@@ -121,6 +121,7 @@ class Region:
   region_connections: dict[Region, _MaybeLogic]
   entrances: list[type[Entrance]]
   locations: dict[LocationType, _MaybeLogic]
+  unreachable_if_no_carry_through_doors: bool = False
 
   def __init__(self, name: str):
     super().__init__()

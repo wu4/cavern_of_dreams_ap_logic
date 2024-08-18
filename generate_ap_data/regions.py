@@ -151,6 +151,12 @@ class RegionsBuilder(Builder):
     #   self.add_line(f"{region_names[region]}.locations.append(l)")
 
     for location, (region, rule) in internal_events.items():
+      extra_indent = 0
+      if region.unreachable_if_no_carry_through_doors:
+        extra_indent = 1
+        self.add_line("if o.carry_through_doors:")
+      self.indent += extra_indent
+
       rule_indent = 0
       if rule is not None:
         required_options = get_required_options(rule)
@@ -169,14 +175,21 @@ class RegionsBuilder(Builder):
 
       self.add_line(f"{region_names[region]}.locations.append(l)")
       self.indent -= rule_indent
+      self.indent -= extra_indent
 
     # self.indent -= 1
 
   def assign_regions(self):
     for region in all_regions:
       name = region_names[region]
+      extra_indent = 0
+      if region.unreachable_if_no_carry_through_doors:
+        extra_indent = 1
+        self.add_line("if o.carry_through_doors:")
+      self.indent += extra_indent
       self.add_line(f"{name}=R({repr(region.name)},p,mw)")
       self.add_line(f"mw.regions.append({name})")
+      self.indent -= extra_indent
 
   def connect_regions(self):
     for region in all_regions:
