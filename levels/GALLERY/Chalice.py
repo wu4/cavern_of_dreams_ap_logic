@@ -43,6 +43,7 @@ def Main(r: Region):
       tech.any_super_jump,
       carrying.mr_kerringtons_wings,
       carrying.jester_boots,
+      item.horn & item.double_jump,
       tech.bubble_jump & Any(
         item.horn,
         item.double_jump,
