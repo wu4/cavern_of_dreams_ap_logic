@@ -193,6 +193,8 @@ class RegionsBuilder(Builder):
 
   def connect_regions(self):
     for region in all_regions:
+      if len(region.region_connections) == 0: continue
+
       extra_indent = 0
       if region.unreachable_if_no_carry_through_doors:
         self.add_line("if o.carry_through_doors:")
