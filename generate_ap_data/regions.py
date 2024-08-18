@@ -1,5 +1,6 @@
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, TypeAlias, override
+from types import TracebackType
+from typing import TYPE_CHECKING, TypeVar, TypeAlias, override
 
 from .builder import Builder
 
@@ -23,6 +24,8 @@ region_names = name_regions(all_regions)
 
 RegionAndRule: TypeAlias = tuple[Region, "MaybeLogic"]
 
+T = TypeVar("T")
+
 class ConditionalIndent:
   builder: Builder
   def __init__(self, builder: Builder, block_starter: str | None) -> None:
@@ -34,7 +37,7 @@ class ConditionalIndent:
       self.builder.add_line(self.block_starter)
       self.builder.indent += 1
 
-  def __exit__(self, exc_type, exc_value, traceback):
+  def __exit__(self, exc_type: type[T], exc_value: T, traceback: TracebackType):
     if self.block_starter is not None:
       self.builder.indent -= 1
 
