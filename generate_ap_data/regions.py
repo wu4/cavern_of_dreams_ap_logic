@@ -193,8 +193,21 @@ class RegionsBuilder(Builder):
 
   def connect_regions(self):
     for region in all_regions:
+      extra_indent = 0
+      if region.unreachable_if_no_carry_through_doors:
+        self.add_line("if o.carry_through_doors:")
+        extra_indent = 1
+      self.indent += extra_indent
+
       for connecting_region, rule in region.region_connections.items():
+        other_extra_indent = 0
+        if connecting_region.unreachable_if_no_carry_through_doors:
+          self.add_line("if o.carry_through_doors:")
+          other_extra_indent = 1
+        self.indent += other_extra_indent
         self.connect(region, connecting_region, rule)
+        self.indent -= other_extra_indent
+      self.indent -= extra_indent
 
   # def no_entrance_rando(self):
   #   for entrance in all_entrances:
