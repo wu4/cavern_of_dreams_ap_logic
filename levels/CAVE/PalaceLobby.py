@@ -119,6 +119,15 @@ def Ledges(r: Region):
         item.horn
       ),
 
+      item.double_jump & Any(
+        tech.air_tail_jump & item.high_jump,
+        tech.ground_tail_jump,
+        tech.bubble_jump & Any(
+          item.high_jump,
+          item.horn
+        )
+      ),
+
       Comment(
         "High + Wing jump from slanted platform to stationary iceberg",
         tech.wing_jump & item.high_jump
@@ -130,8 +139,8 @@ def Ledges(r: Region):
           difficulty.hard & item.horn
         ),
 
-        item.air_tail,
-        item.ground_tail,
+        tech.air_tail_jump,
+        tech.ground_tail_jump,
 
         Comment(
           "Ejection launch from egg iceberg onto tall iceberg as they clip together",
