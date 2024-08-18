@@ -182,8 +182,6 @@ class RegionsBuilder(Builder):
 
           self.add_line(f"{region_names[region]}.locations.append(l)")
 
-    # self.indent -= 1
-
   def assign_regions(self):
     for region in all_regions:
       name = region_names[region]
